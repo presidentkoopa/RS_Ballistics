@@ -36,13 +36,30 @@ class RSB_Def abstract
 }
 
 // A ROUND: what flies.
+// THE ROUND A GUN NAMES pairs how it flies and hits with how it looks, so a look
+// can be restyled per player without ever touching the game.
 class RSB_RoundDef : RSB_Def
+{
+	String ballistics;   // a ballistics profile, by base name
+	String roundLook;    // a roundlook profile, by base name
+}
+
+// BALLISTICS: the round as the GAME knows it. Identical on every machine: read by
+// base name only (the parser refuses ~style, .material and @tier variants), and
+// no player setting reaches it.
+class RSB_BallisticsDef : RSB_Def
 {
 	double speed;        // map units per tic
 	double radius;       // map units
 	int    damageBase;
 	int    damageDice;   // damage = damageBase x 1d(damageDice), unless the shooter sets damageMin/Max
-	String lookKind;     // "sprite" or "model"
+}
+
+// A ROUND LOOK: what a PLAYER sees and hears of a round. Presentation only,
+// resolved on each machine by style, effects tier and the menu's Round look.
+class RSB_RoundLookDef : RSB_Def
+{
+	String lookKind;     // "sprite", "model" or "none"
 	String lookName;
 	bool   glide;        // smoothed between tics
 	String wake;         // a wake profile, or "none"
@@ -349,6 +366,8 @@ class RSB_DefSet
 		Array<String> kinds;
 		kinds.Push("style");
 		kinds.Push("round");
+		kinds.Push("ballistics");
+		kinds.Push("roundlook");
 		kinds.Push("wake");
 		kinds.Push("burst");
 		kinds.Push("impact");

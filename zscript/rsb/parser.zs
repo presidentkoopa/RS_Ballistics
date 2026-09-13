@@ -82,8 +82,18 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], "unknown kind -- style, burst, material, impact, round, wake, flash, flame or ejecta");
+					Refuse(source, ln + 1, head, words[1], "unknown kind -- style, burst, material, impact, round, ballistics, roundlook, wake, flash, flame or ejecta");
 					refusals++;
+					refused = true;
+					continue;
+				}
+				// NETPLAY: ballistics are what the game knows, the same on every
+				// machine, so they have no variants a local setting could pick.
+				if (head == "ballistics" && (words[1].IndexOf("~") >= 0 || words[1].IndexOf("@") >= 0 || words[1].IndexOf(".") >= 0))
+				{
+					Refuse(source, ln + 1, head, words[1], "ballistics have no ~style, .material or @tier variants -- they are the same on every machine");
+					refusals++;
+					cur = null;
 					refused = true;
 					continue;
 				}
@@ -147,10 +157,22 @@ class RSB_Parser
 		if (kind == "round")
 		{
 			let d = new("RSB_RoundDef");
+			d.ballistics = "";
+			d.roundLook = "";
+			return d;
+		}
+		if (kind == "ballistics")
+		{
+			let d = new("RSB_BallisticsDef");
 			d.speed = -1;
 			d.radius = -1;
 			d.damageBase = -1;
 			d.damageDice = -1;
+			return d;
+		}
+		if (kind == "roundlook")
+		{
+			let d = new("RSB_RoundLookDef");
 			d.lookKind = "";
 			d.lookName = "";
 			d.glide = false;
@@ -301,6 +323,10 @@ class RSB_Parser
 	{
 		let r = RSB_RoundDef(d);
 		if (r) return ApplyRound(r, key, v);
+		let bl = RSB_BallisticsDef(d);
+		if (bl) return ApplyBallistics(bl, key, v);
+		let lk = RSB_RoundLookDef(d);
+		if (lk) return ApplyRoundLook(lk, key, v);
 		let w = RSB_WakeDef(d);
 		if (w) return ApplyWake(w, key, v);
 		let b = RSB_BurstDef(d);
@@ -321,36 +347,73 @@ class RSB_Parser
 	}
 
 	// ---------------------------------------------------------------- ROUND
+	// A pairing: which ballistics, which look.
 	private static String ApplyRound(RSB_RoundDef r, String key, out Array<String> v)
+	{
+		if (key == "ballistics")
+		{
+			if (v.Size() != 1) return "ballistics is one ballistics profile name";
+			r.ballistics = v[0];
+			return "";
+		}
+		if (key == "roundlook")
+		{
+			if (v.Size() != 1) return "roundlook is one roundlook profile name";
+			r.roundLook = v[0];
+			return "";
+		}
+		if (key == "speed" || key == "radius" || key == "damage")
+			return String.Format("`%s` belongs in a `ballistics` profile -- a round names only `ballistics` and `roundlook`", key);
+		if (key == "look" || key == "glide" || key == "wake" || key == "impact" || key == "whiz")
+			return String.Format("`%s` belongs in a `roundlook` profile -- a round names only `ballistics` and `roundlook`", key);
+		return String.Format("unknown round key \"%s\" -- a round names `ballistics` and `roundlook`", key);
+	}
+
+	// ----------------------------------------------------------- BALLISTICS
+	// What the game knows about a round. Read as written on every machine.
+	private static String ApplyBallistics(RSB_BallisticsDef bl, String key, out Array<String> v)
 	{
 		String why;
 		if (key == "speed")
 		{
 			why = Nums(v, 1); if (why != "") return why;
-			r.speed = v[0].ToDouble();
-			return (r.speed > 0) ? "" : "speed must be above 0";
+			bl.speed = v[0].ToDouble();
+			return (bl.speed > 0) ? "" : "speed must be above 0";
 		}
 		if (key == "radius")
 		{
 			why = Nums(v, 1); if (why != "") return why;
-			r.radius = v[0].ToDouble();
-			return (r.radius > 0) ? "" : "radius must be above 0";
+			bl.radius = v[0].ToDouble();
+			return (bl.radius > 0) ? "" : "radius must be above 0";
 		}
 		if (key == "damage")
 		{
 			why = Nums(v, 2); if (why != "") return why;
-			r.damageBase = v[0].ToInt();
-			r.damageDice = v[1].ToInt();
-			return (r.damageBase >= 0 && r.damageDice >= 1) ? "" : "damage is base (0 or more), dice (1 or more)";
+			bl.damageBase = v[0].ToInt();
+			bl.damageDice = v[1].ToInt();
+			return (bl.damageBase >= 0 && bl.damageDice >= 1) ? "" : "damage is base (0 or more), dice (1 or more)";
 		}
+		return String.Format("unknown ballistics key \"%s\" -- speed, radius or damage", key);
+	}
+
+	// ------------------------------------------------------------ ROUNDLOOK
+	// What a player sees and hears of a round. Presentation only.
+	private static String ApplyRoundLook(RSB_RoundLookDef lk, String key, out Array<String> v)
+	{
 		if (key == "look")
 		{
-			if (v.Size() != 2) return "look is `sprite, <name>` or `model, <name>`";
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				lk.lookKind = "none";
+				lk.lookName = "";
+				return "";
+			}
+			if (v.Size() != 2) return "look is `sprite, <name>`, `model, <name>` or `none`";
 			String k = v[0].MakeLower();
-			if (k != "sprite" && k != "model") return String.Format("look kind \"%s\" is not sprite or model", v[0]);
+			if (k != "sprite" && k != "model") return String.Format("look kind \"%s\" is not sprite, model or none", v[0]);
 			if (k == "sprite" && v[1].Length() != 4) return String.Format("sprite \"%s\" is not four letters", v[1]);
-			r.lookKind = k;
-			r.lookName = v[1];
+			lk.lookKind = k;
+			lk.lookName = v[1];
 			return "";
 		}
 		if (key == "glide")
@@ -358,29 +421,29 @@ class RSB_Parser
 			if (v.Size() != 1) return "glide is yes or no";
 			int yn = YesNo(v[0]);
 			if (yn < 0) return String.Format("glide \"%s\" is not yes or no", v[0]);
-			r.glide = (yn == 1);
+			lk.glide = (yn == 1);
 			return "";
 		}
 		if (key == "wake")
 		{
 			if (v.Size() != 1) return "wake is one profile name, or none";
-			r.wake = v[0];
+			lk.wake = v[0];
 			return "";
 		}
 		if (key == "impact")
 		{
 			if (v.Size() != 1) return "impact is one profile name, or none";
-			r.impact = v[0];
+			lk.impact = v[0];
 			return "";
 		}
 		if (key == "whiz")
 		{
 			if (v.Size() != 2 || !IsNum(v[0])) return "whiz is radius (map units), sound -- or 0, none";
-			r.whizRadius = v[0].ToDouble();
-			r.whizSound = v[1];
-			return (r.whizRadius >= 0) ? "" : "whiz radius must be 0 or more";
+			lk.whizRadius = v[0].ToDouble();
+			lk.whizSound = v[1];
+			return (lk.whizRadius >= 0) ? "" : "whiz radius must be 0 or more";
 		}
-		return String.Format("unknown round key \"%s\"", key);
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact or whiz", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE

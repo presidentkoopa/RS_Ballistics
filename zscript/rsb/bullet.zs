@@ -1,9 +1,16 @@
 // ============================================================================
-// THE BULLET. A real round that flies, reading a `round` profile.
+// THE BULLET. A real round that flies, from a `round` profile, which pairs:
 //
-// The same FastProjectile as the reload system's WM_Bullet -- it moves in small
-// steps each tic, so a round travelling hundreds of units a tic still cannot
-// skip through a thin monster -- plus what the profile adds:
+//   ballistics  speed, radius, damage: the round as the GAME knows it. Read
+//               exactly as written -- the base profile by name, never a ~style,
+//               .material or @tier variant, never a player's choice -- so every
+//               machine flies it and scores it the same.
+//   roundlook   what it looks and sounds like: sprite, glide, wake, impact, whiz.
+//               Resolved on each machine by style, effects tier and the menu's
+//               "Round look", because nothing a look does reaches the game.
+//
+// The menu's Round look changes what FLIES: sprite, glide, wake. Impacts and the
+// near-miss sound stay the round's own look, so a rifle still cracks past you.
 //
 //   glide    FastProjectile clears interpolation every tic, so the sprite would
 //            jump a whole tic of travel per frame. Restoring Prev after the move
@@ -14,14 +21,14 @@
 //   impact   RSB_Impact, by material, style and tier.
 //
 // THE CONTRACT the fire action relies on (kept from WM_Bullet):
-//   damageMin, damageMax    set per round by the shooter; 0/0 = the profile's
-//                           damageBase x 1d(damageDice).
+//   damageMin, damageMax    set per round by the shooter; 0/0 = the ballistics
+//                           profile's damageBase x 1d(damageDice).
 //
-// NETPLAY. Spawned by the weapon's fire action on every machine. Damage uses a
-// named RNG, like any damage. Everything cosmetic is a hash, and the player's
-// look settings only change what that player's machine draws and plays. The
-// whiz is a sound for the local listener, which changes nothing a netgame
-// compares.
+// NETPLAY. Spawned by the weapon's fire action on every machine. Speed, size and
+// damage come only from the ballistics profile, and damage uses a named RNG.
+// Every look is resolved locally and changes only what that machine draws and
+// plays: the sprite, bINVISIBLE (a drawing flag), interpolation, particles and
+// sounds. The whiz is a sound for the local listener.
 // ============================================================================
 
 class RSB_Bullet : FastProjectile
@@ -30,7 +37,7 @@ class RSB_Bullet : FastProjectile
 	{
 		Radius 2;
 		Height 2;
-		Speed 245;          // map units per tic; Launch sets the live value from the profile
+		Speed 245;          // map units per tic; Launch sets the live value from the ballistics
 		Damage 1;           // replaced outright in DoSpecialDamage
 		Projectile;
 		+THRUSPECIES
@@ -46,8 +53,17 @@ class RSB_Bullet : FastProjectile
 	private Vector3 travel; // last direction of flight; Vel is zeroed before Death
 	private bool    announced;
 	transient bool  whizzed;   // local presentation: set on one machine only, never saved
-	private bool    glide;
-	transient RSB_RoundDef roundDef;   // re-read after a savegame load
+
+	// The profiles, re-read after a savegame load.
+	transient RSB_RoundDef      roundDef;
+	transient RSB_BallisticsDef ballisticsDef;
+
+	// THIS MACHINE'S LOOKS: the round's own, and what flies (the menu's Round look
+	// when one is chosen). Local by design; never saved.
+	transient bool             looksResolved;
+	transient RSB_RoundLookDef lookDef;
+	transient RSB_RoundLookDef flightDef;
+	transient int              flightSprite;
 
 	States
 	{
@@ -61,7 +77,7 @@ class RSB_Bullet : FastProjectile
 
 	// CALLED BY THE FIRE ACTION straight after A_FireProjectile. The engine has
 	// already spawned the round at the firing hand and aimed it; this names its
-	// profile, sets its speed and size, and records who fired it.
+	// profile, sets its speed and size from the ballistics, and records who fired.
 	static RSB_Bullet Launch(Actor shot, PlayerInfo shooter, int whichHand, String whichRound)
 	{
 		let b = RSB_Bullet(shot);
@@ -71,22 +87,22 @@ class RSB_Bullet : FastProjectile
 		b.shooterNum = -1;
 		if (shooter && shooter.mo) b.shooterNum = shooter.mo.PlayerNumber();
 
-		let d = b.Def();
-		if (!d)
+		let bl = b.Ballistics();
+		if (!bl)
 		{
 			RSB_Log.Once(RSB_Log.LV_ERR, "bullet:noround:" .. whichRound, String.Format(
-				"a round was launched as \"%s\", which no RSBDEFS defines -- it flies at its default speed with no effects", whichRound));
+				"a round was launched as \"%s\", which no RSBDEFS defines with its ballistics -- it flies at its default speed with no effects", whichRound));
 			return b;
 		}
-		double spd = clamp(d.speed, 1.0, 1000.0);
+		double spd = clamp(bl.speed, 1.0, 1000.0);
 		if (b.Vel.Length() > 0.000001) b.Vel = b.Vel.Unit() * spd;
 		b.Speed = spd;
-		b.glide = d.glide;
-		if (d.radius != b.radius) b.A_SetSize(d.radius, d.radius);
+		if (bl.radius != b.radius) b.A_SetSize(bl.radius, bl.radius);
 		return b;
 	}
 
-	RSB_RoundDef Def()
+	// Not "Round": ZScript names are case-insensitive, and round() is built in.
+	RSB_RoundDef RoundProfile()
 	{
 		if (!roundDef)
 		{
@@ -96,8 +112,55 @@ class RSB_Bullet : FastProjectile
 		return roundDef;
 	}
 
+	// THE GAME'S NUMBERS: the base ballistics profile, identical on every machine.
+	RSB_BallisticsDef Ballistics()
+	{
+		if (!ballisticsDef)
+		{
+			let r = RoundProfile();
+			let reg = RSB_Registry.Get();
+			if (r && reg) ballisticsDef = reg.FindBallistics(r.ballistics);
+		}
+		return ballisticsDef;
+	}
+
+	// THIS MACHINE'S LOOKS, once per round (again after a savegame load).
+	private void ResolveLooks()
+	{
+		if (looksResolved) return;
+		looksResolved = true;
+		flightSprite = -1;
+		let r = RoundProfile();
+		let reg = RSB_Registry.Get();
+		if (!r || !reg) return;
+
+		String tierName = RSB_Tier.Name(RSB_Tier.Current());
+		lookDef = reg.ResolveRoundLook(r.roundLook, tierName);
+		flightDef = lookDef;
+		String pick = RSB_Settings.RoundLook();
+		if (pick.Length() > 0)
+		{
+			let chosen = reg.ResolveRoundLook(pick, tierName);
+			if (chosen) flightDef = chosen;
+			else RSB_Log.Once(RSB_Log.LV_WARN, "roundlook:missing:" .. pick, String.Format(
+				"Round look \"%s\" is not defined in any RSBDEFS -- rounds keep their own look", pick));
+		}
+		if (!flightDef) return;
+
+		bINVISIBLE = (flightDef.lookKind == "none");
+		if (flightDef.lookKind == "sprite" && !(flightDef.lookName ~== "RSBT"))
+		{
+			flightSprite = GetSpriteIndex(flightDef.lookName);
+			if (flightSprite < 0)
+				RSB_Log.Once(RSB_Log.LV_WARN, "roundlook:sprite:" .. flightDef.lookName, String.Format(
+					"round look %s: sprite %s is not loaded (no actor's states use it) -- drawn as RSBT", flightDef.id, flightDef.lookName));
+		}
+	}
+
 	override void Tick()
 	{
+		ResolveLooks();
+
 		// Remember which way it flies BEFORE moving: the move can end in Death,
 		// and by then Vel is already zero.
 		if (Vel != (0, 0, 0)) travel = Vel.Unit();
@@ -106,14 +169,18 @@ class RSB_Bullet : FastProjectile
 		if (!announced)
 		{
 			announced = true;
+			let r = RoundProfile();
 			RSB_Log.Once(RSB_Log.LV_INFO, "bullet:spawn", String.Format(
-				"first round this map: %s, %s hand, %.0f units a tic", roundId, (hand == 0) ? "main" : "off", Vel.Length()));
+				"first round this map: %s (ballistics %s, look %s), %s hand, %.0f units a tic", roundId,
+				(r != null) ? r.ballistics : "?", (flightDef != null) ? flightDef.id : "?",
+				(hand == 0) ? "main" : "off", Vel.Length()));
 		}
 
 		Super.Tick();
 		if (bDestroyed) return;
+		if (flightSprite >= 0) sprite = flightSprite;
 
-		if (glide && RSB_Settings.Glide())
+		if (flightDef && flightDef.glide && RSB_Settings.Glide())
 		{
 			double moved = (pos - before).Length();
 			// Not across a teleport or portal jump.
@@ -123,9 +190,9 @@ class RSB_Bullet : FastProjectile
 		Whiz(before);
 	}
 
-	// DAMAGE: the shooter's damageMin-damageMax when set; otherwise the profile's
-	// base x 1d(dice); without a profile, the vanilla pistol's 5 x 1d3. This runs
-	// after the engine's own missile roll, so the value returned replaces it.
+	// DAMAGE: the shooter's damageMin-damageMax when set; otherwise the ballistics
+	// profile's base x 1d(dice); without one, the vanilla pistol's 5 x 1d3. This
+	// runs after the engine's own missile roll, so the value returned replaces it.
 	override int DoSpecialDamage(Actor victim, int damage, Name damagetype)
 	{
 		int dealt;
@@ -135,8 +202,8 @@ class RSB_Bullet : FastProjectile
 		}
 		else
 		{
-			let d = Def();
-			if (d) dealt = d.damageBase * random[RSBBullet](1, d.damageDice);
+			let bl = Ballistics();
+			if (bl) dealt = bl.damageBase * random[RSBBullet](1, bl.damageDice);
 			else dealt = 5 * random[RSBBullet](1, 3);
 		}
 		return Super.DoSpecialDamage(victim, dealt, damagetype);
@@ -145,19 +212,18 @@ class RSB_Bullet : FastProjectile
 	private void Landed()
 	{
 		if (BlockingMobj != null) return;   // an actor bleeds; its own mod decides how
-		let d = Def();
-		if (d) RSB_Impact.Land(self, d.impact, travel);
+		ResolveLooks();
+		if (lookDef) RSB_Impact.Land(self, lookDef.impact, travel);
 	}
 
 	private void LayWake(Vector3 before)
 	{
-		let d = Def();
-		if (!d || d.wake ~== "none") return;
+		if (!flightDef || flightDef.wake ~== "none") return;
 		int tier = RSB_Tier.Current();
 		if (tier <= RSB_Tier.T_OFF) return;
 		let reg = RSB_Registry.Get();
 		if (!reg) return;
-		let w = reg.ResolveWake(d.wake, RSB_Tier.Name(tier));
+		let w = reg.ResolveWake(flightDef.wake, RSB_Tier.Name(tier));
 		if (!w || w.perStep <= 0) return;
 
 		int n = clamp(int(w.perStep * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() + 0.5), 0, 32);
@@ -173,15 +239,14 @@ class RSB_Bullet : FastProjectile
 	}
 
 	// THE CLOSEST THIS TIC'S TRAVEL CAME TO THE LISTENER'S HEAD. Once per round,
-	// never for the listener's own shots.
+	// never for the listener's own shots. The round's OWN look decides the sound.
 	private void Whiz(Vector3 before)
 	{
 		if (whizzed) return;
-		let d = Def();
-		if (!d || d.whizRadius <= 0 || d.whizSound ~== "none") return;
+		if (!lookDef || lookDef.whizRadius <= 0 || lookDef.whizSound ~== "none") return;
 		if (shooterNum == consoleplayer) return;
 		if (!RSB_Settings.Whiz()) return;
-		double range = d.whizRadius * RSB_Settings.WhizRange();
+		double range = lookDef.whizRadius * RSB_Settings.WhizRange();
 		double vol = RSB_Settings.WhizVolume();
 		if (range <= 0 || vol <= 0) return;
 		let cam = players[consoleplayer].camera;
@@ -197,6 +262,6 @@ class RSB_Bullet : FastProjectile
 		if ((ear - closest).Length() > range) return;
 
 		whizzed = true;
-		A_StartSound(d.whizSound, CHAN_AUTO, CHANF_OVERLAP, vol);
+		A_StartSound(lookDef.whizSound, CHAN_AUTO, CHANF_OVERLAP, vol);
 	}
 }

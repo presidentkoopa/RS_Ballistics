@@ -36,6 +36,7 @@ user float  rsb_flash_smoke        = 1.0;
 
 // ---- rounds in flight
 user bool   rsb_glide              = true;
+user string rsb_round_look         = "";      // "" each round's own look, or a roundlook profile for what flies
 user float  rsb_wake               = 1.0;
 user bool   rsb_whiz               = true;
 user float  rsb_whiz_range         = 1.0;

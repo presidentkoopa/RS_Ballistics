@@ -51,6 +51,9 @@ class RSB_Registry : StaticEventHandler
 
 	// ---- lookups, typed ---------------------------------------------------------
 	RSB_RoundDef  FindRound(String pid)  { return defs ? RSB_RoundDef(defs.Find("round", pid))   : null; }
+	// NETPLAY: by exact base name only -- never Resolve, so no style, tier or
+	// player setting can change what the game knows about a round.
+	RSB_BallisticsDef FindBallistics(String pid) { return defs ? RSB_BallisticsDef(defs.Find("ballistics", pid)) : null; }
 	RSB_BurstDef  FindBurst(String pid)  { return defs ? RSB_BurstDef(defs.Find("burst", pid))   : null; }
 	RSB_EjectaDef FindEjecta(String pid) { return defs ? RSB_EjectaDef(defs.Find("ejecta", pid)) : null; }
 
@@ -76,6 +79,10 @@ class RSB_Registry : StaticEventHandler
 	RSB_FlameDef ResolveFlame(String base, String tierName)
 	{
 		return defs ? RSB_FlameDef(defs.Resolve("flame", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
+	RSB_RoundLookDef ResolveRoundLook(String base, String tierName)
+	{
+		return defs ? RSB_RoundLookDef(defs.Resolve("roundlook", base, "", tierName, RSB_Settings.StyleName())) : null;
 	}
 
 	// THE MATERIAL OF A TEXTURE, "" for the default surface. Later material
@@ -166,24 +173,52 @@ class RSB_Registry : StaticEventHandler
 			n++;
 		}
 
+		// Ballistics and round looks next: rounds name them.
+		for (int i = defs.defs.Size() - 1; i >= 0; i--)
+		{
+			String why = "";
+			let bl = RSB_BallisticsDef(defs.defs[i]);
+			let lk = RSB_RoundLookDef(defs.defs[i]);
+			if (bl)
+			{
+				if (bl.speed <= 0)
+					why = "it never states `speed`";
+				else if (bl.radius <= 0)
+					why = "it never states `radius`";
+				else if (bl.damageDice < 1)
+					why = "it never states `damage`";
+			}
+			else if (lk)
+			{
+				if (lk.lookKind == "")
+					why = "it never states `look`";
+				else if (!(lk.impact ~== "none") && !defs.Find("impact", lk.impact))
+					why = String.Format("its impact \"%s\" has no base profile in any RSBDEFS", lk.impact);
+				else if (!(lk.wake ~== "none") && !defs.Find("wake", lk.wake))
+					why = String.Format("its wake \"%s\" is not defined in any RSBDEFS", lk.wake);
+			}
+			if (why == "") continue;
+			let d = defs.defs[i];
+			RSB_Log.Err(String.Format("%s line %d: %s %s REFUSED -- %s", d.source, d.lineNo, d.kind, d.id, why));
+			defs.defs.Delete(i);
+			n++;
+		}
+
+		// Rounds last: each pairs one ballistics profile with one look, by BASE name.
 		for (int i = defs.defs.Size() - 1; i >= 0; i--)
 		{
 			let r = RSB_RoundDef(defs.defs[i]);
 			if (!r) continue;
 
 			String why = "";
-			if (r.speed <= 0)
-				why = "it never states `speed`";
-			else if (r.radius <= 0)
-				why = "it never states `radius`";
-			else if (r.damageDice < 1)
-				why = "it never states `damage`";
-			else if (r.lookKind == "")
-				why = "it never states `look`";
-			else if (!(r.impact ~== "none") && !defs.Find("impact", r.impact))
-				why = String.Format("its impact \"%s\" has no base profile in any RSBDEFS", r.impact);
-			else if (!(r.wake ~== "none") && !defs.Find("wake", r.wake))
-				why = String.Format("its wake \"%s\" is not defined in any RSBDEFS", r.wake);
+			if (r.ballistics.Length() == 0)
+				why = "it never states `ballistics`";
+			else if (!defs.Find("ballistics", r.ballistics))
+				why = String.Format("its ballistics \"%s\" is not defined in any RSBDEFS", r.ballistics);
+			else if (r.roundLook.Length() == 0)
+				why = "it never states `roundlook`";
+			else if (!defs.Find("roundlook", r.roundLook))
+				why = String.Format("its roundlook \"%s\" has no base profile in any RSBDEFS", r.roundLook);
 
 			if (why == "") continue;
 			RSB_Log.Err(String.Format("%s line %d: round %s REFUSED -- %s", r.source, r.lineNo, r.id, why));

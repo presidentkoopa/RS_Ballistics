@@ -19,8 +19,11 @@
 #   burst     one GPU particle emission -- the building block
 #   material  which textures are metal, wood, glass, liquid, dirt...
 #   impact    what a landing round does, by surface
-#   round     what flies
-#   wake      what a round sheds as it flies
+#   round      what a gun names: a pairing of ballistics and roundlook
+#   ballistics how a round flies and hits (speed, radius, damage) -- the same on
+#              every machine: no variants, no player setting
+#   roundlook  how a round looks and sounds (sprite, glide, wake, impact, whiz)
+#   wake       what a round sheds as it flies
 #   flash     the muzzle: light, lit-air cone, bursts, flame, smoke
 #   ejecta    spent casings and hulls
 #
@@ -388,19 +391,69 @@ end
 
 
 # ---------------------------------------------------------------- ROUNDS
-#   speed   map units per tic (34 map units = 1 meter, 35 tics a second)
-#   radius  map units
-#   damage  base, dice  -> base x 1d(dice), unless the shooter sets damageMin/Max
-#   look    sprite, <4-letter sprite>
-#   glide   yes | no
-#   wake    <wake> | none
-#   impact  <impact base> | none
-#   whiz    radius (map units), sound -- a near miss past the listener's head
+# A ROUND PAIRS TWO PROFILES, so how it flies and hits stays apart from how it
+# looks -- which is what lets looks be customised per player safely.
+#
+#   ballistics <name>   what the GAME knows. Read exactly as written on every
+#                       machine: no ~style, .material or @tier variants (refused),
+#                       and no player setting reaches it.
+#     speed   map units per tic (34 map units = 1 meter, 35 tics a second)
+#     radius  map units
+#     damage  base, dice  -> base x 1d(dice), unless the shooter sets damageMin/Max
+#
+#   roundlook <name>    what a PLAYER sees and hears. Style and tier variants
+#                       allowed (roundlook pistol_45~cinematic, pistol_45@heavy).
+#                       The menu's Round look swaps what flies (look, glide, wake)
+#                       for any roundlook; impact and whiz stay the round's own.
+#     look    sprite, <4-letter sprite> | none (nothing drawn in flight)
+#     glide   yes | no
+#     wake    <wake> | none
+#     impact  <impact base> | none
+#     whiz    radius (map units), sound -- a near miss past the listener's head
+#
+#   round <name>        what a gun names (WM_Gun.RoundProfile)
+#     ballistics = <ballistics name>
+#     roundlook  = <roundlook name>
 
-round pistol_45
+# ---- ballistics
+ballistics pistol_45
   speed  = 245          # about a .45 ACP
   radius = 2
   damage = 5, 3
+end
+
+ballistics buckshot
+  speed  = 380
+  radius = 1
+  damage = 5, 3
+end
+
+ballistics rifle_556
+  speed  = 900          # supersonic: it cracks past you
+  radius = 1
+  damage = 5, 3         # vanilla; a class's WM_Gun.ShotDamage overrides it
+end
+
+ballistics pistol_9mm
+  speed  = 340          # 9mm: faster and lighter than the .45
+  radius = 1.5
+  damage = 5, 3
+end
+
+ballistics rifle_762
+  speed  = 800          # full-power rifle
+  radius = 1.5
+  damage = 5, 3
+end
+
+ballistics revolver_357
+  speed  = 400
+  radius = 2
+  damage = 5, 3
+end
+
+# ---- round looks
+roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
   wake   = none
@@ -408,10 +461,7 @@ round pistol_45
   whiz   = 72, rsb/whiz
 end
 
-round buckshot
-  speed  = 380
-  radius = 1
-  damage = 5, 3
+roundlook buckshot
   look   = sprite, RSBT
   glide  = yes
   wake   = none
@@ -419,10 +469,7 @@ round buckshot
   whiz   = 48, rsb/whiz
 end
 
-round rifle_556
-  speed  = 900          # supersonic: it cracks past you
-  radius = 1
-  damage = 5, 3         # vanilla; a class's WM_Gun.ShotDamage overrides it
+roundlook rifle_556
   look   = sprite, RSBT
   glide  = yes
   wake   = rifle_trail
@@ -430,10 +477,7 @@ round rifle_556
   whiz   = 96, rsb/crack/near
 end
 
-round pistol_9mm
-  speed  = 340          # 9mm: faster and lighter than the .45
-  radius = 1.5
-  damage = 5, 3
+roundlook pistol_9mm
   look   = sprite, RSBT
   glide  = yes
   wake   = none
@@ -441,10 +485,7 @@ round pistol_9mm
   whiz   = 64, rsb/whiz
 end
 
-round rifle_762
-  speed  = 800          # full-power rifle: cracks, and trails
-  radius = 1.5
-  damage = 5, 3
+roundlook rifle_762
   look   = sprite, RSBT
   glide  = yes
   wake   = rifle_trail
@@ -452,15 +493,66 @@ round rifle_762
   whiz   = 110, rsb/crack/near
 end
 
-round revolver_357
-  speed  = 400
-  radius = 2
-  damage = 5, 3
+roundlook revolver_357
   look   = sprite, RSBT
   glide  = yes
   wake   = none
   impact = bullet
   whiz   = 80, rsb/crack/med
+end
+
+# The menu's Round look choices. Only look, glide and wake are used from these.
+roundlook tracer         # every round a bright streak with a glowing trail
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = tracer_bright
+end
+
+roundlook unseen         # nothing drawn in flight; impacts and whiz unchanged
+  look   = none
+  glide  = no
+  wake   = none
+end
+
+wake tracer_bright
+  perstep = 6
+  size    = 0.9, 0.1
+  life    = 0.35
+  drift   = 3
+  drag    = 3
+  color   = 255, 210, 150
+  glow    = 1.6
+end
+
+# ---- rounds: what guns name
+round pistol_45
+  ballistics = pistol_45
+  roundlook  = pistol_45
+end
+
+round buckshot
+  ballistics = buckshot
+  roundlook  = buckshot
+end
+
+round rifle_556
+  ballistics = rifle_556
+  roundlook  = rifle_556
+end
+
+round pistol_9mm
+  ballistics = pistol_9mm
+  roundlook  = pistol_9mm
+end
+
+round rifle_762
+  ballistics = rifle_762
+  roundlook  = rifle_762
+end
+
+round revolver_357
+  ballistics = revolver_357
+  roundlook  = revolver_357
 end
 
 

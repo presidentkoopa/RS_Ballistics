@@ -130,6 +130,10 @@ class RSB_Settings play
 	// ---- rounds in flight ------------------------------------------------------
 	static bool Glide() { return Cvb("rsb_glide", true); }
 
+	// "" = each round's own look; otherwise a roundlook profile for what flies.
+	// A look only: ballistics never read a setting.
+	static String RoundLook() { return Cvs("rsb_round_look", ""); }
+
 	static double Wake()
 	{
 		let st = Style();

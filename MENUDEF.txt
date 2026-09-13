@@ -25,6 +25,13 @@ OptionString "RSBStyles"
 	"clean",     "Clean -- sparse and crisp"
 }
 
+OptionString "RSBRoundLooks"
+{
+	"",       "Each round's own"
+	"tracer", "Bright tracers"
+	"unseen", "Nothing visible in flight"
+}
+
 OptionString "RSBPreviewImpacts"
 {
 	"bullet",    "Bullet (looks up the surface)"
@@ -130,6 +137,8 @@ OptionMenu "RSB_FlightMenu"
 	Title "ROUNDS IN FLIGHT"
 	StaticText "The round between the barrel and what it hits.", "DarkGray"
 	StaticText ""
+	Option "Round look", "rsb_round_look", "RSBRoundLooks"
+	StaticText "Changes what flies. Impacts and near-miss sounds stay each round's own.", "DarkGray"
 	Option "Smooth flight", "rsb_glide", "OnOff"
 	Slider "Trails", "rsb_wake", 0.0, 3.0, 0.1, 1
 	StaticText ""
