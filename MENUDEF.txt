@@ -2,7 +2,47 @@
 // RS_Ballistics menu. Every control here is checked by tools/menu_lint.py on
 // each build against CVARINFO and the code: a control for a cvar nothing reads
 // fails the build.
+//
+// Settings apply to the next shot, impact or casing. Preview rows fire a test
+// effect through a netevent; close the menu (or keep the world visible) to see
+// it.
 // ============================================================================
+
+OptionValue "RSBTiers"
+{
+	0, "Off -- no effects (sounds stay)"
+	1, "Plain"
+	2, "Normal"
+	3, "Heavy"
+	4, "Extreme"
+}
+
+OptionString "RSBStyles"
+{
+	"",          "Default"
+	"gritty",    "Gritty -- dust, smoke, dim sparks"
+	"cinematic", "Cinematic -- big light, long marks"
+	"clean",     "Clean -- sparse and crisp"
+}
+
+OptionString "RSBPreviewImpacts"
+{
+	"bullet",    "Bullet (looks up the surface)"
+}
+
+OptionString "RSBPreviewFlashes"
+{
+	"pistol",    "Pistol"
+	"shotgun",   "Shotgun"
+	"rifle",     "Rifle"
+}
+
+OptionString "RSBPreviewEjecta"
+{
+	"brass_45",  "Pistol brass"
+	"brass_556", "Rifle brass"
+	"hull_12ga", "Shotgun hull"
+}
 
 OptionValue "RSBLogLevels"
 {
@@ -21,8 +61,111 @@ AddOptionMenu "OptionsMenu"
 OptionMenu "RSB_Options"
 {
 	Title "RS BALLISTICS"
-	StaticText "Bullets, tracers, impacts and flashes, generated from RSBDEFS profiles.", "DarkGray"
+	StaticText "Every muzzle flash, round, casing and impact, generated from RSBDEFS.", "DarkGray"
+	StaticText "Looks only: nothing here changes damage, speed or netplay.", "DarkGray"
+	StaticText ""
+	StaticText "THE DIAL", "Gold"
+	Option "Effects level", "rsb_tier", "RSBTiers"
+	Option "Style", "rsb_style", "RSBStyles"
+	StaticText ""
+	StaticText "TUNE", "Gold"
+	Submenu "Impacts", "RSB_ImpactMenu"
+	Submenu "Muzzle flash", "RSB_FlashMenu"
+	Submenu "Rounds in flight", "RSB_FlightMenu"
+	Submenu "Casings", "RSB_CasingMenu"
+	StaticText ""
+	StaticText "TRY IT", "Gold"
+	Submenu "Preview -- see it without firing", "RSB_PreviewMenu"
+	Submenu "Diagnostics", "RSB_DiagnosticsMenu"
+}
+
+OptionMenu "RSB_ImpactMenu"
+{
+	Title "IMPACTS"
+	StaticText "What a landing round does to the surface it hits.", "DarkGray"
+	StaticText "Metal sparks, concrete chips and dusts, wood splinters, glass glints.", "DarkGray"
+	StaticText ""
+	Option "Impact effects", "rsb_impacts", "OnOff"
+	Slider "Particles", "rsb_impact_particles", 0.0, 3.0, 0.1, 1
+	Slider "Spark brightness", "rsb_impact_glow", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Option "Impact light", "rsb_impact_lights", "OnOff"
+	Slider "Impact light brightness", "rsb_impact_light", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Option "Glowing marks", "rsb_marks", "OnOff"
+	Slider "How long marks glow", "rsb_mark_life", 0.1, 5.0, 0.1, 1
+	StaticText ""
+	Option "Ricochets on glancing hits", "rsb_ricochets", "OnOff"
+	Slider "Impact volume", "rsb_impact_volume", 0.0, 1.0, 0.05, 2
+}
+
+OptionMenu "RSB_FlashMenu"
+{
+	Title "MUZZLE FLASH"
+	StaticText "The strobe that lights the room, the lit air in front of the barrel,", "DarkGray"
+	StaticText "the flame, the sparks out of the bore and the smoke.", "DarkGray"
+	StaticText ""
+	Slider "Light brightness", "rsb_flash_light", 0.0, 3.0, 0.1, 1
+	Slider "Light reach", "rsb_flash_size", 0.25, 3.0, 0.05, 2
+	StaticText ""
+	Option "Lit air cone", "rsb_flash_cone", "OnOff"
+	Slider "Cone density", "rsb_flash_cone_density", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Option "Flame", "rsb_flash_flame", "OnOff"
+	Slider "Flame size", "rsb_flash_flame_size", 0.25, 3.0, 0.05, 2
+	StaticText ""
+	Slider "Bore sparks", "rsb_flash_sparks", 0.0, 3.0, 0.1, 1
+	Slider "Smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
+}
+
+OptionMenu "RSB_FlightMenu"
+{
+	Title "ROUNDS IN FLIGHT"
+	StaticText "The round between the barrel and what it hits.", "DarkGray"
+	StaticText ""
+	Option "Smooth flight", "rsb_glide", "OnOff"
+	Slider "Trails", "rsb_wake", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	StaticText "Near misses: rounds fired by others whiz or crack past your head.", "DarkGray"
+	Option "Whiz and crack", "rsb_whiz", "OnOff"
+	Slider "Near-miss distance", "rsb_whiz_range", 0.25, 3.0, 0.05, 2
+	Slider "Whiz volume", "rsb_whiz_volume", 0.0, 1.0, 0.05, 2
+}
+
+OptionMenu "RSB_CasingMenu"
+{
+	Title "CASINGS"
+	StaticText "Spent brass and shotgun hulls out of the port.", "DarkGray"
+	StaticText ""
+	Option "Casings", "rsb_casings", "OnOff"
+	Slider "Size", "rsb_casing_size", 0.5, 2.0, 0.05, 2
+	Option "Hot glow out of the port", "rsb_casing_hot", "OnOff"
+	Slider "Time on the floor", "rsb_casing_life", 0.0, 10.0, 0.25, 2
+}
+
+OptionMenu "RSB_PreviewMenu"
+{
+	Title "PREVIEW"
+	StaticText "Fires a test effect where you are looking.", "DarkGray"
+	StaticText "Close the menu to watch -- change a setting, preview again.", "DarkGray"
+	StaticText ""
+	Option "Impact", "rsb_preview_impact", "RSBPreviewImpacts"
+	Command "Impact where I am looking", "netevent rsb_preview_impact"
+	StaticText ""
+	Option "Muzzle flash", "rsb_preview_flash", "RSBPreviewFlashes"
+	Command "Muzzle flash in front of me", "netevent rsb_preview_flash"
+	StaticText ""
+	Option "Casing", "rsb_preview_ejecta", "RSBPreviewEjecta"
+	Command "Throw a casing", "netevent rsb_preview_casing"
+	StaticText ""
+	Command "All three", "netevent rsb_preview_all"
+}
+
+OptionMenu "RSB_DiagnosticsMenu"
+{
+	Title "DIAGNOSTICS"
 	StaticText "Profiles are read once at startup and summarised when a map starts.", "DarkGray"
 	StaticText ""
 	Option "Log", "rsb_log", "RSBLogLevels"
+	Option "Print what every hit landed on", "rsb_debug_surfaces", "OnOff"
 }

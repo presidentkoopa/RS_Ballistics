@@ -4,12 +4,11 @@
 //
 // A STATIC event handler (registered in MAPINFO), so it exists from startup and
 // across every map: profiles are read once, not per level. It also owns the
-// once-per-map log memory, cleared as each map starts.
+// once-per-map log memory and the texture-to-material cache.
 //
 // Load order is override order: RSBDEFS lumps are read in the order their
 // packages load, and a later profile with the same kind and name replaces an
-// earlier one. RS_Ballistics' own examples load first; a weapons package can
-// redefine them.
+// earlier one.
 // ============================================================================
 
 class RSB_Registry : StaticEventHandler
@@ -17,7 +16,8 @@ class RSB_Registry : StaticEventHandler
 	RSB_DefSet defs;
 	int        lumpsRead;
 	int        refusals;
-	private Array<String> said;   // once-per-map log keys
+	private Array<String> said;                  // once-per-map log keys
+	private Map<String, String> materialCache;   // "W:NAME" / "F:NAME" -> material ("" = default)
 
 	clearscope static RSB_Registry Get()
 	{
@@ -34,8 +34,10 @@ class RSB_Registry : StaticEventHandler
 	{
 		said.Clear();
 		if (!defs) Load();
-		RSB_Log.Info(String.Format("RS_Ballistics: %d profile(s) from %d RSBDEFS lump(s), %d refused -- %s",
-			defs.defs.Size(), lumpsRead, refusals, defs.Describe()));
+		String style = RSB_Settings.StyleName();
+		RSB_Log.Info(String.Format("RS_Ballistics: %d profile(s) from %d RSBDEFS lump(s), %d refused, effects %s, style %s -- %s",
+			defs.defs.Size(), lumpsRead, refusals, RSB_Tier.Name(RSB_Tier.Current()),
+			(style.Length() > 0) ? style : "default", defs.Describe()));
 		if (RSB_Log.Level() >= RSB_Log.LV_TRACE) Dump();
 	}
 
@@ -47,11 +49,55 @@ class RSB_Registry : StaticEventHandler
 		return false;
 	}
 
-	// ---- lookups, typed, for the bullet, the flash and the service ------------
+	// ---- lookups, typed ---------------------------------------------------------
 	RSB_RoundDef  FindRound(String pid)  { return defs ? RSB_RoundDef(defs.Find("round", pid))   : null; }
-	RSB_WakeDef   FindWake(String pid)   { return defs ? RSB_WakeDef(defs.Find("wake", pid))     : null; }
-	RSB_ImpactDef FindImpact(String pid) { return defs ? RSB_ImpactDef(defs.Find("impact", pid)) : null; }
-	RSB_FlashDef  FindFlash(String pid)  { return defs ? RSB_FlashDef(defs.Find("flash", pid))   : null; }
+	RSB_BurstDef  FindBurst(String pid)  { return defs ? RSB_BurstDef(defs.Find("burst", pid))   : null; }
+
+	RSB_StyleDef  FindStyle(String pid)  { return defs ? RSB_StyleDef(defs.Find("style", pid))   : null; }
+
+	// Resolved with the player's chosen style (RSB_Settings.StyleName).
+	RSB_ImpactDef ResolveImpact(String base, String material, String tierName)
+	{
+		return defs ? RSB_ImpactDef(defs.Resolve("impact", base, material, tierName, RSB_Settings.StyleName())) : null;
+	}
+	RSB_FlashDef ResolveFlash(String base, String tierName)
+	{
+		return defs ? RSB_FlashDef(defs.Resolve("flash", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
+	RSB_EjectaDef ResolveEjecta(String base, String tierName)
+	{
+		return defs ? RSB_EjectaDef(defs.Resolve("ejecta", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
+	RSB_WakeDef ResolveWake(String base, String tierName)
+	{
+		return defs ? RSB_WakeDef(defs.Resolve("wake", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
+
+	// THE MATERIAL OF A TEXTURE, "" for the default surface. Later material
+	// profiles win, so they are tried last-loaded first. Cached per texture name:
+	// an impact is a map lookup after the first.
+	String MaterialFor(TextureID tex, bool flat)
+	{
+		if (!defs || !tex.IsValid()) return "";
+		String texName = TexMan.GetName(tex);
+		texName = texName.MakeUpper();
+		String key = (flat ? "F:" : "W:") .. texName;
+		if (materialCache.CheckKey(key)) return materialCache.Get(key);
+
+		String found = "";
+		for (int i = defs.defs.Size() - 1; i >= 0; i--)
+		{
+			let m = RSB_MaterialDef(defs.defs[i]);
+			if (m && m.Matches(texName, flat))
+			{
+				found = m.id;
+				break;
+			}
+		}
+		materialCache.Insert(key, found);
+		RSB_Log.Trace(String.Format("material: %s %s -> %s", flat ? "flat" : "wall", texName, found.Length() > 0 ? found : "default"));
+		return found;
+	}
 
 	// ---- reading ---------------------------------------------------------------
 	private void Load()
@@ -59,6 +105,7 @@ class RSB_Registry : StaticEventHandler
 		defs = new("RSB_DefSet");
 		lumpsRead = 0;
 		refusals = 0;
+		materialCache.Clear();
 
 		int lump = Wads.FindLump("RSBDEFS", 0);
 		while (lump != -1)
@@ -74,13 +121,35 @@ class RSB_Registry : StaticEventHandler
 			RSB_Log.Warn("RS_Ballistics: no RSBDEFS lump was found -- there are no profiles to generate from");
 	}
 
-	// COMPLETENESS, once every lump is in. A round must state its speed, radius,
-	// damage and look, and name wake and impact profiles that some lump defines.
-	// Checked here rather than in the parser because a later package may supply
-	// the impact a round names.
+	// COMPLETENESS, once every lump is in. Checked here rather than in the parser
+	// because a later package may supply what a profile names. Bursts first, so an
+	// impact refused for a missing burst is gone before rounds are checked.
 	private int Finish()
 	{
 		int n = 0;
+
+		for (int i = defs.defs.Size() - 1; i >= 0; i--)
+		{
+			String why = "";
+			let im = RSB_ImpactDef(defs.defs[i]);
+			let fl = RSB_FlashDef(defs.defs[i]);
+			if (im)
+			{
+				why = MissingBurst(im.bursts);
+				if (why == "" && !(im.glanceBurst ~== "none") && !FindBurst(im.glanceBurst))
+					why = String.Format("its glance burst \"%s\" is not defined in any RSBDEFS", im.glanceBurst);
+			}
+			else if (fl)
+			{
+				why = MissingBurst(fl.bursts);
+			}
+			if (why == "") continue;
+			let d = defs.defs[i];
+			RSB_Log.Err(String.Format("%s line %d: %s %s REFUSED -- %s", d.source, d.lineNo, d.kind, d.id, why));
+			defs.defs.Delete(i);
+			n++;
+		}
+
 		for (int i = defs.defs.Size() - 1; i >= 0; i--)
 		{
 			let r = RSB_RoundDef(defs.defs[i]);
@@ -96,7 +165,7 @@ class RSB_Registry : StaticEventHandler
 			else if (r.lookKind == "")
 				why = "it never states `look`";
 			else if (!(r.impact ~== "none") && !defs.Find("impact", r.impact))
-				why = String.Format("its impact \"%s\" is not defined in any RSBDEFS", r.impact);
+				why = String.Format("its impact \"%s\" has no base profile in any RSBDEFS", r.impact);
 			else if (!(r.wake ~== "none") && !defs.Find("wake", r.wake))
 				why = String.Format("its wake \"%s\" is not defined in any RSBDEFS", r.wake);
 
@@ -106,6 +175,14 @@ class RSB_Registry : StaticEventHandler
 			n++;
 		}
 		return n;
+	}
+
+	private String MissingBurst(Array<String> names)
+	{
+		for (int i = 0; i < names.Size(); i++)
+			if (!FindBurst(names[i]))
+				return String.Format("its burst \"%s\" is not defined in any RSBDEFS", names[i]);
+		return "";
 	}
 
 	private void Dump()

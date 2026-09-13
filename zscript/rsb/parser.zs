@@ -1,21 +1,19 @@
 // ============================================================================
 // READING RSBDEFS.
 //
-// Line-oriented, the reload system's grammar: a header `<kind> <name>`, then
-// `key = value, value` lines, then `end`. `#` starts a comment; keys are
-// case-insensitive.
+// Line-oriented: a header `<kind> <name>`, then `key = value, value` lines,
+// then `end`. `#` starts a comment; keys are case-insensitive.
 //
 // ------------------------------------------------ A REFUSAL, NOT A WARNING
 //
 // An unknown key, the wrong number of values, a word where a number belongs, a
 // header with no `end` before the next one: each refuses THAT profile, naming
 // the lump, the line and the reason. The other profiles still load. A typo must
-// never leave a setting at its default with nothing said -- whoever wrote it
-// would be debugging an effect that never received their number.
+// never leave a setting at its default with nothing said.
 //
-// Whether a profile is COMPLETE -- a round states its speed, names an impact
-// that exists -- is decided after every lump has been read
-// (RSB_Registry.Finish), because a later package may supply the impact.
+// Whether a profile is COMPLETE -- a round states its speed, an impact's bursts
+// exist -- is decided after every lump has been read (RSB_Registry.Finish),
+// because a later package may supply what it names.
 // ============================================================================
 
 class RSB_Parser
@@ -84,7 +82,7 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], "unknown kind -- round, wake, impact or flash");
+					Refuse(source, ln + 1, head, words[1], "unknown kind -- style, burst, material, impact, round, wake, flash or ejecta");
 					refusals++;
 					refused = true;
 					continue;
@@ -158,6 +156,8 @@ class RSB_Parser
 			d.glide = false;
 			d.wake = "none";
 			d.impact = "none";
+			d.whizRadius = 0;
+			d.whizSound = "none";
 			return d;
 		}
 		if (kind == "wake")
@@ -174,20 +174,42 @@ class RSB_Parser
 			d.glow = 1;
 			return d;
 		}
+		if (kind == "burst")
+		{
+			let d = new("RSB_BurstDef");
+			d.count = 0;
+			d.cone = 30;
+			d.speed = 100;
+			d.speedJitter = 0.3;
+			d.tint = white;
+			d.glow = 1;
+			d.life = 0.5;
+			d.lifeJitter = 0.3;
+			d.sizeStart = 1;
+			d.sizeEnd = 0.5;
+			d.gravity = 0;
+			d.drag = 0;
+			d.orient = 0;
+			d.stretch = 0;
+			d.aim = RSB_BurstDef.AIM_NORMAL;
+			d.offset = 1.5;
+			return d;
+		}
 		if (kind == "impact")
 		{
 			let d = new("RSB_ImpactDef");
-			d.sparkCount = 0;
-			d.sparkSpread = 0;
-			d.sparkSpeed = 0;
-			d.sparkLife = 0;
-			d.sparkColor = white;
-			d.sparkGlow = 1;
 			d.markShape = -1;
 			d.markRadius = 0;
 			d.markLife = 0;
 			d.markColor = white;
 			d.soundName = "none";
+			d.lightRadius = 0;
+			d.lightIntensity = 1;
+			d.lightTics = 3;
+			d.lightColor = Color(255, 255, 200, 150);
+			d.glanceDeg = 0;
+			d.glanceSound = "none";
+			d.glanceBurst = "none";
 			return d;
 		}
 		if (kind == "flash")
@@ -202,8 +224,45 @@ class RSB_Parser
 			d.coneLength = 0;
 			d.coneDensity = 0;
 			d.coneTics = 0;
-			d.coreCount = 0;
-			d.coreLife = 0;
+			d.flameScale = 0;
+			d.smokeCount = 0;
+			d.smokeScale = 0.02;
+			d.smokeAlpha = 0.3;
+			return d;
+		}
+		if (kind == "ejecta")
+		{
+			let d = new("RSB_EjectaDef");
+			d.lookKind = "sprite";
+			d.lookName = "RSCS";
+			d.scale = 0.06;
+			d.speedMul = 1.0;
+			d.speedJitter = 0.2;
+			d.bounceFloor = 0.45;
+			d.bounceWall = 0.3;
+			d.bounceCount = 4;
+			d.gravity = 0.6;
+			d.soundName = "none";
+			d.hotTics = 0;
+			d.lifeTics = 700;
+			return d;
+		}
+		if (kind == "material")
+		{
+			return new("RSB_MaterialDef");
+		}
+		if (kind == "style")
+		{
+			let d = new("RSB_StyleDef");
+			d.particlesMul = 1;
+			d.glowMul = 1;
+			d.lightsMul = 1;
+			d.marksMul = 1;
+			d.flashMul = 1;
+			d.coneMul = 1;
+			d.flameMul = 1;
+			d.smokeMul = 1;
+			d.whizMul = 1;
 			return d;
 		}
 		return null;
@@ -216,10 +275,18 @@ class RSB_Parser
 		if (r) return ApplyRound(r, key, v);
 		let w = RSB_WakeDef(d);
 		if (w) return ApplyWake(w, key, v);
+		let b = RSB_BurstDef(d);
+		if (b) return ApplyBurst(b, key, v);
 		let im = RSB_ImpactDef(d);
 		if (im) return ApplyImpact(im, key, v);
 		let f = RSB_FlashDef(d);
 		if (f) return ApplyFlash(f, key, v);
+		let e = RSB_EjectaDef(d);
+		if (e) return ApplyEjecta(e, key, v);
+		let m = RSB_MaterialDef(d);
+		if (m) return ApplyMaterial(m, key, v);
+		let st = RSB_StyleDef(d);
+		if (st) return ApplyStyle(st, key, v);
 		return "internal: a profile of no known kind";
 	}
 
@@ -275,6 +342,13 @@ class RSB_Parser
 			if (v.Size() != 1) return "impact is one profile name, or none";
 			r.impact = v[0];
 			return "";
+		}
+		if (key == "whiz")
+		{
+			if (v.Size() != 2 || !IsNum(v[0])) return "whiz is radius (map units), sound -- or 0, none";
+			r.whizRadius = v[0].ToDouble();
+			r.whizSound = v[1];
+			return (r.whizRadius >= 0) ? "" : "whiz radius must be 0 or more";
 		}
 		return String.Format("unknown round key \"%s\"", key);
 	}
@@ -336,36 +410,117 @@ class RSB_Parser
 		return String.Format("unknown wake key \"%s\"", key);
 	}
 
+	// ---------------------------------------------------------------- BURST
+	private static String ApplyBurst(RSB_BurstDef b, String key, out Array<String> v)
+	{
+		String why;
+		Color c;
+		if (key == "count")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.count = v[0].ToInt();
+			return (b.count >= 0) ? "" : "count must be 0 or more";
+		}
+		if (key == "cone")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.cone = v[0].ToDouble();
+			return (b.cone >= 0 && b.cone <= 180) ? "" : "cone is a half-angle from 0 to 180 degrees";
+		}
+		if (key == "speed")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			b.speed = v[0].ToDouble();
+			b.speedJitter = v[1].ToDouble();
+			return (b.speed >= 0 && b.speedJitter >= 0) ? "" : "speed is speed (map units/s), jitter (0..1), both 0 or more";
+		}
+		if (key == "life")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			b.life = v[0].ToDouble();
+			b.lifeJitter = v[1].ToDouble();
+			return (b.life > 0 && b.lifeJitter >= 0) ? "" : "life is seconds (above 0), jitter (0 or more)";
+		}
+		if (key == "color")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			b.tint = c;
+			return "";
+		}
+		if (key == "glow")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.glow = v[0].ToDouble();
+			return (b.glow >= 0) ? "" : "glow must be 0 or more";
+		}
+		if (key == "size")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			b.sizeStart = v[0].ToDouble();
+			b.sizeEnd = v[1].ToDouble();
+			return (b.sizeStart >= 0 && b.sizeEnd >= 0) ? "" : "size must be 0 or more";
+		}
+		if (key == "gravity")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.gravity = v[0].ToDouble();
+			return "";
+		}
+		if (key == "drag")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.drag = v[0].ToDouble();
+			return (b.drag >= 0) ? "" : "drag must be 0 or more";
+		}
+		if (key == "orient")
+		{
+			if (v.Size() != 1) return "orient is billboard, streak or flake";
+			String o = v[0].MakeLower();
+			if (o == "billboard") b.orient = 0;
+			else if (o == "streak") b.orient = 1;
+			else if (o == "flake") b.orient = 2;
+			else return String.Format("orient \"%s\" is not billboard, streak or flake", v[0]);
+			return "";
+		}
+		if (key == "stretch")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.stretch = v[0].ToDouble();
+			return (b.stretch >= 0) ? "" : "stretch must be 0 or more";
+		}
+		if (key == "aim")
+		{
+			if (v.Size() != 1) return "aim is normal, reflect, back, along or up";
+			String a = v[0].MakeLower();
+			if (a == "normal") b.aim = RSB_BurstDef.AIM_NORMAL;
+			else if (a == "reflect") b.aim = RSB_BurstDef.AIM_REFLECT;
+			else if (a == "back") b.aim = RSB_BurstDef.AIM_BACK;
+			else if (a == "along") b.aim = RSB_BurstDef.AIM_ALONG;
+			else if (a == "up") b.aim = RSB_BurstDef.AIM_UP;
+			else return String.Format("aim \"%s\" is not normal, reflect, back, along or up", v[0]);
+			return "";
+		}
+		if (key == "offset")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			b.offset = v[0].ToDouble();
+			return "";
+		}
+		return String.Format("unknown burst key \"%s\"", key);
+	}
+
 	// --------------------------------------------------------------- IMPACT
 	private static String ApplyImpact(RSB_ImpactDef im, String key, out Array<String> v)
 	{
 		String why;
 		Color c;
-		if (key == "sparks")
+		if (key == "bursts")
 		{
-			why = Nums(v, 3); if (why != "") return why;
-			im.sparkCount = v[0].ToInt();
-			im.sparkSpread = v[1].ToDouble();
-			im.sparkSpeed = v[2].ToDouble();
-			return (im.sparkCount >= 0 && im.sparkSpread >= 0 && im.sparkSpeed >= 0) ? "" : "sparks count, spread and speed must be 0 or more";
-		}
-		if (key == "sparklife")
-		{
-			why = Nums(v, 1); if (why != "") return why;
-			im.sparkLife = v[0].ToDouble();
-			return (im.sparkLife >= 0) ? "" : "sparklife must be 0 or more";
-		}
-		if (key == "sparkcolor")
-		{
-			why = ReadColor(v, c); if (why != "") return why;
-			im.sparkColor = c;
+			im.bursts.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			if (v.Size() == 0) return "bursts is one or more burst profile names, or none";
+			for (int i = 0; i < v.Size(); i++) im.bursts.Push(v[i]);
 			return "";
-		}
-		if (key == "sparkglow")
-		{
-			why = Nums(v, 1); if (why != "") return why;
-			im.sparkGlow = v[0].ToDouble();
-			return (im.sparkGlow >= 0) ? "" : "sparkglow must be 0 or more";
 		}
 		if (key == "mark")
 		{
@@ -389,6 +544,28 @@ class RSB_Parser
 			if (v.Size() != 1) return "sound is one SNDINFO name, or none";
 			im.soundName = v[0];
 			return "";
+		}
+		if (key == "light")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			im.lightRadius = v[0].ToDouble();
+			im.lightIntensity = v[1].ToDouble();
+			im.lightTics = v[2].ToInt();
+			return (im.lightRadius >= 0 && im.lightIntensity >= 0 && im.lightTics >= 1) ? "" : "light is radius (0 or more), intensity (0 or more), tics (1 or more)";
+		}
+		if (key == "lightcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			im.lightColor = c;
+			return "";
+		}
+		if (key == "glance")
+		{
+			if (v.Size() != 3 || !IsNum(v[0])) return "glance is degrees, sound, burst -- sound and burst may be none";
+			im.glanceDeg = v[0].ToDouble();
+			im.glanceSound = v[1];
+			im.glanceBurst = v[2];
+			return (im.glanceDeg >= 0 && im.glanceDeg < 90) ? "" : "glance degrees must be from 0 to below 90";
 		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
@@ -427,14 +604,133 @@ class RSB_Parser
 			f.coneTics = v[0].ToInt();
 			return (f.coneTics >= 0) ? "" : "conetics must be 0 or more";
 		}
-		if (key == "core")
+		if (key == "bursts")
 		{
-			why = Nums(v, 2); if (why != "") return why;
-			f.coreCount = v[0].ToInt();
-			f.coreLife = v[1].ToDouble();
-			return (f.coreCount >= 0 && f.coreLife >= 0) ? "" : "core count and life must be 0 or more";
+			f.bursts.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			if (v.Size() == 0) return "bursts is one or more burst profile names, or none";
+			for (int i = 0; i < v.Size(); i++) f.bursts.Push(v[i]);
+			return "";
+		}
+		if (key == "flame")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			f.flameScale = v[0].ToDouble();
+			return (f.flameScale >= 0) ? "" : "flame scale must be 0 or more (0 = no flame sprite)";
+		}
+		if (key == "smoke")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			f.smokeCount = v[0].ToInt();
+			f.smokeScale = v[1].ToDouble();
+			f.smokeAlpha = v[2].ToDouble();
+			return (f.smokeCount >= 0 && f.smokeScale >= 0 && f.smokeAlpha >= 0 && f.smokeAlpha <= 1) ? "" : "smoke is count (0 or more), scale (0 or more), alpha (0..1)";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
+	}
+
+	// --------------------------------------------------------------- EJECTA
+	private static String ApplyEjecta(RSB_EjectaDef e, String key, out Array<String> v)
+	{
+		String why;
+		if (key == "look")
+		{
+			if (v.Size() != 2) return "look is `sprite, <name>`";
+			if (!(v[0] ~== "sprite")) return "ejecta look kind must be sprite";
+			if (v[1].Length() != 4) return String.Format("sprite \"%s\" is not four letters", v[1]);
+			e.lookKind = "sprite";
+			e.lookName = v[1];
+			return "";
+		}
+		if (key == "scale")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			e.scale = v[0].ToDouble();
+			return (e.scale > 0) ? "" : "scale must be above 0";
+		}
+		if (key == "speed")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			e.speedMul = v[0].ToDouble();
+			e.speedJitter = v[1].ToDouble();
+			return (e.speedMul >= 0 && e.speedJitter >= 0) ? "" : "speed is multiplier, jitter -- both 0 or more";
+		}
+		if (key == "bounce")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			e.bounceFloor = v[0].ToDouble();
+			e.bounceWall = v[1].ToDouble();
+			e.bounceCount = v[2].ToInt();
+			return (e.bounceFloor >= 0 && e.bounceWall >= 0 && e.bounceCount >= 0) ? "" : "bounce is floor factor, wall factor, bounces -- all 0 or more";
+		}
+		if (key == "gravity")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			e.gravity = v[0].ToDouble();
+			return (e.gravity >= 0) ? "" : "gravity must be 0 or more";
+		}
+		if (key == "sound")
+		{
+			if (v.Size() != 1) return "sound is one SNDINFO name, or none";
+			e.soundName = v[0];
+			return "";
+		}
+		if (key == "hot")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			e.hotTics = v[0].ToInt();
+			return (e.hotTics >= 0) ? "" : "hot must be 0 or more tics";
+		}
+		if (key == "life")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			e.lifeTics = v[0].ToInt();
+			return (e.lifeTics >= 1) ? "" : "life must be 1 or more tics";
+		}
+		return String.Format("unknown ejecta key \"%s\"", key);
+	}
+
+	// ------------------------------------------------------------- MATERIAL
+	// `walls` and `flats` add to what earlier lines gave, so a long list can span
+	// several lines.
+	private static String ApplyMaterial(RSB_MaterialDef m, String key, out Array<String> v)
+	{
+		if (key == "walls" || key == "flats")
+		{
+			if (v.Size() == 0) return String.Format("%s needs one or more texture patterns", key);
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String p = v[i].MakeUpper();
+				if (key == "walls") m.walls.Push(p);
+				else m.flats.Push(p);
+			}
+			return "";
+		}
+		return String.Format("unknown material key \"%s\"", key);
+	}
+
+	// ---------------------------------------------------------------- STYLE
+	private static String ApplyStyle(RSB_StyleDef st, String key, out Array<String> v)
+	{
+		if (key == "particles" || key == "glow" || key == "lights" || key == "marks" || key == "flash"
+			|| key == "cone" || key == "flame" || key == "smoke" || key == "whiz")
+		{
+			String why = Nums(v, 1);
+			if (why != "") return why;
+			double x = v[0].ToDouble();
+			if (x < 0) return String.Format("%s must be 0 or more", key);
+			if (key == "particles") st.particlesMul = x;
+			else if (key == "glow") st.glowMul = x;
+			else if (key == "lights") st.lightsMul = x;
+			else if (key == "marks") st.marksMul = x;
+			else if (key == "flash") st.flashMul = x;
+			else if (key == "cone") st.coneMul = x;
+			else if (key == "flame") st.flameMul = x;
+			else if (key == "smoke") st.smokeMul = x;
+			else st.whizMul = x;
+			return "";
+		}
+		return String.Format("unknown style key \"%s\" -- particles, glow, lights, marks, flash, cone, flame, smoke or whiz", key);
 	}
 
 	// ---------------------------------------------------------------- VALUES

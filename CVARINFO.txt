@@ -1,9 +1,55 @@
 // ============================================================================
 // RS_Ballistics settings. Prefix rsb_.
 //
-// Per-effect numbers live in RSBDEFS profiles, not here. Cvars are scene-wide
-// switches and multipliers only, and every one must be read by the ZScript:
+// Per-effect numbers live in RSBDEFS profiles, not here. Cvars are the player's
+// choices: the dial, the style, switches and multipliers. All user cvars -- looks
+// only, each player's own, nothing a netgame compares.
+//
+// Every one must be read by the ZScript (zscript/rsb/settings.zs):
 // tools/menu_lint.py fails the build on one that nothing reads.
 // ============================================================================
 
-user int rsb_log = 3;   // 0 off, 1 errors, 2 warnings, 3 loads and first uses, 4 everything
+// ---- the dial
+user int    rsb_tier               = 2;       // 0 off, 1 plain, 2 normal, 3 heavy, 4 extreme
+user string rsb_style              = "";      // "" default, or a style profile's name
+
+// ---- impacts
+user bool   rsb_impacts            = true;
+user float  rsb_impact_particles   = 1.0;
+user float  rsb_impact_glow        = 1.0;
+user bool   rsb_impact_lights      = true;
+user float  rsb_impact_light       = 1.0;
+user bool   rsb_marks              = true;
+user float  rsb_mark_life          = 1.0;
+user bool   rsb_ricochets          = true;
+user float  rsb_impact_volume      = 1.0;
+
+// ---- muzzle flash
+user float  rsb_flash_light        = 1.0;
+user float  rsb_flash_size         = 1.0;
+user bool   rsb_flash_cone         = true;
+user float  rsb_flash_cone_density = 1.0;
+user bool   rsb_flash_flame        = true;
+user float  rsb_flash_flame_size   = 1.0;
+user float  rsb_flash_sparks       = 1.0;
+user float  rsb_flash_smoke        = 1.0;
+
+// ---- rounds in flight
+user bool   rsb_glide              = true;
+user float  rsb_wake               = 1.0;
+user bool   rsb_whiz               = true;
+user float  rsb_whiz_range         = 1.0;
+user float  rsb_whiz_volume        = 1.0;
+
+// ---- casings
+user bool   rsb_casings            = true;
+user float  rsb_casing_size        = 1.0;
+user bool   rsb_casing_hot         = true;
+user float  rsb_casing_life        = 1.0;
+
+// ---- preview and diagnostics
+user string rsb_preview_impact     = "bullet";
+user string rsb_preview_flash      = "pistol";
+user string rsb_preview_ejecta     = "brass_45";
+user bool   rsb_debug_surfaces     = false;
+user int    rsb_log                = 3;       // 0 off, 1 errors, 2 warnings, 3 loads and first uses, 4 everything

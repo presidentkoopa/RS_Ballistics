@@ -1,0 +1,176 @@
+// ============================================================================
+// RS_Ballistics sounds, generated from the files under sounds/rsb/.
+// Full paths, so a short lump name in another package cannot shadow them.
+// Each $random set picks one variation per play; $limit keeps a firefight from
+// spending every voice on one effect.
+// ============================================================================
+
+rsb/impact/concrete1         sounds/rsb/impact_concrete/bulletimpact1.ogg
+rsb/impact/concrete2         sounds/rsb/impact_concrete/bulletimpact2.ogg
+rsb/impact/concrete3         sounds/rsb/impact_concrete/bulletimpact3.ogg
+rsb/impact/concrete4         sounds/rsb/impact_concrete/bulletimpact4.ogg
+rsb/impact/concrete5         sounds/rsb/impact_concrete/bulletimpact5.ogg
+rsb/impact/concrete6         sounds/rsb/impact_concrete/bulletimpact6.ogg
+rsb/impact/concrete7         sounds/rsb/impact_concrete/bulletimpact7.ogg
+rsb/impact/concrete8         sounds/rsb/impact_concrete/bulletimpact8.ogg
+rsb/impact/concrete9         sounds/rsb/impact_concrete/bulletimpact9.ogg
+rsb/impact/concrete10        sounds/rsb/impact_concrete/bulletimpact10.ogg
+rsb/impact/concrete11        sounds/rsb/impact_concrete/bulletimpact11.ogg
+$random rsb/impact/concrete { rsb/impact/concrete1 rsb/impact/concrete2 rsb/impact/concrete3 rsb/impact/concrete4 rsb/impact/concrete5 rsb/impact/concrete6 rsb/impact/concrete7 rsb/impact/concrete8 rsb/impact/concrete9 rsb/impact/concrete10 rsb/impact/concrete11 }
+$limit rsb/impact/concrete 6
+
+rsb/impact/metal1            sounds/rsb/impact_metal/blt_imp_metal_thick_near_01.ogg
+rsb/impact/metal2            sounds/rsb/impact_metal/blt_imp_metal_thick_near_02.ogg
+rsb/impact/metal3            sounds/rsb/impact_metal/blt_imp_metal_thick_near_03.ogg
+rsb/impact/metal4            sounds/rsb/impact_metal/blt_imp_metal_thick_near_04.ogg
+rsb/impact/metal5            sounds/rsb/impact_metal/blt_imp_metal_thick_near_05.ogg
+rsb/impact/metal6            sounds/rsb/impact_metal/blt_imp_metal_thick_near_06.ogg
+$random rsb/impact/metal { rsb/impact/metal1 rsb/impact/metal2 rsb/impact/metal3 rsb/impact/metal4 rsb/impact/metal5 rsb/impact/metal6 }
+$limit rsb/impact/metal 6
+
+rsb/impact/metalthin1        sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_01.ogg
+rsb/impact/metalthin2        sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_02.ogg
+rsb/impact/metalthin3        sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_03.ogg
+rsb/impact/metalthin4        sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_04.ogg
+rsb/impact/metalthin5        sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_05.ogg
+rsb/impact/metalthin6        sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_06.ogg
+$random rsb/impact/metalthin { rsb/impact/metalthin1 rsb/impact/metalthin2 rsb/impact/metalthin3 rsb/impact/metalthin4 rsb/impact/metalthin5 rsb/impact/metalthin6 }
+$limit rsb/impact/metalthin 6
+
+rsb/impact/wood1             sounds/rsb/impact_wood/blt_imp_wood_near_01.ogg
+rsb/impact/wood2             sounds/rsb/impact_wood/blt_imp_wood_near_02.ogg
+rsb/impact/wood3             sounds/rsb/impact_wood/blt_imp_wood_near_03.ogg
+rsb/impact/wood4             sounds/rsb/impact_wood/blt_imp_wood_near_04.ogg
+rsb/impact/wood5             sounds/rsb/impact_wood/blt_imp_wood_near_05.ogg
+rsb/impact/wood6             sounds/rsb/impact_wood/blt_imp_wood_near_06.ogg
+$random rsb/impact/wood { rsb/impact/wood1 rsb/impact/wood2 rsb/impact/wood3 rsb/impact/wood4 rsb/impact/wood5 rsb/impact/wood6 }
+$limit rsb/impact/wood 6
+
+rsb/ricochet1                sounds/rsb/ricochet/ricoche1.ogg
+rsb/ricochet2                sounds/rsb/ricochet/ricoche2.ogg
+rsb/ricochet3                sounds/rsb/ricochet/ricoche3.ogg
+rsb/ricochet4                sounds/rsb/ricochet/ricoche4.ogg
+rsb/ricochet5                sounds/rsb/ricochet/ricoche5.ogg
+rsb/ricochet6                sounds/rsb/ricochet/ricoche6.ogg
+rsb/ricochet7                sounds/rsb/ricochet/ricoche7.ogg
+rsb/ricochet8                sounds/rsb/ricochet/ricoche8.ogg
+rsb/ricochet9                sounds/rsb/ricochet/ricoche9.ogg
+rsb/ricochet10               sounds/rsb/ricochet/ricoche10.ogg
+rsb/ricochet11               sounds/rsb/ricochet/ricoche11.ogg
+rsb/ricochet12               sounds/rsb/ricochet/ricoche12.ogg
+rsb/ricochet13               sounds/rsb/ricochet/ricoche13.ogg
+rsb/ricochet14               sounds/rsb/ricochet/ricoche14.ogg
+rsb/ricochet15               sounds/rsb/ricochet/ricoche15.ogg
+rsb/ricochet16               sounds/rsb/ricochet/ricoche16.ogg
+$random rsb/ricochet { rsb/ricochet1 rsb/ricochet2 rsb/ricochet3 rsb/ricochet4 rsb/ricochet5 rsb/ricochet6 rsb/ricochet7 rsb/ricochet8 rsb/ricochet9 rsb/ricochet10 rsb/ricochet11 rsb/ricochet12 rsb/ricochet13 rsb/ricochet14 rsb/ricochet15 rsb/ricochet16 }
+$limit rsb/ricochet 4
+
+rsb/whiz1                    sounds/rsb/whiz/whizby1.wav
+rsb/whiz2                    sounds/rsb/whiz/whizby2.wav
+rsb/whiz3                    sounds/rsb/whiz/whizby3.wav
+rsb/whiz4                    sounds/rsb/whiz/whizby4.wav
+rsb/whiz5                    sounds/rsb/whiz/whizby5.wav
+rsb/whiz6                    sounds/rsb/whiz/whizby6.wav
+rsb/whiz7                    sounds/rsb/whiz/whizby7.wav
+rsb/whiz8                    sounds/rsb/whiz/whizby8.wav
+rsb/whiz9                    sounds/rsb/whiz/whizby9.wav
+rsb/whiz10                   sounds/rsb/whiz/whizby10.wav
+rsb/whiz11                   sounds/rsb/whiz/whizby11.wav
+rsb/whiz12                   sounds/rsb/whiz/whizby12.wav
+rsb/whiz13                   sounds/rsb/whiz/whizby13.wav
+rsb/whiz14                   sounds/rsb/whiz/whizby14.wav
+rsb/whiz15                   sounds/rsb/whiz/whizby15.wav
+rsb/whiz16                   sounds/rsb/whiz/whizby16.wav
+rsb/whiz17                   sounds/rsb/whiz/whizby17.wav
+rsb/whiz18                   sounds/rsb/whiz/whizby18.wav
+rsb/whiz19                   sounds/rsb/whiz/whizby19.wav
+rsb/whiz20                   sounds/rsb/whiz/whizby20.wav
+rsb/whiz21                   sounds/rsb/whiz/whizby21.wav
+rsb/whiz22                   sounds/rsb/whiz/whizby22.wav
+rsb/whiz23                   sounds/rsb/whiz/whizby23.wav
+rsb/whiz24                   sounds/rsb/whiz/whizby24.wav
+$random rsb/whiz { rsb/whiz1 rsb/whiz2 rsb/whiz3 rsb/whiz4 rsb/whiz5 rsb/whiz6 rsb/whiz7 rsb/whiz8 rsb/whiz9 rsb/whiz10 rsb/whiz11 rsb/whiz12 rsb/whiz13 rsb/whiz14 rsb/whiz15 rsb/whiz16 rsb/whiz17 rsb/whiz18 rsb/whiz19 rsb/whiz20 rsb/whiz21 rsb/whiz22 rsb/whiz23 rsb/whiz24 }
+$limit rsb/whiz 3
+
+rsb/casing/small1            sounds/rsb/casing_small/brass_c1.ogg
+rsb/casing/small2            sounds/rsb/casing_small/brass_c2.ogg
+rsb/casing/small3            sounds/rsb/casing_small/brass_c3.ogg
+rsb/casing/small4            sounds/rsb/casing_small/brass_c4.ogg
+rsb/casing/small5            sounds/rsb/casing_small/brass_c5.ogg
+rsb/casing/small6            sounds/rsb/casing_small/brass_c6.ogg
+rsb/casing/small7            sounds/rsb/casing_small/brass_c7.ogg
+rsb/casing/small8            sounds/rsb/casing_small/brass_c8.ogg
+rsb/casing/small9            sounds/rsb/casing_small/brass_c9.ogg
+$random rsb/casing/small { rsb/casing/small1 rsb/casing/small2 rsb/casing/small3 rsb/casing/small4 rsb/casing/small5 rsb/casing/small6 rsb/casing/small7 rsb/casing/small8 rsb/casing/small9 }
+$limit rsb/casing/small 6
+
+rsb/casing/medium1           sounds/rsb/casing_medium/dscasin1.ogg
+rsb/casing/medium2           sounds/rsb/casing_medium/dscasin2.ogg
+rsb/casing/medium3           sounds/rsb/casing_medium/dscasin3.ogg
+rsb/casing/medium4           sounds/rsb/casing_medium/dscasin4.ogg
+rsb/casing/medium5           sounds/rsb/casing_medium/dscasin5.ogg
+rsb/casing/medium6           sounds/rsb/casing_medium/dscasin6.ogg
+rsb/casing/medium7           sounds/rsb/casing_medium/dscasin7.ogg
+rsb/casing/medium8           sounds/rsb/casing_medium/dscasin8.ogg
+rsb/casing/medium9           sounds/rsb/casing_medium/dscasin9.ogg
+$random rsb/casing/medium { rsb/casing/medium1 rsb/casing/medium2 rsb/casing/medium3 rsb/casing/medium4 rsb/casing/medium5 rsb/casing/medium6 rsb/casing/medium7 rsb/casing/medium8 rsb/casing/medium9 }
+$limit rsb/casing/medium 6
+
+rsb/casing/shell1            sounds/rsb/casing_shell/dsshell1.ogg
+rsb/casing/shell2            sounds/rsb/casing_shell/dsshell2.ogg
+rsb/casing/shell3            sounds/rsb/casing_shell/dsshell3.ogg
+rsb/casing/shell4            sounds/rsb/casing_shell/dsshell4.ogg
+rsb/casing/shell5            sounds/rsb/casing_shell/dsshell5.ogg
+rsb/casing/shell6            sounds/rsb/casing_shell/dsshell6.ogg
+rsb/casing/shell7            sounds/rsb/casing_shell/dsshell7.ogg
+rsb/casing/shell8            sounds/rsb/casing_shell/dsshell8.ogg
+rsb/casing/shell9            sounds/rsb/casing_shell/dsshell9.ogg
+$random rsb/casing/shell { rsb/casing/shell1 rsb/casing/shell2 rsb/casing/shell3 rsb/casing/shell4 rsb/casing/shell5 rsb/casing/shell6 rsb/casing/shell7 rsb/casing/shell8 rsb/casing/shell9 }
+$limit rsb/casing/shell 6
+
+rsb/sparks1                  sounds/rsb/sparks/sparks1.ogg
+rsb/sparks2                  sounds/rsb/sparks/sparks2.ogg
+rsb/sparks3                  sounds/rsb/sparks/sparks3.ogg
+rsb/sparks4                  sounds/rsb/sparks/sparks4.ogg
+$random rsb/sparks { rsb/sparks1 rsb/sparks2 rsb/sparks3 rsb/sparks4 }
+$limit rsb/sparks 4
+
+rsb/glass1                   sounds/rsb/glass/dsbottle.ogg
+rsb/glass2                   sounds/rsb/glass/glsfal.ogg
+rsb/glass3                   sounds/rsb/glass/winbrea.ogg
+$random rsb/glass { rsb/glass1 rsb/glass2 rsb/glass3 }
+$limit rsb/glass 4
+
+rsb/crack/near1              sounds/rsb/crack/bullet_crack_near_01.ogg
+rsb/crack/near2              sounds/rsb/crack/bullet_crack_near_02.ogg
+rsb/crack/near3              sounds/rsb/crack/bullet_crack_near_03.ogg
+rsb/crack/near4              sounds/rsb/crack/bullet_crack_near_04.ogg
+rsb/crack/near5              sounds/rsb/crack/bullet_crack_near_05.ogg
+rsb/crack/near6              sounds/rsb/crack/bullet_crack_near_06.ogg
+rsb/crack/near7              sounds/rsb/crack/bullet_crack_near_07.ogg
+rsb/crack/near8              sounds/rsb/crack/bullet_crack_near_08.ogg
+$random rsb/crack/near { rsb/crack/near1 rsb/crack/near2 rsb/crack/near3 rsb/crack/near4 rsb/crack/near5 rsb/crack/near6 rsb/crack/near7 rsb/crack/near8 }
+$limit rsb/crack/near 3
+
+rsb/crack/med1               sounds/rsb/crack/bullet_crack_med_01.ogg
+rsb/crack/med2               sounds/rsb/crack/bullet_crack_med_02.ogg
+rsb/crack/med3               sounds/rsb/crack/bullet_crack_med_03.ogg
+rsb/crack/med4               sounds/rsb/crack/bullet_crack_med_04.ogg
+rsb/crack/med5               sounds/rsb/crack/bullet_crack_med_05.ogg
+rsb/crack/med6               sounds/rsb/crack/bullet_crack_med_06.ogg
+rsb/crack/med7               sounds/rsb/crack/bullet_crack_med_07.ogg
+rsb/crack/med8               sounds/rsb/crack/bullet_crack_med_08.ogg
+$random rsb/crack/med { rsb/crack/med1 rsb/crack/med2 rsb/crack/med3 rsb/crack/med4 rsb/crack/med5 rsb/crack/med6 rsb/crack/med7 rsb/crack/med8 }
+$limit rsb/crack/med 3
+
+rsb/crack/far1               sounds/rsb/crack/bullet_crack_far_01.ogg
+rsb/crack/far2               sounds/rsb/crack/bullet_crack_far_02.ogg
+rsb/crack/far3               sounds/rsb/crack/bullet_crack_far_03.ogg
+rsb/crack/far4               sounds/rsb/crack/bullet_crack_far_04.ogg
+rsb/crack/far5               sounds/rsb/crack/bullet_crack_far_05.ogg
+rsb/crack/far6               sounds/rsb/crack/bullet_crack_far_06.ogg
+rsb/crack/far7               sounds/rsb/crack/bullet_crack_far_07.ogg
+rsb/crack/far8               sounds/rsb/crack/bullet_crack_far_08.ogg
+$random rsb/crack/far { rsb/crack/far1 rsb/crack/far2 rsb/crack/far3 rsb/crack/far4 rsb/crack/far5 rsb/crack/far6 rsb/crack/far7 rsb/crack/far8 }
+$limit rsb/crack/far 3
+

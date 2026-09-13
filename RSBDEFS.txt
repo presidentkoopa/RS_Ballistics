@@ -3,9 +3,8 @@
 #
 # Any loaded package may ship an RSBDEFS lump. Every one is read, in load
 # order, and a later profile with the same kind and name replaces an earlier
-# one -- that is how a weapons package adds or overrides looks without code.
-#
-# Line-oriented, the same grammar as the reload system's cards:
+# one -- that is how a weapons or map package adds or overrides looks without
+# code.
 #
 #     <kind> <name>
 #       key = value, value, ...
@@ -13,87 +12,519 @@
 #
 # `#` starts a comment. Keys are case-insensitive. AN UNKNOWN KEY OR A BAD
 # VALUE REFUSES THAT PROFILE, named with its lump and line; the other profiles
-# still load. A typo must never leave a setting at its default with nothing
-# said.
+# still load.
 #
-# Kinds: round, wake, impact, flash. Units are stated beside each key.
+# KINDS
+#   style     a look the player picks in the menu: multipliers over everything
+#   burst     one GPU particle emission -- the building block
+#   material  which textures are metal, wood, glass, liquid, dirt...
+#   impact    what a landing round does, by surface
+#   round     what flies
+#   wake      what a round sheds as it flies
+#   flash     the muzzle: light, lit-air cone, bursts, flame, smoke
+#   ejecta    spent casings and hulls
 #
-# The profiles below are the test pistols' looks as they are today, written as
-# data: the first examples of the format, not special cases. Nothing reads them
-# until the bullet and flash move into RS_Ballistics.
+# VARIANT NAMES:  <base>[~style][.material][@tier]
+#   impact bullet                   the default
+#   impact bullet.metal             on metal
+#   impact bullet@plain             at the plain tier
+#   impact bullet~cinematic.metal   the cinematic style, on metal
+# The most specific that exists is used. Material outranks style. A profile
+# written for a tier is used as written; otherwise the tier scales counts
+# (plain 0.4, normal 1, heavy 1.8, extreme 3).
+#
+# THIS FORMAT IS THE PROTOTYPE of the engine's effect-definition lump
+# (Engine docs/ENGINE_SUPPORT_LIST.md): keep kinds and keys general.
+#
+# GPU PARTICLES ARE ADDITIVE GLOW TODAY. "Dust" below is a dim warm glow until
+# lit, alpha-blended smoke lands in the engine (list item #7).
 # ============================================================================
 
 
-# ---------------------------------------------------------------- ROUNDS
-#
-#   speed   map units per tic
-#   radius  map units (FastProjectile sub-steps below this)
-#   damage  base, dice  -> base x 1d(dice)
-#   look    sprite, <4-letter sprite>  |  model, <MODELDEF model name>
-#   glide   yes | no     smooth the round between tics
-#   wake    <wake profile> | none
-#   impact  <impact profile> | none
+# ---------------------------------------------------------------- STYLES
+#   particles  glow  lights  marks  flash  cone  flame  smoke  whiz   (multipliers)
 
-round pistol_45
-  speed   = 245          # about a .45 ACP at 34 map units per meter
-  radius  = 2
-  damage  = 5, 3         # 5 x 1d3, the vanilla pistol
-  look    = sprite, RSBT
-  glide   = no
-  wake    = none
-  impact  = hard_small
+style gritty
+  particles = 1.3
+  glow      = 0.7
+  lights    = 0.6
+  marks     = 1.5
+  flash     = 0.85
+  cone      = 0.8
+  flame     = 0.9
+  smoke     = 1.8
+end
+
+style cinematic
+  particles = 1.5
+  glow      = 1.5
+  lights    = 1.8
+  marks     = 2.0
+  flash     = 1.4
+  cone      = 1.4
+  flame     = 1.2
+  smoke     = 1.5
+  whiz      = 1.3
+end
+
+style clean
+  particles = 0.6
+  lights    = 0.5
+  marks     = 0.5
+  flash     = 0.7
+  cone      = 0.6
+  flame     = 0.8
+  smoke     = 0.3
+end
+
+
+# ---------------------------------------------------------------- BURSTS
+#   count       particles
+#   cone        half-angle, degrees
+#   speed       map units per second, jitter 0..1
+#   life        seconds, jitter
+#   color       r, g, b
+#   glow        brightness (additive)
+#   size        start, end (diameter, map units)
+#   gravity     map units per second^2 (negative rises)
+#   drag        1/s
+#   orient      billboard | streak | flake
+#   stretch     streak length, seconds of travel
+#   aim         normal | reflect | back | along | up
+#   offset      map units off the surface
+
+burst spark_hot
+  count   = 14
+  cone    = 55
+  speed   = 220, 0.5
+  life    = 0.35, 0.4
+  color   = 255, 206, 130
+  glow    = 3.0
+  size    = 0.7, 0.2
+  gravity = 400
+  drag    = 2.0
+  orient  = streak
+  stretch = 0.025
+  aim     = reflect
+end
+
+burst spark_metal
+  count   = 26
+  cone    = 50
+  speed   = 320, 0.5
+  life    = 0.45, 0.4
+  color   = 255, 220, 160
+  glow    = 4.0
+  size    = 0.6, 0.15
+  gravity = 500
+  drag    = 1.5
+  orient  = streak
+  stretch = 0.03
+  aim     = reflect
+end
+
+burst ember_metal
+  count   = 8
+  cone    = 70
+  speed   = 90, 0.6
+  life    = 1.2, 0.5
+  color   = 255, 140, 40
+  glow    = 2.5
+  size    = 0.9, 0.3
+  gravity = 250
+  drag    = 1.0
+  orient  = billboard
+end
+
+burst chips_concrete
+  count   = 10
+  cone    = 45
+  speed   = 160, 0.5
+  life    = 0.6, 0.4
+  color   = 180, 170, 150
+  glow    = 0.6
+  size    = 0.8, 0.5
+  gravity = 600
+  drag    = 1.2
+  orient  = flake
+end
+
+burst dust_concrete
+  count   = 6
+  cone    = 35
+  speed   = 40, 0.6
+  life    = 1.4, 0.4
+  color   = 120, 110, 95
+  glow    = 0.35
+  size    = 6, 14
+  gravity = -10
+  drag    = 2.5
+  orient  = billboard
+end
+
+burst splinter_wood
+  count   = 12
+  cone    = 50
+  speed   = 180, 0.5
+  life    = 0.8, 0.4
+  color   = 170, 120, 70
+  glow    = 0.7
+  size    = 1.0, 0.6
+  gravity = 550
+  drag    = 1.0
+  orient  = flake
+end
+
+burst dust_wood
+  count   = 4
+  cone    = 40
+  speed   = 35, 0.6
+  life    = 1.2, 0.4
+  color   = 110, 85, 55
+  glow    = 0.3
+  size    = 5, 11
+  gravity = -8
+  drag    = 2.5
+end
+
+burst glint_glass
+  count   = 18
+  cone    = 60
+  speed   = 150, 0.5
+  life    = 0.7, 0.4
+  color   = 200, 230, 255
+  glow    = 2.2
+  size    = 0.5, 0.2
+  gravity = 500
+  drag    = 1.0
+  orient  = flake
+end
+
+burst splash_liquid
+  count   = 16
+  cone    = 25
+  speed   = 140, 0.5
+  life    = 0.7, 0.4
+  color   = 150, 190, 210
+  glow    = 0.8
+  size    = 1.2, 0.4
+  gravity = 700
+  drag    = 0.8
+  orient  = streak
+  stretch = 0.02
+  aim     = up
+end
+
+burst clods_dirt
+  count   = 10
+  cone    = 40
+  speed   = 150, 0.5
+  life    = 0.7, 0.4
+  color   = 110, 90, 60
+  glow    = 0.5
+  size    = 1.2, 0.7
+  gravity = 650
+  drag    = 1.0
+  orient  = flake
+end
+
+burst flash_core
+  count   = 8
+  cone    = 25
+  speed   = 160, 0.3
+  life    = 0.05, 0.2
+  color   = 255, 240, 200
+  glow    = 6.0
+  size    = 1.4, 0.3
+  orient  = streak
+  stretch = 0.012
+  aim     = along
+  offset  = 0
+end
+
+burst flash_sparks
+  count   = 28
+  cone    = 14
+  speed   = 420, 0.45
+  life    = 0.22, 0.4
+  color   = 255, 196, 110
+  glow    = 2.5
+  size    = 0.8, 0.2
+  gravity = 250
+  drag    = 3.0
+  orient  = streak
+  stretch = 0.02
+  aim     = along
+  offset  = 0
+end
+
+burst flash_sparks_wide
+  count   = 44
+  cone    = 22
+  speed   = 380, 0.5
+  life    = 0.28, 0.4
+  color   = 255, 190, 100
+  glow    = 2.8
+  size    = 0.9, 0.2
+  gravity = 250
+  drag    = 3.0
+  orient  = streak
+  stretch = 0.02
+  aim     = along
+  offset  = 0
+end
+
+burst trail_hot
+  count   = 1
+  cone    = 180
+  speed   = 4, 0.5
+  life    = 0.25, 0.3
+  color   = 255, 230, 190
+  glow    = 0.8
+  size    = 0.6, 0.1
+  drag    = 3.0
+  offset  = 0
+end
+
+
+# ---------------------------------------------------------------- MATERIALS
+#   walls = pattern, pattern...   flats = pattern, pattern...
+#   * matches any run, ? one character. A texture no material claims is the
+#   default surface (concrete-like). Starter lists for the Doom 2 set -- tune
+#   them, or add a map pack's own in its RSBDEFS.
+
+material metal
+  walls = METAL*, SUPPORT*, SW1MET*, SW2MET*, DOOR*, BIGDOOR1, BIGDOOR2, BIGDOOR3, BIGDOOR4
+  walls = EXITDOOR, PLAT1, SILVER*, SHAWN*, TEK*, COMP*, SPACEW*, PIPE*, *GRATE*
+  flats = FLAT23, STEP1, STEP2, *GRATE*
+end
+
+material wood
+  walls = WOOD*, BIGDOOR5, BIGDOOR6, BIGDOOR7, PANEL*, CRATE*, CRATINY, CRATELIT, CRATWIDE
+  flats = FLAT5_1, FLAT5_2, CRATOP*
+end
+
+material glass
+  walls = *GLASS*, LITE*
+end
+
+material liquid
+  walls = SFALL*, BFALL*
+  flats = FWATER*, NUKAGE*, BLOOD*, SLIME*, LAVA*
+end
+
+material dirt
+  walls = ASHWALL*, ROCK*, SP_ROCK*
+  flats = GRASS*, RROCK*, FLAT10
 end
 
 
 # ---------------------------------------------------------------- IMPACTS
-#
-#   sparks      count, spread (degrees), speed (map units per second)
-#   sparklife   seconds
-#   sparkcolor  r, g, b
-#   sparkglow   brightness (additive, above 1 allowed)
+#   bursts      burst names, or none
 #   mark        shape, radius (map units), life (tics)
 #               shapes: pool bar gouge ring hexfield hexring spiral boxring
 #                       star sunburst grid invert box
 #   markcolor   r, g, b
 #   sound       SNDINFO name | none
+#   light       radius, intensity, tics      lightcolor  r, g, b
+#   glance      degrees from the surface, sound, burst -- a ricochet
 
-impact hard_small
-  sparks      = 14, 55, 220
-  sparklife   = 0.35
-  sparkcolor  = 255, 206, 130
-  sparkglow   = 3.0
-  mark        = pool, 5, 20
-  markcolor   = 255, 150, 60
-  sound       = rsb/impact
+impact bullet
+  bursts    = spark_hot, chips_concrete, dust_concrete
+  mark      = pool, 5, 20
+  markcolor = 255, 150, 60
+  sound     = rsb/impact/concrete
+  glance    = 18, rsb/ricochet, spark_hot
+end
+
+impact bullet@plain
+  bursts    = spark_hot
+  mark      = pool, 4, 12
+  markcolor = 255, 150, 60
+  sound     = rsb/impact/concrete
+end
+
+impact bullet.metal
+  bursts     = spark_metal, ember_metal
+  mark       = pool, 4, 35
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 60, 1.5, 3
+  lightcolor = 255, 190, 120
+  glance     = 25, rsb/ricochet, spark_metal
+end
+
+impact bullet.wood
+  bursts    = splinter_wood, dust_wood
+  mark      = pool, 3, 10
+  markcolor = 200, 110, 50
+  sound     = rsb/impact/wood
+end
+
+impact bullet.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+end
+
+impact bullet.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact bullet.dirt
+  bursts    = clods_dirt, dust_concrete
+  sound     = rsb/impact/concrete
+end
+
+impact bullet~cinematic
+  bursts     = spark_hot, chips_concrete, dust_concrete
+  mark       = sunburst, 7, 30
+  markcolor  = 255, 160, 70
+  sound      = rsb/impact/concrete
+  light      = 48, 1.2, 3
+  lightcolor = 255, 180, 110
+  glance     = 22, rsb/ricochet, spark_hot
 end
 
 
-# ---------------------------------------------------------------- FLASHES
-#
-#   light       radius (map units), punch (brightness on the shot tic), tics
-#   lightcolor  r, g, b
-#   cone        inner, outer (degrees), length (map units), density
-#   conetics    tics the lit-air cone lasts
-#   core        particles, life (seconds)
+# ---------------------------------------------------------------- ROUNDS
+#   speed   map units per tic (34 map units = 1 meter, 35 tics a second)
+#   radius  map units
+#   damage  base, dice  -> base x 1d(dice), unless the shooter sets damageMin/Max
+#   look    sprite, <4-letter sprite>
+#   glide   yes | no
+#   wake    <wake> | none
+#   impact  <impact base> | none
+#   whiz    radius (map units), sound -- a near miss past the listener's head
 
-flash pistol
-  light       = 180, 3.0, 2
-  lightcolor  = 255, 214, 150
-  cone        = 20, 55, 80, 5
-  conetics    = 3
-  core        = 8, 0.05
+round pistol_45
+  speed  = 245          # about a .45 ACP
+  radius = 2
+  damage = 5, 3
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = bullet
+  whiz   = 72, rsb/whiz
+end
+
+round buckshot
+  speed  = 380
+  radius = 1
+  damage = 5, 3
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = bullet
+  whiz   = 48, rsb/whiz
+end
+
+round rifle_556
+  speed  = 900          # supersonic: it cracks past you
+  radius = 1
+  damage = 8, 3
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_trail
+  impact = bullet
+  whiz   = 96, rsb/crack/near
 end
 
 
 # ---------------------------------------------------------------- WAKES
-#
-#   perstep     particles each time the round moves a sub-step
-#   size        start, end (diameter, map units)
-#   life        seconds
-#   drift       map units per second
-#   drag        1/s
-#   gravity     map units per second^2
-#   color       r, g, b
-#   glow        brightness
-#
-# No example yet: the pistol's round has `wake = none` until wakes are drawn.
+#   perstep  particles along each tic's travel
+#   size     start, end     life  seconds     drift  map units/s
+#   drag     1/s            gravity           color  r, g, b     glow
+
+wake rifle_trail
+  perstep = 4
+  size    = 0.6, 0.1
+  life    = 0.25
+  drift   = 4
+  drag    = 3
+  color   = 255, 230, 190
+  glow    = 0.8
+end
+
+
+# ---------------------------------------------------------------- FLASHES
+#   light       radius, punch, tics      lightcolor  r, g, b
+#   cone        inner, outer (degrees), length, density
+#   conetics    tics
+#   bursts      burst names | none
+#   flame       sprite scale (0 = none)
+#   smoke       count, scale, alpha
+
+flash pistol
+  light      = 180, 3.0, 2
+  lightcolor = 255, 214, 150
+  cone       = 20, 55, 80, 5
+  conetics   = 3
+  bursts     = flash_core, flash_sparks
+  flame      = 0.05
+  smoke      = 1, 0.02, 0.3
+end
+
+flash shotgun
+  light      = 260, 3.5, 3
+  lightcolor = 255, 205, 140
+  cone       = 28, 70, 120, 7
+  conetics   = 4
+  bursts     = flash_core, flash_sparks_wide
+  flame      = 0.08
+  smoke      = 3, 0.03, 0.35
+end
+
+flash rifle
+  light      = 220, 3.2, 2
+  lightcolor = 255, 220, 170
+  cone       = 14, 40, 110, 6
+  conetics   = 3
+  bursts     = flash_core, flash_sparks
+  flame      = 0.06
+  smoke      = 1, 0.025, 0.3
+end
+
+
+# ---------------------------------------------------------------- EJECTA
+#   look     sprite, <4-letter sprite>
+#   scale    sprite scale
+#   speed    multiplier on the caller's throw speed, +/- jitter
+#   bounce   floor factor, wall factor, bounces
+#   gravity
+#   sound    SNDINFO name | none
+#   hot      tics fullbright out of the port
+#   life     tics on the floor before it fades
+
+ejecta brass_45
+  look    = sprite, RSCS
+  scale   = 0.06
+  speed   = 1.0, 0.2
+  bounce  = 0.45, 0.3, 4
+  gravity = 0.6
+  sound   = rsb/casing/medium
+  hot     = 12
+  life    = 700
+end
+
+ejecta brass_556
+  look    = sprite, RSCS
+  scale   = 0.05
+  speed   = 1.2, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 700
+end
+
+ejecta hull_12ga
+  look    = sprite, RSCS
+  scale   = 0.09
+  speed   = 0.8, 0.2
+  bounce  = 0.3, 0.25, 3
+  gravity = 0.7
+  sound   = rsb/casing/shell
+  hot     = 0
+  life    = 900
+end

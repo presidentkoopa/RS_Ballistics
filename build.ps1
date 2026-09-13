@@ -27,7 +27,7 @@ $reloadPk3 = 'E:\DOOMWork\RS_VR_Reload\RS_VR_Reload.pk3'
 & python 'E:\DOOMWork\tools\menu_lint.py' $root --prefix rsb_
 if ($LASTEXITCODE -ne 0) { throw "menu lint failed -- a control would be dead. See above." }
 
-$rootLumps = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt')
+$rootLumps = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt')
 $files = @()
 foreach ($l in $rootLumps) {
     $p = Join-Path $root $l
@@ -55,9 +55,13 @@ $zip.Dispose(); $fs.Dispose()
 $check = [System.IO.Compression.ZipFile]::OpenRead($out)
 $names = $check.Entries | ForEach-Object { $_.FullName }
 $check.Dispose()
-$must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt',
-          'zscript/rsb/log.zs', 'zscript/rsb/defs.zs', 'zscript/rsb/parser.zs',
-          'zscript/rsb/registry.zs', 'zscript/rsb/service.zs')
+$must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt',
+          'zscript/rsb/log.zs', 'zscript/rsb/hash.zs', 'zscript/rsb/defs.zs', 'zscript/rsb/parser.zs',
+          'zscript/rsb/registry.zs', 'zscript/rsb/settings.zs', 'zscript/rsb/materials.zs',
+          'zscript/rsb/impact.zs', 'zscript/rsb/bullet.zs', 'zscript/rsb/flash.zs',
+          'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs',
+          'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png',
+          'sounds/rsb/impact_concrete/bulletimpact1.ogg', 'sounds/rsb/whiz/whizby1.wav')
 foreach ($m in $must) {
     if ($names -notcontains $m) { throw "verification failed: $m missing" }
 }

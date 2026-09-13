@@ -1,6 +1,7 @@
 // RS_Ballistics' registry is a static event handler: it reads every RSBDEFS
 // lump once, at startup, and lives for the whole session, across maps.
+// RSB_Preview answers the menu's preview rows (netevents) on each map.
 gameinfo
 {
-    AddEventHandlers = "RSB_Registry"
+    AddEventHandlers = "RSB_Registry", "RSB_Preview"
 }
