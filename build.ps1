@@ -10,13 +10,17 @@
 #
 # -NoCompileCheck skips the last step, which runs doomxr.exe -norun -- for a
 # builder whose rule is never to run doomxr at all.
-param([switch]$NoCompileCheck)
+#
+# -OutFile packs somewhere other than the installed RS_Ballistics.pk3: a scratch
+# pack to compile-check BEFORE it replaces the one the owner loads. (Not -Out:
+# PowerShell variables ignore case, so $Out would be $out below.)
+param([switch]$NoCompileCheck, [string]$OutFile = '')
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 $root = $PSScriptRoot
-$out  = Join-Path $root 'RS_Ballistics.pk3'
+$out  = if ($OutFile) { $OutFile } else { Join-Path $root 'RS_Ballistics.pk3' }
 
 # THE PACKAGE RS_Ballistics IS COMPILE-CHECKED WITH. One variable on purpose:
 # the reload system is being renamed RS_VR_PistolTest -> RS_VR_Reload, and this
@@ -59,7 +63,7 @@ $must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO
           'zscript/rsb/log.zs', 'zscript/rsb/hash.zs', 'zscript/rsb/defs.zs', 'zscript/rsb/parser.zs',
           'zscript/rsb/registry.zs', 'zscript/rsb/settings.zs', 'zscript/rsb/materials.zs',
           'zscript/rsb/impact.zs', 'zscript/rsb/bullet.zs', 'zscript/rsb/flash.zs',
-          'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs', 'zscript/rsb/flamer.zs',
+          'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs', 'zscript/rsb/flamer.zs', 'zscript/rsb/bench.zs',
           'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png',
           'sounds/rsb/impact_concrete/bulletimpact1.ogg', 'sounds/rsb/whiz/whizby1.wav', 'sounds/rsb/flame/flamer_loop.ogg')
 foreach ($m in $must) {

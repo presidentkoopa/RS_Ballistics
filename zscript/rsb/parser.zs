@@ -272,6 +272,11 @@ class RSB_Parser
 			d.loopSound = "none";
 			d.startSound = "none";
 			d.stopSound = "none";
+			d.jets = 1;
+			d.jetSpacing = 0;
+			d.jetSplay = 0;
+			d.sputterBelow = 0;
+			d.sputterSound = "none";
 			return d;
 		}
 		if (kind == "style")
@@ -837,6 +842,30 @@ class RSB_Parser
 			fm.loopSound = v[0];
 			fm.startSound = v[1];
 			fm.stopSound = v[2];
+			return "";
+		}
+		if (key == "jets")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			fm.jets = v[0].ToInt();
+			fm.jetSpacing = v[1].ToDouble();
+			fm.jetSplay = v[2].ToDouble();
+			return (fm.jets >= 1 && fm.jets <= 8 && fm.jetSpacing >= 0 && fm.jetSplay >= 0 && fm.jetSplay <= 45) ? ""
+				: "jets is count (1-8), spacing (map units, 0 or more), splay (0-45 degrees)";
+		}
+		if (key == "sputter")
+		{
+			if (v.Size() != 2 || !IsNum(v[0])) return "sputter is fuel share (0..1), sound -- or 0, none";
+			fm.sputterBelow = v[0].ToDouble();
+			fm.sputterSound = v[1];
+			return (fm.sputterBelow >= 0 && fm.sputterBelow <= 1) ? "" : "sputter's fuel share is 0 to 1";
+		}
+		if (key == "flameout")
+		{
+			fm.flameout.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			if (v.Size() == 0) return "flameout is one or more burst names, or none";
+			for (int i = 0; i < v.Size(); i++) fm.flameout.Push(v[i]);
 			return "";
 		}
 		return String.Format("unknown flame key \"%s\"", key);

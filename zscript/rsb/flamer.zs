@@ -3,11 +3,17 @@
 // where it lands, scorch, a flickering light and a roar.
 //
 // HOW A GUN USES IT
-//   RSB_Flame.Stream(profile, owner, hand, nozzleAt, dir, carrierVel, intensity)
-//       every tic the trigger is held. The first call lights it; it keeps an
-//       emitter per (owner, hand).
+//   RSB_Flame.Stream(profile, owner, hand, nozzleAt, dir, carrierVel,
+//                    intensity = 1, fuelShare = 1, acrossAxis = (0,0,0))
+//       every tic the trigger is held (every other tic works too: the emitter
+//       keeps burning between feeds). The first call lights it; it keeps an
+//       emitter per (owner, hand). fuelShare is what is left in the canister,
+//       0..1: below the profile's `sputter` share the jet coughs. acrossAxis is
+//       the gun's sideways axis in the world, for side-by-side `jets` on a
+//       rolled gun; zero works it out from the aim.
 //   RSB_Flame.StopStream(owner, hand)
-//       on release. Optional: an emitter not fed for two tics stops itself.
+//       on release: the profile's `flameout` burst, unless the canister is
+//       empty. Optional: an emitter not fed for two tics stops itself.
 //   RSB_Flame.Pilot(profile, nozzleAt, dir)
 //       every tic while idle, for a pilot light.
 // Looks only. What the fire DAMAGES is the gun's business.
@@ -30,7 +36,8 @@ class RSB_Flame play
 	// The hand number the menu's preview uses, clear of the real hands (0, 1).
 	const PREVIEW_HAND = 9;
 
-	static RSB_FlameEmitter Stream(String whichFlame, Actor who, int hand, Vector3 nozzle, Vector3 aim, Vector3 carrierVel, double intensity = 1.0)
+	static RSB_FlameEmitter Stream(String whichFlame, Actor who, int hand, Vector3 nozzle, Vector3 aim, Vector3 carrierVel,
+		double intensity = 1.0, double fuelShare = 1.0, Vector3 acrossAxis = (0, 0, 0))
 	{
 		let reg = RSB_Registry.Get();
 		if (!reg || !who) return null;
@@ -54,7 +61,7 @@ class RSB_Flame play
 			if (!e) return null;
 			e.Begin(whichFlame, fd, who, hand);
 		}
-		e.Feed(nozzle, aim, carrierVel, intensity);
+		e.Feed(nozzle, aim, carrierVel, intensity, fuelShare, acrossAxis);
 		return e;
 	}
 
@@ -123,6 +130,9 @@ class RSB_FlameEmitter : Actor
 	private int     fadeTics;
 	private bool    stopping;
 	private int     burnSeq;
+	private double  fuelLeft;
+	private Vector3 acrossHint;
+	private bool    sputterOut;   // this tic the coughing jet is out
 	private RSB_FlameLight landLight;
 	transient RSB_FlameDef flameDef;
 
@@ -142,6 +152,7 @@ class RSB_FlameEmitter : Actor
 		flameOwner = who;
 		hand = whichHand;
 		strength = 1.0;
+		fuelLeft = 1.0;
 		lastFed = level.maptime;
 
 		double vol = RSB_Settings.FlameVolume();
@@ -155,12 +166,14 @@ class RSB_FlameEmitter : Actor
 			fd.id, int(fd.reach), int(fd.fuelSpeed), fd.stream.Size()));
 	}
 
-	void Feed(Vector3 at, Vector3 aim, Vector3 carrierVel, double intensity)
+	void Feed(Vector3 at, Vector3 aim, Vector3 carrierVel, double intensity, double fuelShare, Vector3 acrossAxis)
 	{
 		nozzle = at;
 		aimDir = (aim.Length() > 0.000001) ? aim.Unit() : (1, 0, 0);
 		carrier = carrierVel;
 		strength = clamp(intensity, 0.0, 2.0);
+		fuelLeft = clamp(fuelShare, 0.0, 1.0);
+		acrossHint = acrossAxis;
 		lastFed = level.maptime;
 		SetOrigin(at, true);
 	}
@@ -174,6 +187,7 @@ class RSB_FlameEmitter : Actor
 		let fd = flameDef;
 		double vol = RSB_Settings.FlameVolume();
 		if (fd && vol > 0 && !(fd.stopSound ~== "none")) A_StartSound(fd.stopSound, CHAN_AUTO, CHANF_OVERLAP, vol);
+		if (fuelLeft > 0.02) FlameOut(1.0);   // an empty canister has nothing left to throw
 		DropLandLight();
 	}
 
@@ -225,6 +239,22 @@ class RSB_FlameEmitter : Actor
 		}
 	}
 
+	// THE LAST GOUT OF FIRE: the profile's `flameout` bursts out of the nozzle,
+	// on release, and smaller each time a coughing jet catches again.
+	private void FlameOut(double amount)
+	{
+		let fd = flameDef;
+		let reg = RSB_Registry.Get();
+		if (!fd || !reg || fd.flameout.Size() == 0) return;
+		int tier = RSB_Tier.Current();
+		if (tier <= RSB_Tier.T_OFF || !RSB_Settings.Flame()) return;
+		double countScale = RSB_Tier.CountScale(tier) * RSB_Settings.FlameParticles() * amount;
+		int seed = RSB_Hash.OfPos(nozzle);
+		for (int i = 0; i < fd.flameout.Size(); i++)
+			RSB_Burst.Fire(reg.FindBurst(fd.flameout[i]), nozzle, aimDir, aimDir, countScale, 1.0,
+				RSB_Hash.Seed(level.maptime, 300 + i, seed));
+	}
+
 	private double Flicker(double amount, int channel)
 	{
 		return 1.0 - amount + amount * RSB_Hash.Frac(level.maptime, burnSeq, channel);
@@ -256,6 +286,12 @@ class RSB_FlameEmitter : Actor
 		// THE STREAM WANDERS within `spread`: a hash per tic, never the RNG.
 		// `across`, not `side`: ZScript is case-insensitive and Side is a type.
 		Vector3 across = (abs(aimDir.z) < 0.95) ? (aimDir cross (0, 0, 1)) : (aimDir cross (1, 0, 0));
+		if (acrossHint.Length() > 0.000001)
+		{
+			// The gun's own sideways axis, squared up to the aim.
+			Vector3 h = acrossHint - aimDir * (acrossHint dot aimDir);
+			if (h.Length() > 0.000001) across = h;
+		}
 		across = across.Unit();
 		Vector3 up = across cross aimDir;
 		double wobble = tan(clamp(fd.spread, 0.0, 45.0));
@@ -280,35 +316,58 @@ class RSB_FlameEmitter : Actor
 			}
 		}
 
-		NozzleLight(1.0);
-		if (!visuals)
+		// RUNNING DRY: below the profile's `sputter` share of fuel the jet coughs --
+		// out on more tics the emptier it gets (a hash, not the RNG), the roar
+		// dropping while it is out, a pop and a hiss each time it catches again.
+		bool wasOut = sputterOut;
+		sputterOut = false;
+		if (fd.sputterBelow > 0 && fuelLeft < fd.sputterBelow)
+			sputterOut = RSB_Hash.Frac(level.maptime, burnSeq, 71) > 0.2 + 0.7 * (fuelLeft / fd.sputterBelow);
+		double vol = RSB_Settings.FlameVolume();
+		if (sputterOut != wasOut) A_SoundVolume(CHAN_BODY, sputterOut ? vol * 0.25 : vol);
+		if (wasOut && !sputterOut && vol > 0 && !(fd.sputterSound ~== "none"))
+			A_StartSound(fd.sputterSound, CHAN_AUTO, CHANF_OVERLAP, vol);
+
+		NozzleLight(sputterOut ? 0.25 : 1.0);
+		if (!visuals || sputterOut)
 		{
 			DropLandLight();
 			return;
 		}
+		if (wasOut) FlameOut(0.5);
 
 		// THE STREAM. A written tier variant is used as written; otherwise the tier
-		// scales the counts, and the player's slider and style scale on top.
+		// scales the counts, and the player's slider and style scale on top. Side by
+		// side `jets` share the count between them.
 		double countScale = (fd.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
 		countScale *= RSB_Settings.FlameParticles() * strength;
-		double fuel = max(1.0, fd.fuelSpeed);
-		double travelSecs = landDist / fuel;
+		int jets = max(1, fd.jets);
+		double perJet = countScale / jets;
+		double splay = tan(clamp(fd.jetSplay, 0.0, 45.0));
+		double fuelSpd = max(1.0, fd.fuelSpeed);
+		double travelSecs = landDist / fuelSpd;
 		Vector3 carried = carrier * 35.0;   // map units a tic -> a second
 		int posSeed = RSB_Hash.OfPos(nozzle);
-		for (int i = 0; i < fd.stream.Size(); i++)
+		for (int j = 0; j < jets; j++)
 		{
-			let b = reg.FindBurst(fd.stream[i]);
-			if (!b) continue;
-			Vector3 v = dir * (fuel * b.speed) + carried;
-			double spd = v.Length();
-			if (spd < 0.001) continue;
-			// The average particle dies where the stream lands. Jitter (+/-) lets the
-			// fastest go a little past: behind a wall the depth test hides them; on
-			// a monster it reads as flame wrapping round it.
-			double life = travelSecs * b.life;
-			if (landed) life = min(life, landDist / spd);
-			RSB_Burst.FireCustom(b, nozzle, v / spd, countScale, spd, life, 1.0,
-				RSB_Hash.Seed(level.maptime, burnSeq * 16 + i, posSeed));
+			double place = j - (jets - 1) * 0.5;
+			Vector3 jetAt = nozzle + across * (place * fd.jetSpacing);
+			Vector3 jetDir = (dir + across * (splay * place)).Unit();
+			for (int i = 0; i < fd.stream.Size(); i++)
+			{
+				let b = reg.FindBurst(fd.stream[i]);
+				if (!b) continue;
+				Vector3 v = jetDir * (fuelSpd * b.speed) + carried;
+				double spd = v.Length();
+				if (spd < 0.001) continue;
+				// The average particle dies where the stream lands. Jitter (+/-) lets the
+				// fastest go a little past: behind a wall the depth test hides them; on
+				// a monster it reads as flame wrapping round it.
+				double life = travelSecs * b.life;
+				if (landed) life = min(life, landDist / spd);
+				RSB_Burst.FireCustom(b, jetAt, v / spd, perJet, spd, life, 1.0,
+					RSB_Hash.Seed(level.maptime, burnSeq * 16 + i, posSeed + j * 977));
+			}
 		}
 
 		if (!landed)
@@ -413,6 +472,7 @@ class RSB_FlamePreview : Actor
 	int    playerNum;
 	int    ticsLeft;
 	String flameId;
+	bool   runDry;   // the fuel runs from 30% to empty over the preview
 
 	States
 	{
@@ -438,7 +498,8 @@ class RSB_FlamePreview : Actor
 		Vector3 right = (sin(ang), -cos(ang), 0);
 		Vector3 eye = pmo.pos + (0, 0, players[playerNum].viewz - pmo.pos.z);
 		Vector3 nozzleAt = eye + fwd * 18.0 + right * 6.0 - (0, 0, 10);
-		RSB_Flame.Stream(flameId, pmo, RSB_Flame.PREVIEW_HAND, nozzleAt, fwd, pmo.Vel, 1.0);
+		double fuelShare = runDry ? 0.3 * double(max(ticsLeft, 0)) / 70.0 : 1.0;
+		RSB_Flame.Stream(flameId, pmo, RSB_Flame.PREVIEW_HAND, nozzleAt, fwd, pmo.Vel, 1.0, fuelShare);
 		Super.Tick();
 	}
 }

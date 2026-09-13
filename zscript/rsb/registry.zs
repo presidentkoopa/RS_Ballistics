@@ -156,6 +156,7 @@ class RSB_Registry : StaticEventHandler
 					why = MissingBurst(fm.stream);
 					if (why == "") why = MissingBurst(fm.landing);
 					if (why == "") why = MissingBurst(fm.pilot);
+					if (why == "") why = MissingBurst(fm.flameout);
 				}
 			}
 			if (why == "") continue;

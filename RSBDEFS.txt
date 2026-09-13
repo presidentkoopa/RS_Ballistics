@@ -563,6 +563,10 @@ end
 #   landlight    radius, intensity (where it lands, same colour)
 #   sounds       loop, start, stop
 #   pilot        bursts for an idle pilot light
+#   jets         count, spacing (map units), splay (degrees): side-by-side jets
+#   sputter      fuel share, sound: below that share of fuel (Stream's fuelShare)
+#                the jet coughs, and the sound plays as it catches again
+#   flameout     bursts when the trigger lets go (not from an empty canister)
 # GPU particles are capped at r_gpuparticles_maxsize (8 map units by default):
 # many overlapping puffs, not a few big ones, until the engine's next stage.
 
@@ -676,6 +680,19 @@ burst pilot_flame
   offset  = 0
 end
 
+burst flame_out_puff
+  count   = 16
+  cone    = 22
+  speed   = 240, 0.4
+  life    = 0.35, 0.3
+  color   = 255, 150, 50
+  glow    = 2.6
+  size    = 3, 8
+  gravity = -90
+  drag    = 2.0
+  offset  = 2
+end
+
 flame incinerator        # a tight, fast jet
   reach       = 520
   speed       = 950
@@ -691,6 +708,8 @@ flame incinerator        # a tight, fast jet
   landlight   = 160, 2.2
   sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
   pilot       = pilot_flame
+  sputter     = 0.15, rsb/flame/hiss
+  flameout    = flame_out_puff
 end
 
 flame napalm             # wide and slower; it sticks and burns where it lands
@@ -708,6 +727,9 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   landlight   = 220, 2.6
   sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
   pilot       = pilot_flame
+  jets        = 2, 1.0, 3       # twin jets through a round shroud, splaying into a wide spray
+  sputter     = 0.15, rsb/flame/hiss
+  flameout    = flame_out_puff
 end
 
 

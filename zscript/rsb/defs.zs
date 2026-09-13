@@ -232,6 +232,12 @@ class RSB_FlameDef : RSB_Def
 	String startSound;
 	String stopSound;
 	Array<String> pilot;     // bursts for RSB_Flame.Pilot
+	int    jets;             // streams out of the nozzle, side by side
+	double jetSpacing;       // map units between neighbouring jets
+	double jetSplay;         // degrees each jet turns away from its neighbour
+	double sputterBelow;     // fuel share (0..1) below which the jet coughs; 0 = never
+	String sputterSound;     // as a coughing jet catches again
+	Array<String> flameout;  // bursts when the trigger lets go
 }
 
 // A STYLE: a named look the player picks in the menu. Multipliers over every

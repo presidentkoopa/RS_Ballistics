@@ -10,6 +10,9 @@
 //   netevent rsb_preview_flash
 //   netevent rsb_preview_casing
 //   netevent rsb_preview_all
+//   netevent rsb_preview_flame       the chosen flame for two seconds
+//   netevent rsb_preview_flame_dry   the same, running out of fuel (sputter)
+//   netevent rsb_bench_*             benchmarks: bench.zs
 //
 // NETPLAY. A netevent runs on every machine on the same tic, so the preview is
 // the same everywhere; nothing here uses RNG or affects the game. Which profile
@@ -24,17 +27,20 @@ class RSB_Preview : EventHandler
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
+		if (RSB_Bench.Begin(e)) return;   // rsb_bench_*: bench.zs
+
 		bool impact = e.Name ~== "rsb_preview_impact";
 		bool flash  = e.Name ~== "rsb_preview_flash";
 		bool casing = e.Name ~== "rsb_preview_casing";
 		bool flameOn = e.Name ~== "rsb_preview_flame";
+		bool flameDry = e.Name ~== "rsb_preview_flame_dry";
 		if (e.Name ~== "rsb_preview_all")
 		{
 			impact = true;
 			flash = true;
 			casing = true;
 		}
-		if (!impact && !flash && !casing && !flameOn) return;
+		if (!impact && !flash && !casing && !flameOn && !flameDry) return;
 		if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player]) return;
 		let pmo = players[e.Player].mo;
 		if (!pmo) return;
@@ -80,7 +86,7 @@ class RSB_Preview : EventHandler
 				toss, pmo.Vel, 4.0, level.maptime);
 		}
 
-		if (flameOn)
+		if (flameOn || flameDry)
 		{
 			let drv = RSB_FlamePreview(Actor.Spawn("RSB_FlamePreview", eye, ALLOW_REPLACE));
 			if (drv)
@@ -88,6 +94,7 @@ class RSB_Preview : EventHandler
 				drv.playerNum = e.Player;
 				drv.ticsLeft = 70;
 				drv.flameId = RSB_Settings.PreviewFlame();
+				drv.runDry = flameDry;
 			}
 		}
 	}
