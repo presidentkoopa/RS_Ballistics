@@ -49,7 +49,7 @@ class RSB_Materials play
 	// Null if it hit nothing usable (an actor).
 	static RSB_Surface FromTrace(out FLineTraceData d, Vector3 travel)
 	{
-		let s = New(d.HitLocation, travel);
+		let s = MakeSurface(d.HitLocation, travel);
 		TextureID tex;
 		tex.SetInvalid();
 
@@ -91,7 +91,7 @@ class RSB_Materials play
 	// The projectile's own record of what stopped it.
 	static RSB_Surface FromBlocking(Actor mo, Vector3 travel)
 	{
-		let s = New(mo.pos, travel);
+		let s = MakeSurface(mo.pos, travel);
 		TextureID tex;
 		tex.SetInvalid();
 
@@ -109,8 +109,10 @@ class RSB_Materials play
 		}
 		else if (mo.BlockingLine)
 		{
-			int side = level.PointOnLineSide(mo.pos.xy, mo.BlockingLine);
-			Side sd = mo.BlockingLine.sidedef[side];
+			// Not `side`: ZScript names are case-insensitive, and a local called
+			// side hides the Side type that Side.mid below needs.
+			int lineSide = level.PointOnLineSide(mo.pos.xy, mo.BlockingLine);
+			Side sd = mo.BlockingLine.sidedef[lineSide];
 			if (sd)
 			{
 				tex = sd.GetTexture(Side.mid);
@@ -122,7 +124,8 @@ class RSB_Materials play
 		return s;
 	}
 
-	private static RSB_Surface New(Vector3 at, Vector3 travel)
+	// Not `New`: case-insensitive, it would hide the `new` operator inside itself.
+	private static RSB_Surface MakeSurface(Vector3 at, Vector3 travel)
 	{
 		let s = new("RSB_Surface");
 		s.material = "";

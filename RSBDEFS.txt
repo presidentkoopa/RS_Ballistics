@@ -504,7 +504,7 @@ ejecta brass_45
   gravity = 0.6
   sound   = rsb/casing/medium
   hot     = 12
-  life    = 700
+  life    = 2100        # 60 s on the floor; the menu can only shorten it
 end
 
 ejecta brass_556
@@ -515,7 +515,7 @@ ejecta brass_556
   gravity = 0.6
   sound   = rsb/casing/small
   hot     = 10
-  life    = 700
+  life    = 2100
 end
 
 ejecta hull_12ga
@@ -526,5 +526,5 @@ ejecta hull_12ga
   gravity = 0.7
   sound   = rsb/casing/shell
   hot     = 0
-  life    = 900
+  life    = 2100
 end

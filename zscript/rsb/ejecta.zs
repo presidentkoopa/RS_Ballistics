@@ -12,8 +12,18 @@
 // velocity and its throw speed. Throw returns null when the player has casings
 // switched off.
 //
-// NETPLAY. Thrown for the console player's gun only, so nothing here may draw
-// from the playsim RNG: the speed variation and the tumble are hashes.
+// NETPLAY -- A CASING IS A REAL MISSILE, SO IT MUST EXIST IDENTICALLY EVERYWHERE.
+// It bounces through the world and takes up playsim movement, so whether one
+// spawns, how it moves and when it is removed must not depend on anything local.
+// Throw therefore:
+//   - always spawns, whatever the player's casings switch, tier or style says;
+//   - takes its physics (speed, bounce, gravity) and its lifetime from the BASE
+//     profile only -- never a ~style or @tier variant, which are local choices;
+//   - uses hashes for the speed variation and the tumble, never the playsim RNG.
+// The player's settings change only how it LOOKS: invisible when casings are
+// off, drawn size, hot glow, and how soon it fades from view (never later than
+// the profile's lifetime, which is when every machine removes it).
+// The caller must call Throw on every machine for the same shot.
 // ============================================================================
 
 class RSB_Ejecta : Actor
@@ -61,10 +71,9 @@ class RSB_Ejecta : Actor
 
 	static RSB_Ejecta Throw(String whichEjecta, Vector3 at, Vector3 aim, Vector3 carrierVel, double throwSpeed, int seed)
 	{
-		if (!RSB_Settings.Casings()) return null;
 		let reg = RSB_Registry.Get();
 		if (!reg) return null;
-		let ed = reg.ResolveEjecta(whichEjecta, RSB_Tier.Name(RSB_Tier.Current()));
+		let ed = reg.FindEjecta(whichEjecta);   // the base profile: see NETPLAY above
 		if (!ed)
 		{
 			RSB_Log.Once(RSB_Log.LV_ERR, "ejecta:missing:" .. whichEjecta, String.Format(
@@ -75,7 +84,8 @@ class RSB_Ejecta : Actor
 		if (!c) return null;
 
 		c.ejectaId = whichEjecta;
-		c.A_SetScale(ed.scale * RSB_Settings.CasingSize());
+		c.bINVISIBLE = !RSB_Settings.Casings();                 // look only
+		c.A_SetScale(ed.scale * RSB_Settings.CasingSize());     // look only: scale is not size
 		c.bouncefactor = ed.bounceFloor;
 		c.wallbouncefactor = ed.bounceWall;
 		c.bouncecount = ed.bounceCount;
@@ -112,15 +122,17 @@ class RSB_Ejecta : Actor
 		if (InStateSequence(CurState, ResolveState("Death")))
 		{
 			restTics++;
-			if (restTics > int(lifeTics * RSB_Settings.CasingLife()))
+			// REMOVED on the profile's lifetime, the same tic on every machine.
+			if (restTics > lifeTics)
+			{
+				Destroy();
+				return;
+			}
+			// FADED from view sooner if this player's slider says so -- a look only.
+			if (restTics > int(lifeTics * clamp(RSB_Settings.CasingLife(), 0.0, 1.0)))
 			{
 				A_SetRenderStyle(Alpha, STYLE_Translucent);
-				Alpha -= 0.05;
-				if (Alpha <= 0)
-				{
-					Destroy();
-					return;
-				}
+				Alpha = max(0.0, Alpha - 0.05);
 			}
 		}
 		Super.Tick();

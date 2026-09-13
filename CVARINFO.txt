@@ -45,7 +45,7 @@ user float  rsb_whiz_volume        = 1.0;
 user bool   rsb_casings            = true;
 user float  rsb_casing_size        = 1.0;
 user bool   rsb_casing_hot         = true;
-user float  rsb_casing_life        = 1.0;
+user float  rsb_casing_life        = 1.0;     // 0..1 of the profile's lifetime: fades sooner, never lingers longer (netplay)
 
 // ---- preview and diagnostics
 user string rsb_preview_impact     = "bullet";

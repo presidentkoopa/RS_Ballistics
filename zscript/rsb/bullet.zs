@@ -45,7 +45,7 @@ class RSB_Bullet : FastProjectile
 
 	private Vector3 travel; // last direction of flight; Vel is zeroed before Death
 	private bool    announced;
-	private bool    whizzed;
+	transient bool  whizzed;   // local presentation: set on one machine only, never saved
 	private bool    glide;
 	transient RSB_RoundDef roundDef;   // re-read after a savegame load
 

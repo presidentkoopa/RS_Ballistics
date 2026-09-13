@@ -140,7 +140,7 @@ OptionMenu "RSB_CasingMenu"
 	Option "Casings", "rsb_casings", "OnOff"
 	Slider "Size", "rsb_casing_size", 0.5, 2.0, 0.05, 2
 	Option "Hot glow out of the port", "rsb_casing_hot", "OnOff"
-	Slider "Time on the floor", "rsb_casing_life", 0.0, 10.0, 0.25, 2
+	Slider "Time on the floor (share of the full time)", "rsb_casing_life", 0.0, 1.0, 0.05, 2
 }
 
 OptionMenu "RSB_PreviewMenu"

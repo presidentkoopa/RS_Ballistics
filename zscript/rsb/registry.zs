@@ -52,6 +52,7 @@ class RSB_Registry : StaticEventHandler
 	// ---- lookups, typed ---------------------------------------------------------
 	RSB_RoundDef  FindRound(String pid)  { return defs ? RSB_RoundDef(defs.Find("round", pid))   : null; }
 	RSB_BurstDef  FindBurst(String pid)  { return defs ? RSB_BurstDef(defs.Find("burst", pid))   : null; }
+	RSB_EjectaDef FindEjecta(String pid) { return defs ? RSB_EjectaDef(defs.Find("ejecta", pid)) : null; }
 
 	RSB_StyleDef  FindStyle(String pid)  { return defs ? RSB_StyleDef(defs.Find("style", pid))   : null; }
 
