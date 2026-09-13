@@ -174,3 +174,14 @@ rsb/crack/far8               sounds/rsb/crack/bullet_crack_far_08.ogg
 $random rsb/crack/far { rsb/crack/far1 rsb/crack/far2 rsb/crack/far3 rsb/crack/far4 rsb/crack/far5 rsb/crack/far6 rsb/crack/far7 rsb/crack/far8 }
 $limit rsb/crack/far 3
 
+rsb/flame/hiss1              sounds/rsb/flame/flamerhiss1.ogg
+rsb/flame/hiss2              sounds/rsb/flame/flamerhiss2.wav
+$random rsb/flame/hiss { rsb/flame/hiss1 rsb/flame/hiss2 }
+$limit rsb/flame/hiss 2
+
+rsb/flame/loop               sounds/rsb/flame/flamer_loop.ogg
+rsb/flame/start              sounds/rsb/flame/flamer_start.ogg
+rsb/flame/stop               sounds/rsb/flame/flamer_blast.ogg
+rsb/flame/pilot              sounds/rsb/flame/ft_lighthiss.ogg
+$limit rsb/flame/loop 4
+

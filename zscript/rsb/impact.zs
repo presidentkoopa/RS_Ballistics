@@ -46,6 +46,18 @@ class RSB_Burst play
 			b.tint, b.glow * glowScale, b.life, b.lifeJitter, b.sizeStart, b.sizeEnd, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
 	}
+
+	// One emission whose speed and life the caller decides (a flame's stream: the
+	// fuel's speed, and the time to where it lands). Everything else is the burst's.
+	static void FireCustom(RSB_BurstDef b, Vector3 at, Vector3 dir, double countScale, double speedValue, double lifeValue, double glowScale, int seed)
+	{
+		if (!b || lifeValue <= 0) return;
+		int n = int(b.count * countScale + 0.5);
+		if (n <= 0) return;
+		level.SpawnGpuParticles(at + dir * b.offset, dir, n, b.cone, speedValue, b.speedJitter,
+			b.tint, b.glow * glowScale, lifeValue, b.lifeJitter, b.sizeStart, b.sizeEnd, b.gravity, b.drag,
+			b.orient, b.stretch, seed);
+	}
 }
 
 class RSB_Impact play

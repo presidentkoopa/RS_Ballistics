@@ -82,7 +82,7 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], "unknown kind -- style, burst, material, impact, round, wake, flash or ejecta");
+					Refuse(source, ln + 1, head, words[1], "unknown kind -- style, burst, material, impact, round, wake, flash, flame or ejecta");
 					refusals++;
 					refused = true;
 					continue;
@@ -251,6 +251,29 @@ class RSB_Parser
 		{
 			return new("RSB_MaterialDef");
 		}
+		if (kind == "flame")
+		{
+			let d = new("RSB_FlameDef");
+			d.reach = 400;
+			d.fuelSpeed = 800;
+			d.spread = 2;
+			d.landingTics = 2;
+			d.markShape = -1;
+			d.markRadius = 0;
+			d.markLife = 0;
+			d.markColor = white;
+			d.markTics = 6;
+			d.lightRadius = 0;
+			d.lightIntensity = 1;
+			d.flicker = 0.3;
+			d.lightColor = Color(255, 255, 150, 60);
+			d.landLightRadius = 0;
+			d.landLightIntensity = 1;
+			d.loopSound = "none";
+			d.startSound = "none";
+			d.stopSound = "none";
+			return d;
+		}
 		if (kind == "style")
 		{
 			let d = new("RSB_StyleDef");
@@ -287,6 +310,8 @@ class RSB_Parser
 		if (m) return ApplyMaterial(m, key, v);
 		let st = RSB_StyleDef(d);
 		if (st) return ApplyStyle(st, key, v);
+		let fm = RSB_FlameDef(d);
+		if (fm) return ApplyFlame(fm, key, v);
 		return "internal: a profile of no known kind";
 	}
 
@@ -707,6 +732,114 @@ class RSB_Parser
 			return "";
 		}
 		return String.Format("unknown material key \"%s\"", key);
+	}
+
+	// ---------------------------------------------------------------- FLAME
+	private static String ApplyFlame(RSB_FlameDef fm, String key, out Array<String> v)
+	{
+		String why;
+		Color c;
+		if (key == "reach")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			fm.reach = v[0].ToDouble();
+			return (fm.reach > 0) ? "" : "reach must be above 0";
+		}
+		if (key == "speed")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			fm.fuelSpeed = v[0].ToDouble();
+			return (fm.fuelSpeed > 0) ? "" : "speed (the fuel's, map units a second) must be above 0";
+		}
+		if (key == "spread")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			fm.spread = v[0].ToDouble();
+			return (fm.spread >= 0 && fm.spread <= 45) ? "" : "spread is 0 to 45 degrees";
+		}
+		if (key == "stream")
+		{
+			fm.stream.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			if (v.Size() == 0) return "stream is one or more burst names, or none";
+			for (int i = 0; i < v.Size(); i++) fm.stream.Push(v[i]);
+			return "";
+		}
+		if (key == "landing")
+		{
+			fm.landing.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			if (v.Size() == 0) return "landing is one or more burst names, or none";
+			for (int i = 0; i < v.Size(); i++) fm.landing.Push(v[i]);
+			return "";
+		}
+		if (key == "pilot")
+		{
+			fm.pilot.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			if (v.Size() == 0) return "pilot is one or more burst names, or none";
+			for (int i = 0; i < v.Size(); i++) fm.pilot.Push(v[i]);
+			return "";
+		}
+		if (key == "landingtics")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			fm.landingTics = v[0].ToInt();
+			return (fm.landingTics >= 1) ? "" : "landingtics must be 1 or more";
+		}
+		if (key == "scorch")
+		{
+			if (v.Size() != 3) return "scorch is shape, radius, life";
+			int shape = ShapeId(v[0]);
+			if (shape < 0) return String.Format("scorch shape \"%s\" is not a stamp shape (pool, sunburst, ring...)", v[0]);
+			if (!IsNum(v[1]) || !IsNum(v[2])) return "scorch radius and life must be numbers";
+			fm.markShape = shape;
+			fm.markRadius = v[1].ToDouble();
+			fm.markLife = v[2].ToInt();
+			return (fm.markRadius > 0 && fm.markLife > 0) ? "" : "scorch radius and life must be above 0";
+		}
+		if (key == "scorchcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			fm.markColor = c;
+			return "";
+		}
+		if (key == "scorchtics")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			fm.markTics = v[0].ToInt();
+			return (fm.markTics >= 1) ? "" : "scorchtics must be 1 or more";
+		}
+		if (key == "light")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			fm.lightRadius = v[0].ToDouble();
+			fm.lightIntensity = v[1].ToDouble();
+			fm.flicker = v[2].ToDouble();
+			return (fm.lightRadius >= 0 && fm.lightIntensity >= 0 && fm.flicker >= 0 && fm.flicker <= 1) ? "" : "light is radius, intensity (both 0 or more), flicker (0..1)";
+		}
+		if (key == "lightcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			fm.lightColor = c;
+			return "";
+		}
+		if (key == "landlight")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			fm.landLightRadius = v[0].ToDouble();
+			fm.landLightIntensity = v[1].ToDouble();
+			return (fm.landLightRadius >= 0 && fm.landLightIntensity >= 0) ? "" : "landlight is radius, intensity -- both 0 or more";
+		}
+		if (key == "sounds")
+		{
+			if (v.Size() != 3) return "sounds is loop, start, stop -- SNDINFO names, or none";
+			fm.loopSound = v[0];
+			fm.startSound = v[1];
+			fm.stopSound = v[2];
+			return "";
+		}
+		return String.Format("unknown flame key \"%s\"", key);
 	}
 
 	// ---------------------------------------------------------------- STYLE

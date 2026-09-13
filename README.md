@@ -14,7 +14,16 @@ and Max Payne-level spectacle, in VR.
 
 - **M1 done:** profiles (`RSBDEFS`), the parser that refuses a bad profile by
   lump and line, the registry, the service, `rsb_log`.
-- **Next:** the bullet, flash and casings move in from `RS_VR_Reload`.
+- **M2 done:** styles, bursts, materials, impacts by surface, the profile-driven
+  bullet, flash and casings, near-miss whiz, and the customization menu with
+  Preview.
+- **In this batch:**
+  - **Flamethrowers:** `flame` profiles, `RSB_Flame.Stream / StopStream / Pilot`, a
+    Preview button and a menu page.
+  - **Casings:** local by default (`shared: false`) for netplay.
+  - **Profiles:** six more gun profiles.
+- **Next:** the reload system's call sites (main lane), then the engine's
+  particle stage 2 (textured, lit smoke; heat shimmer).
 
 The owner-approved direction is that the heavy machinery (particles, smoke volume,
 surface damage, materials, the world clock) moves into the engine, GPU-driven.

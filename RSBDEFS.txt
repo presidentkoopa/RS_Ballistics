@@ -422,12 +422,45 @@ end
 round rifle_556
   speed  = 900          # supersonic: it cracks past you
   radius = 1
-  damage = 8, 3
+  damage = 5, 3         # vanilla; a class's WM_Gun.ShotDamage overrides it
   look   = sprite, RSBT
   glide  = yes
   wake   = rifle_trail
   impact = bullet
   whiz   = 96, rsb/crack/near
+end
+
+round pistol_9mm
+  speed  = 340          # 9mm: faster and lighter than the .45
+  radius = 1.5
+  damage = 5, 3
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = bullet
+  whiz   = 64, rsb/whiz
+end
+
+round rifle_762
+  speed  = 800          # full-power rifle: cracks, and trails
+  radius = 1.5
+  damage = 5, 3
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_trail
+  impact = bullet
+  whiz   = 110, rsb/crack/near
+end
+
+round revolver_357
+  speed  = 400
+  radius = 2
+  damage = 5, 3
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = bullet
+  whiz   = 80, rsb/crack/med
 end
 
 
@@ -485,9 +518,202 @@ flash rifle
   smoke      = 1, 0.025, 0.3
 end
 
+flash smg                # full auto: quicker, smaller, so a burst strobes
+  light      = 160, 2.6, 1
+  lightcolor = 255, 210, 150
+  cone       = 18, 50, 70, 4
+  conetics   = 2
+  bursts     = flash_core, flash_sparks
+  flame      = 0.045
+  smoke      = 1, 0.018, 0.22
+end
+
+flash revolver           # a big cylinder gap blast
+  light      = 240, 3.6, 2
+  lightcolor = 255, 205, 140
+  cone       = 26, 65, 100, 7
+  conetics   = 3
+  bursts     = flash_core, flash_sparks_wide
+  flame      = 0.07
+  smoke      = 2, 0.03, 0.32
+end
+
+flash shotgun_double     # both barrels at once
+  light      = 320, 4.0, 3
+  lightcolor = 255, 200, 130
+  cone       = 32, 75, 140, 8
+  conetics   = 4
+  bursts     = flash_core, flash_sparks_wide, flash_sparks_wide
+  flame      = 0.1
+  smoke      = 4, 0.035, 0.38
+end
+
+
+# ---------------------------------------------------------------- FLAMES
+#   reach        map units the stream carries
+#   speed        the fuel's speed, map units per second
+#   spread       degrees the stream wanders
+#   stream       bursts fired from the nozzle every tic. FOR THESE, a burst's
+#                speed and life are MULTIPLIERS: of the fuel speed, and of the
+#                time the fuel takes to reach where the stream lands (1 = it
+#                reaches it). They never fly on past a surface the stream hits.
+#   landing      bursts where it lands (ordinary bursts), every landingtics
+#   scorch       shape, radius, life (tics)   scorchcolor r, g, b   scorchtics
+#   light        radius, intensity, flicker 0..1 (at the nozzle)   lightcolor
+#   landlight    radius, intensity (where it lands, same colour)
+#   sounds       loop, start, stop
+#   pilot        bursts for an idle pilot light
+# GPU particles are capped at r_gpuparticles_maxsize (8 map units by default):
+# many overlapping puffs, not a few big ones, until the engine's next stage.
+
+burst flame_core
+  count   = 6
+  cone    = 4
+  speed   = 1.0, 0.1
+  life    = 0.3, 0.3
+  color   = 255, 245, 200
+  glow    = 5.0
+  size    = 1.5, 4
+  orient  = streak
+  stretch = 0.02
+  offset  = 0
+end
+
+burst flame_body
+  count   = 14
+  cone    = 5
+  speed   = 0.95, 0.15
+  life    = 1.0, 0.2
+  color   = 255, 140, 40
+  glow    = 2.2
+  size    = 3, 8
+  gravity = -60
+  drag    = 0.4
+  offset  = 0
+end
+
+burst flame_tip
+  count   = 6
+  cone    = 7
+  speed   = 0.85, 0.2
+  life    = 1.0, 0.25
+  color   = 200, 60, 15
+  glow    = 1.2
+  size    = 5, 8
+  gravity = -90
+  drag    = 0.6
+  offset  = 0
+end
+
+burst flame_embers
+  count   = 4
+  cone    = 9
+  speed   = 0.7, 0.3
+  life    = 1.0, 0.3
+  color   = 255, 170, 60
+  glow    = 3.0
+  size    = 0.6, 0.2
+  gravity = -140
+  drag    = 0.8
+  orient  = streak
+  stretch = 0.03
+  offset  = 0
+end
+
+burst flame_splash
+  count   = 10
+  cone    = 60
+  speed   = 120, 0.5
+  life    = 0.5, 0.4
+  color   = 255, 150, 50
+  glow    = 2.5
+  size    = 4, 8
+  gravity = -120
+  drag    = 1.5
+  offset  = 2
+end
+
+burst flame_licks
+  count   = 6
+  cone    = 35
+  speed   = 40, 0.5
+  life    = 0.9, 0.3
+  color   = 255, 110, 25
+  glow    = 1.8
+  size    = 5, 8
+  gravity = -180
+  drag    = 1.0
+  aim     = up
+  offset  = 3
+end
+
+burst flame_embers_rise
+  count   = 5
+  cone    = 50
+  speed   = 60, 0.6
+  life    = 1.6, 0.4
+  color   = 255, 160, 60
+  glow    = 3.0
+  size    = 0.5, 0.2
+  gravity = -200
+  drag    = 0.5
+  orient  = streak
+  stretch = 0.03
+  aim     = up
+  offset  = 2
+end
+
+burst pilot_flame
+  count   = 2
+  cone    = 10
+  speed   = 25, 0.3
+  life    = 0.12, 0.3
+  color   = 160, 190, 255
+  glow    = 2.0
+  size    = 1.2, 0.4
+  gravity = -40
+  aim     = along
+  offset  = 0
+end
+
+flame incinerator        # a tight, fast jet
+  reach       = 520
+  speed       = 950
+  spread      = 1.5
+  stream      = flame_core, flame_body, flame_tip, flame_embers
+  landing     = flame_splash, flame_embers_rise
+  landingtics = 2
+  scorch      = pool, 10, 105
+  scorchcolor = 255, 100, 25
+  scorchtics  = 8
+  light       = 240, 2.6, 0.35
+  lightcolor  = 255, 150, 60
+  landlight   = 160, 2.2
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+end
+
+flame napalm             # wide and slower; it sticks and burns where it lands
+  reach       = 380
+  speed       = 620
+  spread      = 4
+  stream      = flame_core, flame_body, flame_body, flame_tip, flame_embers
+  landing     = flame_splash, flame_licks, flame_embers_rise
+  landingtics = 1
+  scorch      = sunburst, 16, 140
+  scorchcolor = 255, 90, 20
+  scorchtics  = 6
+  light       = 280, 2.8, 0.45
+  lightcolor  = 255, 135, 45
+  landlight   = 220, 2.6
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+end
+
 
 # ---------------------------------------------------------------- EJECTA
-#   look     sprite, <4-letter sprite>
+#   look     sprite, <4-letter sprite>: five tumble frames A to E, lying on C.
+#            Some actor's states must use the sprite, or it is not loaded.
 #   scale    sprite scale
 #   speed    multiplier on the caller's throw speed, +/- jitter
 #   bounce   floor factor, wall factor, bounces
@@ -525,6 +751,39 @@ ejecta hull_12ga
   bounce  = 0.3, 0.25, 3
   gravity = 0.7
   sound   = rsb/casing/shell
+  hot     = 0
+  life    = 2100
+end
+
+ejecta brass_9mm
+  look    = sprite, RSCS
+  scale   = 0.05
+  speed   = 1.1, 0.2
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+end
+
+ejecta brass_762
+  look    = sprite, RSCS
+  scale   = 0.07
+  speed   = 1.2, 0.25
+  bounce  = 0.45, 0.3, 4
+  gravity = 0.6
+  sound   = rsb/casing/medium
+  hot     = 14
+  life    = 2100
+end
+
+ejecta brass_357          # dumped from a cylinder, not thrown by a port: slow, no glow
+  look    = sprite, RSCS
+  scale   = 0.06
+  speed   = 0.6, 0.3
+  bounce  = 0.4, 0.3, 4
+  gravity = 0.6
+  sound   = rsb/casing/medium
   hot     = 0
   life    = 2100
 end

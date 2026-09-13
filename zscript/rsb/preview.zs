@@ -27,13 +27,14 @@ class RSB_Preview : EventHandler
 		bool impact = e.Name ~== "rsb_preview_impact";
 		bool flash  = e.Name ~== "rsb_preview_flash";
 		bool casing = e.Name ~== "rsb_preview_casing";
+		bool flameOn = e.Name ~== "rsb_preview_flame";
 		if (e.Name ~== "rsb_preview_all")
 		{
 			impact = true;
 			flash = true;
 			casing = true;
 		}
-		if (!impact && !flash && !casing) return;
+		if (!impact && !flash && !casing && !flameOn) return;
 		if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player]) return;
 		let pmo = players[e.Player].mo;
 		if (!pmo) return;
@@ -77,6 +78,17 @@ class RSB_Preview : EventHandler
 			Vector3 toss = right + (0, 0, 0.6);
 			RSB_Ejecta.Throw(RSB_Settings.PreviewEjecta(), eye + fwd * 14.0 + right * 6.0 - (0, 0, 8),
 				toss, pmo.Vel, 4.0, level.maptime);
+		}
+
+		if (flameOn)
+		{
+			let drv = RSB_FlamePreview(Actor.Spawn("RSB_FlamePreview", eye, ALLOW_REPLACE));
+			if (drv)
+			{
+				drv.playerNum = e.Player;
+				drv.ticsLeft = 70;
+				drv.flameId = RSB_Settings.PreviewFlame();
+			}
 		}
 	}
 }

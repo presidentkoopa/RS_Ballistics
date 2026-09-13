@@ -155,6 +155,25 @@ class RSB_Settings play
 
 	static double CasingLife() { return max(0.0, Cvf("rsb_casing_life", 1.0)); }
 
+	// ---- flamethrowers ---------------------------------------------------------
+	static bool Flame() { return Cvb("rsb_flame", true); }
+
+	static double FlameParticles()
+	{
+		let st = Style();
+		return max(0.0, Cvf("rsb_flame_particles", 1.0) * (st ? st.particlesMul : 1.0));
+	}
+
+	static double FlameLight()
+	{
+		let st = Style();
+		return max(0.0, Cvf("rsb_flame_light", 1.0) * (st ? st.lightsMul : 1.0));
+	}
+
+	static double FlameVolume() { return clamp(Cvf("rsb_flame_volume", 1.0), 0.0, 1.0); }
+
+	static String PreviewFlame() { return Cvs("rsb_preview_flame", "incinerator"); }
+
 	// ---- diagnostics and preview ------------------------------------------------
 	static bool DebugSurfaces() { return Cvb("rsb_debug_surfaces", false); }
 

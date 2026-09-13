@@ -47,7 +47,14 @@ user float  rsb_casing_size        = 1.0;
 user bool   rsb_casing_hot         = true;
 user float  rsb_casing_life        = 1.0;     // 0..1 of the profile's lifetime: fades sooner, never lingers longer (netplay)
 
+// ---- flamethrowers
+user bool   rsb_flame              = true;
+user float  rsb_flame_particles    = 1.0;
+user float  rsb_flame_light        = 1.0;
+user float  rsb_flame_volume       = 1.0;
+
 // ---- preview and diagnostics
+user string rsb_preview_flame      = "incinerator";
 user string rsb_preview_impact     = "bullet";
 user string rsb_preview_flash      = "pistol";
 user string rsb_preview_ejecta     = "brass_45";

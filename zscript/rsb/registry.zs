@@ -73,6 +73,10 @@ class RSB_Registry : StaticEventHandler
 	{
 		return defs ? RSB_WakeDef(defs.Resolve("wake", base, "", tierName, RSB_Settings.StyleName())) : null;
 	}
+	RSB_FlameDef ResolveFlame(String base, String tierName)
+	{
+		return defs ? RSB_FlameDef(defs.Resolve("flame", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
 
 	// THE MATERIAL OF A TEXTURE, "" for the default surface. Later material
 	// profiles win, so they are tried last-loaded first. Cached per texture name:
@@ -143,6 +147,16 @@ class RSB_Registry : StaticEventHandler
 			else if (fl)
 			{
 				why = MissingBurst(fl.bursts);
+			}
+			else
+			{
+				let fm = RSB_FlameDef(defs.defs[i]);
+				if (fm)
+				{
+					why = MissingBurst(fm.stream);
+					if (why == "") why = MissingBurst(fm.landing);
+					if (why == "") why = MissingBurst(fm.pilot);
+				}
 			}
 			if (why == "") continue;
 			let d = defs.defs[i];

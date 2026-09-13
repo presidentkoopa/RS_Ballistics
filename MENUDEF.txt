@@ -44,6 +44,12 @@ OptionString "RSBPreviewEjecta"
 	"hull_12ga", "Shotgun hull"
 }
 
+OptionString "RSBPreviewFlamers"
+{
+	"incinerator", "Incinerator -- a tight jet"
+	"napalm",      "Napalm -- wide, sticks and burns"
+}
+
 OptionValue "RSBLogLevels"
 {
 	0, "Off"
@@ -73,6 +79,7 @@ OptionMenu "RSB_Options"
 	Submenu "Muzzle flash", "RSB_FlashMenu"
 	Submenu "Rounds in flight", "RSB_FlightMenu"
 	Submenu "Casings", "RSB_CasingMenu"
+	Submenu "Flamethrowers", "RSB_FlameMenu"
 	StaticText ""
 	StaticText "TRY IT", "Gold"
 	Submenu "Preview -- see it without firing", "RSB_PreviewMenu"
@@ -159,6 +166,21 @@ OptionMenu "RSB_PreviewMenu"
 	Command "Throw a casing", "netevent rsb_preview_casing"
 	StaticText ""
 	Command "All three", "netevent rsb_preview_all"
+	StaticText ""
+	Option "Flamethrower", "rsb_preview_flame", "RSBPreviewFlamers"
+	Command "Flamethrower for two seconds", "netevent rsb_preview_flame"
+}
+
+OptionMenu "RSB_FlameMenu"
+{
+	Title "FLAMETHROWERS"
+	StaticText "The stream of fire, the fire where it lands, its light and its roar.", "DarkGray"
+	StaticText "Black smoke and heat shimmer come with the engine's next particle work.", "DarkGray"
+	StaticText ""
+	Option "Flame effects", "rsb_flame", "OnOff"
+	Slider "Flames", "rsb_flame_particles", 0.0, 3.0, 0.1, 1
+	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
+	Slider "Flame volume", "rsb_flame_volume", 0.0, 1.0, 0.05, 2
 }
 
 OptionMenu "RSB_DiagnosticsMenu"

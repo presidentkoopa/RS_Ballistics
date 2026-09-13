@@ -206,6 +206,34 @@ class RSB_MaterialDef : RSB_Def
 	}
 }
 
+// A FLAME: a flamethrower's stream, where it lands, its light and sounds.
+// Stream bursts read their speed and life as MULTIPLIERS: of the fuel speed, and
+// of the time the fuel takes to reach where the stream lands.
+class RSB_FlameDef : RSB_Def
+{
+	double reach;            // map units the stream carries
+	double fuelSpeed;        // map units per second
+	double spread;           // degrees the stream wanders
+	Array<String> stream;    // bursts from the nozzle every tic
+	Array<String> landing;   // bursts where the stream lands
+	int    landingTics;
+	int    markShape;        // scorch: a STAMP_* id; -1 = none
+	double markRadius;
+	int    markLife;
+	Color  markColor;
+	int    markTics;         // tics between scorch marks
+	double lightRadius;      // at the nozzle; 0 = none
+	double lightIntensity;
+	double flicker;          // 0..1
+	Color  lightColor;
+	double landLightRadius;  // where it lands; 0 = none
+	double landLightIntensity;
+	String loopSound;
+	String startSound;
+	String stopSound;
+	Array<String> pilot;     // bursts for RSB_Flame.Pilot
+}
+
 // A STYLE: a named look the player picks in the menu. Multipliers over every
 // profile, plus any `~style` variants written for it.
 class RSB_StyleDef : RSB_Def
@@ -319,6 +347,7 @@ class RSB_DefSet
 		kinds.Push("burst");
 		kinds.Push("impact");
 		kinds.Push("flash");
+		kinds.Push("flame");
 		kinds.Push("ejecta");
 		kinds.Push("material");
 
