@@ -1,0 +1,9 @@
+// ============================================================================
+// RS_Ballistics settings. Prefix rsb_.
+//
+// Per-effect numbers live in RSBDEFS profiles, not here. Cvars are scene-wide
+// switches and multipliers only, and every one must be read by the ZScript:
+// tools/menu_lint.py fails the build on one that nothing reads.
+// ============================================================================
+
+user int rsb_log = 3;   // 0 off, 1 errors, 2 warnings, 3 loads and first uses, 4 everything

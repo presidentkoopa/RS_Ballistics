@@ -1,0 +1,4 @@
+// RS_Ballistics models. None yet: the tracer model arrives with round looks.
+//
+// The lump exists now because tools/menu_lint.py reads MODELDEF.txt from every
+// package it checks.

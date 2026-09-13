@@ -1,0 +1,7 @@
+version "5.0.0"
+
+#include "zscript/rsb/log.zs"
+#include "zscript/rsb/defs.zs"
+#include "zscript/rsb/parser.zs"
+#include "zscript/rsb/registry.zs"
+#include "zscript/rsb/service.zs"

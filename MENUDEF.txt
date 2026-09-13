@@ -1,0 +1,28 @@
+// ============================================================================
+// RS_Ballistics menu. Every control here is checked by tools/menu_lint.py on
+// each build against CVARINFO and the code: a control for a cvar nothing reads
+// fails the build.
+// ============================================================================
+
+OptionValue "RSBLogLevels"
+{
+	0, "Off"
+	1, "Errors only"
+	2, "Errors and warnings"
+	3, "Profiles loaded, first uses"
+	4, "Everything, with a dump of every profile"
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "RS Ballistics", "RSB_Options"
+}
+
+OptionMenu "RSB_Options"
+{
+	Title "RS BALLISTICS"
+	StaticText "Bullets, tracers, impacts and flashes, generated from RSBDEFS profiles.", "DarkGray"
+	StaticText "Profiles are read once at startup and summarised when a map starts.", "DarkGray"
+	StaticText ""
+	Option "Log", "rsb_log", "RSBLogLevels"
+}

@@ -1,0 +1,99 @@
+# ============================================================================
+# RSBDEFS -- RS_Ballistics profiles.
+#
+# Any loaded package may ship an RSBDEFS lump. Every one is read, in load
+# order, and a later profile with the same kind and name replaces an earlier
+# one -- that is how a weapons package adds or overrides looks without code.
+#
+# Line-oriented, the same grammar as the reload system's cards:
+#
+#     <kind> <name>
+#       key = value, value, ...
+#     end
+#
+# `#` starts a comment. Keys are case-insensitive. AN UNKNOWN KEY OR A BAD
+# VALUE REFUSES THAT PROFILE, named with its lump and line; the other profiles
+# still load. A typo must never leave a setting at its default with nothing
+# said.
+#
+# Kinds: round, wake, impact, flash. Units are stated beside each key.
+#
+# The profiles below are the test pistols' looks as they are today, written as
+# data: the first examples of the format, not special cases. Nothing reads them
+# until the bullet and flash move into RS_Ballistics.
+# ============================================================================
+
+
+# ---------------------------------------------------------------- ROUNDS
+#
+#   speed   map units per tic
+#   radius  map units (FastProjectile sub-steps below this)
+#   damage  base, dice  -> base x 1d(dice)
+#   look    sprite, <4-letter sprite>  |  model, <MODELDEF model name>
+#   glide   yes | no     smooth the round between tics
+#   wake    <wake profile> | none
+#   impact  <impact profile> | none
+
+round pistol_45
+  speed   = 245          # about a .45 ACP at 34 map units per meter
+  radius  = 2
+  damage  = 5, 3         # 5 x 1d3, the vanilla pistol
+  look    = sprite, RSBT
+  glide   = no
+  wake    = none
+  impact  = hard_small
+end
+
+
+# ---------------------------------------------------------------- IMPACTS
+#
+#   sparks      count, spread (degrees), speed (map units per second)
+#   sparklife   seconds
+#   sparkcolor  r, g, b
+#   sparkglow   brightness (additive, above 1 allowed)
+#   mark        shape, radius (map units), life (tics)
+#               shapes: pool bar gouge ring hexfield hexring spiral boxring
+#                       star sunburst grid invert box
+#   markcolor   r, g, b
+#   sound       SNDINFO name | none
+
+impact hard_small
+  sparks      = 14, 55, 220
+  sparklife   = 0.35
+  sparkcolor  = 255, 206, 130
+  sparkglow   = 3.0
+  mark        = pool, 5, 20
+  markcolor   = 255, 150, 60
+  sound       = rsb/impact
+end
+
+
+# ---------------------------------------------------------------- FLASHES
+#
+#   light       radius (map units), punch (brightness on the shot tic), tics
+#   lightcolor  r, g, b
+#   cone        inner, outer (degrees), length (map units), density
+#   conetics    tics the lit-air cone lasts
+#   core        particles, life (seconds)
+
+flash pistol
+  light       = 180, 3.0, 2
+  lightcolor  = 255, 214, 150
+  cone        = 20, 55, 80, 5
+  conetics    = 3
+  core        = 8, 0.05
+end
+
+
+# ---------------------------------------------------------------- WAKES
+#
+#   perstep     particles each time the round moves a sub-step
+#   size        start, end (diameter, map units)
+#   life        seconds
+#   drift       map units per second
+#   drag        1/s
+#   gravity     map units per second^2
+#   color       r, g, b
+#   glow        brightness
+#
+# No example yet: the pistol's round has `wake = none` until wakes are drawn.

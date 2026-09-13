@@ -1,0 +1,6 @@
+// RS_Ballistics' registry is a static event handler: it reads every RSBDEFS
+// lump once, at startup, and lives for the whole session, across maps.
+gameinfo
+{
+    AddEventHandlers = "RSB_Registry"
+}
