@@ -42,6 +42,12 @@ class RSB_Burst play
 		if (dir.Length() < 0.000001) dir = (0, 0, 1);
 		dir = dir.Unit();
 
+		if (b.particle.Length() > 0)
+		{
+			level.SpawnParticles(Handle(b), at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
+				b.life, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed);
+			return;
+		}
 		level.SpawnGpuParticles(at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
 			b.tint, b.glow * glowScale, b.life, b.lifeJitter, b.sizeStart, b.sizeEnd, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
@@ -54,9 +60,24 @@ class RSB_Burst play
 		if (!b || lifeValue <= 0) return;
 		int n = int(b.count * countScale + 0.5);
 		if (n <= 0) return;
+		if (b.particle.Length() > 0)
+		{
+			level.SpawnParticles(Handle(b), at + dir * b.offset, dir, n, b.cone, speedValue, b.speedJitter,
+				lifeValue, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed);
+			return;
+		}
 		level.SpawnGpuParticles(at + dir * b.offset, dir, n, b.cone, speedValue, b.speedJitter,
 			b.tint, b.glow * glowScale, lifeValue, b.lifeJitter, b.sizeStart, b.sizeEnd, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
+	}
+
+	// The burst's PARTICLEDEFS handle, looked up once. A hash of the name: the same
+	// on every machine whether or not the definition loaded here, so it is cached
+	// and passed, never tested. An unknown one draws nothing on this machine only.
+	private static int Handle(RSB_BurstDef b)
+	{
+		if (b.particleHandle == 0) b.particleHandle = level.ParticleDefinition(b.particle);
+		return b.particleHandle;
 	}
 }
 

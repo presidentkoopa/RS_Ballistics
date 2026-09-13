@@ -108,6 +108,14 @@ class RSB_BurstDef : RSB_Def
 	double stretch;      // streak length, seconds of travel
 	int    aim;
 	double offset;       // map units off the surface before emitting
+
+	// A PARTICLEDEFS definition to draw with, or "". With one, the DEFINITION
+	// supplies colour, emissive, size, gravity, drag, orient, stretch and spin; the
+	// burst still supplies count, cone, speed, life, aim and offset, and the glow
+	// slider still scales it. The handle is a hash of the name -- the same number
+	// on every machine -- cached on first use and never tested (netplay rule).
+	String particle;
+	int    particleHandle;
 }
 
 // AN IMPACT: what a landing round does to a surface.

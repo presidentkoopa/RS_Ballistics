@@ -215,6 +215,8 @@ class RSB_Parser
 			d.stretch = 0;
 			d.aim = RSB_BurstDef.AIM_NORMAL;
 			d.offset = 1.5;
+			d.particle = "";
+			d.particleHandle = 0;
 			return d;
 		}
 		if (kind == "impact")
@@ -597,6 +599,13 @@ class RSB_Parser
 		{
 			why = Nums(v, 1); if (why != "") return why;
 			b.offset = v[0].ToDouble();
+			return "";
+		}
+		if (key == "particle")
+		{
+			if (v.Size() != 1) return "particle is one PARTICLEDEFS definition name, or none";
+			b.particle = (v[0] ~== "none") ? "" : v[0];
+			b.particleHandle = 0;
 			return "";
 		}
 		return String.Format("unknown burst key \"%s\"", key);

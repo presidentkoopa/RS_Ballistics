@@ -675,30 +675,27 @@ burst flame_core
   offset  = 0
 end
 
+# `particle = <PARTICLEDEFS definition>` on any burst: the definition gives
+# colour, glow over life, size over life, gravity, drag, orient, stretch and
+# spin; the burst keeps count, cone, speed, life, aim and offset. These two use
+# RS_Ballistics' own PARTICLEDEFS: puffs that swell and cool white -> orange ->
+# dark red. (Sizes past r_gpuparticles_maxsize, 8 by default, are capped.)
 burst flame_body
-  count   = 14
-  cone    = 5
-  speed   = 0.95, 0.15
-  life    = 1.0, 0.2
-  color   = 255, 140, 40
-  glow    = 2.2
-  size    = 3, 8
-  gravity = -60
-  drag    = 0.4
-  offset  = 0
+  count    = 14
+  cone     = 5
+  speed    = 0.95, 0.15
+  life     = 1.0, 0.2
+  offset   = 0
+  particle = rsb_flame_puff
 end
 
 burst flame_tip
-  count   = 6
-  cone    = 7
-  speed   = 0.85, 0.2
-  life    = 1.0, 0.25
-  color   = 200, 60, 15
-  glow    = 1.2
-  size    = 5, 8
-  gravity = -90
-  drag    = 0.6
-  offset  = 0
+  count    = 6
+  cone     = 7
+  speed    = 0.85, 0.2
+  life     = 1.0, 0.25
+  offset   = 0
+  particle = rsb_flame_tip
 end
 
 burst flame_embers
