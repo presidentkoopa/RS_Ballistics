@@ -20,7 +20,10 @@ class RSB_Burst play
 	// PARTICLEDEFS definition that says `collide = plane` then keeps its particles
 	// in front of that surface and skids them on the floor in front of it (engine
 	// F4). No surface -- a flash, a blast in mid-air -- passes no plane.
-	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null)
+	//
+	// SIZESCALE: every particle's size x this -- an impact's `scale` (a rifle's cloud
+	// is bigger than a pistol's). 1 = as the burst and its definition say.
+	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null, double sizeScale = 1.0)
 	{
 		if (!b) return;
 		int n = int(b.count * countScale + 0.5);
@@ -59,12 +62,12 @@ class RSB_Burst play
 				floorAt = FloorBelow(onto.at, onto.normal);
 			}
 			level.SpawnParticles(Handle(b), at + normal * b.offset, dir, n, Spread(b), b.speed, b.speedJitter,
-				b.life, b.lifeJitter, b.tint, glowScale, 1.0, seed,
+				b.life, b.lifeJitter, b.tint, glowScale, sizeScale, seed,
 				b.shape, planeAt, planeNormal, floorAt);
 			return;
 		}
 		level.SpawnGpuParticles(at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
-			b.tint, b.glow * glowScale, b.life, b.lifeJitter, b.sizeStart, b.sizeEnd, b.gravity, b.drag,
+			b.tint, b.glow * glowScale, b.life, b.lifeJitter, b.sizeStart * sizeScale, b.sizeEnd * sizeScale, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
 	}
 
@@ -214,15 +217,16 @@ class RSB_Impact play
 		// scales the counts. The player's sliders and style scale on top.
 		double countScale = (im.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
 		countScale *= RSB_Settings.ImpactParticles();
+		countScale *= im.countScale;   // the profile's `scale`: how hard this class of round bites
 		double glowScale = RSB_Settings.ImpactGlow();
 		int posSeed = RSB_Hash.OfPos(surf.at);
 
 		for (int i = 0; i < im.bursts.Size(); i++)
 			RSB_Burst.Fire(reg.FindBurst(im.bursts[i]), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(level.maptime, i + 1, posSeed), surf);
+				RSB_Hash.Seed(level.maptime, i + 1, posSeed), surf, im.sizeScale);
 		if (glancing && !(im.glanceBurst ~== "none"))
 			RSB_Burst.Fire(reg.FindBurst(im.glanceBurst), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(level.maptime, 97, posSeed), surf);
+				RSB_Hash.Seed(level.maptime, 97, posSeed), surf, im.sizeScale);
 
 		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks())
 		{

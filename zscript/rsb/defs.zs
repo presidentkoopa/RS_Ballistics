@@ -145,6 +145,8 @@ class RSB_ImpactDef : RSB_Def
 	double heatRadius;     // heat shimmer where it lands: a ball fading over heatTics; 0 = none
 	double heatStrength;
 	int    heatTics;
+	double countScale;     // `scale`: every burst's particle count x this (how hard a weapon class bites); 1 = as written
+	double sizeScale;      // `scale`: every burst's particle size x this
 }
 
 // A FLASH: the muzzle's light, its lit-air cone, its bursts, flame and smoke.

@@ -228,6 +228,36 @@ burst dust_dirt            # a rolling dirt cloud (rsb_dust_dirt)
   particle = rsb_dust_dirt
 end
 
+burst dust_jet_concrete    # dust shot back out of a hard hit along the ricochet line: the chewed-pillar spray
+  count    = 4
+  cone     = 14
+  speed    = 160, 0.4
+  life     = 1.3, 0.3
+  aim      = reflect
+  offset   = 2
+  particle = rsb_dust_concrete
+end
+
+burst dust_jet_wood        # the same out of wood
+  count    = 3
+  cone     = 16
+  speed    = 140, 0.4
+  life     = 1.1, 0.3
+  aim      = reflect
+  offset   = 2
+  particle = rsb_dust_wood
+end
+
+burst dust_jet_dirt        # the same out of dirt and rock
+  count    = 3
+  cone     = 18
+  speed    = 130, 0.4
+  life     = 1.2, 0.3
+  aim      = reflect
+  offset   = 2
+  particle = rsb_dust_dirt
+end
+
 burst spark_spray          # a spray of hot streaks off metal (rsb_spark_spray)
   count    = 1
   cone     = 8
@@ -315,7 +345,10 @@ end
 #   light       radius, intensity, tics      lightcolor  r, g, b
 #   glance      degrees from the surface, sound, burst -- a ricochet
 #   heat        radius, strength, tics -- heat shimmer where it lands, fading (the
-#               engine's; the player turns it on in Developer options)
+#               engine's; turned on in Ballistics & Effects, Heat shimmer)
+#   scale       count, size -- every burst's particle count and size times these:
+#               how hard a class of round bites (a pistol a little, a rifle a lot,
+#               one pellet of buckshot little). 1, 1 when not given
 
 impact bullet
   bursts    = spark_hot, chips_concrete, dust_concrete
@@ -372,6 +405,195 @@ impact bullet~cinematic
   light      = 48, 1.2, 3
   lightcolor = 255, 180, 110
   glance     = 22, rsb/ricochet, spark_hot
+end
+
+# ---- IMPACTS BY WEAPON CLASS. A round look names its class's impact; the `bullet`
+# family above stays for anything that names it. Each class lists every material,
+# because a variant replaces its base. `scale` sets how hard the class bites; buckshot
+# is per pellet, with no ricochet sound or light per pellet.
+
+# pistol -- pistol rounds (.45, 9mm): a little under the old bullet
+impact pistol
+  bursts    = spark_hot, chips_concrete, dust_concrete
+  scale     = 0.8, 0.9
+  mark      = pool, 4, 18
+  markcolor = 255, 150, 60
+  sound     = rsb/impact/concrete
+  glance    = 18, rsb/ricochet, spark_hot
+end
+
+impact pistol.metal
+  bursts     = spark_metal, ember_metal, spark_spray
+  scale      = 0.8, 0.9
+  mark       = pool, 3, 33
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 50, 1.3, 3
+  lightcolor = 255, 190, 120
+  glance     = 25, rsb/ricochet, spark_metal
+end
+
+impact pistol.wood
+  bursts    = splinter_wood, dust_wood
+  scale     = 0.8, 0.9
+  mark      = pool, 3, 9
+  markcolor = 200, 110, 50
+  sound     = rsb/impact/wood
+end
+
+impact pistol.glass
+  bursts    = glint_glass
+  scale     = 0.8, 0.9
+  sound     = rsb/glass
+end
+
+impact pistol.liquid
+  bursts    = splash_liquid
+  scale     = 0.8, 0.9
+  sound     = none
+end
+
+impact pistol.dirt
+  bursts    = clods_dirt, dust_dirt
+  scale     = 0.8, 0.9
+  sound     = rsb/impact/concrete
+end
+
+# magnum -- the .357: a bigger bite, dust shot back out
+impact magnum
+  bursts    = spark_hot, chips_concrete, dust_concrete, dust_jet_concrete
+  scale     = 1.3, 1.15
+  mark      = pool, 6, 26
+  markcolor = 255, 150, 60
+  sound     = rsb/impact/concrete
+  glance    = 20, rsb/ricochet, spark_hot
+end
+
+impact magnum.metal
+  bursts     = spark_metal, ember_metal, spark_spray
+  scale      = 1.3, 1.15
+  mark       = pool, 5, 41
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 70, 1.6, 3
+  lightcolor = 255, 190, 120
+  glance     = 25, rsb/ricochet, spark_metal
+end
+
+impact magnum.wood
+  bursts    = splinter_wood, dust_wood, dust_jet_wood
+  scale     = 1.3, 1.15
+  mark      = pool, 5, 13
+  markcolor = 200, 110, 50
+  sound     = rsb/impact/wood
+end
+
+impact magnum.glass
+  bursts    = glint_glass
+  scale     = 1.3, 1.15
+  sound     = rsb/glass
+end
+
+impact magnum.liquid
+  bursts    = splash_liquid
+  scale     = 1.3, 1.15
+  sound     = none
+end
+
+impact magnum.dirt
+  bursts    = clods_dirt, dust_dirt, dust_jet_dirt
+  scale     = 1.3, 1.15
+  sound     = rsb/impact/concrete
+end
+
+# rifle -- rifle rounds (5.56, 7.62): clouds and chips that chew a pillar
+impact rifle
+  bursts    = spark_hot, chips_concrete, dust_concrete, dust_jet_concrete
+  scale     = 1.6, 1.3
+  mark      = pool, 6, 32
+  markcolor = 255, 150, 60
+  sound     = rsb/impact/concrete
+  glance    = 14, rsb/ricochet, spark_hot
+end
+
+impact rifle.metal
+  bursts     = spark_metal, ember_metal, spark_spray
+  scale      = 1.6, 1.3
+  mark       = pool, 5, 47
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 80, 1.8, 3
+  lightcolor = 255, 190, 120
+  glance     = 20, rsb/ricochet, spark_metal
+end
+
+impact rifle.wood
+  bursts    = splinter_wood, dust_wood, dust_jet_wood
+  scale     = 1.6, 1.3
+  mark      = pool, 5, 16
+  markcolor = 200, 110, 50
+  sound     = rsb/impact/wood
+end
+
+impact rifle.glass
+  bursts    = glint_glass
+  scale     = 1.6, 1.3
+  sound     = rsb/glass
+end
+
+impact rifle.liquid
+  bursts    = splash_liquid
+  scale     = 1.6, 1.3
+  sound     = none
+end
+
+impact rifle.dirt
+  bursts    = clods_dirt, dust_dirt, dust_jet_dirt
+  scale     = 1.6, 1.3
+  sound     = rsb/impact/concrete
+end
+
+# buckshot -- one pellet of buckshot: small, so a blast peppers a wall
+impact buckshot
+  bursts    = spark_hot, chips_concrete, dust_concrete
+  scale     = 0.35, 0.8
+  mark      = pool, 3, 10
+  markcolor = 255, 150, 60
+  sound     = rsb/impact/concrete
+end
+
+impact buckshot.metal
+  bursts     = spark_metal, ember_metal, spark_spray
+  scale      = 0.35, 0.8
+  mark       = pool, 3, 25
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+end
+
+impact buckshot.wood
+  bursts    = splinter_wood, dust_wood
+  scale     = 0.35, 0.8
+  mark      = pool, 2, 8
+  markcolor = 200, 110, 50
+  sound     = rsb/impact/wood
+end
+
+impact buckshot.glass
+  bursts    = glint_glass
+  scale     = 0.35, 0.8
+  sound     = rsb/glass
+end
+
+impact buckshot.liquid
+  bursts    = splash_liquid
+  scale     = 0.35, 0.8
+  sound     = none
+end
+
+impact buckshot.dirt
+  bursts    = clods_dirt, dust_dirt
+  scale     = 0.35, 0.8
+  sound     = rsb/impact/concrete
 end
 
 # ---- the rest of the arsenal: plasma, rockets, the BFG (projectiles.zs), and the
@@ -731,7 +953,7 @@ roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
   wake   = none
-  impact = bullet
+  impact = pistol
   whiz   = 72, rsb/whiz
 end
 
@@ -739,7 +961,7 @@ roundlook buckshot
   look   = sprite, RSBT
   glide  = yes
   wake   = none
-  impact = bullet
+  impact = buckshot
   whiz   = 48, rsb/whiz
 end
 
@@ -747,7 +969,7 @@ roundlook rifle_556
   look   = sprite, RSBT
   glide  = yes
   wake   = rifle_trail
-  impact = bullet
+  impact = rifle
   whiz   = 96, rsb/crack/near
 end
 
@@ -755,7 +977,7 @@ roundlook pistol_9mm
   look   = sprite, RSBT
   glide  = yes
   wake   = none
-  impact = bullet
+  impact = pistol
   whiz   = 64, rsb/whiz
 end
 
@@ -763,7 +985,7 @@ roundlook rifle_762
   look   = sprite, RSBT
   glide  = yes
   wake   = rifle_trail
-  impact = bullet
+  impact = rifle
   whiz   = 110, rsb/crack/near
 end
 
@@ -771,7 +993,7 @@ roundlook revolver_357
   look   = sprite, RSBT
   glide  = yes
   wake   = none
-  impact = bullet
+  impact = magnum
   whiz   = 80, rsb/crack/med
 end
 

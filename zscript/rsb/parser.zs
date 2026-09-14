@@ -236,6 +236,8 @@ class RSB_Parser
 			d.glanceDeg = 0;
 			d.glanceSound = "none";
 			d.glanceBurst = "none";
+			d.countScale = 1;
+			d.sizeScale = 1;
 			return d;
 		}
 		if (kind == "flash")
@@ -700,6 +702,14 @@ class RSB_Parser
 			im.heatStrength = v[1].ToDouble();
 			im.heatTics = v[2].ToInt();
 			return (im.heatRadius >= 0 && im.heatStrength >= 0 && im.heatTics >= 0) ? "" : "heat is radius, strength, tics -- all 0 or more";
+		}
+		if (key == "scale")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			im.countScale = v[0].ToDouble();
+			im.sizeScale = v[1].ToDouble();
+			return (im.countScale > 0 && im.countScale <= 4 && im.sizeScale > 0 && im.sizeScale <= 4) ? ""
+				: "scale is count, size -- each above 0, up to 4";
 		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
