@@ -25,7 +25,9 @@
 // SIZE CAP: min(maxsize, r_gpuparticles_maxsize); raised to 64 by Ballistics &
 // Effects -> "All effects on".
 // COLLIDE: `collide = plane` keeps particles in front of the surface an emission
-// names and skids them on the floor in front of it.
+// names and skids them on the floor in front of it. `collide = level` (engine #8,
+// efd17d4219) stops them at the whole level's walls and floors near the eye and
+// fades one that sinks 1-2 units in (Debris -> "Particles collide with the level").
 // LOOKS (engine 8125f36976, particle looks build A): dust and fire are generated
 // by the engine, not flipbooks -- torn edges that churn, sized to the world (3.5
 // units a noise cell). Dust never glows and shades where a dynamic light reaches it;
@@ -178,6 +180,7 @@ particle rsb_spark_spray
 	soft     = 2
 	texture  = "RSSPA0", 7, 12, once
 	orient   = billboard
+	collide  = level
 }
 
 // ---------------------------------------------------------------- ENERGY (plasma, BFG)
@@ -316,6 +319,7 @@ particle rsb_spark_streak
 	texture  = "RSKSA0", 1, 1, loop
 	orient   = streak
 	stretch  = 0.03
+	collide  = level
 }
 
 // A photoreal spark: a hot head and a long fading tail.
@@ -333,6 +337,7 @@ particle rsb_spark_photo
 	texture  = "RSKRA0", 1, 1, loop
 	orient   = streak
 	stretch  = 0.04
+	collide  = level
 }
 
 // A four-point star: the brightest grains flashing and gone.
@@ -350,6 +355,7 @@ particle rsb_spark_star
 	texture  = "RSKTA0", 1, 1, loop
 	orient   = billboard
 	spin     = -360, 360
+	collide  = level
 }
 
 // Tiny spark clusters, flickering through their frames.
@@ -367,6 +373,7 @@ particle rsb_spark_speck
 	texture  = "RSKPA0", 4, 20, loop
 	orient   = billboard
 	spin     = -180, 180
+	collide  = level
 }
 
 // A glowing ember: slower, longer, falling as it cools to dark red.
@@ -383,6 +390,7 @@ particle rsb_spark_ember
 	soft     = 1
 	texture  = "RSKEA0", 1, 1, loop
 	orient   = billboard
+	collide  = level
 }
 
 // A photoreal sparkler burst: a big gun's biggest shots, one bright starburst.
@@ -400,6 +408,7 @@ particle rsb_spark_sparkler
 	texture  = "RSKBA0", 1, 1, loop
 	orient   = billboard
 	spin     = -90, 90
+	collide  = level
 }
 
 // ---------------------------------------------------------------- PLASMA
@@ -697,7 +706,7 @@ particle rsb_debris_chip
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 }
 
 particle rsb_debris_splinter
@@ -713,7 +722,7 @@ particle rsb_debris_splinter
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 }
 
 particle rsb_debris_clod
@@ -729,7 +738,7 @@ particle rsb_debris_clod
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 }
 
 // Glass: see-through, catching the room's light on its edges as it turns.
@@ -746,7 +755,7 @@ particle rsb_debris_shard
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 }
 
 // ---------------------------------------------------------------- TRAILS
@@ -785,7 +794,7 @@ particle rsb_chunk_concrete_chip1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -801,7 +810,7 @@ particle rsb_chunk_concrete_chip2
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -817,7 +826,7 @@ particle rsb_chunk_concrete_chip3
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -833,7 +842,7 @@ particle rsb_chunk_concrete_chip4
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -849,7 +858,7 @@ particle rsb_chunk_concrete_slab1
 	gravity  = 700
 	drag     = 0.4
 	spin     = -360, 360
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 10, loop
 	orient   = flake
@@ -865,7 +874,7 @@ particle rsb_chunk_concrete_slab2
 	gravity  = 700
 	drag     = 0.4
 	spin     = -360, 360
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 10, loop
 	orient   = flake
@@ -882,7 +891,7 @@ particle rsb_chunk_wood_splinter1
 	gravity  = 450
 	drag     = 1.0
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
@@ -898,7 +907,7 @@ particle rsb_chunk_wood_splinter2
 	gravity  = 450
 	drag     = 1.0
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
@@ -914,7 +923,7 @@ particle rsb_chunk_wood_splinter3
 	gravity  = 450
 	drag     = 1.0
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
@@ -930,7 +939,7 @@ particle rsb_chunk_wood_plank1
 	gravity  = 550
 	drag     = 0.6
 	spin     = -420, 420
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 8, loop
 	orient   = flake
@@ -947,7 +956,7 @@ particle rsb_chunk_metal_shard1
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -963,7 +972,7 @@ particle rsb_chunk_metal_shard2
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -979,7 +988,7 @@ particle rsb_chunk_metal_shard3
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -996,7 +1005,7 @@ particle rsb_chunk_glass_shard1
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1012,7 +1021,7 @@ particle rsb_chunk_glass_shard2
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1028,7 +1037,7 @@ particle rsb_chunk_glass_shard3
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1045,7 +1054,7 @@ particle rsb_chunk_dirt_clod1
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1061,7 +1070,7 @@ particle rsb_chunk_dirt_clod2
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1077,7 +1086,7 @@ particle rsb_chunk_dirt_clod3
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1097,7 +1106,7 @@ particle rsb_chunk_concrete_chip5
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1113,7 +1122,7 @@ particle rsb_chunk_concrete_chip6
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1129,7 +1138,7 @@ particle rsb_chunk_concrete_chip7
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1145,7 +1154,7 @@ particle rsb_chunk_concrete_chip8
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1161,7 +1170,7 @@ particle rsb_chunk_concrete_slab3
 	gravity  = 700
 	drag     = 0.4
 	spin     = -360, 360
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 10, loop
 	orient   = flake
@@ -1177,7 +1186,7 @@ particle rsb_chunk_concrete_rubble1
 	gravity  = 750
 	drag     = 0.35
 	spin     = -300, 300
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 8, loop
 	orient   = flake
@@ -1193,7 +1202,7 @@ particle rsb_chunk_concrete_rubble2
 	gravity  = 750
 	drag     = 0.35
 	spin     = -300, 300
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 8, loop
 	orient   = flake
@@ -1209,7 +1218,7 @@ particle rsb_chunk_concrete_rubble3
 	gravity  = 750
 	drag     = 0.35
 	spin     = -300, 300
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 8, loop
 	orient   = flake
@@ -1225,7 +1234,7 @@ particle rsb_chunk_wood_splinter4
 	gravity  = 450
 	drag     = 1
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
@@ -1241,7 +1250,7 @@ particle rsb_chunk_wood_splinter5
 	gravity  = 450
 	drag     = 1
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
@@ -1257,7 +1266,7 @@ particle rsb_chunk_wood_plank2
 	gravity  = 550
 	drag     = 0.6
 	spin     = -420, 420
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 8, loop
 	orient   = flake
@@ -1273,7 +1282,7 @@ particle rsb_chunk_wood_woodchip1
 	gravity  = 420
 	drag     = 1.4
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 12, loop
 	orient   = flake
@@ -1289,7 +1298,7 @@ particle rsb_chunk_wood_woodchip2
 	gravity  = 420
 	drag     = 1.4
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 12, loop
 	orient   = flake
@@ -1305,7 +1314,7 @@ particle rsb_chunk_wood_woodchip3
 	gravity  = 420
 	drag     = 1.4
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 12, loop
 	orient   = flake
@@ -1321,7 +1330,7 @@ particle rsb_chunk_metal_shard4
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1337,7 +1346,7 @@ particle rsb_chunk_metal_shard5
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1353,7 +1362,7 @@ particle rsb_chunk_metal_nut1
 	gravity  = 700
 	drag     = 0.4
 	spin     = -720, 720
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1369,7 +1378,7 @@ particle rsb_chunk_metal_strip1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
@@ -1385,7 +1394,7 @@ particle rsb_chunk_glass_shard4
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1401,7 +1410,7 @@ particle rsb_chunk_glass_shard5
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1417,7 +1426,7 @@ particle rsb_chunk_glass_sliver1
 	gravity  = 520
 	drag     = 0.9
 	spin     = -1080, 1080
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1433,7 +1442,7 @@ particle rsb_chunk_glass_sliver2
 	gravity  = 520
 	drag     = 0.9
 	spin     = -1080, 1080
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
@@ -1449,7 +1458,7 @@ particle rsb_chunk_dirt_clod4
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1465,7 +1474,7 @@ particle rsb_chunk_dirt_clod5
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1481,7 +1490,7 @@ particle rsb_chunk_dirt_pebble1
 	gravity  = 700
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1497,7 +1506,7 @@ particle rsb_chunk_dirt_pebble2
 	gravity  = 700
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1513,7 +1522,7 @@ particle rsb_chunk_dirt_pebble3
 	gravity  = 700
 	drag     = 0.5
 	spin     = -600, 600
-	collide  = plane
+	collide  = level
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
@@ -1537,6 +1546,7 @@ particle rsb_spark_impact
 	texture  = "RSKSA0", 1, 1, loop
 	orient   = streak
 	stretch  = 0.025
+	collide  = level
 }
 
 // A ricochet off metal: long photoreal streaks, a hot head and a tail.
@@ -1554,6 +1564,7 @@ particle rsb_spark_ricochet
 	texture  = "RSKRA0", 1, 1, loop
 	orient   = streak
 	stretch  = 0.035
+	collide  = level
 }
 
 // Hot metal torn off by a hit: glowing beads that fall and cool.
@@ -1570,4 +1581,5 @@ particle rsb_ember_metal
 	soft     = 1
 	texture  = "RSKEA0", 1, 1, loop
 	orient   = billboard
+	collide  = level
 }
