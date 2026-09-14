@@ -15,7 +15,12 @@ class RSB_Burst play
 {
 	// One emission. `normal` is the surface's (or, for a flash, the barrel's)
 	// direction; `travel` the round's.
-	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed)
+	//
+	// ONTO: the surface it comes off, when there is one. A burst drawn with a
+	// PARTICLEDEFS definition that says `collide = plane` then keeps its particles
+	// in front of that surface and skids them on the floor in front of it (engine
+	// F4). No surface -- a flash, a blast in mid-air -- passes no plane.
+	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null)
 	{
 		if (!b) return;
 		int n = int(b.count * countScale + 0.5);
@@ -44,8 +49,18 @@ class RSB_Burst play
 
 		if (b.particle.Length() > 0)
 		{
-			level.SpawnParticles(Handle(b), at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
-				b.life, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed);
+			Vector3 planeAt = (0, 0, 0);
+			Vector3 planeNormal = (0, 0, 0);
+			double floorAt = -32768;
+			if (onto && !onto.air && !onto.sky)
+			{
+				planeAt = onto.at;
+				planeNormal = onto.normal;
+				floorAt = FloorBelow(onto.at, onto.normal);
+			}
+			level.SpawnParticles(Handle(b), at + normal * b.offset, dir, n, Spread(b), b.speed, b.speedJitter,
+				b.life, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed,
+				b.shape, planeAt, planeNormal, floorAt);
 			return;
 		}
 		level.SpawnGpuParticles(at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
@@ -55,20 +70,46 @@ class RSB_Burst play
 
 	// One emission whose speed and life the caller decides (a flame's stream: the
 	// fuel's speed, and the time to where it lands). Everything else is the burst's.
-	static void FireCustom(RSB_BurstDef b, Vector3 at, Vector3 dir, double countScale, double speedValue, double lifeValue, double glowScale, int seed)
+	// The plane and floor are the caller's (FloorBelow gives the floor); a zero
+	// normal is no plane.
+	static void FireCustom(RSB_BurstDef b, Vector3 at, Vector3 dir, double countScale, double speedValue, double lifeValue, double glowScale, int seed,
+		Vector3 planeAt = (0, 0, 0), Vector3 planeNormal = (0, 0, 0), double floorAt = -32768)
 	{
 		if (!b || lifeValue <= 0) return;
 		int n = int(b.count * countScale + 0.5);
 		if (n <= 0) return;
 		if (b.particle.Length() > 0)
 		{
-			level.SpawnParticles(Handle(b), at + dir * b.offset, dir, n, b.cone, speedValue, b.speedJitter,
-				lifeValue, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed);
+			level.SpawnParticles(Handle(b), at + dir * b.offset, dir, n, Spread(b), speedValue, b.speedJitter,
+				lifeValue, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed,
+				b.shape, planeAt, planeNormal, floorAt);
 			return;
 		}
 		level.SpawnGpuParticles(at + dir * b.offset, dir, n, b.cone, speedValue, b.speedJitter,
 			b.tint, b.glow * glowScale, lifeValue, b.lifeJitter, b.sizeStart, b.sizeEnd, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
+	}
+
+	// THE FLOOR A SKIDDING PARTICLE STOPS ON: the highest floor at or below a point
+	// just in front of the surface, 3D floors included. Map data only -- the same on
+	// every machine -- and only ever used for what is drawn.
+	static double FloorBelow(Vector3 at, Vector3 normal)
+	{
+		Vector3 p = at + normal * 2.0;
+		Sector sec = level.PointInSector(p.xy);
+		if (!sec) return -32768;
+		double fz;
+		Sector fsec;
+		F3DFloor ffloor;
+		[fz, fsec, ffloor] = sec.NextLowestFloorAt(p.x, p.y, p.z + 1.0);
+		return fz;
+	}
+
+	// A cone's spread is its half-angle; a disc's is how far it lifts off the
+	// surface, which the engine takes as 0 to 90 degrees.
+	private static double Spread(RSB_BurstDef b)
+	{
+		return (b.shape == RSB_BurstDef.SHAPE_DISC) ? min(b.cone, 90.0) : b.cone;
 	}
 
 	// The burst's PARTICLEDEFS handle, looked up once. A hash of the name: the same
@@ -178,10 +219,10 @@ class RSB_Impact play
 
 		for (int i = 0; i < im.bursts.Size(); i++)
 			RSB_Burst.Fire(reg.FindBurst(im.bursts[i]), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(level.maptime, i + 1, posSeed));
+				RSB_Hash.Seed(level.maptime, i + 1, posSeed), surf);
 		if (glancing && !(im.glanceBurst ~== "none"))
 			RSB_Burst.Fire(reg.FindBurst(im.glanceBurst), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(level.maptime, 97, posSeed));
+				RSB_Hash.Seed(level.maptime, 97, posSeed), surf);
 
 		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks())
 		{

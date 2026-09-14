@@ -619,6 +619,15 @@ class RSB_Parser
 			b.particleHandle = 0;
 			return "";
 		}
+		if (key == "shape")
+		{
+			if (v.Size() != 1) return "shape is cone or disc";
+			String sh = v[0].MakeLower();
+			if (sh == "cone") b.shape = RSB_BurstDef.SHAPE_CONE;
+			else if (sh == "disc") b.shape = RSB_BurstDef.SHAPE_DISC;
+			else return String.Format("shape \"%s\" is not cone or disc", v[0]);
+			return "";
+		}
 		return String.Format("unknown burst key \"%s\"", key);
 	}
 
@@ -957,6 +966,12 @@ class RSB_Parser
 			if (v.Size() == 0) return "flameout is one or more burst names, or none";
 			for (int i = 0; i < v.Size(); i++) fm.flameout.Push(v[i]);
 			return "";
+		}
+		if (key == "cling")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			fm.cling = v[0].ToDouble();
+			return (fm.cling >= 0 && fm.cling <= 2) ? "" : "cling is 0 to 2 seconds";
 		}
 		return String.Format("unknown flame key \"%s\"", key);
 	}

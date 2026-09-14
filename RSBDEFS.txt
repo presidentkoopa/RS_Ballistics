@@ -95,6 +95,9 @@ end
 #   stretch     streak length, seconds of travel
 #   aim         normal | reflect | back | along | up
 #   offset      map units off the surface
+#   shape       cone (the default) | disc: a disc spreads ACROSS its aim -- along
+#               the surface, for aim normal -- lifted off it by up to `cone`
+#               degrees (0-90). Only for bursts drawn with a `particle`.
 
 burst spark_hot
   count   = 14
@@ -1035,7 +1038,11 @@ end
 #   stream       bursts fired from the nozzle every tic. FOR THESE, a burst's
 #                speed and life are MULTIPLIERS: of the fuel speed, and of the
 #                time the fuel takes to reach where the stream lands (1 = it
-#                reaches it). They never fly on past a surface the stream hits.
+#                reaches it). They never fly on past a surface the stream hits,
+#                except for `cling`.
+#   cling        seconds a stream puff drawn with a `particle` lives on past the
+#                wall or floor the stream hits, sliding along it (its definition's
+#                `collide = plane`); 0, the default, ends it there
 #   landing      bursts where it lands (ordinary bursts), every landingtics
 #   scorch       shape, radius, life (tics)   scorchcolor r, g, b   scorchtics
 #   light        radius, intensity, flicker 0..1 (at the nozzle)   lightcolor
@@ -1046,8 +1053,9 @@ end
 #   sputter      fuel share, sound: below that share of fuel (Stream's fuelShare)
 #                the jet coughs, and the sound plays as it catches again
 #   flameout     bursts when the trigger lets go (not from an empty canister)
-# GPU particles are capped at r_gpuparticles_maxsize (8 map units by default):
-# many overlapping puffs, not a few big ones, until the engine's next stage.
+# GPU particles are drawn at min(the definition's maxsize, r_gpuparticles_maxsize).
+# That cvar is 8 until the owner raises the engine's size-cap slider (F5), so big
+# puffs show only then.
 
 burst flame_core
   count   = 6
@@ -1169,12 +1177,24 @@ burst flame_out_puff
   offset  = 2
 end
 
+burst flame_sheet        # fire spreading ACROSS the wall or floor it lands on (collide = plane)
+  count    = 5
+  cone     = 12          # a disc: lifted off the surface by up to 12 degrees
+  speed    = 90, 0.5
+  life     = 0.7, 0.3
+  aim      = normal
+  offset   = 2
+  shape    = disc
+  particle = rsb_flame_puff
+end
+
 flame incinerator        # a tight, fast jet
   reach       = 520
   speed       = 950
   spread      = 1.5
   stream      = flame_core, flame_body, flame_tip, flame_embers
-  landing     = flame_splash, flame_embers_rise, flame_smoke
+  landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke
+  cling       = 0.15
   landingtics = 2
   scorch      = pool, 10, 105
   scorchcolor = 255, 100, 25
@@ -1193,7 +1213,8 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   speed       = 620
   spread      = 4
   stream      = flame_core, flame_body, flame_body, flame_tip, flame_embers
-  landing     = flame_splash, flame_licks, flame_embers_rise, flame_smoke
+  landing     = flame_splash, flame_sheet, flame_licks, flame_embers_rise, flame_smoke
+  cling       = 0.3           # it sticks: puffs slide along what they hit twice as long
   landingtics = 1
   scorch      = sunburst, 16, 140
   scorchcolor = 255, 90, 20

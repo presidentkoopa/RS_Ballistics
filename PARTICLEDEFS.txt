@@ -5,7 +5,8 @@
 // `particle = <name>` (RSB_Burst -> level.SpawnParticles, by handle).
 //
 // ALL IN USE since engine 6997b2c308 (stage 2d: lit, alpha-blended, soft):
-//   rsb_flame_puff, rsb_flame_tip   the flamethrower's body and tip (burst particle)
+//   rsb_flame_puff, rsb_flame_tip   the flamethrower's body and tip (burst particle),
+//                                   and flame_sheet where it lands
 //   rsb_smoke_gun                   muzzle smoke (flash `smokeparticle`), rsb_bench_smoke200
 //   rsb_smoke_flame                 black smoke where a flame lands (burst flame_smoke)
 //   rsb_dust_concrete, rsb_dust_wood  impact dust (bursts dust_concrete, dust_wood)
@@ -14,8 +15,13 @@
 // NOT SORTED: a newer puff dims an older spark in front of it, and so on.
 // SOFT: a definition's own `soft` wins over the Soft particles slider.
 // TINT colours the smoke body; intensity scales only emissive.
-// SIZE CAP: min(maxsize, r_gpuparticles_maxsize); the cvar defaults to 8, so
-// the bigger sizes here show once it is raised (the flame plan's F5 slider).
+// SIZE CAP: min(maxsize, r_gpuparticles_maxsize). The cvar defaults to 8, so the
+// bigger sizes here show once it is raised (the engine's size-cap slider, F5).
+// COLLIDE (engine F4, built in 2b): `collide = plane` keeps particles in front of
+// the surface an emission names and skids them on the floor in front of it.
+// RS_Ballistics names one where a round lands (RSB_Impact.LandOn) and where a
+// flame lands (its stream and landing bursts). An emission with no surface -- a
+// muzzle, a blast in mid-air -- names none, and the key changes nothing.
 // Engine notes: Engine docs/STAGE2B_IMPL_NOTES.md, STAGE2C_IMPL_NOTES.md,
 // STAGE2D_IMPL_NOTES.md.
 //
@@ -23,6 +29,7 @@
 // work as they are (SpawnGpuParticles draws through inline definitions). These
 // need the new keys:
 //   - size ramps past the old 8-unit cap (flame puffs, dust clouds)   2b
+//   - staying in front of a surface, sliding along it                   2b
 //   - alpha that hides what is behind it                               2d
 //   - light from the lights in view (a muzzle flash turns smoke orange) 2d
 //   - soft contact with walls and floors                               2a
@@ -36,7 +43,8 @@
 //       "RSSKA0", 6 is RSSKA0, RSSKB0 ... RSSKF0. Any other name counts its
 //       trailing number up, padding kept (SMOKE01 ... SMOKE06). A missing frame
 //       refuses that one definition. Approved; GPU_PARTICLES_STAGE2_PLAN.md 2c.
-//   orient = billboard | streak | flake   stretch   spin = min, max   collide
+//   orient = billboard | streak | flake   stretch   spin = min, max
+//   collide = none | plane
 // ============================================================================
 
 // ---------------------------------------------------------------- FLAME
@@ -55,6 +63,7 @@ particle rsb_flame_puff
 	soft     = 8
 	orient   = billboard
 	spin     = -120, 120
+	collide  = plane
 }
 
 // The ragged tip: fewer, larger, redder, fading sooner.
@@ -71,6 +80,7 @@ particle rsb_flame_tip
 	soft     = 8
 	orient   = billboard
 	spin     = -90, 90
+	collide  = plane
 }
 
 // Black smoke off burning fuel: dark, hides the room behind it, lit from below
@@ -89,10 +99,12 @@ particle rsb_smoke_flame
 	texture  = "RSSKA0", 6, 8, loop
 	orient   = billboard
 	spin     = -20, 20
+	collide  = plane
 }
 
 // ---------------------------------------------------------------- GUNSMOKE
 // Barrel smoke: pale grey, thin, drifts up and hangs; catches the muzzle flash.
+// No `collide`: a muzzle is no surface.
 particle rsb_smoke_gun
 {
 	size     = 4 @0, 18 @0.4, 30 @1
@@ -125,6 +137,7 @@ particle rsb_dust_concrete
 	texture  = "RSSKA0", 6, 8, once
 	orient   = billboard
 	spin     = -40, 40
+	collide  = plane
 }
 
 // Wood dust: browner, lighter, settles sooner.
@@ -142,4 +155,5 @@ particle rsb_dust_wood
 	texture  = "RSSKA0", 6, 8, once
 	orient   = billboard
 	spin     = -40, 40
+	collide  = plane
 }

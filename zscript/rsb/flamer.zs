@@ -336,6 +336,20 @@ class RSB_FlameEmitter : Actor
 		}
 		if (wasOut) FlameOut(0.5);
 
+		// WHAT IT LANDS ON. A wall or a floor is a plane the stream and the landing
+		// bursts slide along (PARTICLEDEFS `collide = plane`) instead of passing
+		// into; a monster is no surface, and the stream wraps round it as before.
+		RSB_Surface surf = landed ? RSB_Materials.FromTrace(d, dir) : null;
+		Vector3 planeAt = (0, 0, 0);
+		Vector3 planeNormal = (0, 0, 0);
+		double landFloor = -32768;
+		if (surf)
+		{
+			planeAt = surf.at;
+			planeNormal = surf.normal;
+			landFloor = RSB_Burst.FloorBelow(surf.at, surf.normal);
+		}
+
 		// THE STREAM. A written tier variant is used as written; otherwise the tier
 		// scales the counts, and the player's slider and style scale on top. Side by
 		// side `jets` share the count between them.
@@ -362,11 +376,13 @@ class RSB_FlameEmitter : Actor
 				if (spd < 0.001) continue;
 				// The average particle dies where the stream lands. Jitter (+/-) lets the
 				// fastest go a little past: behind a wall the depth test hides them; on
-				// a monster it reads as flame wrapping round it.
+				// a monster it reads as flame wrapping round it. On a surface, a puff
+				// drawn with a definition lives the profile's `cling` longer, sliding
+				// along the surface instead of into it.
 				double life = travelSecs * b.life;
-				if (landed) life = min(life, landDist / spd);
+				if (landed) life = min(life, landDist / spd + ((surf && b.particle.Length() > 0) ? fd.cling : 0.0));
 				RSB_Burst.FireCustom(b, jetAt, v / spd, perJet, spd, life, 1.0,
-					RSB_Hash.Seed(level.maptime, burnSeq * 16 + i, posSeed + j * 977));
+					RSB_Hash.Seed(level.maptime, burnSeq * 16 + i, posSeed + j * 977), planeAt, planeNormal, landFloor);
 			}
 		}
 
@@ -379,7 +395,6 @@ class RSB_FlameEmitter : Actor
 		// FIRE WHERE IT LANDS.
 		Vector3 at = d.HitLocation;
 		Vector3 n = -dir;
-		let surf = RSB_Materials.FromTrace(d, dir);
 		if (surf)
 		{
 			at = surf.at;
@@ -390,7 +405,7 @@ class RSB_FlameEmitter : Actor
 			int landSeed = RSB_Hash.OfPos(at);
 			for (int i = 0; i < fd.landing.Size(); i++)
 				RSB_Burst.Fire(reg.FindBurst(fd.landing[i]), at, n, dir, countScale, 1.0,
-					RSB_Hash.Seed(level.maptime, 200 + i, landSeed));
+					RSB_Hash.Seed(level.maptime, 200 + i, landSeed), surf);
 		}
 		if (surf && fd.markShape >= 0 && fd.markTics > 0 && (burnSeq % fd.markTics) == 0 && RSB_Settings.Marks())
 		{

@@ -96,6 +96,9 @@ class RSB_BurstDef : RSB_Def
 	const AIM_ALONG   = 3;   // the way the round (or the barrel) points
 	const AIM_UP      = 4;
 
+	const SHAPE_CONE  = 0;   // around the aim, `cone` its half-angle
+	const SHAPE_DISC  = 1;   // across the aim (along a surface), lifted up to `cone` degrees
+
 	int    count;
 	double cone;         // half-angle, degrees
 	double speed;        // map units per second
@@ -112,6 +115,7 @@ class RSB_BurstDef : RSB_Def
 	double stretch;      // streak length, seconds of travel
 	int    aim;
 	double offset;       // map units off the surface before emitting
+	int    shape;        // SHAPE_CONE or SHAPE_DISC; only a `particle` burst draws a disc
 
 	// A PARTICLEDEFS definition to draw with, or "". With one, the DEFINITION
 	// supplies colour, emissive, size, gravity, drag, orient, stretch and spin; the
@@ -271,6 +275,7 @@ class RSB_FlameDef : RSB_Def
 	double sputterBelow;     // fuel share (0..1) below which the jet coughs; 0 = never
 	String sputterSound;     // as a coughing jet catches again
 	Array<String> flameout;  // bursts when the trigger lets go
+	double cling;            // seconds a stream puff slides on past the surface it hits; 0 = none
 }
 
 // A STYLE: a named look the player picks in the menu. Multipliers over every
