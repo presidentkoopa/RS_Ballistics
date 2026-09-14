@@ -26,7 +26,13 @@ class RSB_Burst play
 	//
 	// OFFSETSCALE: the burst's offset x this -- a flash's gun size (`sizecvar`), so a backblast
 	// offset behind the muzzle stays at the rear of a resized tube.
-	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null, double sizeScale = 1.0, double offsetScale = 1.0)
+	//
+	// PER-SHOT SHAPE (sparks: RSB_Flash's `sparkvary`, RSB_Impact's hit sparks): SPREADSCALE opens or
+	// tightens the cone, SPEEDSCALE and LIFESCALE lengthen or shorten the throw, and LEANDEG tilts the
+	// whole emission up to that many degrees off its aim toward a side hashed from LEANSEED -- so each
+	// shot's spray leans its own way. All 1 / 0 by default: every other caller is unchanged.
+	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null, double sizeScale = 1.0, double offsetScale = 1.0,
+		double spreadScale = 1.0, double speedScale = 1.0, double lifeScale = 1.0, double leanDeg = 0.0, int leanSeed = 0)
 	{
 		if (!b) return;
 		int n = int(b.count * countScale + 0.5);
@@ -52,6 +58,7 @@ class RSB_Burst play
 		}
 		if (dir.Length() < 0.000001) dir = (0, 0, 1);
 		dir = dir.Unit();
+		if (leanDeg > 0) dir = Lean(dir, leanDeg, leanSeed);
 
 		if (b.particle.Length() > 0)
 		{
@@ -71,15 +78,37 @@ class RSB_Burst play
 				int share = n / kinds + ((k < n % kinds) ? 1 : 0);
 				if (share <= 0) continue;
 				int handle = (k == 0) ? Handle(b) : MoreHandle(b, k - 1);
-				level.SpawnParticles(handle, at + normal * (b.offset * offsetScale), dir, share, Spread(b), b.speed, b.speedJitter,
-					b.life, b.lifeJitter, b.tint, glowScale, sizeScale, (k == 0) ? seed : RSB_Hash.Seed(seed, k, 613),
+				level.SpawnParticles(handle, at + normal * (b.offset * offsetScale), dir, share, clamp(Spread(b) * spreadScale, 0.0, 180.0), b.speed * speedScale, b.speedJitter,
+					b.life * lifeScale, b.lifeJitter, b.tint, glowScale, sizeScale, (k == 0) ? seed : RSB_Hash.Seed(seed, k, 613),
 					b.shape, planeAt, planeNormal, floorAt);
 			}
 			return;
 		}
-		level.SpawnGpuParticles(at + normal * (b.offset * offsetScale), dir, n, b.cone, b.speed, b.speedJitter,
-			b.tint, b.glow * glowScale, b.life, b.lifeJitter, b.sizeStart * sizeScale, b.sizeEnd * sizeScale, b.gravity, b.drag,
+		level.SpawnGpuParticles(at + normal * (b.offset * offsetScale), dir, n, clamp(b.cone * spreadScale, 0.0, 180.0), b.speed * speedScale, b.speedJitter,
+			b.tint, b.glow * glowScale, b.life * lifeScale, b.lifeJitter, b.sizeStart * sizeScale, b.sizeEnd * sizeScale, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
+	}
+
+	// A DIRECTION TILTED up to `maxDeg` (at least a third of it) toward a side hashed from `seed`.
+	static Vector3 Lean(Vector3 dir, double maxDeg, int seed)
+	{
+		double a = RSB_Hash.Between(0.35, 1.0, seed, 3, 911) * maxDeg;
+		double phi = RSB_Hash.Between(0.0, 360.0, seed, 5, 911);
+		Vector3 up = (abs(dir.z) < 0.9) ? (0, 0, 1) : (1, 0, 0);
+		Vector3 u = (up cross dir).Unit();
+		Vector3 w = dir cross u;
+		return (dir * cos(a) + (u * cos(phi) + w * sin(phi)) * sin(a)).Unit();
+	}
+
+	// A SPARK BURST -- hot streaks, specks, stars, embers, powder -- the bursts the per-shot spark
+	// variation shapes. Flame, core, petals, plumes, smoke, dust and chunks are not.
+	static bool IsSpark(RSB_BurstDef b)
+	{
+		if (!b) return false;
+		if (b.particle.IndexOf("rsb_spark") == 0 || b.particle.IndexOf("rsb_ember") == 0) return true;
+		String id = b.id.MakeLower();
+		return id.IndexOf("spk_") == 0 || id.IndexOf("spark_") == 0 || id.IndexOf("ember_") == 0
+			|| id.IndexOf("flash_sparks") == 0 || id.IndexOf("flash_powder") == 0 || id.IndexOf("flash_embers") == 0;
 	}
 
 	// One emission whose speed and life the caller decides (a flame's stream: the
@@ -185,6 +214,8 @@ class RSB_Wake play
 
 class RSB_Impact play
 {
+	const HIT_SPARK_LEAN = 10.0;   // degrees a hit's spark bursts may lean off their aim, per hit
+
 	// A landing projectile. inAirToo: a projectile that must show its impact even
 	// with no surface to land on -- a rocket bursting on a monster or in the air --
 	// gets it where it is, facing back along its flight, with no mark.
@@ -263,18 +294,36 @@ class RSB_Impact play
 		double sizeScale = im.sizeScale * RSB_Hash.Wobble(im.varySize, hitTic, 503, posSeed);
 		double lightWobble = RSB_Hash.Wobble(im.varyLight, hitTic, 505, posSeed);
 
+		// HIT SPARKS VARY TOO (lighter than a muzzle's `sparkvary`): this hit's spark bursts lean up to
+		// HIT_SPARK_LEAN degrees off their aim toward a hashed side, and their spread, speed and size vary
+		// per hit. Chips, dust, splashes and energy keep their shape.
+		int hitLeanSeed = RSB_Hash.Seed(hitTic, 521, posSeed);
+		double hSpread = RSB_Hash.Wobble(0.3, hitTic, 523, posSeed);
+		double hSpeed  = RSB_Hash.Wobble(0.35, hitTic, 525, posSeed);
+		double hSize   = RSB_Hash.Wobble(0.25, hitTic, 527, posSeed);
+
 		for (int i = 0; i < im.bursts.Size(); i++)
-			RSB_Burst.Fire(reg.FindBurst(im.bursts[i]), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(hitTic, i + 1, posSeed), surf, sizeScale);
+		{
+			let bd = reg.FindBurst(im.bursts[i]);
+			bool sp = RSB_Burst.IsSpark(bd);
+			RSB_Burst.Fire(bd, surf.at, surf.normal, travel, countScale, glowScale, RSB_Hash.Seed(hitTic, i + 1, posSeed), surf,
+				sp ? sizeScale * hSize : sizeScale, 1.0, sp ? hSpread : 1.0, sp ? hSpeed : 1.0, 1.0, sp ? HIT_SPARK_LEAN : 0.0, hitLeanSeed);
+		}
 		for (int i = 0; i < im.maybeBursts.Size(); i++)
 		{
 			if (RSB_Hash.Frac(hitTic, 511 + i * 2, posSeed) >= im.maybeChance[i]) continue;
-			RSB_Burst.Fire(reg.FindBurst(im.maybeBursts[i]), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(hitTic, 41 + i, posSeed), surf, sizeScale);
+			let bd = reg.FindBurst(im.maybeBursts[i]);
+			bool sp = RSB_Burst.IsSpark(bd);
+			RSB_Burst.Fire(bd, surf.at, surf.normal, travel, countScale, glowScale, RSB_Hash.Seed(hitTic, 41 + i, posSeed), surf,
+				sp ? sizeScale * hSize : sizeScale, 1.0, sp ? hSpread : 1.0, sp ? hSpeed : 1.0, 1.0, sp ? HIT_SPARK_LEAN : 0.0, hitLeanSeed);
 		}
 		if (glancing && !(im.glanceBurst ~== "none"))
-			RSB_Burst.Fire(reg.FindBurst(im.glanceBurst), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(hitTic, 97, posSeed), surf, sizeScale);
+		{
+			let bd = reg.FindBurst(im.glanceBurst);
+			bool sp = RSB_Burst.IsSpark(bd);
+			RSB_Burst.Fire(bd, surf.at, surf.normal, travel, countScale, glowScale, RSB_Hash.Seed(hitTic, 97, posSeed), surf,
+				sp ? sizeScale * hSize : sizeScale, 1.0, sp ? hSpread : 1.0, sp ? hSpeed : 1.0, 1.0, sp ? HIT_SPARK_LEAN : 0.0, hitLeanSeed);
+		}
 
 		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks())
 		{

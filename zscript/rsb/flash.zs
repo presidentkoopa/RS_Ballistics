@@ -145,15 +145,25 @@ class RSB_Flash : Actor
 		if (reg)
 		{
 			double sparkScale = countScale * RSB_Settings.FlashSparks() * vSparks;
+			// EACH SHOT ITS OWN SPRAY (`sparkvary`, owner 09-14: "the sparks need more randomization per
+			// shot"): this shot's spark bursts lean a hashed few degrees off the bore, open wider or
+			// tighter, fly faster or lazier, burn fatter or finer, brighter or dimmer, longer or shorter,
+			// and each one's share of the mix rises or falls. Flame, core, plumes and smoke keep their shape.
+			int leanSeed   = RSB_Hash.Seed(shotTic, 433, posSeed);
+			double sSpread = RSB_Hash.Wobble(fd.sparkSpread, shotTic, 435, posSeed);
+			double sSpeed  = RSB_Hash.Wobble(fd.sparkSpeed, shotTic, 437, posSeed);
+			double sSize   = RSB_Hash.Wobble(fd.sparkSize, shotTic, 439, posSeed);
+			double sGlow   = RSB_Hash.Wobble(fd.sparkGlow, shotTic, 441, posSeed);
+			double sLife   = RSB_Hash.Wobble(fd.sparkLife, shotTic, 443, posSeed);
 			for (int i = 0; i < fd.bursts.Size(); i++)
-				RSB_Burst.Fire(reg.FindBurst(fd.bursts[i]), pos, dir, dir, sparkScale, 1.0,
-					RSB_Hash.Seed(shotTic, i + 1, posSeed), null, 1.0, sizeMul);
+				ShotBurst(reg.FindBurst(fd.bursts[i]), fd, sparkScale, RSB_Hash.Seed(shotTic, i + 1, posSeed), sizeMul,
+					RSB_Hash.Wobble(fd.sparkMix, shotTic, 451 + i * 2, posSeed), leanSeed, sSpread, sSpeed, sSize, sGlow, sLife);
 			// Bursts only some shots throw: powder specks, a wider spray.
 			for (int i = 0; i < fd.maybeBursts.Size(); i++)
 			{
 				if (RSB_Hash.Frac(shotTic, 421 + i * 2, posSeed) >= fd.maybeChance[i]) continue;
-				RSB_Burst.Fire(reg.FindBurst(fd.maybeBursts[i]), pos, dir, dir, sparkScale, 1.0,
-					RSB_Hash.Seed(shotTic, 61 + i, posSeed), null, 1.0, sizeMul);
+				ShotBurst(reg.FindBurst(fd.maybeBursts[i]), fd, sparkScale, RSB_Hash.Seed(shotTic, 61 + i, posSeed), sizeMul,
+					RSB_Hash.Wobble(fd.sparkMix, shotTic, 481 + i * 2, posSeed), leanSeed, sSpread, sSpeed, sSize, sGlow, sLife);
 			}
 		}
 
@@ -218,6 +228,21 @@ class RSB_Flash : Actor
 			coneOn ? "on" : "off", fd.bursts.Size(), puffs));
 	}
 
+
+	// ONE OF THE SHOT'S BURSTS: a spark burst takes this shot's spray (lean, spread, speed, size, glow,
+	// life) and its own share of the mix; any other burst fires as the profile wrote it.
+	private void ShotBurst(RSB_BurstDef bd, RSB_FlashDef fd, double countScale, int seed, double sizeMul,
+		double mix, int leanSeed, double sSpread, double sSpeed, double sSize, double sGlow, double sLife)
+	{
+		if (!bd) return;
+		if (!RSB_Burst.IsSpark(bd))
+		{
+			RSB_Burst.Fire(bd, pos, dir, dir, countScale, 1.0, seed, null, 1.0, sizeMul);
+			return;
+		}
+		RSB_Burst.Fire(bd, pos, dir, dir, countScale * mix, sGlow, seed, null, sSize, sizeMul,
+			sSpread, sSpeed, sLife, fd.sparkLean, leanSeed);
+	}
 
 	private void StrobeLight(double k)
 	{

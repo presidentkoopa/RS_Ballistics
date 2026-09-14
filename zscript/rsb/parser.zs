@@ -274,6 +274,14 @@ class RSB_Parser
 			d.surgeChance = 0;
 			d.surgeScale = 1;
 			d.flameRoll = true;
+			// Every gun's sparks vary per shot unless a profile says otherwise (`sparkvary`).
+			d.sparkLean = 12;
+			d.sparkSpread = 0.45;
+			d.sparkSpeed = 0.45;
+			d.sparkSize = 0.4;
+			d.sparkGlow = 0.35;
+			d.sparkLife = 0.3;
+			d.sparkMix = 0.7;
 			d.barrelPerShot = 0;
 			d.barrelCool = 0.3;
 			d.barrelSmokeFrom = 0.5;
@@ -1089,6 +1097,38 @@ class RSB_Parser
 				else if (word == "sparks") f.varySparks = amount;
 				else if (word == "smoke") f.varySmoke = amount;
 				else return String.Format("vary \"%s\" is not light, flame, cone, sparks or smoke", word);
+			}
+			return "";
+		}
+		if (key == "sparkvary")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.sparkLean = 0;
+				f.sparkSpread = 0;
+				f.sparkSpeed = 0;
+				f.sparkSize = 0;
+				f.sparkGlow = 0;
+				f.sparkLife = 0;
+				f.sparkMix = 0;
+				return "";
+			}
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 45.0, word, amount);
+				if (why != "") return "sparkvary " .. why;
+				word = word.MakeLower();
+				if (word == "lean") f.sparkLean = amount;
+				else if (amount > 0.9) return String.Format("sparkvary %s must be 0 to 0.9 (only lean is degrees)", word);
+				else if (word == "spread") f.sparkSpread = amount;
+				else if (word == "speed") f.sparkSpeed = amount;
+				else if (word == "size") f.sparkSize = amount;
+				else if (word == "glow") f.sparkGlow = amount;
+				else if (word == "life") f.sparkLife = amount;
+				else if (word == "mix") f.sparkMix = amount;
+				else return String.Format("sparkvary \"%s\" is not lean, spread, speed, size, glow, life or mix", word);
 			}
 			return "";
 		}

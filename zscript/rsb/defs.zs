@@ -225,6 +225,15 @@ class RSB_FlashDef : RSB_Def
 	double surgeChance;
 	double surgeScale;
 	bool   flameRoll;
+	// EACH SHOT ITS OWN SPRAY (`sparkvary`): how far a shot's spark bursts may lean off the bore
+	// (degrees), and how much their spread, speed, size, glow, life and share of the mix vary per shot.
+	double sparkLean;
+	double sparkSpread;
+	double sparkSpeed;
+	double sparkSize;
+	double sparkGlow;
+	double sparkLife;
+	double sparkMix;
 	// THE SMOKING BARREL (RSB_Barrel): heat a shot adds, heat lost a second, the heat it
 	// starts smoking at; the ribbon and its puffs a tic at full heat; the hot air over it.
 	double barrelPerShot;
