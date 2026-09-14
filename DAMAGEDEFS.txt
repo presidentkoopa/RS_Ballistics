@@ -1,0 +1,84 @@
+// RS_Ballistics wall damage brushes (engine #17). WRITTEN BY tools/gen_brushes.py -- change the tool
+// and run it again rather than editing here. Masks: R soot, G hole depth, B heat, A wet (channels = rgba).
+// Generated from fixed seeds and owned outright. Four variants a brush; the engine picks one per paint
+// by a hash of the position. A brush's +x is the axis a paint's `along` gives (RSBDEFS `damage`).
+
+brush hole_chip
+{
+	masks = "damage/rsb/hole_chip_a.png", "damage/rsb/hole_chip_b.png", "damage/rsb/hole_chip_c.png", "damage/rsb/hole_chip_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}
+
+brush hole_punch
+{
+	masks = "damage/rsb/hole_punch_a.png", "damage/rsb/hole_punch_b.png", "damage/rsb/hole_punch_c.png", "damage/rsb/hole_punch_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}
+
+brush hole_splinter
+{
+	masks = "damage/rsb/hole_splinter_a.png", "damage/rsb/hole_splinter_b.png", "damage/rsb/hole_splinter_c.png", "damage/rsb/hole_splinter_d.png"
+	channels = rgba
+	turn = none
+	flip = hashed
+}
+
+brush pit
+{
+	masks = "damage/rsb/pit_a.png", "damage/rsb/pit_b.png", "damage/rsb/pit_c.png", "damage/rsb/pit_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}
+
+brush crater
+{
+	masks = "damage/rsb/crater_a.png", "damage/rsb/crater_b.png", "damage/rsb/crater_c.png", "damage/rsb/crater_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}
+
+brush scorch
+{
+	masks = "damage/rsb/scorch_a.png", "damage/rsb/scorch_b.png", "damage/rsb/scorch_c.png", "damage/rsb/scorch_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}
+
+brush scorch_ring
+{
+	masks = "damage/rsb/scorch_ring_a.png", "damage/rsb/scorch_ring_b.png", "damage/rsb/scorch_ring_c.png", "damage/rsb/scorch_ring_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}
+
+brush gouge
+{
+	masks = "damage/rsb/gouge_a.png", "damage/rsb/gouge_b.png", "damage/rsb/gouge_c.png", "damage/rsb/gouge_d.png"
+	channels = rgba
+	turn = none
+	flip = none
+}
+
+brush cut
+{
+	masks = "damage/rsb/cut_a.png", "damage/rsb/cut_b.png", "damage/rsb/cut_c.png", "damage/rsb/cut_d.png"
+	channels = rgba
+	turn = none
+	flip = none
+}
+
+brush crack
+{
+	masks = "damage/rsb/crack_a.png", "damage/rsb/crack_b.png", "damage/rsb/crack_c.png", "damage/rsb/crack_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}

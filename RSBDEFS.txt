@@ -1376,6 +1376,8 @@ impact bullet
   bursts    = spark_hot, chips_concrete, dust_concrete
   sound     = rsb/impact/concrete
   glance    = 18, rsb/ricochet, spark_hot
+  damage     = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
 end
 
 impact bullet@plain
@@ -1392,16 +1394,20 @@ impact bullet.metal
   light      = 60, 1.5, 3
   lightcolor = 255, 190, 120
   glance     = 25, rsb/ricochet, spark_metal
+  damage     = hole_punch, 1.65, 0.45, 0.12, 0.25
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.25, travel
 end
 
 impact bullet.wood
   bursts    = splinter_wood, dust_wood
   sound     = rsb/impact/wood
+  damage     = hole_splinter, 2.53, 0.5, 0.15, 0, up
 end
 
 impact bullet.glass
   bursts    = glint_glass
   sound     = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
 end
 
 impact bullet.liquid
@@ -1412,6 +1418,7 @@ end
 impact bullet.dirt
   bursts     = clods_dirt, dust_dirt
   sound     = rsb/impact/concrete
+  damage     = pit, 2.86, 0.4, 0.2, 0
 end
 
 impact bullet~cinematic
@@ -1420,6 +1427,8 @@ impact bullet~cinematic
   light      = 48, 1.2, 3
   lightcolor = 255, 180, 110
   glance     = 22, rsb/ricochet, spark_hot
+  damage     = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
 end
 
 # ---- IMPACTS BY WEAPON CLASS. A round look names its class's impact; the `bullet`
@@ -1433,6 +1442,8 @@ impact pistol
   scale     = 0.8, 0.9
   sound     = rsb/impact/concrete
   glance    = 18, rsb/ricochet, spark_hot
+  damage     = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
 end
 
 impact pistol.metal
@@ -1444,18 +1455,22 @@ impact pistol.metal
   light      = 50, 1.3, 3
   lightcolor = 255, 190, 120
   glance     = 25, rsb/ricochet, spark_metal
+  damage     = hole_punch, 1.65, 0.45, 0.12, 0.25
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.25, travel
 end
 
 impact pistol.wood
   bursts    = splinter_wood, dust_wood
   scale     = 0.8, 0.9
   sound     = rsb/impact/wood
+  damage     = hole_splinter, 2.53, 0.5, 0.15, 0, up
 end
 
 impact pistol.glass
   bursts    = glint_glass
   scale     = 0.8, 0.9
   sound     = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
 end
 
 impact pistol.liquid
@@ -1468,6 +1483,7 @@ impact pistol.dirt
   bursts    = clods_dirt, dust_dirt
   scale     = 0.8, 0.9
   sound     = rsb/impact/concrete
+  damage     = pit, 2.86, 0.4, 0.2, 0
 end
 
 # magnum -- the .357: a bigger bite, dust shot back out
@@ -1482,6 +1498,8 @@ impact pistol_9mm
   sound     = rsb/impact/concrete
   glance    = 18, rsb/ricochet, spark_hot
   smokevolume = 14, 0.8, 0
+  damage     = hole_chip, 2.5, 0.55, 0.3, 0
+  glancedamage = gouge, 3.5, 0.33, 0.3, 0, travel
 end
 
 impact pistol_9mm.metal
@@ -1495,6 +1513,8 @@ impact pistol_9mm.metal
   light      = 55, 1.4, 3
   lightcolor = 255, 190, 120
   glance     = 25, rsb/ricochet, spark_metal
+  damage     = hole_punch, 1.88, 0.5, 0.15, 0.3
+  glancedamage = gouge, 3, 0.25, 0.12, 0.3, travel
 end
 
 impact pistol_9mm.wood
@@ -1504,6 +1524,7 @@ impact pistol_9mm.wood
   scale     = 0.9, 0.95
   sound     = rsb/impact/wood
   smokevolume = 12, 0.5, 0
+  damage     = hole_splinter, 2.88, 0.55, 0.18, 0, up
 end
 
 impact pistol_9mm.glass
@@ -1511,6 +1532,7 @@ impact pistol_9mm.glass
   vary      = count 0.4, size 0.2
   scale     = 0.9, 0.9
   sound     = rsb/glass
+  damage     = crack, 5, 0.28, 0, 0
 end
 
 impact pistol_9mm.liquid
@@ -1527,6 +1549,7 @@ impact pistol_9mm.dirt
   scale     = 0.9, 0.95
   sound     = rsb/impact/concrete
   smokevolume = 16, 0.9, 0
+  damage     = pit, 3.25, 0.44, 0.24, 0
 end
 
 # The .45: heavier and slower -- more dust, a jet more often, fewer sparks.
@@ -1538,6 +1561,8 @@ impact pistol_45
   sound     = rsb/impact/concrete
   glance    = 16, rsb/ricochet, spark_hot
   smokevolume = 14, 0.92, 0
+  damage     = hole_chip, 3, 0.6, 0.3, 0
+  glancedamage = gouge, 4.2, 0.36, 0.3, 0, travel
 end
 
 impact pistol_45.metal
@@ -1551,6 +1576,8 @@ impact pistol_45.metal
   light      = 60, 1.5, 3
   lightcolor = 255, 190, 120
   glance     = 22, rsb/ricochet, spark_metal
+  damage     = hole_punch, 2.25, 0.54, 0.15, 0.35
+  glancedamage = gouge, 3.6, 0.27, 0.12, 0.35, travel
 end
 
 impact pistol_45.wood
@@ -1560,6 +1587,7 @@ impact pistol_45.wood
   scale     = 1.05, 1.1
   sound     = rsb/impact/wood
   smokevolume = 12, 0.58, 0
+  damage     = hole_splinter, 3.45, 0.6, 0.18, 0, up
 end
 
 impact pistol_45.glass
@@ -1567,6 +1595,7 @@ impact pistol_45.glass
   vary      = count 0.4, size 0.2
   scale     = 1.2, 1.0
   sound     = rsb/glass
+  damage     = crack, 6, 0.3, 0, 0
 end
 
 impact pistol_45.liquid
@@ -1583,6 +1612,7 @@ impact pistol_45.dirt
   scale     = 1.05, 1.1
   sound     = rsb/impact/concrete
   smokevolume = 16, 1.04, 0
+  damage     = pit, 3.9, 0.48, 0.24, 0
 end
 
 # THE CHAINGUNS' ROUNDS: nine a second, so each hit is lighter and the stream does the work --
@@ -1596,6 +1626,8 @@ impact chaingun_556
   sound     = rsb/impact/concrete
   glance    = 14, rsb/ricochet, spark_hot
   smokevolume = 14, 0.64, 0
+  damage     = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
 end
 
 impact chaingun_556.metal
@@ -1609,6 +1641,8 @@ impact chaingun_556.metal
   light      = 40, 1.0, 2
   lightcolor = 255, 190, 120
   glance     = 20, rsb/ricochet, spark_metal
+  damage     = hole_punch, 1.65, 0.45, 0.12, 0.3
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.3, travel
 end
 
 impact chaingun_556.wood
@@ -1618,6 +1652,7 @@ impact chaingun_556.wood
   scale     = 0.8, 1.0
   sound     = rsb/impact/wood
   smokevolume = 12, 0.4, 0
+  damage     = hole_splinter, 2.53, 0.5, 0.15, 0, up
 end
 
 impact chaingun_556.glass
@@ -1625,6 +1660,7 @@ impact chaingun_556.glass
   vary      = count 0.4, size 0.2
   scale     = 0.8, 0.9
   sound     = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
 end
 
 impact chaingun_556.liquid
@@ -1641,6 +1677,7 @@ impact chaingun_556.dirt
   scale     = 0.8, 1.0
   sound     = rsb/impact/concrete
   smokevolume = 16, 0.72, 0
+  damage     = pit, 2.86, 0.4, 0.2, 0
 end
 
 impact machinegun_762
@@ -1651,6 +1688,8 @@ impact machinegun_762
   sound     = rsb/impact/concrete
   glance    = 14, rsb/ricochet, spark_hot
   smokevolume = 14, 0.8, 0
+  damage     = hole_chip, 3, 0.7, 0.3, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
 end
 
 impact machinegun_762.metal
@@ -1664,6 +1703,8 @@ impact machinegun_762.metal
   light      = 60, 1.4, 3
   lightcolor = 255, 190, 120
   glance     = 20, rsb/ricochet, spark_metal
+  damage     = hole_punch, 2.25, 0.63, 0.15, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
 end
 
 impact machinegun_762.wood
@@ -1673,6 +1714,7 @@ impact machinegun_762.wood
   scale     = 1.25, 1.2
   sound     = rsb/impact/wood
   smokevolume = 12, 0.5, 0
+  damage     = hole_splinter, 3.45, 0.7, 0.18, 0, up
 end
 
 impact machinegun_762.glass
@@ -1680,6 +1722,7 @@ impact machinegun_762.glass
   vary      = count 0.4, size 0.2
   scale     = 1.1, 1.0
   sound     = rsb/glass
+  damage     = crack, 6, 0.35, 0, 0
 end
 
 impact machinegun_762.liquid
@@ -1695,6 +1738,7 @@ impact machinegun_762.dirt
   scale     = 1.25, 1.2
   sound     = rsb/impact/concrete
   smokevolume = 16, 0.9, 0
+  damage     = pit, 3.9, 0.56, 0.24, 0
 end
 
 impact magnum
@@ -1702,6 +1746,8 @@ impact magnum
   scale     = 1.3, 1.15
   sound     = rsb/impact/concrete
   glance    = 20, rsb/ricochet, spark_hot
+  damage     = hole_chip, 3.4, 0.7, 0.35, 0
+  glancedamage = gouge, 4.76, 0.42, 0.35, 0, travel
 end
 
 impact magnum.metal
@@ -1713,18 +1759,22 @@ impact magnum.metal
   light      = 70, 1.6, 3
   lightcolor = 255, 190, 120
   glance     = 25, rsb/ricochet, spark_metal
+  damage     = hole_punch, 2.55, 0.63, 0.17, 0.4
+  glancedamage = gouge, 4.08, 0.32, 0.14, 0.4, travel
 end
 
 impact magnum.wood
   bursts    = splinter_wood, dust_wood, dust_jet_wood
   scale     = 1.3, 1.15
   sound     = rsb/impact/wood
+  damage     = hole_splinter, 3.91, 0.7, 0.21, 0, up
 end
 
 impact magnum.glass
   bursts    = glint_glass
   scale     = 1.3, 1.15
   sound     = rsb/glass
+  damage     = crack, 6.8, 0.35, 0, 0
 end
 
 impact magnum.liquid
@@ -1737,6 +1787,7 @@ impact magnum.dirt
   bursts    = clods_dirt, dust_dirt, dust_jet_dirt
   scale     = 1.3, 1.15
   sound     = rsb/impact/concrete
+  damage     = pit, 4.42, 0.56, 0.28, 0
 end
 
 # rifle -- rifle rounds (5.56, 7.62): clouds and chips that chew a pillar
@@ -1745,6 +1796,8 @@ impact rifle
   scale     = 1.6, 1.3
   sound     = rsb/impact/concrete
   glance    = 14, rsb/ricochet, spark_hot
+  damage     = hole_chip, 3, 0.7, 0.3, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
 end
 
 impact rifle.metal
@@ -1756,18 +1809,22 @@ impact rifle.metal
   light      = 80, 1.8, 3
   lightcolor = 255, 190, 120
   glance     = 20, rsb/ricochet, spark_metal
+  damage     = hole_punch, 2.25, 0.63, 0.15, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
 end
 
 impact rifle.wood
   bursts    = splinter_wood, dust_wood, dust_jet_wood
   scale     = 1.6, 1.3
   sound     = rsb/impact/wood
+  damage     = hole_splinter, 3.45, 0.7, 0.18, 0, up
 end
 
 impact rifle.glass
   bursts    = glint_glass
   scale     = 1.6, 1.3
   sound     = rsb/glass
+  damage     = crack, 6, 0.35, 0, 0
 end
 
 impact rifle.liquid
@@ -1780,6 +1837,7 @@ impact rifle.dirt
   bursts    = clods_dirt, dust_dirt, dust_jet_dirt
   scale     = 1.6, 1.3
   sound     = rsb/impact/concrete
+  damage     = pit, 3.9, 0.56, 0.24, 0
 end
 
 # buckshot -- one pellet of buckshot: small, so a blast peppers a wall
@@ -1834,6 +1892,7 @@ impact buckshot_magnum
   scale     = 0.6, 1.05
   sound     = rsb/impact/concrete
   smokevolume = 14, 0.24, 0
+  damage     = hole_chip, 1.9, 0.45, 0.2, 0
 end
 
 impact buckshot_magnum.metal
@@ -1842,6 +1901,7 @@ impact buckshot_magnum.metal
   vary      = count 0.5, size 0.25
   scale     = 0.6, 0.95
   sound     = rsb/impact/metal
+  damage     = hole_punch, 1.42, 0.41, 0.1, 0.25
 end
 
 impact buckshot_magnum.wood
@@ -1851,6 +1911,7 @@ impact buckshot_magnum.wood
   scale     = 0.6, 1.05
   sound     = rsb/impact/wood
   smokevolume = 12, 0.15, 0
+  damage     = hole_splinter, 2.18, 0.45, 0.12, 0, up
 end
 
 impact buckshot_magnum.glass
@@ -1858,6 +1919,7 @@ impact buckshot_magnum.glass
   vary      = count 0.4, size 0.2
   scale     = 0.55, 0.95
   sound     = rsb/glass
+  damage     = crack, 3.8, 0.23, 0, 0
 end
 
 impact buckshot_magnum.liquid
@@ -1874,6 +1936,7 @@ impact buckshot_magnum.dirt
   scale     = 0.6, 1.05
   sound     = rsb/impact/concrete
   smokevolume = 16, 0.27, 0
+  damage     = pit, 2.47, 0.36, 0.16, 0
 end
 
 impact buckshot
@@ -1883,6 +1946,7 @@ impact buckshot
   scale     = 0.45, 0.9
   sound     = rsb/impact/concrete
   smokevolume = 14, 0.28, 0
+  damage     = hole_chip, 1.6, 0.4, 0.2, 0
 end
 
 impact buckshot.metal
@@ -1893,6 +1957,7 @@ impact buckshot.metal
   mark       = pool, 3, 25
   markcolor  = 255, 170, 80
   sound      = rsb/impact/metal
+  damage     = hole_punch, 1.2, 0.36, 0.1, 0.2
 end
 
 impact buckshot.wood
@@ -1902,6 +1967,7 @@ impact buckshot.wood
   scale     = 0.45, 0.9
   sound     = rsb/impact/wood
   smokevolume = 12, 0.18, 0
+  damage     = hole_splinter, 1.84, 0.4, 0.12, 0, up
 end
 
 impact buckshot.glass
@@ -1909,6 +1975,7 @@ impact buckshot.glass
   vary      = count 0.4, size 0.2
   scale     = 0.4, 0.85
   sound     = rsb/glass
+  damage     = crack, 3.2, 0.2, 0, 0
 end
 
 impact buckshot.liquid
@@ -1925,6 +1992,7 @@ impact buckshot.dirt
   scale     = 0.45, 0.9
   sound     = rsb/impact/concrete
   smokevolume = 16, 0.32, 0
+  damage     = pit, 2.08, 0.32, 0.16, 0
 end
 
 # ---- the rest of the arsenal: plasma, rockets, the BFG (projectiles.zs), and the
@@ -2087,6 +2155,7 @@ impact plasma            # a plasma ball's hit: a blue splash, motes, ozone, arc
   light      = 140, 2.5, 5
   lightcolor = 120, 180, 255
   smokevolume = 12, 0.35, 1.0
+  damage     = scorch_ring, 8, 0.2, 0.6, 0.5
 end
 
 impact rocket
@@ -2098,6 +2167,7 @@ impact rocket
   lightcolor = 255, 170, 90
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
+  damage     = crater, 22, 0.6, 0.9, 0
 end
 
 # THE BFG'S BLAST: a shockwave racing across the surface, lit ozone hanging, chunks by surface;
@@ -2111,6 +2181,7 @@ impact bfg
   lightcolor = 140, 255, 150
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
+  damage     = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.metal
@@ -2122,6 +2193,7 @@ impact bfg.metal
   lightcolor = 140, 255, 150
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
+  damage     = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.wood
@@ -2133,6 +2205,7 @@ impact bfg.wood
   lightcolor = 140, 255, 150
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
+  damage     = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.dirt
@@ -2144,6 +2217,7 @@ impact bfg.dirt
   lightcolor = 140, 255, 150
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
+  damage     = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.glass
@@ -2155,6 +2229,7 @@ impact bfg.glass
   lightcolor = 140, 255, 150
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
+  damage     = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.liquid
@@ -2177,6 +2252,7 @@ impact bfg_heavy
   lightcolor = 150, 255, 160
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
+  damage     = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.metal
@@ -2189,6 +2265,7 @@ impact bfg_heavy.metal
   lightcolor = 150, 255, 160
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
+  damage     = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.wood
@@ -2201,6 +2278,7 @@ impact bfg_heavy.wood
   lightcolor = 150, 255, 160
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
+  damage     = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.dirt
@@ -2213,6 +2291,7 @@ impact bfg_heavy.dirt
   lightcolor = 150, 255, 160
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
+  damage     = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.glass
@@ -2225,6 +2304,7 @@ impact bfg_heavy.glass
   lightcolor = 150, 255, 160
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
+  damage     = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.liquid
@@ -2243,6 +2323,7 @@ impact bfg_spray           # where a BFG ray strikes (on Doom's BFE2 flash): a g
   sound      = none
   light      = 120, 2.4, 10
   lightcolor = 140, 255, 150
+  damage     = scorch, 9, 0, 0.6, 0.6
 end
 
 impact bfg_spray_heavy
@@ -2251,6 +2332,7 @@ impact bfg_spray_heavy
   sound      = none
   light      = 160, 2.8, 12
   lightcolor = 150, 255, 160
+  damage     = scorch, 11, 0, 0.7, 0.7
 end
 
 impact rail
@@ -2259,6 +2341,7 @@ impact rail
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
 end
 
 # THE CHAINSAWS: the chain bites about nine times a second while the bar is held on a surface, so each bite
@@ -2469,6 +2552,7 @@ impact plasma_carbine     # the carbine's hit: sharper -- more splash, a smaller
   markcolor  = 150, 200, 255
   light      = 110, 2.8, 3
   lightcolor = 150, 200, 255
+  damage     = scorch_ring, 6, 0.2, 0.55, 0.45
 end
 
 impact plasma_carbine.liquid
@@ -2490,6 +2574,7 @@ impact rocket.metal
   lightcolor = 255, 170, 90
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
+  damage     = crater, 18, 0.4, 0.8, 0.6
 end
 
 impact rocket.wood
@@ -2501,6 +2586,7 @@ impact rocket.wood
   lightcolor = 255, 170, 90
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
+  damage     = crater, 22, 0.55, 1, 0
 end
 
 impact rocket.dirt
@@ -2512,6 +2598,7 @@ impact rocket.dirt
   lightcolor = 255, 170, 90
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
+  damage     = crater, 24, 0.7, 0.6, 0
 end
 
 impact rocket.glass
@@ -2523,6 +2610,7 @@ impact rocket.glass
   lightcolor = 255, 170, 90
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
+  damage     = crack, 28, 0.4, 0.3, 0
 end
 
 impact rocket.liquid
@@ -2545,6 +2633,7 @@ impact rocket_rpg
   scale      = 1.25, 1.15
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
+  damage     = crater, 28, 0.7, 1, 0
 end
 
 impact rocket_rpg.metal
@@ -2557,6 +2646,7 @@ impact rocket_rpg.metal
   scale      = 1.25, 1.15
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
+  damage     = crater, 23, 0.45, 0.9, 0.7
 end
 
 impact rocket_rpg.wood
@@ -2569,6 +2659,7 @@ impact rocket_rpg.wood
   scale      = 1.25, 1.15
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
+  damage     = crater, 28, 0.65, 1, 0
 end
 
 impact rocket_rpg.dirt
@@ -2581,6 +2672,7 @@ impact rocket_rpg.dirt
   scale      = 1.25, 1.15
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
+  damage     = crater, 30, 0.8, 0.7, 0
 end
 
 impact rocket_rpg.glass
@@ -2593,6 +2685,7 @@ impact rocket_rpg.glass
   scale      = 1.25, 1.15
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
+  damage     = crack, 34, 0.45, 0.35, 0
 end
 
 impact rocket_rpg.liquid
@@ -2613,6 +2706,7 @@ impact rail.wood
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
 end
 
 impact rail.dirt
@@ -2621,6 +2715,7 @@ impact rail.dirt
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
 end
 
 impact rail.glass
@@ -2629,6 +2724,7 @@ impact rail.glass
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
 end
 
 impact rail.liquid
@@ -3854,6 +3950,8 @@ impact pistol_9mm@extreme  # stone: chips that always spark, glowing jacket frag
   lightcolor = 255, 200, 140
   glance     = 20, rsb/ricochet, spark_hot
   smokevolume = 16, 0.95, 0
+  damage     = hole_chip, 2.75, 0.55, 0.39, 0
+  glancedamage = gouge, 3.85, 0.33, 0.39, 0, travel
 end
 
 impact pistol_9mm.metal@extreme  # metal: a starburst where it strikes, the ricochet spray, glowing fragments, a hotter pool that lasts
@@ -3867,6 +3965,8 @@ impact pistol_9mm.metal@extreme  # metal: a starburst where it strikes, the rico
   light      = 70, 1.8, 4
   lightcolor = 255, 190, 120
   glance     = 28, rsb/ricochet, spark_metal
+  damage     = hole_punch, 2.06, 0.5, 0.2, 0.3
+  glancedamage = gouge, 3.3, 0.25, 0.16, 0.3, travel
 end
 
 impact pistol_9mm.wood@extreme   # wood: splinters, a dust jet every hit, a thicker cloud
@@ -3875,6 +3975,7 @@ impact pistol_9mm.wood@extreme   # wood: splinters, a dust jet every hit, a thic
   scale     = 1.1, 1.05
   sound     = rsb/impact/wood
   smokevolume = 14, 0.65, 0
+  damage     = hole_splinter, 3.16, 0.55, 0.23, 0, up
 end
 
 impact pistol_9mm.dirt@extreme   # dirt: clods, a dust jet every hit, a rolling cloud
@@ -3883,6 +3984,7 @@ impact pistol_9mm.dirt@extreme   # dirt: clods, a dust jet every hit, a rolling 
   scale     = 1.1, 1.05
   sound     = rsb/impact/concrete
   smokevolume = 18, 1.1, 0
+  damage     = pit, 3.58, 0.44, 0.31, 0
 end
 
 impact pistol_9mm.glass@extreme  # glass: a bigger glittering spray
@@ -3890,6 +3992,7 @@ impact pistol_9mm.glass@extreme  # glass: a bigger glittering spray
   vary      = count 0.4, size 0.2
   scale     = 1.3, 1.0
   sound     = rsb/glass
+  damage     = crack, 5.5, 0.28, 0, 0
 end
 
 wake x9_vapour             # the Pistolet's round at extreme: a vapour line that hangs longer (lit, never glowing)
@@ -5321,28 +5424,32 @@ roundlook bfg_heavy@extreme   # the Heavy BFG's ball at extreme: arcs nearly eve
 end
 
 impact pistol_45@extreme   # the .45's hits at extreme
-  bursts      = chips_lazy_concrete, dust_bloom_concrete, spark_hot
-  maybe       = dust_jet_concrete 0.85, x9_hit_frags 0.5
-  vary        = count 0.4, size 0.25
-  scale       = 1.208, 1.1
-  sound       = rsb/impact/concrete
-  glance      = 16, rsb/ricochet, spark_hot
-  smokevolume = 16, 1.1, 0
-  light       = 34, 0.9, 2
-  lightcolor  = 255, 200, 140
+  bursts       = chips_lazy_concrete, dust_bloom_concrete, spark_hot
+  maybe        = dust_jet_concrete 0.85, x9_hit_frags 0.5
+  vary         = count 0.4, size 0.25
+  scale        = 1.208, 1.1
+  sound        = rsb/impact/concrete
+  glance       = 16, rsb/ricochet, spark_hot
+  smokevolume  = 16, 1.1, 0
+  damage       = hole_chip, 3, 0.6, 0.3, 0
+  glancedamage = gouge, 4.2, 0.36, 0.3, 0, travel
+  light        = 34, 0.9, 2
+  lightcolor   = 255, 200, 140
 end
 
 impact pistol_45.metal@extreme
-  bursts     = spark_hot, ember_metal
-  maybe      = spark_metal 0.4, spark_spray 0.3, x9_hit_frags 0.6
-  vary       = count 0.4, size 0.2, light 0.3
-  scale      = 1.15, 1
-  mark       = pool, 5, 50
-  markcolor  = 255, 170, 80
-  sound      = rsb/impact/metal
-  light      = 75, 1.8, 4
-  lightcolor = 255, 190, 120
-  glance     = 22, rsb/ricochet, spark_metal
+  bursts       = spark_hot, ember_metal
+  maybe        = spark_metal 0.4, spark_spray 0.3, x9_hit_frags 0.6
+  vary         = count 0.4, size 0.2, light 0.3
+  scale        = 1.15, 1
+  mark         = pool, 5, 50
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/metal
+  light        = 75, 1.8, 4
+  lightcolor   = 255, 190, 120
+  glance       = 22, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.54, 0.15, 0.35
+  glancedamage = gouge, 3.6, 0.27, 0.12, 0.35, travel
 end
 
 impact pistol_45.wood@extreme
@@ -5352,6 +5459,7 @@ impact pistol_45.wood@extreme
   scale       = 1.208, 1.1
   sound       = rsb/impact/wood
   smokevolume = 14, 0.7, 0
+  damage      = hole_splinter, 3.45, 0.6, 0.18, 0, up
 end
 
 impact pistol_45.glass@extreme
@@ -5359,6 +5467,7 @@ impact pistol_45.glass@extreme
   vary   = count 0.4, size 0.2
   scale  = 1.56, 1
   sound  = rsb/glass
+  damage = crack, 6, 0.3, 0, 0
 end
 
 impact pistol_45.liquid@extreme
@@ -5375,29 +5484,34 @@ impact pistol_45.dirt@extreme
   scale       = 1.208, 1.1
   sound       = rsb/impact/concrete
   smokevolume = 18, 1.2, 0
+  damage      = pit, 3.9, 0.48, 0.24, 0
 end
 
 impact chaingun_556@extreme   # the chaingun's hits at extreme
-  bursts      = grit_concrete, dust_jet_concrete
-  maybe       = chips_concrete 0.35, spark_hot 0.6, dust_concrete 0.5, x9_hit_frags 0.25
-  vary        = count 0.5, size 0.35
-  scale       = 0.92, 1
-  sound       = rsb/impact/concrete
-  glance      = 14, rsb/ricochet, spark_hot
-  smokevolume = 14, 0.64, 0
+  bursts       = grit_concrete, dust_jet_concrete
+  maybe        = chips_concrete 0.35, spark_hot 0.6, dust_concrete 0.5, x9_hit_frags 0.25
+  vary         = count 0.5, size 0.35
+  scale        = 0.92, 1
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.64, 0
+  damage       = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
 end
 
 impact chaingun_556.metal@extreme
-  bursts     = spark_metal
-  maybe      = spark_spray 0.6, ember_metal 0.6
-  vary       = count 0.5, size 0.25, light 0.4
-  scale      = 0.92, 0.9
-  mark       = pool, 3, 30
-  markcolor  = 255, 170, 80
-  sound      = rsb/impact/metal
-  light      = 50, 1.2, 2
-  lightcolor = 255, 190, 120
-  glance     = 20, rsb/ricochet, spark_metal
+  bursts       = spark_metal
+  maybe        = spark_spray 0.6, ember_metal 0.6
+  vary         = count 0.5, size 0.25, light 0.4
+  scale        = 0.92, 0.9
+  mark         = pool, 3, 30
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/metal
+  light        = 50, 1.2, 2
+  lightcolor   = 255, 190, 120
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.12, 0.3
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.3, travel
 end
 
 impact chaingun_556.wood@extreme
@@ -5407,6 +5521,7 @@ impact chaingun_556.wood@extreme
   scale       = 0.92, 1
   sound       = rsb/impact/wood
   smokevolume = 12, 0.4, 0
+  damage      = hole_splinter, 2.53, 0.5, 0.15, 0, up
 end
 
 impact chaingun_556.glass@extreme
@@ -5414,6 +5529,7 @@ impact chaingun_556.glass@extreme
   vary   = count 0.4, size 0.2
   scale  = 0.92, 0.9
   sound  = rsb/glass
+  damage = crack, 4.4, 0.25, 0, 0
 end
 
 impact chaingun_556.liquid@extreme
@@ -5430,29 +5546,34 @@ impact chaingun_556.dirt@extreme
   scale       = 0.92, 1
   sound       = rsb/impact/concrete
   smokevolume = 16, 0.72, 0
+  damage      = pit, 2.86, 0.4, 0.2, 0
 end
 
 impact machinegun_762@extreme   # the machine gun's hits at extreme
-  bursts      = chips_concrete, dust_concrete, dust_jet_concrete
-  maybe       = slabs_concrete 0.25, spark_hot 0.5, x9_hit_frags 0.3
-  vary        = count 0.45, size 0.3
-  scale       = 1.438, 1.2
-  sound       = rsb/impact/concrete
-  glance      = 14, rsb/ricochet, spark_hot
-  smokevolume = 14, 0.8, 0
+  bursts       = chips_concrete, dust_concrete, dust_jet_concrete
+  maybe        = slabs_concrete 0.25, spark_hot 0.5, x9_hit_frags 0.3
+  vary         = count 0.45, size 0.3
+  scale        = 1.438, 1.2
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = hole_chip, 3, 0.7, 0.3, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
 end
 
 impact machinegun_762.metal@extreme
-  bursts     = spark_metal, spark_spray, ember_metal
-  maybe      = shards_metal 0.2
-  vary       = count 0.45, size 0.25, light 0.35
-  scale      = 1.265, 1
-  mark       = pool, 5, 40
-  markcolor  = 255, 170, 80
-  sound      = rsb/impact/metal
-  light      = 75, 1.7, 3
-  lightcolor = 255, 190, 120
-  glance     = 20, rsb/ricochet, spark_metal
+  bursts       = spark_metal, spark_spray, ember_metal
+  maybe        = shards_metal 0.2
+  vary         = count 0.45, size 0.25, light 0.35
+  scale        = 1.265, 1
+  mark         = pool, 5, 40
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/metal
+  light        = 75, 1.7, 3
+  lightcolor   = 255, 190, 120
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.63, 0.15, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
 end
 
 impact machinegun_762.wood@extreme
@@ -5462,6 +5583,7 @@ impact machinegun_762.wood@extreme
   scale       = 1.438, 1.2
   sound       = rsb/impact/wood
   smokevolume = 12, 0.5, 0
+  damage      = hole_splinter, 3.45, 0.7, 0.18, 0, up
 end
 
 impact machinegun_762.glass@extreme
@@ -5469,6 +5591,7 @@ impact machinegun_762.glass@extreme
   vary   = count 0.4, size 0.2
   scale  = 1.265, 1
   sound  = rsb/glass
+  damage = crack, 6, 0.35, 0, 0
 end
 
 impact machinegun_762.liquid@extreme
@@ -5484,6 +5607,7 @@ impact machinegun_762.dirt@extreme
   scale       = 1.438, 1.2
   sound       = rsb/impact/concrete
   smokevolume = 16, 0.9, 0
+  damage      = pit, 3.9, 0.56, 0.24, 0
 end
 
 impact buckshot@extreme   # buckshot's hits at extreme
@@ -5493,6 +5617,7 @@ impact buckshot@extreme   # buckshot's hits at extreme
   scale       = 0.517, 0.9
   sound       = rsb/impact/concrete
   smokevolume = 14, 0.28, 0
+  damage      = hole_chip, 1.6, 0.4, 0.2, 0
 end
 
 impact buckshot.metal@extreme
@@ -5503,6 +5628,7 @@ impact buckshot.metal@extreme
   mark      = pool, 3, 35
   markcolor = 255, 170, 80
   sound     = rsb/impact/metal
+  damage    = hole_punch, 1.2, 0.36, 0.1, 0.2
 end
 
 impact buckshot.wood@extreme
@@ -5512,6 +5638,7 @@ impact buckshot.wood@extreme
   scale       = 0.517, 0.9
   sound       = rsb/impact/wood
   smokevolume = 12, 0.18, 0
+  damage      = hole_splinter, 1.84, 0.4, 0.12, 0, up
 end
 
 impact buckshot.glass@extreme
@@ -5519,6 +5646,7 @@ impact buckshot.glass@extreme
   vary   = count 0.4, size 0.2
   scale  = 0.46, 0.85
   sound  = rsb/glass
+  damage = crack, 3.2, 0.2, 0, 0
 end
 
 impact buckshot.liquid@extreme
@@ -5535,6 +5663,7 @@ impact buckshot.dirt@extreme
   scale       = 0.517, 0.9
   sound       = rsb/impact/concrete
   smokevolume = 16, 0.32, 0
+  damage      = pit, 2.08, 0.32, 0.16, 0
 end
 
 impact buckshot_magnum@extreme   # magnum buckshot's hits at extreme
@@ -5544,6 +5673,7 @@ impact buckshot_magnum@extreme   # magnum buckshot's hits at extreme
   scale       = 0.69, 1.05
   sound       = rsb/impact/concrete
   smokevolume = 14, 0.24, 0
+  damage      = hole_chip, 1.9, 0.45, 0.2, 0
 end
 
 impact buckshot_magnum.metal@extreme
@@ -5552,6 +5682,7 @@ impact buckshot_magnum.metal@extreme
   vary       = count 0.5, size 0.25
   scale      = 0.69, 0.95
   sound      = rsb/impact/metal
+  damage     = hole_punch, 1.42, 0.41, 0.1, 0.25
   mark       = pool, 3, 30
   markcolor  = 255, 170, 80
   light      = 30, 0.8, 2
@@ -5565,6 +5696,7 @@ impact buckshot_magnum.wood@extreme
   scale       = 0.69, 1.05
   sound       = rsb/impact/wood
   smokevolume = 12, 0.15, 0
+  damage      = hole_splinter, 2.18, 0.45, 0.12, 0, up
 end
 
 impact buckshot_magnum.glass@extreme
@@ -5572,6 +5704,7 @@ impact buckshot_magnum.glass@extreme
   vary   = count 0.4, size 0.2
   scale  = 0.632, 0.95
   sound  = rsb/glass
+  damage = crack, 3.8, 0.23, 0, 0
 end
 
 impact buckshot_magnum.liquid@extreme
@@ -5588,6 +5721,7 @@ impact buckshot_magnum.dirt@extreme
   scale       = 0.69, 1.05
   sound       = rsb/impact/concrete
   smokevolume = 16, 0.27, 0
+  damage      = pit, 2.47, 0.36, 0.16, 0
 end
 
 impact plasma@extreme   # a plasma hit at extreme: arcs every hit, a wider scorched ring, a longer light
@@ -5600,6 +5734,7 @@ impact plasma@extreme   # a plasma hit at extreme: arcs every hit, a wider scorc
   light       = 170, 2.9, 6
   lightcolor  = 120, 180, 255
   smokevolume = 14, 0.45, 1.0
+  damage      = scorch_ring, 8, 0.2, 0.6, 0.5
 end
 
 impact plasma.liquid@extreme
@@ -5645,6 +5780,7 @@ impact plasma_carbine@extreme   # the Blue Plasma Rifle's hit at extreme: arcs m
   markcolor  = 150, 200, 255
   light      = 130, 3.2, 4
   lightcolor = 150, 200, 255
+  damage     = scorch_ring, 6, 0.2, 0.55, 0.45
 end
 
 impact plasma_carbine.liquid@extreme
@@ -5666,6 +5802,7 @@ impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring 
   lightcolor  = 255, 170, 90
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
+  damage      = crater, 22, 0.6, 0.9, 0
 end
 
 impact rocket.metal@extreme
@@ -5677,6 +5814,7 @@ impact rocket.metal@extreme
   lightcolor  = 255, 170, 90
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
+  damage      = crater, 18, 0.4, 0.8, 0.6
 end
 
 impact rocket.wood@extreme
@@ -5688,6 +5826,7 @@ impact rocket.wood@extreme
   lightcolor  = 255, 170, 90
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
+  damage      = crater, 22, 0.55, 1, 0
 end
 
 impact rocket.dirt@extreme
@@ -5699,6 +5838,7 @@ impact rocket.dirt@extreme
   lightcolor  = 255, 170, 90
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
+  damage      = crater, 24, 0.7, 0.6, 0
 end
 
 impact rocket.glass@extreme
@@ -5710,6 +5850,7 @@ impact rocket.glass@extreme
   lightcolor  = 255, 170, 90
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
+  damage      = crack, 28, 0.4, 0.3, 0
 end
 
 impact rocket.liquid@extreme
@@ -5731,6 +5872,7 @@ impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ri
   scale       = 1.25, 1.15
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
+  damage      = crater, 28, 0.7, 1, 0
 end
 
 impact rocket_rpg.metal@extreme
@@ -5743,6 +5885,7 @@ impact rocket_rpg.metal@extreme
   scale       = 1.25, 1.15
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
+  damage      = crater, 23, 0.45, 0.9, 0.7
 end
 
 impact rocket_rpg.wood@extreme
@@ -5755,6 +5898,7 @@ impact rocket_rpg.wood@extreme
   scale       = 1.25, 1.15
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
+  damage      = crater, 28, 0.65, 1, 0
 end
 
 impact rocket_rpg.dirt@extreme
@@ -5767,6 +5911,7 @@ impact rocket_rpg.dirt@extreme
   scale       = 1.25, 1.15
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
+  damage      = crater, 30, 0.8, 0.7, 0
 end
 
 impact rocket_rpg.glass@extreme
@@ -5779,6 +5924,7 @@ impact rocket_rpg.glass@extreme
   scale       = 1.25, 1.15
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
+  damage      = crack, 34, 0.45, 0.35, 0
 end
 
 impact rocket_rpg.liquid@extreme
@@ -5800,6 +5946,7 @@ impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starbu
   lightcolor  = 140, 255, 150
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
+  damage      = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.metal@extreme
@@ -5811,6 +5958,7 @@ impact bfg.metal@extreme
   lightcolor  = 140, 255, 150
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
+  damage      = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.wood@extreme
@@ -5822,6 +5970,7 @@ impact bfg.wood@extreme
   lightcolor  = 140, 255, 150
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
+  damage      = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.dirt@extreme
@@ -5833,6 +5982,7 @@ impact bfg.dirt@extreme
   lightcolor  = 140, 255, 150
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
+  damage      = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.glass@extreme
@@ -5844,6 +5994,7 @@ impact bfg.glass@extreme
   lightcolor  = 140, 255, 150
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
+  damage      = scorch_ring, 34, 0.4, 0.9, 0.8
 end
 
 impact bfg.liquid@extreme
@@ -5865,6 +6016,7 @@ impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a
   lightcolor  = 150, 255, 160
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
+  damage      = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.metal@extreme
@@ -5877,6 +6029,7 @@ impact bfg_heavy.metal@extreme
   lightcolor  = 150, 255, 160
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
+  damage      = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.wood@extreme
@@ -5889,6 +6042,7 @@ impact bfg_heavy.wood@extreme
   lightcolor  = 150, 255, 160
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
+  damage      = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.dirt@extreme
@@ -5901,6 +6055,7 @@ impact bfg_heavy.dirt@extreme
   lightcolor  = 150, 255, 160
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
+  damage      = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.glass@extreme
@@ -5913,6 +6068,7 @@ impact bfg_heavy.glass@extreme
   lightcolor  = 150, 255, 160
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
+  damage      = scorch_ring, 46, 0.45, 1, 0.85
 end
 
 impact bfg_heavy.liquid@extreme
@@ -5930,6 +6086,7 @@ impact bfg_spray@extreme   # where a BFG ray strikes at extreme: a starburst in 
   sound      = none
   light      = 150, 2.8, 12
   lightcolor = 140, 255, 150
+  damage     = scorch, 9, 0, 0.6, 0.6
 end
 
 impact rail@extreme   # a rail hit at extreme: arcs and a starburst, a wider glowing ring, bent air where it struck
@@ -5938,6 +6095,7 @@ impact rail@extreme   # a rail hit at extreme: arcs and a starburst, a wider glo
   markcolor  = 180, 210, 255
   light      = 140, 3.0, 6
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
   heat       = 10, 0.8, 12
 end
 
@@ -5947,6 +6105,7 @@ impact rail.wood@extreme
   markcolor  = 180, 210, 255
   light      = 140, 3.0, 6
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
   heat       = 10, 0.8, 12
 end
 
@@ -5956,6 +6115,7 @@ impact rail.dirt@extreme
   markcolor  = 180, 210, 255
   light      = 140, 3.0, 6
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
   heat       = 10, 0.8, 12
 end
 
@@ -5965,6 +6125,7 @@ impact rail.glass@extreme
   markcolor  = 180, 210, 255
   light      = 140, 3.0, 6
   lightcolor = 180, 210, 255
+  damage     = hole_punch, 3, 0.9, 0.35, 0.9
   heat       = 10, 0.8, 12
 end
 

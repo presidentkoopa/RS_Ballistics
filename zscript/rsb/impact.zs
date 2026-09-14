@@ -241,6 +241,24 @@ class RSB_Impact play
 
 	// A surface already found. `soundAt` carries the sound: the round itself, or
 	// an RSB_SoundSpot placed on the surface.
+	// WHICH WAY A DAMAGE BRUSH LIES (`damage ..., along`): its +x unrotated, along the round's travel
+	// (a gouge, a cut), or up the wall (wood grain). Up on a floor is square to it: unrotated.
+	const DAMAGE_ALONG_NONE   = 0;
+	const DAMAGE_ALONG_TRAVEL = 1;
+	const DAMAGE_ALONG_UP     = 2;
+
+	// ONE PAINT of lasting damage (engine #17): a DAMAGEDEFS brush into the surface's damage tiles.
+	// Presentation only -- the engine queues it (128 a tic) and nothing reads it back.
+	static void PaintDamage(RSB_Surface surf, Vector3 travel, String brush, double radius, double depth,
+		double soot, double heat, double wet, int along)
+	{
+		if (!surf || surf.air || surf.sky || radius <= 0 || brush.Length() == 0) return;
+		Vector3 axis = (0, 0, 0);
+		if (along == DAMAGE_ALONG_TRAVEL) axis = travel;
+		else if (along == DAMAGE_ALONG_UP) axis = (0, 0, 1);
+		level.PaintSurfaceDamage(surf.at, surf.normal, Name(brush), radius, depth, soot, heat, wet, axis);
+	}
+
 	static void LandOn(Actor soundAt, RSB_Surface surf, String impactBase, Vector3 travel)
 	{
 		if (!soundAt || !surf || surf.sky) return;
@@ -331,6 +349,15 @@ class RSB_Impact play
 			if (life > 0)
 				level.SpawnSurfaceStamp(im.markShape, surf.at, im.markRadius, im.markColor, life, (0, 0, 0));
 		}
+
+		// LASTING DAMAGE (engine #17, `damage`; `glancedamage` when it glances): a hole, gouge, crater or
+		// scorch that stays for the map. The glowing stamp above is the brief heat; this is the wound.
+		if (glancing && im.glanceDamageRadius > 0)
+			PaintDamage(surf, travel, im.glanceDamageBrush, im.glanceDamageRadius, im.glanceDamageDepth, im.glanceDamageSoot,
+				im.glanceDamageHeat, im.glanceDamageWet, im.glanceDamageAlong);
+		else if (im.damageRadius > 0)
+			PaintDamage(surf, travel, im.damageBrush, im.damageRadius, im.damageDepth, im.damageSoot,
+				im.damageHeat, im.damageWet, im.damageAlong);
 
 		if (im.lightRadius > 0 && RSB_Settings.ImpactLights())
 		{

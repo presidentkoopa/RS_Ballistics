@@ -179,6 +179,23 @@ class RSB_ImpactDef : RSB_Def
 	double glanceDeg;      // a round arriving within this many degrees of the surface glances; 0 = never
 	String glanceSound;
 	String glanceBurst;
+	// LASTING DAMAGE (engine #17, `damage`): a hole, crater or scorch painted into the surface for the
+	// map -- `glancedamage` instead when the round glances. A DAMAGEDEFS brush, its radius (map units),
+	// depth, soot, heat and wet (0..1), and which way the brush's +x lies (RSB_Impact.DAMAGE_ALONG_*).
+	String damageBrush;
+	double damageRadius;          // 0 = none
+	double damageDepth;
+	double damageSoot;
+	double damageHeat;
+	double damageWet;
+	int    damageAlong;
+	String glanceDamageBrush;
+	double glanceDamageRadius;    // 0 = a glance paints `damage` like any hit
+	double glanceDamageDepth;
+	double glanceDamageSoot;
+	double glanceDamageHeat;
+	double glanceDamageWet;
+	int    glanceDamageAlong;
 	double heatRadius;     // heat shimmer where it lands: a ball fading over heatTics; 0 = none
 	double heatStrength;
 	int    heatTics;

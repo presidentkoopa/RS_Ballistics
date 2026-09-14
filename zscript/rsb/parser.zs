@@ -1019,6 +1019,24 @@ class RSB_Parser
 			im.pushStrength = v[1].ToDouble();
 			return (im.pushRadius >= 0) ? "" : "push radius must be 0 or more";
 		}
+		if (key == "damage" || key == "glancedamage")
+		{
+			String db;
+			double dr, dd, ds, dh, dw;
+			int da;
+			why = ReadDamage(v, db, dr, dd, ds, dh, dw, da); if (why != "") return why;
+			if (key == "damage")
+			{
+				im.damageBrush = db; im.damageRadius = dr; im.damageDepth = dd;
+				im.damageSoot = ds; im.damageHeat = dh; im.damageWet = dw; im.damageAlong = da;
+			}
+			else
+			{
+				im.glanceDamageBrush = db; im.glanceDamageRadius = dr; im.glanceDamageDepth = dd;
+				im.glanceDamageSoot = ds; im.glanceDamageHeat = dh; im.glanceDamageWet = dw; im.glanceDamageAlong = da;
+			}
+			return "";
+		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
 
@@ -1993,6 +2011,37 @@ class RSB_Parser
 			return String.Format("wants %d value%s, got %d", need, (need == 1) ? "" : "s", v.Size());
 		for (int i = 0; i < v.Size(); i++)
 			if (!IsNum(v[i])) return String.Format("\"%s\" is not a number", v[i]);
+		return "";
+	}
+
+	// `damage` / `glancedamage`: brush, radius, depth, soot, heat[, wet][, along] -- along is none, travel
+	// or up: which way the brush's +x lies on the surface. `none` alone clears it (radius 0).
+	private static String ReadDamage(out Array<String> v, out String brush, out double radius, out double depth,
+		out double soot, out double heat, out double wet, out int along)
+	{
+		brush = ""; radius = 0; depth = 0; soot = 0; heat = 0; wet = 0; along = RSB_Impact.DAMAGE_ALONG_NONE;
+		if (v.Size() == 1 && v[0] ~== "none") return "";
+		int n = v.Size();
+		if (n >= 6 && !IsNum(v[n - 1]))
+		{
+			String a = v[n - 1].MakeLower();
+			if (a == "travel") along = RSB_Impact.DAMAGE_ALONG_TRAVEL;
+			else if (a == "up") along = RSB_Impact.DAMAGE_ALONG_UP;
+			else if (a != "none") return String.Format("damage along \"%s\" is not none, travel or up", v[n - 1]);
+			n--;
+		}
+		if (n < 5 || n > 6) return "damage is brush, radius, depth, soot, heat[, wet][, none|travel|up] -- or none";
+		for (int i = 1; i < n; i++)
+			if (!IsNum(v[i])) return String.Format("damage value \"%s\" is not a number", v[i]);
+		brush = v[0];
+		radius = v[1].ToDouble();
+		depth = v[2].ToDouble();
+		soot = v[3].ToDouble();
+		heat = v[4].ToDouble();
+		wet = (n == 6) ? v[5].ToDouble() : 0.0;
+		if (radius < 0.5 || radius > 64) return "damage radius must be 0.5 to 64 map units";
+		if (depth < 0 || depth > 1 || soot < 0 || soot > 1 || heat < 0 || heat > 1 || wet < 0 || wet > 1)
+			return "damage depth, soot, heat and wet must be 0..1";
 		return "";
 	}
 

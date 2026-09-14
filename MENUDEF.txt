@@ -330,11 +330,16 @@ OptionMenu "RSB_DebrisMenu"
 OptionMenu "RSB_DamageMenu"
 {
 	Title "WALL DAMAGE"
-	StaticText "Bullet holes, gouges, soot and scorch that last, and metal that glows hot.", "DarkGray"
+	StaticText "Bullet holes, gouges, craters, soot and scorch that last the map, and metal that glows hot.", "DarkGray"
 	StaticText ""
-	StaticText "The engine's wall damage comes last in its build order. Rows arrive with it.", "Gold"
+	Option "Wall damage", "r_damage", "OnOff"
+	Option "Damage memory (changing it clears all damage)", "r_damage_memory", "DamageMemorySizes"
+	Option "Heat glow", "r_damage_heat", "OnOff"
+	Slider "Damage soot", "r_damage_soot_scale", 0, 2, 0.1, 1
+	Slider "Damage hole depth", "r_damage_depth_scale", 0, 2, 0.1, 1
+	Slider "Damage heat", "r_damage_heat_scale", 0, 2, 0.1, 1
 	StaticText ""
-	StaticText "Today: glowing impact marks.", "DarkGray"
+	StaticText "Glowing marks: the brief glow where hot and energy hits land.", "DarkGray"
 	Option "Glowing marks", "rsb_marks", "OnOff"
 	Slider "How long marks glow", "rsb_mark_life", 0.1, 5.0, 0.1, 1
 }
