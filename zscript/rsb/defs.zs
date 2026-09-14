@@ -89,6 +89,9 @@ class RSB_RoundLookDef : RSB_Def
 	// MORE OF THE MOTOR (`motormaybe`): bursts some tics fire as well, each at its chance.
 	Array<String> motorMaybe;
 	Array<double> motorMaybeChance;
+	// CARVING THE ROOM'S SMOKE (engine 13b, `carve`): each tic of flight, a tunnel this wide.
+	double carveRadius;
+	double carveAmount;
 }
 
 // A WAKE: what a round sheds as it flies.
@@ -183,6 +186,12 @@ class RSB_ImpactDef : RSB_Def
 	double varyLight;
 	Array<String> maybeBursts;
 	Array<double> maybeChance;
+	// SMOKE INTO THE ROOM (engine 13b, `smokevolume`): radius, amount, heat; 0 amount = none.
+	double smokeVolRadius;
+	double smokeVolAmount;
+	double smokeVolHeat;
+	double pushRadius;       // `push`: a blast shoving the room's smoke (and debris); 0 = none
+	double pushStrength;
 }
 
 // A FLASH: the muzzle's light, its lit-air cone, its bursts, flame and smoke.
@@ -260,6 +269,15 @@ class RSB_FlashDef : RSB_Def
 	// weapon firing every tic reads as one pulsing glow, not a strobe.
 	int    throbTics;
 	double throbDepth;
+	// SMOKE INTO THE ROOM (engine 13b, `smokevolume`): radius, amount, heat; 0 amount = none.
+	double smokeVolRadius;
+	double smokeVolAmount;
+	double smokeVolHeat;
+	double smokeVolSpeed;    // out along the bore, map units a second
+	double smokeVolAlong;    // from the muzzle along the bore (negative behind), x the gun's size
+	double pushRadius;       // `push`: shove the room's smoke (and debris) outward; 0 = none
+	double pushStrength;
+	double pushAlong;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the
@@ -379,6 +397,10 @@ class RSB_FlameDef : RSB_Def
 	double heatRise;         // how fast the shimmer rises
 	double heatLandRadius;
 	double heatLandStrength;
+	// SMOKE INTO THE ROOM (engine 13b, `smokevolume`): radius, amount, heat; 0 amount = none.
+	double smokeVolRadius;
+	double smokeVolAmount;
+	double smokeVolHeat;
 }
 
 // A HOTSPOT: a spot a sustained beam or stream heats up (an impact's `hotspot`). Many hits
@@ -407,6 +429,10 @@ class RSB_HotspotDef : RSB_Def
 	double shimmerStrength;
 	String loopSound;           // a looping SNDINFO name, or "none"
 	double loopVolume;          // at full heat
+	// SMOKE INTO THE ROOM (engine 13b, `smokevolume`): radius, amount, heat; 0 amount = none.
+	double smokeVolRadius;
+	double smokeVolAmount;
+	double smokeVolHeat;
 }
 
 // A STYLE: a named look the player picks in the menu. Multipliers over every

@@ -263,9 +263,12 @@ OptionMenu "RSB_SmokeMenu"
 	StaticText "Room-filling gunsmoke that drifts through doorways, is stopped by walls,", "DarkGray"
 	StaticText "is lit by flashes and lights, and shows lasers passing through it.", "DarkGray"
 	StaticText ""
-	StaticText "The engine's smoke volume is in. Our guns start filling it in its next step.", "Gold"
+	StaticText "Room smoke: guns, blasts, flames and cuts fill it; blasts shove it; rounds tear it.", "Gold"
+	StaticText "It is simulated now and drawn once the engine's smoke drawing lands.", "DarkGray"
 	Option "Smoke volume", "r_smoke", "OnOff"
 	Slider "Smoke quality (1 = 59 MB, 2 = 157 MB, 3 = 328 MB, 4 = 472 MB)", "r_smoke_quality", 1, 4, 1, 0
+	Slider "Smoke thickness", "r_smoke_density_scale", 0.0, 3.0, 0.05, 2
+	Slider "Smoke lingering", "r_smoke_dissipation_scale", 0.25, 3.0, 0.05, 2
 	StaticText ""
 	StaticText "Today: muzzle, flame and impact smoke are GPU particles.", "DarkGray"
 	Slider "Muzzle smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1

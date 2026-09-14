@@ -180,6 +180,13 @@ class RSB_Flash : Actor
 			if (ground) RSB_Impact.LandOn(self, ground, fd.kickImpact, groundDir);
 		}
 
+		// SMOKE INTO THE ROOM (engine 13b, `smokevolume`) and A SHOVE (`push`): muzzle haze that
+		// builds over a string of shots, out of the muzzle or a tube's rear; a blast pushing it.
+		if (fd.smokeVolAmount > 0 && RSB_Settings.FlashSmoke() > 0)
+			level.EmitSmoke(pos + dir * (fd.smokeVolAlong * sizeMul + fd.smokeVolRadius * 0.5), fd.smokeVolRadius, fd.smokeVolAmount * vSmoke * RSB_Settings.FlashSmoke(), fd.smokeVolHeat, dir * fd.smokeVolSpeed);
+		if (fd.pushRadius > 0 && fd.pushStrength > 0)
+			level.PushEffectImpulse(pos + dir * (fd.pushAlong * sizeMul), fd.pushRadius, fd.pushStrength * surge);
+
 		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() * vSmoke + 0.5);
 		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
 		// definition: puffs drifting out of the bore, rising and hanging. The handle

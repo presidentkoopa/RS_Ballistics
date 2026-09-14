@@ -609,6 +609,9 @@ class RSB_FlameEmitter : Actor
 			for (int i = 0; i < fd.landing.Size(); i++)
 				RSB_Burst.Fire(reg.FindBurst(fd.landing[i]), at, n, dir, countScale, 1.0,
 					RSB_Hash.Seed(level.maptime, 200 + i, landSeed), surf);
+			// SMOKE INTO THE ROOM where it burns (engine 13b, `smokevolume`).
+			if (fd.smokeVolAmount > 0)
+				level.EmitSmoke(at + n * (fd.smokeVolRadius * 0.5), fd.smokeVolRadius, fd.smokeVolAmount, fd.smokeVolHeat, (0, 0, 30));
 		}
 		if (surf && fd.markShape >= 0 && fd.markTics > 0 && (burnSeq % fd.markTics) == 0 && RSB_Settings.Marks())
 		{

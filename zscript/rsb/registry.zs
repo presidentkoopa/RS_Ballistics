@@ -41,6 +41,8 @@ class RSB_Registry : StaticEventHandler
 		barrels.Clear();
 		casings.Clear();
 		hotspots.Clear();
+		// THE ROOM SMOKE'S LOOK (engine 13b): not in savegames, so set on every map and load.
+		level.SetSmokeLook(Color(255, 140, 138, 134), 1.0, 0.8, 0.4, 0.15, 1.0);
 		if (!defs) Load();
 		String style = RSB_Settings.StyleName();
 		RSB_Log.Info(String.Format("RS_Ballistics: %d profile(s) from %d RSBDEFS lump(s), %d refused, effects %s, style %s -- %s",

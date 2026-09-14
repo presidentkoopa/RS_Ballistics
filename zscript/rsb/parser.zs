@@ -630,7 +630,15 @@ class RSB_Parser
 			}
 			return "";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe or onset", key);
+		if (key == "carve")
+		{
+			String cw = Nums(v, 2);
+			if (cw != "") return cw;
+			lk.carveRadius = v[0].ToDouble();
+			lk.carveAmount = v[1].ToDouble();
+			return (lk.carveRadius >= 0 && lk.carveAmount >= 0) ? "" : "carve is radius, amount -- both 0 or more";
+		}
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset or carve", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE
@@ -939,6 +947,21 @@ class RSB_Parser
 			im.hotspot = (v[0] ~== "none") ? "" : v[0];
 			return "";
 		}
+		if (key == "smokevolume")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			im.smokeVolRadius = v[0].ToDouble();
+			im.smokeVolAmount = v[1].ToDouble();
+			im.smokeVolHeat = v[2].ToDouble();
+			return (im.smokeVolRadius > 0 && im.smokeVolAmount >= 0) ? "" : "smokevolume is radius (above 0), amount, heat";
+		}
+		if (key == "push")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			im.pushRadius = v[0].ToDouble();
+			im.pushStrength = v[1].ToDouble();
+			return (im.pushRadius >= 0) ? "" : "push radius must be 0 or more";
+		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
 
@@ -1190,6 +1213,26 @@ class RSB_Parser
 			f.chargeShimmerRadius = v[0].ToDouble();
 			f.chargeShimmerStrength = v[1].ToDouble();
 			return (f.chargeShimmerRadius >= 0 && f.chargeShimmerStrength >= 0) ? "" : "chargeshimmer is radius, strength -- both 0 or more";
+		}
+		if (key == "smokevolume")
+		{
+			if (v.Size() < 4 || v.Size() > 5) return "smokevolume is radius, amount, heat, speed[, along]";
+			for (int i = 0; i < v.Size(); i++) if (!IsNum(v[i])) return "smokevolume values must be numbers";
+			f.smokeVolRadius = v[0].ToDouble();
+			f.smokeVolAmount = v[1].ToDouble();
+			f.smokeVolHeat = v[2].ToDouble();
+			f.smokeVolSpeed = v[3].ToDouble();
+			f.smokeVolAlong = (v.Size() == 5) ? v[4].ToDouble() : 0.0;
+			return (f.smokeVolRadius > 0 && f.smokeVolAmount >= 0) ? "" : "smokevolume radius must be above 0, amount 0 or more";
+		}
+		if (key == "push")
+		{
+			if (v.Size() < 2 || v.Size() > 3) return "push is radius, strength[, along]";
+			for (int i = 0; i < v.Size(); i++) if (!IsNum(v[i])) return "push values must be numbers";
+			f.pushRadius = v[0].ToDouble();
+			f.pushStrength = v[1].ToDouble();
+			f.pushAlong = (v.Size() == 3) ? v[2].ToDouble() : 0.0;
+			return (f.pushRadius >= 0) ? "" : "push radius must be 0 or more";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
@@ -1483,6 +1526,14 @@ class RSB_Parser
 			fm.heatLandStrength = v[1].ToDouble();
 			return (fm.heatLandRadius >= 0 && fm.heatLandStrength >= 0) ? "" : "heatland is radius, strength -- both 0 or more";
 		}
+		if (key == "smokevolume")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			fm.smokeVolRadius = v[0].ToDouble();
+			fm.smokeVolAmount = v[1].ToDouble();
+			fm.smokeVolHeat = v[2].ToDouble();
+			return (fm.smokeVolRadius > 0 && fm.smokeVolAmount >= 0) ? "" : "smokevolume is radius (above 0), amount, heat";
+		}
 		return String.Format("unknown flame key \"%s\"", key);
 	}
 
@@ -1685,6 +1736,13 @@ class RSB_Parser
 			hs.loopSound = v[0];
 			hs.loopVolume = v[1].ToDouble();
 			return (hs.loopVolume >= 0) ? "" : "sound volume must be 0 or more";
+		}
+		if (key == "smokevolume")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			hs.smokeVolRadius = v[0].ToDouble();
+			hs.smokeVolAmount = v[1].ToDouble();
+			return (hs.smokeVolRadius > 0 && hs.smokeVolAmount >= 0) ? "" : "smokevolume is radius (above 0), amount";
 		}
 		return String.Format("unknown hotspot key \"%s\"", key);
 	}

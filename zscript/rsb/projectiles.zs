@@ -51,6 +51,8 @@ class RSB_ProjectileLook play
 			return true;
 		}
 		RSB_Wake.Lay(lk.wake, before, mo.pos, travel);
+		if (lk.carveAmount > 0 && lk.carveRadius > 0)
+			level.CarveSmoke(before, mo.pos, lk.carveRadius, lk.carveAmount);
 		Motor(mo, lk, travel);
 		return landed;
 	}

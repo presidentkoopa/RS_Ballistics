@@ -247,6 +247,9 @@ class RSB_Bullet : FastProjectile
 	private void LayWake(Vector3 before)
 	{
 		if (flightDef) RSB_Wake.Lay(flightDef.wake, before, pos, travel);
+		// CARVING THE ROOM'S SMOKE (engine 13b, the look's `carve`): a tunnel along this tic's flight.
+		if (flightDef && flightDef.carveAmount > 0 && flightDef.carveRadius > 0)
+			level.CarveSmoke(before, pos, flightDef.carveRadius, flightDef.carveAmount);
 	}
 
 	// THE AIR IT TEARS THROUGH (its flight look's `heat`): bent air over the last heatReach
