@@ -148,3 +148,34 @@ Written by `tools/import_fx.py`. Not packed (build.ps1 packs an allowlist).
 - `sprites/RSKEA0.png` from `RS_Main/sprites/combatfx/sparks/RSS0S0.png` (sha1 8e6dcc59b40c37d754f09fd726572bf1e2a437e5)
 - `sprites/RSKEB0.png` from `RS_Main/sprites/combatfx/sparks/RSS4B0.png` (sha1 c314b8b4f74291a79390b674937ac57510979556)
 - `sprites/RSKBA0.png` from `ART SOURCE/SPRITES/PARTICLES/photorealisticspark/yellowflare.png` (sha1 cb2fccf98403a8d9f0dfd76ccc3f9e41bfac00ac), shrink
+
+<!-- BEGIN debris landing sounds (tools/import_debris_sounds.py) -->
+## Debris landing sounds (sounds/rsb/debris)
+
+Copied unchanged from RS_Main's sound folders (owner-cleared, 2026-09-14). SHA-1 is of the source.
+
+- `sounds/rsb/debris/chips/impact6.wav` from `RS_Main/sounds/combatfx/impact/impact6.wav` (sha1 9a5d01324b8468fac1dfb06b84b7b025a8c67250)
+- `sounds/rsb/debris/chips/impact9.mp3` from `RS_Main/sounds/combatfx/impact/impact9.mp3` (sha1 95a780f6421d9f2c7dc1606cd4cf9b1d38586248)
+- `sounds/rsb/debris/chips/impact5.wav` from `RS_Main/sounds/combatfx/impact/impact5.wav` (sha1 96a416ed2ce1a06f5503c1f396e1f6829eaed88d)
+- `sounds/rsb/debris/rubble/rockhit1.wav` from `RS_Main/sounds/ch/ROCKHIT1.wav` (sha1 782977c0c47147adc49b132ce92dcf0b6f08ce73)
+- `sounds/rsb/debris/rubble/dsmothud.ogg` from `RS_Main/sounds/ch/DSMOTHUD.ogg` (sha1 a68eb189efad113845d4c594992107f565bdb3c3)
+- `sounds/rsb/debris/metal/dsbounc1.ogg` from `RS_Main/sounds/combatfx/magdrops/DSBOUNC1.ogg` (sha1 6b055c9b8bc83bb7701e8653d659fac727f0b4c1)
+- `sounds/rsb/debris/metal/dsbounc2.ogg` from `RS_Main/sounds/combatfx/magdrops/DSBOUNC2.ogg` (sha1 eafb3628f0bae1b3bcdfa0d467b23b1b86e71f80)
+- `sounds/rsb/debris/metal/dsbounc3.ogg` from `RS_Main/sounds/combatfx/magdrops/DSBOUNC3.ogg` (sha1 0c8068ea505c55ff3062665042e37ad3f5dea4fb)
+- `sounds/rsb/debris/metal/dsbounc4.ogg` from `RS_Main/sounds/combatfx/magdrops/DSBOUNC4.ogg` (sha1 a6e56ce7cbc95bc46730c01cfc1cc69f08299953)
+- `sounds/rsb/debris/metal/dsbounc5.ogg` from `RS_Main/sounds/combatfx/magdrops/DSBOUNC5.ogg` (sha1 9348efd7f71a7e196f5b58de0d7df18684963093)
+- `sounds/rsb/debris/metal/dsbounc6.ogg` from `RS_Main/sounds/combatfx/magdrops/DSBOUNC6.ogg` (sha1 dc9b43b4abb9c9d5a4cff3ea657e60a454aee9b2)
+- `sounds/rsb/debris/metal_big/dsaounc1.ogg` from `RS_Main/sounds/combatfx/magdrops/DSAOUNC1.ogg` (sha1 835a0636e772a2664af395cf9a3034e37eb56c46)
+- `sounds/rsb/debris/metal_big/dsaounc2.ogg` from `RS_Main/sounds/combatfx/magdrops/DSAOUNC2.ogg` (sha1 9fac1585f0b7182f4995caa19f961c352b3fefa0)
+- `sounds/rsb/debris/metal_big/dsaounc3.ogg` from `RS_Main/sounds/combatfx/magdrops/DSAOUNC3.ogg` (sha1 7a755bf8a37f0137ee8f594de39937442b9e9b0c)
+- `sounds/rsb/debris/metal_big/dsaounc4.ogg` from `RS_Main/sounds/combatfx/magdrops/DSAOUNC4` (sha1 bfd0c6f69649602d92e0f7186f611975a027c252)
+- `sounds/rsb/debris/metal_big/dsaounc5.ogg` from `RS_Main/sounds/combatfx/magdrops/DSAOUNC5` (sha1 cdde18702fe06bee8666d355135a54cb4c006c4b)
+- `sounds/rsb/debris/metal_big/dsaounc6.ogg` from `RS_Main/sounds/combatfx/magdrops/DSAOUNC6` (sha1 88ef54d63809be96c76062385baa243a38ff88c0)
+- `sounds/rsb/debris/glass_big/ice_shatter.ogg` from `RS_Main/sounds/combatfx/ice/ice_shatter.ogg` (sha1 efee3a43af103224176de8662783319dc5d88b7d)
+- `sounds/rsb/debris/dirt/gbounce.wav` from `RS_Main/sounds/rs_grenade/GBOUNCE` (sha1 cc3cb80881fc1645f523e7da991a83758d82aca7)
+- `sounds/rsb/debris/dirt/grnbnce.wav` from `RS_Main/sounds/rs_gh_weapon/gh_grenade/GRNBNCE` (sha1 43a1edd60ca7b474973ea43d1fa377a7c2a52d4b)
+- `sounds/rsb/debris/brass_rifle/dsriflc1.ogg` from `RS_Main/sounds/combatfx/casings/DSRIFLC1.ogg` (sha1 011613aefdc09c740bb57b135611fb6a2477e47a)
+- `sounds/rsb/debris/brass_rifle/dsriflc2.ogg` from `RS_Main/sounds/combatfx/casings/DSRIFLC2.ogg` (sha1 f71c84eec0db8c1df6e1933e296608c1e52a7a24)
+- `sounds/rsb/debris/brass_rifle/dsriflc3.ogg` from `RS_Main/sounds/combatfx/casings/DSRIFLC3.ogg` (sha1 fc334bc28e35418d3f65d21ef873185c5bc01e75)
+- `sounds/rsb/debris/brass_rifle/chgncas2.wav` from `RS_Main/sounds/combatfx/casings/CHGNCAS2` (sha1 39ff772e77e2e8f7fe16740449db2e6043eb328d)
+<!-- END debris landing sounds -->
