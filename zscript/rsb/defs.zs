@@ -141,6 +141,10 @@ class RSB_BurstDef : RSB_Def
 	// on every machine -- cached on first use and never tested (netplay rule).
 	String particle;
 	int    particleHandle;
+	// FURTHER DEFINITIONS (`particle = a, b, c`): the burst's count is shared among the
+	// first and these, so one burst throws chips of several shapes. Hash handles, cached.
+	Array<String> moreParticles;
+	Array<int>    moreHandles;
 }
 
 // AN IMPACT: what a landing round does to a surface.

@@ -99,6 +99,8 @@ end
 #   shape       cone (the default) | disc: a disc spreads ACROSS its aim -- along
 #               the surface, for aim normal -- lifted off it by up to `cone`
 #               degrees (0-90). Only for bursts drawn with a `particle`.
+#   particle    <PARTICLEDEFS definition>[, <another>, ...] -- several share the count, so
+#               one burst throws chips of several shapes (the 3D chunks)
 
 burst spark_hot
   count   = 14
@@ -143,13 +145,13 @@ burst ember_metal
   orient  = billboard
 end
 
-burst chips_concrete       # lit chips of broken concrete (rsb_debris_chip), never glowing
+burst chips_concrete       # 3D chips of broken concrete (flat chips with Mesh particles off), lit, never glowing
   count    = 9
   cone     = 45
   speed    = 170, 0.5
   life     = 1.2, 0.4
   color    = 150, 146, 138
-  particle = rsb_debris_chip
+  particle = rsb_chunk_concrete_chip1, rsb_chunk_concrete_chip2, rsb_chunk_concrete_chip3, rsb_chunk_concrete_chip4
 end
 
 burst dust_concrete       # a lit dust cloud (PARTICLEDEFS rsb_dust_concrete, stage 2d)
@@ -160,13 +162,13 @@ burst dust_concrete       # a lit dust cloud (PARTICLEDEFS rsb_dust_concrete, st
   particle = rsb_dust_concrete
 end
 
-burst splinter_wood        # lit wood splinters (rsb_debris_splinter)
+burst splinter_wood        # 3D wood splinters (flat with Mesh particles off)
   count    = 10
   cone     = 50
   speed    = 180, 0.5
   life     = 1.2, 0.4
   color    = 176, 128, 80
-  particle = rsb_debris_splinter
+  particle = rsb_chunk_wood_splinter1, rsb_chunk_wood_splinter2, rsb_chunk_wood_splinter3
 end
 
 burst dust_wood          # a lit wood-dust cloud (PARTICLEDEFS rsb_dust_wood, stage 2d)
@@ -187,13 +189,13 @@ burst flame_smoke        # black smoke rising off burning fuel (PARTICLEDEFS rsb
   particle = rsb_smoke_flame
 end
 
-burst glint_glass          # glass shards turning in the room's light (rsb_debris_shard)
+burst glint_glass          # 3D glass shards turning in the room's light (flat with Mesh particles off)
   count    = 14
   cone     = 60
   speed    = 150, 0.5
   life     = 1.0, 0.4
   color    = 205, 225, 235
-  particle = rsb_debris_shard
+  particle = rsb_chunk_glass_shard1, rsb_chunk_glass_shard2, rsb_chunk_glass_shard3
 end
 
 burst splash_liquid
@@ -211,13 +213,13 @@ burst splash_liquid
   aim     = up
 end
 
-burst clods_dirt           # lit dirt clods (rsb_debris_clod)
+burst clods_dirt           # 3D dirt clods (flat with Mesh particles off)
   count    = 9
   cone     = 40
   speed    = 150, 0.5
   life     = 1.1, 0.4
   color    = 116, 96, 68
-  particle = rsb_debris_clod
+  particle = rsb_chunk_dirt_clod1, rsb_chunk_dirt_clod2, rsb_chunk_dirt_clod3
 end
 
 burst dust_dirt            # a rolling dirt cloud (rsb_dust_dirt)
@@ -514,6 +516,33 @@ burst flash_launcher_puff  # a grenade launcher's thump: a big soft puff of smok
   aim      = along
   offset   = 3
   particle = rsb_smoke_gun
+end
+
+burst slabs_concrete       # a blast's heavier pieces: flat slabs of broken concrete (3D chunks)
+  count    = 4
+  cone     = 55
+  speed    = 220, 0.5
+  life     = 1.6, 0.4
+  color    = 150, 146, 138
+  particle = rsb_chunk_concrete_slab1, rsb_chunk_concrete_slab2
+end
+
+burst planks_wood          # a blast's heavier pieces: broken plank ends (3D chunks)
+  count    = 3
+  cone     = 55
+  speed    = 200, 0.5
+  life     = 1.6, 0.4
+  color    = 176, 128, 80
+  particle = rsb_chunk_wood_plank1
+end
+
+burst shards_metal         # torn, bent metal thrown off a blast (3D chunks, lit, never glowing)
+  count    = 6
+  cone     = 55
+  speed    = 260, 0.5
+  life     = 1.4, 0.4
+  color    = 200, 204, 212
+  particle = rsb_chunk_metal_shard1, rsb_chunk_metal_shard2, rsb_chunk_metal_shard3
 end
 
 burst trail_hot
@@ -1256,7 +1285,7 @@ end
 
 impact rocket
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, chips_concrete, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rocket_smoke, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -1300,7 +1329,7 @@ end
 
 impact rocket.metal
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, spark_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, spark_metal, shards_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -1309,7 +1338,7 @@ end
 
 impact rocket.wood
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, splinter_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10

@@ -61,9 +61,17 @@ class RSB_Burst play
 				planeNormal = onto.normal;
 				floorAt = FloorBelow(onto.at, onto.normal);
 			}
-			level.SpawnParticles(Handle(b), at + normal * b.offset, dir, n, Spread(b), b.speed, b.speedJitter,
-				b.life, b.lifeJitter, b.tint, glowScale, sizeScale, seed,
-				b.shape, planeAt, planeNormal, floorAt);
+			// Several definitions (`particle = a, b, c`) share the count: chips of several shapes.
+			int kinds = 1 + b.moreParticles.Size();
+			for (int k = 0; k < kinds; k++)
+			{
+				int share = n / kinds + ((k < n % kinds) ? 1 : 0);
+				if (share <= 0) continue;
+				int handle = (k == 0) ? Handle(b) : MoreHandle(b, k - 1);
+				level.SpawnParticles(handle, at + normal * b.offset, dir, share, Spread(b), b.speed, b.speedJitter,
+					b.life, b.lifeJitter, b.tint, glowScale, sizeScale, (k == 0) ? seed : RSB_Hash.Seed(seed, k, 613),
+					b.shape, planeAt, planeNormal, floorAt);
+			}
 			return;
 		}
 		level.SpawnGpuParticles(at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
@@ -122,6 +130,14 @@ class RSB_Burst play
 	{
 		if (b.particleHandle == 0) b.particleHandle = level.ParticleDefinition(b.particle);
 		return b.particleHandle;
+	}
+
+	// One of a burst's further definitions (`particle = a, b, c`): looked up once, as Handle.
+	private static int MoreHandle(RSB_BurstDef b, int i)
+	{
+		while (b.moreHandles.Size() <= i) b.moreHandles.Push(0);
+		if (b.moreHandles[i] == 0) b.moreHandles[i] = level.ParticleDefinition(b.moreParticles[i]);
+		return b.moreHandles[i];
 	}
 }
 

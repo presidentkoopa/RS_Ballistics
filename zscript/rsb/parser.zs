@@ -730,9 +730,13 @@ class RSB_Parser
 		}
 		if (key == "particle")
 		{
-			if (v.Size() != 1) return "particle is one PARTICLEDEFS definition name, or none";
+			if (v.Size() == 0) return "particle is one or more PARTICLEDEFS definition names, or none";
 			b.particle = (v[0] ~== "none") ? "" : v[0];
 			b.particleHandle = 0;
+			b.moreParticles.Clear();
+			b.moreHandles.Clear();
+			if (b.particle.Length() == 0) return (v.Size() == 1) ? "" : "particle none stands alone";
+			for (int i = 1; i < v.Size(); i++) b.moreParticles.Push(v[i]);
 			return "";
 		}
 		if (key == "shape")
