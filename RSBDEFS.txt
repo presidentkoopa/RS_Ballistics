@@ -529,6 +529,107 @@ impact saw               # sparks where the chain bites a wall; the saw has its 
   lightcolor = 255, 200, 140
 end
 
+# ---- the same arsenal on each material. A variant REPLACES its base -- nothing is
+# inherited -- so each lists everything it keeps. Liquids take no mark (a scorch
+# stamped on water reads as a sticker); debris is the material's own, never
+# concrete chips off wood or sparks off dirt. Plasma and the BFG throw no debris,
+# so only their liquid landing differs.
+impact plasma.liquid
+  bursts     = plasma_splash, plasma_motes, splash_liquid
+  light      = 140, 2.5, 5
+  lightcolor = 120, 180, 255
+end
+
+impact rocket.metal
+  bursts     = rocket_fire, rocket_embers, spark_metal, rocket_smoke
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+end
+
+impact rocket.wood
+  bursts     = rocket_fire, rocket_embers, splinter_wood, dust_wood, rocket_smoke
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+end
+
+impact rocket.dirt
+  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_concrete, rocket_smoke
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+end
+
+impact rocket.glass
+  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+end
+
+impact rocket.liquid
+  bursts     = rocket_fire, splash_liquid, rocket_smoke
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+end
+
+impact bfg.liquid
+  bursts     = bfg_splash, bfg_motes, splash_liquid
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+end
+
+impact rail.wood
+  bursts     = rail_splash, splinter_wood
+  mark       = ring, 5, 105
+  markcolor  = 180, 210, 255
+  light      = 100, 2.5, 4
+  lightcolor = 180, 210, 255
+end
+
+impact rail.dirt
+  bursts     = rail_splash, clods_dirt
+  mark       = ring, 5, 105
+  markcolor  = 180, 210, 255
+  light      = 100, 2.5, 4
+  lightcolor = 180, 210, 255
+end
+
+impact rail.glass
+  bursts     = rail_splash, glint_glass
+  mark       = ring, 5, 105
+  markcolor  = 180, 210, 255
+  light      = 100, 2.5, 4
+  lightcolor = 180, 210, 255
+end
+
+impact rail.liquid
+  bursts     = rail_splash, splash_liquid
+  light      = 100, 2.5, 4
+  lightcolor = 180, 210, 255
+end
+
+impact saw.wood          # the chain throws splinters and dust, not sparks
+  bursts     = splinter_wood, dust_wood
+end
+
+impact saw.dirt
+  bursts     = clods_dirt, dust_concrete
+end
+
+impact saw.glass
+  bursts     = glint_glass
+end
+
+impact saw.liquid
+  bursts     = splash_liquid
+end
+
 
 # ---------------------------------------------------------------- ROUNDS
 # A ROUND PAIRS TWO PROFILES, so how it flies and hits stays apart from how it
