@@ -484,6 +484,28 @@ burst dust_kick_ring_dirt  # the same off dirt and rock: heavier, darker
   particle = rsb_dust_dirt
 end
 
+burst flash_brake_fire     # a muzzle brake's blast: a ring of fire thrown out sideways around the muzzle (rsb_muzzle_plume, disc)
+  count    = 14
+  cone     = 12
+  speed    = 460, 0.35
+  life     = 0.1, 0.25
+  aim      = along
+  offset   = 1
+  shape    = disc
+  particle = rsb_muzzle_plume
+end
+
+burst flash_brake_smoke    # the brake's smoke: a ring rolling out around the muzzle (rsb_smoke_gun, disc)
+  count    = 10
+  cone     = 15
+  speed    = 150, 0.4
+  life     = 1.8, 0.35
+  aim      = along
+  offset   = 1
+  shape    = disc
+  particle = rsb_smoke_gun
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -1851,6 +1873,25 @@ flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-oran
   barrelheat = 0.9, 0.22, 0.3
   barrelsmoke = rsb_smoke_barrel_soot, 4.0
   barrelshimmer = 4, 0.6
+end
+
+flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanilla partner: the hammer -- a muzzle brake throws a ring of fire and smoke out sideways, a hard white spike forward, a sharp bright strobe, the floor kicked hard; brutal, mechanical, nearly the same every shot
+  light      = 700, 7.5, 2
+  lightcolor = 255, 232, 188
+  cone       = 26, 70, 180, 14
+  conetics   = 3
+  bursts     = flash_core, flash_tongue, flash_brake_fire, flash_brake_smoke, flash_sparks_wide
+  maybe      = flash_powder 0.6
+  flame      = 0.09
+  smoke      = 5, 0.04, 0.38
+  smokeparticle = rsb_smoke_gun
+  heat       = 12, 50, 1.3, 16
+  groundkick = kick_blast, 72
+  vary       = light 0.1, flame 0.15, cone 0.1, sparks 0.25, smoke 0.2
+  surge      = 0.05, 1.2
+  barrelheat = 0.55, 0.24, 0.35
+  barrelsmoke = rsb_smoke_barrel, 3.0
+  barrelshimmer = 3.5, 0.55
 end
 
 flash rifle
