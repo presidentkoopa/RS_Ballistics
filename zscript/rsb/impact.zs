@@ -294,10 +294,11 @@ class RSB_Impact play
 		}
 
 		// SMOKE INTO THE ROOM and A BLAST'S SHOVE (engine 13b, `smokevolume`, `push`).
+		// Both follow the effects level (RSB_Tier: heavy x1, extreme up).
 		if (im.smokeVolAmount > 0)
-			level.EmitSmoke(surf.at + surf.normal * (im.smokeVolRadius * 0.5), im.smokeVolRadius, im.smokeVolAmount, im.smokeVolHeat, surf.normal * 20.0);
+			level.EmitSmoke(surf.at + surf.normal * (im.smokeVolRadius * 0.5), im.smokeVolRadius, im.smokeVolAmount * RSB_Tier.SmokeScale(tier), im.smokeVolHeat, surf.normal * 20.0);
 		if (im.pushRadius > 0 && im.pushStrength > 0)
-			level.PushEffectImpulse(surf.at, im.pushRadius, im.pushStrength);
+			level.PushEffectImpulse(surf.at, im.pushRadius, im.pushStrength * RSB_Tier.PushScale(tier));
 
 		// HEAT SHIMMER where it lands (RSB_Heat): a ball of hot air that fades on its own.
 		if (im.heatStrength > 0)

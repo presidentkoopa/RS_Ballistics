@@ -27,8 +27,10 @@ class RSB_Heat play
 	const BLAST_SLOTS  = 16;   // 32..47
 
 	// A BALL OF HOT AIR at `at`, rising a little, fading over `tics`.
+	// Every source's strength follows the effects level (RSB_Tier.HeatScale: heavy x1, extreme up).
 	static void Blast(Vector3 at, double radius, double strength, int tics)
 	{
+		strength *= RSB_Tier.HeatScale(RSB_Tier.Current());
 		if (radius <= 0 || strength <= 0 || tics <= 0) return;
 		level.SetHeatSource(NextBlastSlot(), at, at + (0, 0, radius * 0.6), radius * 0.8, radius,
 			strength, 0.08, 24.0, tics);
@@ -38,6 +40,7 @@ class RSB_Heat play
 	// starts: a muzzle's.
 	static void Along(Vector3 from, Vector3 dir, double length, double radius, double strength, int tics)
 	{
+		strength *= RSB_Tier.HeatScale(RSB_Tier.Current());
 		if (radius <= 0 || strength <= 0 || tics <= 0 || length <= 0) return;
 		level.SetHeatSource(NextBlastSlot(), from, from + dir * length, radius * 0.5, radius,
 			strength, 0.1, 20.0, tics);

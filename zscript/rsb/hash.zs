@@ -62,14 +62,15 @@ class RSB_Hash
 // damage, speed or anything else a netgame compares.
 //
 //   0 off      no visuals (sounds still play)
-//   1 plain    fewer particles
-//   2 normal   the profiles as written
-//   3 heavy    more
-//   4 extreme  much more
+//   1 plain    fewer particles, dimmer, thinner smoke
+//   2 normal   a little under heavy
+//   3 heavy    the recommended level: what every profile is tuned at
+//   4 extreme  EVERYTHING turned way up (the owner: "EXTREMEEEEEE")
 //
 // A profile written for a tier -- `impact bullet@heavy` -- is used as written
-// at that tier. Otherwise the untiered profile is used and its particle counts
-// are scaled by CountScale.
+// at that tier. Otherwise the untiered profile is used, and the level scales far
+// more than its particle counts: lights, sizes, room smoke, shoves, heat shimmer,
+// how long marks stay, glow and how often tracers fly (the ladder below).
 class RSB_Tier
 {
 	const T_OFF     = 0;
@@ -103,8 +104,39 @@ class RSB_Tier
 		case T_OFF:     return 0.0;
 		case T_PLAIN:   return 0.4;
 		case T_HEAVY:   return 1.8;
-		case T_EXTREME: return 3.0;
+		case T_EXTREME: return 4.0;
 		}
 		return 1.0;
+	}
+
+	// THE LADDER BEYOND COUNTS. Heavy is what every profile is tuned at, so heavy is x1 on
+	// every rung; plain and normal trim, extreme goes big. Off is 0 (nothing draws anyway).
+	private static double Ladder(int t, double plain, double normal, double heavy, double extreme)
+	{
+		switch (t)
+		{
+		case T_OFF:     return 0.0;
+		case T_PLAIN:   return plain;
+		case T_NORMAL:  return normal;
+		case T_HEAVY:   return heavy;
+		}
+		return extreme;
+	}
+
+	static double LightScale(int t) { return Ladder(t, 0.6, 0.85, 1.0, 1.5); }   // every effect light's brightness
+	static double SizeScale(int t)  { return Ladder(t, 0.85, 0.95, 1.0, 1.3); }  // muzzle light reach, flash flame size
+	static double SmokeScale(int t) { return Ladder(t, 0.4, 0.7, 1.0, 1.7); }    // room smoke and smoke puffs
+	static double PushScale(int t)  { return Ladder(t, 0.5, 0.8, 1.0, 1.5); }    // blasts shoving the room's smoke
+	static double HeatScale(int t)  { return Ladder(t, 0.5, 0.8, 1.0, 1.6); }    // heat shimmer strength
+	static double MarkScale(int t)  { return Ladder(t, 0.5, 0.75, 1.0, 2.5); }   // how long surface marks stay
+	static double GlowScale(int t)  { return Ladder(t, 0.8, 0.9, 1.0, 1.3); }    // hot particles' glow
+
+	// A look's tracer every N rounds: twice as often at extreme, half as often at plain.
+	static int TracerEvery(int every, int t)
+	{
+		if (every <= 0) return every;
+		if (t >= T_EXTREME) return max(1, every / 2);
+		if (t <= T_PLAIN) return every * 2;
+		return every;
 	}
 }

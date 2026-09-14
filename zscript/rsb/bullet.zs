@@ -147,8 +147,10 @@ class RSB_Bullet : FastProjectile
 		String tierName = RSB_Tier.Name(RSB_Tier.Current());
 		lookDef = reg.ResolveRoundLook(r.roundLook, tierName);
 		flightDef = lookDef;
-		// A TRACER: every Nth round of a hand (the look's `tracer`) flies in the tracer's look.
-		if (lookDef && lookDef.tracerEvery > 0 && roundIndex > 0 && (roundIndex % lookDef.tracerEvery) == 0)
+		// A TRACER: every Nth round of a hand (the look's `tracer`) flies in the tracer's look --
+		// twice as often at extreme, half as often at plain (RSB_Tier.TracerEvery).
+		int tracerEvery = lookDef ? RSB_Tier.TracerEvery(lookDef.tracerEvery, RSB_Tier.Current()) : 0;
+		if (lookDef && tracerEvery > 0 && roundIndex > 0 && (roundIndex % tracerEvery) == 0)
 		{
 			let tracerDef = reg.ResolveRoundLook(lookDef.tracerLook, tierName);
 			if (tracerDef) flightDef = tracerDef;

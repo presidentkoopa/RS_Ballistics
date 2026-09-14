@@ -64,10 +64,12 @@ class RSB_Settings play
 		return max(0.0, Cvf("rsb_impact_particles", 1.0) * (st ? st.particlesMul : 1.0));
 	}
 
+	// THE EFFECTS LEVEL folds in here too (RSB_Tier's ladder): heavy is what every profile is
+	// tuned at, so heavy is x1; plain and normal trim, extreme goes big.
 	static double ImpactGlow()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_impact_glow", 1.0) * (st ? st.glowMul : 1.0));
+		return max(0.0, Cvf("rsb_impact_glow", 1.0) * (st ? st.glowMul : 1.0) * RSB_Tier.GlowScale(RSB_Tier.Current()));
 	}
 
 	static bool ImpactLights() { return Cvb("rsb_impact_lights", true); }
@@ -75,7 +77,7 @@ class RSB_Settings play
 	static double ImpactLight()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_impact_light", 1.0) * (st ? st.lightsMul : 1.0));
+		return max(0.0, Cvf("rsb_impact_light", 1.0) * (st ? st.lightsMul : 1.0) * RSB_Tier.LightScale(RSB_Tier.Current()));
 	}
 
 	static bool Marks() { return Cvb("rsb_marks", true); }
@@ -83,7 +85,7 @@ class RSB_Settings play
 	static double MarkLife()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_mark_life", 1.0) * (st ? st.marksMul : 1.0));
+		return max(0.0, Cvf("rsb_mark_life", 1.0) * (st ? st.marksMul : 1.0) * RSB_Tier.MarkScale(RSB_Tier.Current()));
 	}
 
 	static bool Ricochets() { return Cvb("rsb_ricochets", true); }
@@ -94,10 +96,10 @@ class RSB_Settings play
 	static double FlashLight()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_flash_light", 1.0) * (st ? st.flashMul : 1.0));
+		return max(0.0, Cvf("rsb_flash_light", 1.0) * (st ? st.flashMul : 1.0) * RSB_Tier.LightScale(RSB_Tier.Current()));
 	}
 
-	static double FlashSize() { return max(0.0, Cvf("rsb_flash_size", 1.0)); }
+	static double FlashSize() { return max(0.0, Cvf("rsb_flash_size", 1.0) * RSB_Tier.SizeScale(RSB_Tier.Current())); }
 
 	static bool FlashCone() { return Cvb("rsb_flash_cone", true); }
 
@@ -112,7 +114,7 @@ class RSB_Settings play
 	static double FlashFlameSize()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_flash_flame_size", 1.0) * (st ? st.flameMul : 1.0));
+		return max(0.0, Cvf("rsb_flash_flame_size", 1.0) * (st ? st.flameMul : 1.0) * RSB_Tier.SizeScale(RSB_Tier.Current()));
 	}
 
 	static double FlashSparks()
@@ -124,7 +126,7 @@ class RSB_Settings play
 	static double FlashSmoke()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_flash_smoke", 1.0) * (st ? st.smokeMul : 1.0));
+		return max(0.0, Cvf("rsb_flash_smoke", 1.0) * (st ? st.smokeMul : 1.0) * RSB_Tier.SmokeScale(RSB_Tier.Current()));
 	}
 
 	// ---- rounds in flight ------------------------------------------------------
@@ -173,7 +175,7 @@ class RSB_Settings play
 	static double FlameLight()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_flame_light", 1.0) * (st ? st.lightsMul : 1.0));
+		return max(0.0, Cvf("rsb_flame_light", 1.0) * (st ? st.lightsMul : 1.0) * RSB_Tier.LightScale(RSB_Tier.Current()));
 	}
 
 	static double FlameVolume() { return clamp(Cvf("rsb_flame_volume", 1.0), 0.0, 1.0); }

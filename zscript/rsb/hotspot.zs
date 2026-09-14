@@ -156,7 +156,7 @@ class RSB_Hotspot : Actor
 				RSB_Heat.Blast(pos + surfNormal * (hs.shimmerRadius * 0.4), hs.shimmerRadius, hs.shimmerStrength * hot, SHIMMER_EVERY + 6);
 			// SMOKE INTO THE ROOM while it burns (engine 13b, `smokevolume`), by its heat.
 			if (hs.smokeVolAmount > 0 && (now % SHIMMER_EVERY) == 0)
-				level.EmitSmoke(pos + surfNormal * (hs.smokeVolRadius * 0.5), hs.smokeVolRadius, hs.smokeVolAmount * hot, 0.5 * hot, (0, 0, 20));
+				level.EmitSmoke(pos + surfNormal * (hs.smokeVolRadius * 0.5), hs.smokeVolRadius, hs.smokeVolAmount * hot * RSB_Tier.SmokeScale(tier), 0.5 * hot, (0, 0, 20));
 		}
 
 		// THE SOUND at every effects level: the dial turns the visuals down, not the fight.

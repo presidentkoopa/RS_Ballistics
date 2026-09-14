@@ -20,7 +20,7 @@ OptionValue "RSBTiers"
 	1, "Plain"
 	2, "Normal"
 	3, "Heavy (recommended)"
-	4, "Extreme"
+	4, "EXTREME -- everything turned way up"
 }
 
 OptionValue "RSBAtlasSizes"
