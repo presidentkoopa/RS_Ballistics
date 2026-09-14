@@ -341,6 +341,9 @@ end
 #               shapes: pool bar gouge ring hexfield hexring spiral boxring
 #                       star sunburst grid invert box
 #   markcolor   r, g, b
+#               A mark GLOWS, so only a hot hit leaves one (owner: only hot things
+#               glow): metal a round strikes, energy, blasts, burns. Never stone,
+#               wood or dirt; their holes wait for the engine's wall damage (#17).
 #   sound       SNDINFO name | none
 #   light       radius, intensity, tics      lightcolor  r, g, b
 #   glance      degrees from the surface, sound, burst -- a ricochet
@@ -352,16 +355,12 @@ end
 
 impact bullet
   bursts    = spark_hot, chips_concrete, dust_concrete
-  mark      = pool, 5, 20
-  markcolor = 255, 150, 60
   sound     = rsb/impact/concrete
   glance    = 18, rsb/ricochet, spark_hot
 end
 
 impact bullet@plain
   bursts    = spark_hot
-  mark      = pool, 4, 12
-  markcolor = 255, 150, 60
   sound     = rsb/impact/concrete
 end
 
@@ -377,8 +376,6 @@ end
 
 impact bullet.wood
   bursts    = splinter_wood, dust_wood
-  mark      = pool, 3, 10
-  markcolor = 200, 110, 50
   sound     = rsb/impact/wood
 end
 
@@ -399,8 +396,6 @@ end
 
 impact bullet~cinematic
   bursts     = spark_hot, chips_concrete, dust_concrete
-  mark       = sunburst, 7, 30
-  markcolor  = 255, 160, 70
   sound      = rsb/impact/concrete
   light      = 48, 1.2, 3
   lightcolor = 255, 180, 110
@@ -416,8 +411,6 @@ end
 impact pistol
   bursts    = spark_hot, chips_concrete, dust_concrete
   scale     = 0.8, 0.9
-  mark      = pool, 4, 18
-  markcolor = 255, 150, 60
   sound     = rsb/impact/concrete
   glance    = 18, rsb/ricochet, spark_hot
 end
@@ -436,8 +429,6 @@ end
 impact pistol.wood
   bursts    = splinter_wood, dust_wood
   scale     = 0.8, 0.9
-  mark      = pool, 3, 9
-  markcolor = 200, 110, 50
   sound     = rsb/impact/wood
 end
 
@@ -463,8 +454,6 @@ end
 impact magnum
   bursts    = spark_hot, chips_concrete, dust_concrete, dust_jet_concrete
   scale     = 1.3, 1.15
-  mark      = pool, 6, 26
-  markcolor = 255, 150, 60
   sound     = rsb/impact/concrete
   glance    = 20, rsb/ricochet, spark_hot
 end
@@ -483,8 +472,6 @@ end
 impact magnum.wood
   bursts    = splinter_wood, dust_wood, dust_jet_wood
   scale     = 1.3, 1.15
-  mark      = pool, 5, 13
-  markcolor = 200, 110, 50
   sound     = rsb/impact/wood
 end
 
@@ -510,8 +497,6 @@ end
 impact rifle
   bursts    = spark_hot, chips_concrete, dust_concrete, dust_jet_concrete
   scale     = 1.6, 1.3
-  mark      = pool, 6, 32
-  markcolor = 255, 150, 60
   sound     = rsb/impact/concrete
   glance    = 14, rsb/ricochet, spark_hot
 end
@@ -530,8 +515,6 @@ end
 impact rifle.wood
   bursts    = splinter_wood, dust_wood, dust_jet_wood
   scale     = 1.6, 1.3
-  mark      = pool, 5, 16
-  markcolor = 200, 110, 50
   sound     = rsb/impact/wood
 end
 
@@ -557,8 +540,6 @@ end
 impact buckshot
   bursts    = spark_hot, chips_concrete, dust_concrete
   scale     = 0.35, 0.8
-  mark      = pool, 3, 10
-  markcolor = 255, 150, 60
   sound     = rsb/impact/concrete
 end
 
@@ -573,8 +554,6 @@ end
 impact buckshot.wood
   bursts    = splinter_wood, dust_wood
   scale     = 0.35, 0.8
-  mark      = pool, 2, 8
-  markcolor = 200, 110, 50
   sound     = rsb/impact/wood
 end
 

@@ -16,11 +16,11 @@ VR. Effects are picked per player by style, effects tier and menu settings.
 
 ## Requirements
 
-- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 463098530b or later.
+- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 8125f36976 or later.
   RS_Ballistics uses engine features plain GZDoom does not have: GPU particle
   definitions (`PARTICLEDEFS`, `SpawnParticles`), surface materials (`SURFACES`,
-  `TexMan.GetSurface`) and drawn-line looks (`SetDrawnLine*`). It will not load on
-  other engines.
+  `TexMan.GetSurface`), drawn-line looks (`SetDrawnLine*`) and generated
+  particle looks (`look = dust | fire`). It will not load on other engines.
 - Mods that fire its rounds (RS_VR_Reload, RS_VR_Weapons) require it and load
   after it.
 

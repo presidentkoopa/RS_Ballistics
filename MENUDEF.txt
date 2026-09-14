@@ -134,6 +134,7 @@ OptionMenu "RSB_ParticleMenu"
 	Slider "Soft particles (map units, 8 recommended)", "r_gpuparticles_soft", 0, 32, 1, 0
 	Slider "Particle lights (32 recommended)", "r_gpuparticles_lights", 0, 32, 1, 0
 	Option "Particle atlas size", "r_gpuparticles_atlas_size", "RSBAtlasSizes"
+	Slider "Generated particle looks (0 = plain dots)", "r_gpuparticles_looks", 0, 3, 1, 0
 	StaticText ""
 	Slider "Particle size", "r_gpuparticles_sizescale", 0.25, 3.0, 0.05, 2
 	Slider "Particle brightness", "r_gpuparticles_intensity", 0.25, 3.0, 0.05, 2
@@ -259,7 +260,9 @@ OptionMenu "RSB_SmokeMenu"
 	StaticText "Room-filling gunsmoke that drifts through doorways, is stopped by walls,", "DarkGray"
 	StaticText "is lit by flashes and lights, and shows lasers passing through it.", "DarkGray"
 	StaticText ""
-	StaticText "The engine's smoke volume is being built. Its rows arrive here with it.", "Gold"
+	StaticText "The engine's smoke volume is in. Our guns start filling it in its next step.", "Gold"
+	Option "Smoke volume", "r_smoke", "OnOff"
+	Slider "Smoke quality (1 = 59 MB, 2 = 157 MB, 3 = 328 MB, 4 = 472 MB)", "r_smoke_quality", 1, 4, 1, 0
 	StaticText ""
 	StaticText "Today: muzzle, flame and impact smoke are GPU particles.", "DarkGray"
 	Slider "Muzzle smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1

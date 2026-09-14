@@ -26,8 +26,10 @@
 // Effects -> "All effects on".
 // COLLIDE: `collide = plane` keeps particles in front of the surface an emission
 // names and skids them on the floor in front of it.
-// NEXT: dust and fire move to generated looks (Engine docs/GPU_PARTICLE_LOOKS_PLAN.md,
-// staged in _staged/PARTICLEDEFS_looksA.txt) when that engine build lands.
+// LOOKS (engine 8125f36976, particle looks build A): dust and fire are generated
+// by the engine, not flipbooks -- torn edges that churn, sized to the world (3.5
+// units a noise cell). Dust never glows and shades where a dynamic light reaches it;
+// fire's colour is its heat ramp, so its colour ramp stays near white.
 //
 // Keys (value @ life fraction for ramps, up to 8 keys):
 //   size, color, alpha, emissive   ramps
@@ -35,42 +37,56 @@
 //   texture = "<first frame>", frames, fps, loop | once
 //   orient = billboard | streak | flake   stretch   spin = min, max
 //   collide = none | plane
+//   look = none | dust | fire (never with texture)   roughness 0..1
+//   churn (cells a second)   detail 1..4   heat = start, end (fire, 0 soot .. 1 white)
+//   rise (fire, map units a second)
 // ============================================================================
 
 // ---------------------------------------------------------------- FLAME
-// The flamethrower's body: small and white-hot out of the nozzle, swelling to
-// big orange puffs, cooling to dark red. Additive (alpha 0 throughout).
+// The flamethrower's body, generated fire: tongues white-hot at the root, cooling
+// through orange to deep red over life (heat 1 to 0.3). Additive (alpha 0 throughout).
+// No spin: the tongues follow the quad's up axis.
 particle rsb_flame_puff
 {
-	size     = 3 @0, 16 @0.4, 30 @1
-	color    = 255 240 200 @0, 255 150 45 @0.35, 170 50 15 @1
-	alpha    = 0 @0, 0 @1
-	emissive = 3.5 @0, 2.2 @0.5, 0 @1
-	lit      = 0
-	gravity  = -60
-	drag     = 0.4
-	maxsize  = 48
-	soft     = 8
-	orient   = billboard
-	spin     = -120, 120
-	collide  = plane
+	look      = fire
+	heat      = 1.0, 0.3
+	rise      = 28
+	roughness = 0.5
+	churn     = 1.6
+	detail    = 3
+	size      = 4 @0, 18 @0.4, 34 @1
+	color     = 255 250 240 @0, 255 250 240 @1
+	alpha     = 0 @0, 0 @1
+	emissive  = 5.2 @0, 3.3 @0.5, 0 @1
+	lit       = 0
+	gravity   = -60
+	drag      = 0.4
+	maxsize   = 56
+	soft      = 8
+	orient    = billboard
+	collide   = plane
 }
 
-// The ragged tip: fewer, larger, redder, fading sooner.
+// The ragged tip: fewer, larger, cooler (heat 0.75 to 0.1), fading sooner.
 particle rsb_flame_tip
 {
-	size     = 8 @0, 26 @0.6, 36 @1
-	color    = 255 120 30 @0, 180 45 12 @1
-	alpha    = 0 @0, 0 @1
-	emissive = 1.6 @0, 0.8 @0.6, 0 @1
-	lit      = 0
-	gravity  = -90
-	drag     = 0.6
-	maxsize  = 48
-	soft     = 8
-	orient   = billboard
-	spin     = -90, 90
-	collide  = plane
+	look      = fire
+	heat      = 0.75, 0.1
+	rise      = 40
+	roughness = 0.65
+	churn     = 1.8
+	detail    = 3
+	size      = 10 @0, 28 @0.6, 40 @1
+	color     = 255 250 240 @0, 255 250 240 @1
+	alpha     = 0 @0, 0 @1
+	emissive  = 2.4 @0, 1.2 @0.6, 0 @1
+	lit       = 0
+	gravity   = -90
+	drag      = 0.6
+	maxsize   = 56
+	soft      = 8
+	orient    = billboard
+	collide   = plane
 }
 
 // A single flame licking up where fire lands: the tongue rises, bends and breaks.
@@ -199,59 +215,69 @@ particle rsb_smoke_gun
 }
 
 // ---------------------------------------------------------------- IMPACT DUST
-// The rolling dust cloud (RSDS): bursts out of the hit, rolls, thins. Lit by the
-// room; a burst's colour picks the material.
+// The dust a round knocks out of concrete, generated dust: it bursts out, billows,
+// tears at the edge and thins, hanging long enough to cloud the air. Lit by the
+// room, never glowing.
 particle rsb_dust_concrete
 {
-	size     = 5 @0, 18 @0.3, 30 @1
-	color    = 138 130 116 @0, 120 114 104 @1
-	alpha    = 0 @0, 0.5 @0.08, 0.22 @0.5, 0 @1
-	emissive = 0 @0, 0 @1
-	lit      = 1
-	gravity  = -10
-	drag     = 2.5
-	maxsize  = 48
-	soft     = 10
-	texture  = "RSDSA0", 18, 12, once
-	orient   = billboard
-	spin     = -40, 40
-	collide  = plane
+	look      = dust
+	roughness = 0.65
+	churn     = 0.6
+	detail    = 3
+	size      = 6 @0, 24 @0.25, 42 @1
+	color     = 150 144 132 @0, 128 124 116 @1
+	alpha     = 0 @0, 0.55 @0.06, 0.3 @0.45, 0 @1
+	emissive  = 0 @0, 0 @1
+	lit       = 1
+	gravity   = -8
+	drag      = 2.2
+	maxsize   = 64
+	soft      = 12
+	orient    = billboard
+	spin      = -25, 25
+	collide   = plane
 }
 
 // Wood dust: browner, lighter, settles sooner.
 particle rsb_dust_wood
 {
-	size     = 4 @0, 13 @0.3, 22 @1
-	color    = 124 98 64 @0, 108 88 60 @1
-	alpha    = 0 @0, 0.38 @0.08, 0.16 @0.5, 0 @1
-	emissive = 0 @0, 0 @1
-	lit      = 1
-	gravity  = -6
-	drag     = 2.5
-	maxsize  = 36
-	soft     = 8
-	texture  = "RSDSA0", 18, 12, once
-	orient   = billboard
-	spin     = -40, 40
-	collide  = plane
+	look      = dust
+	roughness = 0.55
+	churn     = 0.5
+	detail    = 3
+	size      = 4 @0, 16 @0.3, 28 @1
+	color     = 126 100 66 @0, 110 90 62 @1
+	alpha     = 0 @0, 0.42 @0.08, 0.18 @0.5, 0 @1
+	emissive  = 0 @0, 0 @1
+	lit       = 1
+	gravity   = -4
+	drag      = 2.6
+	maxsize   = 48
+	soft      = 8
+	orient    = billboard
+	spin      = -40, 40
+	collide   = plane
 }
 
-// Dirt: dark brown, heavy, falls back sooner.
+// Dirt and rock: dark brown, heavy, falls back sooner.
 particle rsb_dust_dirt
 {
-	size     = 5 @0, 16 @0.3, 26 @1
-	color    = 102 84 60 @0, 90 76 56 @1
-	alpha    = 0 @0, 0.48 @0.06, 0.2 @0.45, 0 @1
-	emissive = 0 @0, 0 @1
-	lit      = 1
-	gravity  = 12
-	drag     = 2.0
-	maxsize  = 40
-	soft     = 10
-	texture  = "RSDSA0", 18, 12, once
-	orient   = billboard
-	spin     = -30, 30
-	collide  = plane
+	look      = dust
+	roughness = 0.75
+	churn     = 0.45
+	detail    = 3
+	size      = 5 @0, 20 @0.3, 32 @1
+	color     = 104 86 62 @0, 92 78 58 @1
+	alpha     = 0 @0, 0.5 @0.06, 0.22 @0.45, 0 @1
+	emissive  = 0 @0, 0 @1
+	lit       = 1
+	gravity   = 10
+	drag      = 2.0
+	maxsize   = 56
+	soft      = 10
+	orient    = billboard
+	spin      = -30, 30
+	collide   = plane
 }
 
 // ---------------------------------------------------------------- DEBRIS (lit, never glowing)
