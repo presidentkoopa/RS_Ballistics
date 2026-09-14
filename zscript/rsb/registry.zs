@@ -20,7 +20,7 @@ class RSB_Registry : StaticEventHandler
 	int        trailNext;       // RSB_Trail: the next drawn-line slot for a trail, in turn (drawing only)
 	Array<RSB_BarrelHeat> barrels;   // RSB_Barrel: heat per gun (drawing only; cleared each map)
 	Array<int>             roundCounts;   // RSB_Bullet: rounds each player's hand has fired, for tracers (drawing only)
-	Array<RSB_LocalEjecta> casings;       // local casings in the world, oldest first: the casing cap (cleared each map)
+	Array<Actor>           casings;       // casings in the world, oldest first: the shared casing cap -- ours and any mod's that asked (RSB_Service casing.keep); cleared each map
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()
@@ -59,9 +59,10 @@ class RSB_Registry : StaticEventHandler
 		return roundCounts[k];
 	}
 
-	// THE CASING CAP (Casings: "Casings in the world, most"): a new local casing joins the
-	// list; past the cap the oldest start fading. Looks only, on this machine.
-	void KeepCasing(RSB_LocalEjecta c)
+	// THE SHARED CASING CAP (Casings: "Casings in the world, most"): a new casing joins the
+	// list -- RS_Ballistics' own, or another mod's through RSB_Service casing.keep; past the
+	// cap the oldest start fading. Looks only, on this machine.
+	void KeepCasing(Actor c)
 	{
 		if (!c) return;
 		casings.Push(c);
@@ -73,7 +74,11 @@ class RSB_Registry : StaticEventHandler
 		{
 			let oldest = casings[0];
 			casings.Delete(0);
-			if (oldest) oldest.FadeOut();
+			// Ours fade as they always have. Another mod's casing hears Deactivate, which its
+			// class overrides to start its own fade; only actors that asked are ever told.
+			let ours = RSB_LocalEjecta(oldest);
+			if (ours) ours.FadeOut();
+			else if (oldest) oldest.Deactivate(null);
 		}
 	}
 

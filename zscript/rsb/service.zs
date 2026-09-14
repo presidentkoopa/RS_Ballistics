@@ -16,6 +16,14 @@
 //   GetString("profiles")                      every profile, by kind, one line
 //   GetInt("count", kind)                      how many profiles of that kind
 //   GetInt("has", name, 0, 0, null, 'kind')    1 if that profile exists
+//   GetInt("casing.hello")                     1: the shared casing cap is here
+//   GetInt("casing.keep", "", 0, 0, actor)     puts a casing ACTOR another mod has just thrown
+//                                              in the shared cap (Casings: "Casings in the
+//                                              world, most"); 1 when kept. Past the cap the
+//                                              oldest fade: RS_Ballistics' own by themselves,
+//                                              another mod's by Deactivate(null), which its
+//                                              class overrides to start its own fade. Looks
+//                                              only, on the machine that threw it.
 // ============================================================================
 
 class RSB_Service : Service
@@ -31,7 +39,16 @@ class RSB_Service : Service
 	override int GetInt(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
 		let reg = RSB_Registry.Get();
-		if (!reg || !reg.defs) return 0;
+		if (!reg) return 0;
+		if (request ~== "casing.hello") return 1;
+		if (request ~== "casing.keep")
+		{
+			let casing = Actor(objectArg);
+			if (!casing) return 0;
+			reg.KeepCasing(casing);
+			return 1;
+		}
+		if (!reg.defs) return 0;
 		if (request ~== "count") return reg.defs.Count(stringArg);
 		if (request ~== "has")
 		{
