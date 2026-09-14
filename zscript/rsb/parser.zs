@@ -194,6 +194,8 @@ class RSB_Parser
 			d.gravity = 0;
 			d.tint = white;
 			d.glow = 1;
+			d.particle = "";
+			d.particleHandle = 0;
 			return d;
 		}
 		if (kind == "burst")
@@ -503,6 +505,13 @@ class RSB_Parser
 			why = Nums(v, 1); if (why != "") return why;
 			w.glow = v[0].ToDouble();
 			return (w.glow >= 0) ? "" : "glow must be 0 or more";
+		}
+		if (key == "particle")
+		{
+			if (v.Size() != 1) return "particle is one PARTICLEDEFS definition name, or none";
+			w.particle = (v[0] ~== "none") ? "" : v[0];
+			w.particleHandle = 0;
+			return "";
 		}
 		return String.Format("unknown wake key \"%s\"", key);
 	}

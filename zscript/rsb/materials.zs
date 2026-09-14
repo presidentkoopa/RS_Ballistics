@@ -23,6 +23,7 @@ class RSB_Surface
 	Vector3 normal;     // unit, facing back toward the round
 	bool    sky;        // the round went into the sky: no effects
 	bool    flat;
+	bool    air;        // no surface: a blast in mid-air or on a monster; no mark
 }
 
 class RSB_Materials play
@@ -134,6 +135,16 @@ class RSB_Materials play
 		s.normal = (travel != (0, 0, 0)) ? -travel : (0, 0, 1);
 		s.sky = false;
 		s.flat = false;
+		s.air = false;
+		return s;
+	}
+
+	// NO SURFACE: where a projectile blew up on a monster or in the air. Facing back
+	// along its flight, the default material, and flagged so no mark is stamped.
+	static RSB_Surface InAir(Vector3 at, Vector3 travel)
+	{
+		let s = MakeSurface(at, travel);
+		s.air = true;
 		return s;
 	}
 

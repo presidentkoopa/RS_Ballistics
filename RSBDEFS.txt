@@ -390,6 +390,145 @@ impact bullet~cinematic
   glance     = 22, rsb/ricochet, spark_hot
 end
 
+# ---- the rest of the arsenal: plasma, rockets, the BFG (projectiles.zs), and the
+# rail and saw puffs (RSB_RailPuff, RSB_SawPuff). Their own explosion sprites and
+# sounds stay; these add light, particles, smoke and marks.
+burst plasma_splash
+  count   = 22
+  cone    = 70
+  speed   = 260, 0.5
+  life    = 0.3, 0.4
+  color   = 120, 190, 255
+  glow    = 3.0
+  size    = 0.9, 0.2
+  gravity = 150
+  drag    = 2.5
+  orient  = streak
+  stretch = 0.02
+  aim     = reflect
+end
+
+burst plasma_motes
+  count   = 10
+  cone    = 60
+  speed   = 60, 0.6
+  life    = 0.6, 0.4
+  color   = 150, 210, 255
+  glow    = 2.0
+  size    = 2.5, 0.5
+  drag    = 2.0
+end
+
+burst rocket_fire        # the fireball: flame puffs flung out, cooling (PARTICLEDEFS)
+  count    = 28
+  cone     = 80
+  speed    = 200, 0.5
+  life     = 0.8, 0.3
+  offset   = 6
+  particle = rsb_flame_puff
+end
+
+burst rocket_embers
+  count   = 36
+  cone    = 75
+  speed   = 380, 0.5
+  life    = 0.9, 0.4
+  color   = 255, 170, 70
+  glow    = 3.0
+  size    = 1.0, 0.3
+  gravity = 350
+  drag    = 1.2
+  orient  = streak
+  stretch = 0.02
+end
+
+burst rocket_smoke       # the smoke after the blast (PARTICLEDEFS)
+  count    = 10
+  cone     = 70
+  speed    = 70, 0.5
+  life     = 3.2, 0.3
+  offset   = 8
+  particle = rsb_smoke_flame
+end
+
+burst bfg_splash
+  count   = 48
+  cone    = 85
+  speed   = 320, 0.5
+  life    = 0.5, 0.4
+  color   = 140, 255, 150
+  glow    = 3.5
+  size    = 1.4, 0.3
+  gravity = 80
+  drag    = 1.8
+  orient  = streak
+  stretch = 0.025
+end
+
+burst bfg_motes
+  count   = 24
+  cone    = 90
+  speed   = 90, 0.6
+  life    = 1.0, 0.4
+  color   = 170, 255, 180
+  glow    = 2.4
+  size    = 3.0, 0.5
+  drag    = 1.5
+end
+
+burst rail_splash
+  count   = 26
+  cone    = 55
+  speed   = 340, 0.5
+  life    = 0.28, 0.4
+  color   = 200, 220, 255
+  glow    = 3.5
+  size    = 0.7, 0.15
+  gravity = 250
+  drag    = 2.5
+  orient  = streak
+  stretch = 0.025
+  aim     = reflect
+end
+
+impact plasma
+  bursts     = plasma_splash, plasma_motes
+  mark       = ring, 8, 70
+  markcolor  = 120, 180, 255
+  light      = 140, 2.5, 5
+  lightcolor = 120, 180, 255
+end
+
+impact rocket
+  bursts     = rocket_fire, rocket_embers, chips_concrete, rocket_smoke
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+end
+
+impact bfg
+  bursts     = bfg_splash, bfg_motes
+  mark       = hexring, 36, 175
+  markcolor  = 140, 255, 150
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+end
+
+impact rail
+  bursts     = rail_splash, spark_metal
+  mark       = ring, 5, 105
+  markcolor  = 180, 210, 255
+  light      = 100, 2.5, 4
+  lightcolor = 180, 210, 255
+end
+
+impact saw               # sparks where the chain bites a wall; the saw has its own sound
+  bursts     = spark_metal, ember_metal
+  light      = 60, 1.5, 3
+  lightcolor = 255, 200, 140
+end
+
 
 # ---------------------------------------------------------------- ROUNDS
 # A ROUND PAIRS TWO PROFILES, so how it flies and hits stays apart from how it
@@ -515,6 +654,28 @@ roundlook unseen         # nothing drawn in flight; impacts and whiz unchanged
   wake   = none
 end
 
+# The engine's own projectiles fired as RSB_PlasmaBall, RSB_Rocket, RSB_BFGBall
+# (zscript/rsb/projectiles.zs). They keep their own sprite, speed, damage and
+# explosion; these looks add only the trail and the impact (in mid-air too).
+# `look = none` here means "nothing added" -- the projectile still draws itself.
+roundlook plasma_ball
+  look   = none
+  wake   = plasma_trail
+  impact = plasma
+end
+
+roundlook rocket
+  look   = none
+  wake   = rocket_smoke
+  impact = rocket
+end
+
+roundlook bfg_ball
+  look   = none
+  wake   = bfg_trail
+  impact = bfg
+end
+
 wake tracer_bright
   perstep = 6
   size    = 0.9, 0.1
@@ -561,6 +722,8 @@ end
 #   perstep  particles along each tic's travel
 #   size     start, end     life  seconds     drift  map units/s
 #   drag     1/s            gravity           color  r, g, b     glow
+#   particle <PARTICLEDEFS definition> | none -- each mote drawn with a definition
+#            (then size, gravity and drag are the definition's; color tints it)
 
 wake rifle_trail
   perstep = 4
@@ -570,6 +733,33 @@ wake rifle_trail
   drag    = 3
   color   = 255, 230, 190
   glow    = 0.8
+end
+
+wake plasma_trail        # blue motes shed by a plasma ball
+  perstep = 3
+  size    = 1.4, 0.2
+  life    = 0.3
+  drift   = 8
+  drag    = 3
+  color   = 120, 190, 255
+  glow    = 1.6
+end
+
+wake bfg_trail           # green sparks and glow off the BFG ball
+  perstep = 5
+  size    = 2.2, 0.3
+  life    = 0.45
+  drift   = 14
+  drag    = 2.5
+  color   = 140, 255, 150
+  glow    = 2.0
+end
+
+wake rocket_smoke        # lit grey smoke off the motor
+  perstep  = 2
+  life     = 1.8
+  drift    = 10
+  particle = rsb_smoke_gun
 end
 
 

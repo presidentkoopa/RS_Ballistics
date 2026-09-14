@@ -81,13 +81,55 @@ class RSB_Burst play
 	}
 }
 
+// A WAKE: what anything that flies sheds along one tic's travel -- a round, a
+// plasma ball, a rocket. Particles laid evenly from where it was to where it is,
+// drifting back along its flight. A `particle` wake draws each mote with a
+// PARTICLEDEFS definition (a rocket's lit smoke); otherwise inline glow.
+class RSB_Wake play
+{
+	static void Lay(String wakeId, Vector3 before, Vector3 after, Vector3 travel)
+	{
+		if (wakeId.Length() == 0 || wakeId ~== "none") return;
+		int tier = RSB_Tier.Current();
+		if (tier <= RSB_Tier.T_OFF) return;
+		let reg = RSB_Registry.Get();
+		if (!reg) return;
+		let w = reg.ResolveWake(wakeId, RSB_Tier.Name(tier));
+		if (!w || w.perStep <= 0) return;
+
+		int n = clamp(int(w.perStep * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() + 0.5), 0, 32);
+		Vector3 seg = after - before;
+		Vector3 back = (travel != (0, 0, 0)) ? -travel : (0, 0, 1);
+		int posSeed = RSB_Hash.OfPos(after);
+		// The handle is a hash of the name, the same everywhere: cached, never tested.
+		if (w.particle.Length() > 0 && w.particleHandle == 0) w.particleHandle = level.ParticleDefinition(w.particle);
+		for (int k = 0; k < n; k++)
+		{
+			double t = (k + 0.5) / n;
+			int seed = RSB_Hash.Seed(level.maptime, k + 1, posSeed);
+			if (w.particle.Length() > 0)
+				level.SpawnParticles(w.particleHandle, before + seg * t, back, 1, 180.0, w.drift, 0.5,
+					w.life, 0.3, w.tint, w.glow, 1.0, seed);
+			else
+				level.SpawnGpuParticles(before + seg * t, back, 1, 180.0, w.drift, 0.5, w.tint, w.glow,
+					w.life, 0.3, w.sizeStart, w.sizeEnd, w.gravity, w.drag, 0, 0, seed);
+		}
+	}
+}
+
 class RSB_Impact play
 {
-	// A landing projectile.
-	static void Land(Actor mo, String impactBase, Vector3 travel)
+	// A landing projectile. inAirToo: a projectile that must show its impact even
+	// with no surface to land on -- a rocket bursting on a monster or in the air --
+	// gets it where it is, facing back along its flight, with no mark.
+	static void Land(Actor mo, String impactBase, Vector3 travel, bool inAirToo = false)
 	{
 		if (!mo || impactBase.Length() == 0 || impactBase ~== "none") return;
-		LandOn(mo, RSB_Materials.Probe(mo, travel), impactBase, travel);
+		RSB_Surface surf = null;
+		// On a monster the trace would pass through it to a wall behind: not that wall.
+		if (!(inAirToo && mo.BlockingMobj)) surf = RSB_Materials.Probe(mo, travel);
+		if (inAirToo && !surf) surf = RSB_Materials.InAir(mo.pos, travel);
+		LandOn(mo, surf, impactBase, travel);
 	}
 
 	// A surface already found. `soundAt` carries the sound: the round itself, or
@@ -141,7 +183,7 @@ class RSB_Impact play
 			RSB_Burst.Fire(reg.FindBurst(im.glanceBurst), surf.at, surf.normal, travel, countScale, glowScale,
 				RSB_Hash.Seed(level.maptime, 97, posSeed));
 
-		if (im.markShape >= 0 && RSB_Settings.Marks())
+		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks())
 		{
 			int life = int(im.markLife * RSB_Settings.MarkLife() + 0.5);
 			if (life > 0)

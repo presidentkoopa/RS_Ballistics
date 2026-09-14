@@ -218,24 +218,7 @@ class RSB_Bullet : FastProjectile
 
 	private void LayWake(Vector3 before)
 	{
-		if (!flightDef || flightDef.wake ~== "none") return;
-		int tier = RSB_Tier.Current();
-		if (tier <= RSB_Tier.T_OFF) return;
-		let reg = RSB_Registry.Get();
-		if (!reg) return;
-		let w = reg.ResolveWake(flightDef.wake, RSB_Tier.Name(tier));
-		if (!w || w.perStep <= 0) return;
-
-		int n = clamp(int(w.perStep * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() + 0.5), 0, 32);
-		Vector3 seg = pos - before;
-		int posSeed = RSB_Hash.OfPos(pos);
-		for (int k = 0; k < n; k++)
-		{
-			double t = (k + 0.5) / n;
-			level.SpawnGpuParticles(before + seg * t, -travel, 1, 180.0, w.drift, 0.5, w.tint, w.glow,
-				w.life, 0.3, w.sizeStart, w.sizeEnd, w.gravity, w.drag, 0, 0,
-				RSB_Hash.Seed(level.maptime, k + 1, posSeed));
-		}
+		if (flightDef) RSB_Wake.Lay(flightDef.wake, before, pos, travel);
 	}
 
 	// THE CLOSEST THIS TIC'S TRAVEL CAME TO THE LISTENER'S HEAD. Once per round,

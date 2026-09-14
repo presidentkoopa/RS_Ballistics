@@ -63,7 +63,7 @@ $must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO
           'zscript/rsb/log.zs', 'zscript/rsb/hash.zs', 'zscript/rsb/defs.zs', 'zscript/rsb/parser.zs',
           'zscript/rsb/registry.zs', 'zscript/rsb/settings.zs', 'zscript/rsb/materials.zs',
           'zscript/rsb/impact.zs', 'zscript/rsb/bullet.zs', 'zscript/rsb/flash.zs',
-          'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs', 'zscript/rsb/flamer.zs', 'zscript/rsb/bench.zs',
+          'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs', 'zscript/rsb/flamer.zs', 'zscript/rsb/bench.zs', 'zscript/rsb/projectiles.zs',
           'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png',
           'sounds/rsb/impact_concrete/bulletimpact1.ogg', 'sounds/rsb/whiz/whizby1.wav', 'sounds/rsb/flame/flamer_loop.ogg')
 foreach ($m in $must) {

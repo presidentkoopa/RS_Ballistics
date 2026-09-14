@@ -80,6 +80,10 @@ class RSB_WakeDef : RSB_Def
 	double gravity;
 	Color  tint;
 	double glow;
+	// A PARTICLEDEFS definition for each mote, or "" (then the definition gives size,
+	// gravity and drag, and `color` tints it). Hash handle, cached, never tested.
+	String particle;
+	int    particleHandle;
 }
 
 // A BURST: one GPU particle emission. The building block impacts and flashes
