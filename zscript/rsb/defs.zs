@@ -215,6 +215,18 @@ class RSB_FlameDef : RSB_Def
 	String sputterSound;     // as a coughing jet catches again
 	Array<String> flameout;  // bursts when the trigger lets go
 	double cling;            // seconds a stream puff slides on past the surface it hits; 0 = none
+	// THE TUBE: drawn-line segments from the nozzle to where the stream lands.
+	int    tubeSegments;     // 0 = no tube; up to 8
+	double tubeThick;        // the hot core, map units
+	double tubeSoft;         // the halo's reach at the nozzle, map units
+	double tubeStreamShare;  // stream particle counts x this while the tube draws
+	double tubeIntensity;
+	double tubeSwell;        // the halo at the far end over the nozzle's
+	double tubeHalo;         // SetDrawnLineLook's halo
+	Array<int> tubeColors;   // r, g, b stops, spread evenly from the nozzle to the far end
+	double tubeLickStrength; // 0 = no licks
+	double tubeLickScale;    // noise cells per map unit
+	double tubeLickSpeed;    // rising, cells a second
 }
 
 // A STYLE: a named look the player picks in the menu. Multipliers over every

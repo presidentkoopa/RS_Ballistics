@@ -176,6 +176,10 @@ class RSB_Settings play
 
 	static double FlameVolume() { return clamp(Cvf("rsb_flame_volume", 1.0), 0.0, 1.0); }
 
+	// The flame's drawn-line core, for a profile with a `tube`. Off, the stream
+	// keeps all of its particles.
+	static bool FlameTube() { return Cvb("rsb_flame_tube", true); }
+
 	static String PreviewFlame() { return Cvs("rsb_preview_flame", "incinerator"); }
 
 	// ---- diagnostics and preview ------------------------------------------------

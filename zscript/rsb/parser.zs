@@ -278,6 +278,13 @@ class RSB_Parser
 		if (kind == "flame")
 		{
 			let d = new("RSB_FlameDef");
+			d.tubeSegments = 0;
+			d.tubeStreamShare = 1.0;
+			d.tubeIntensity = 1.0;
+			d.tubeSwell = 1.0;
+			d.tubeHalo = 0.5;
+			d.tubeLickScale = 0.05;
+			d.tubeLickSpeed = 1.5;
 			d.reach = 400;
 			d.fuelSpeed = 800;
 			d.spread = 2;
@@ -947,6 +954,47 @@ class RSB_Parser
 			why = Nums(v, 1); if (why != "") return why;
 			fm.cling = v[0].ToDouble();
 			return (fm.cling >= 0 && fm.cling <= 2) ? "" : "cling is 0 to 2 seconds";
+		}
+		if (key == "tube")
+		{
+			why = Nums(v, 4); if (why != "") return why;
+			fm.tubeSegments = v[0].ToInt();
+			fm.tubeThick = v[1].ToDouble();
+			fm.tubeSoft = v[2].ToDouble();
+			fm.tubeStreamShare = v[3].ToDouble();
+			return (fm.tubeSegments >= 0 && fm.tubeSegments <= 8 && fm.tubeThick >= 0 && fm.tubeSoft >= 0 && fm.tubeStreamShare >= 0 && fm.tubeStreamShare <= 1) ? ""
+				: "tube is segments (0-8), thick, soft (map units, 0 or more), stream share while it draws (0..1)";
+		}
+		if (key == "tubelook")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			fm.tubeIntensity = v[0].ToDouble();
+			fm.tubeSwell = v[1].ToDouble();
+			fm.tubeHalo = v[2].ToDouble();
+			return (fm.tubeIntensity >= 0 && fm.tubeSwell >= 0 && fm.tubeSwell <= 16 && fm.tubeHalo >= 0) ? ""
+				: "tubelook is intensity (0 or more), swell (0-16, the far end's halo over the nozzle's), halo (0 or more)";
+		}
+		if (key == "tubecolors")
+		{
+			if (v.Size() < 6 || v.Size() > 24 || v.Size() % 3 != 0) return "tubecolors is 2 to 8 colours, r, g, b each, the nozzle's first";
+			fm.tubeColors.Clear();
+			for (int i = 0; i < v.Size(); i++)
+			{
+				if (!IsNum(v[i])) return "tubecolors values must be numbers";
+				int ch = v[i].ToInt();
+				if (ch < 0 || ch > 255) return "tubecolors values are 0 to 255";
+				fm.tubeColors.Push(ch);
+			}
+			return "";
+		}
+		if (key == "tubelicks")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			fm.tubeLickStrength = v[0].ToDouble();
+			fm.tubeLickScale = v[1].ToDouble();
+			fm.tubeLickSpeed = v[2].ToDouble();
+			return (fm.tubeLickStrength >= 0 && fm.tubeLickStrength <= 2 && fm.tubeLickScale >= 0 && fm.tubeLickScale <= 1) ? ""
+				: "tubelicks is strength (0-2), scale (0-1 noise cells per map unit), speed";
 		}
 		return String.Format("unknown flame key \"%s\"", key);
 	}

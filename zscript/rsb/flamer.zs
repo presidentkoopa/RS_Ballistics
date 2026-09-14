@@ -23,9 +23,12 @@
 // the fuel takes to reach where the stream lands (a trace along it), so none
 // fly on through the wall. Several stream bursts at different speeds, lives and
 // colours overlap into a flame that is white at the nozzle, orange through the
-// body and dark red at the tip. Flame is additive light, which today's GPU
-// particles are. Black smoke, heat shimmer and fire that crawls along walls
-// are engine items (ENGINE_SUPPORT_LIST.md #7, #14, #8).
+// body and dark red at the tip. Around them, THE TUBE: a run of drawn-line
+// segments from the nozzle to where the stream lands (the engine's drawn-line
+// looks: a colour gradient, a halo widening as it travels, world-space licks),
+// so the core reads as one jet. Puffs slide along what they hit (collide =
+// plane) and black smoke rises where it lands. Heat shimmer is the engine's
+// next item.
 //
 // NETPLAY. Every actor here is +NOINTERACTION, uses no playsim RNG (the flicker
 // and the stream's wander are hashes) and changes nothing a netgame compares.
@@ -35,6 +38,15 @@ class RSB_Flame play
 {
 	// The hand number the menu's preview uses, clear of the real hands (0, 1).
 	const PREVIEW_HAND = 9;
+
+	// THE TUBE'S DRAWN-LINE SLOTS. Drawn-line indices are caller-managed
+	// (LevelLocals.SetDrawnLine), and RS_Ballistics' flames own 1024..1215:
+	// TUBE_BLOCKS blocks of TUBE_MAX_SEGMENTS, one block per burning emitter.
+	// Low on purpose: the engine walks every slot up to the highest ever written,
+	// every frame. Beams (the lasers, the Lance) are a separate system.
+	const TUBE_FIRST_SLOT = 1024;
+	const TUBE_BLOCKS = 24;
+	const TUBE_MAX_SEGMENTS = 8;
 
 	static RSB_FlameEmitter Stream(String whichFlame, Actor who, int hand, Vector3 nozzle, Vector3 aim, Vector3 carrierVel,
 		double intensity = 1.0, double fuelShare = 1.0, Vector3 acrossAxis = (0, 0, 0))
@@ -134,6 +146,10 @@ class RSB_FlameEmitter : Actor
 	private Vector3 acrossHint;
 	private bool    sputterOut;   // this tic the coughing jet is out
 	private RSB_FlameLight landLight;
+	int     tubeBlock;            // this emitter's block of tube slots; -1 none
+	private int     tubeLaid;     // tube segments drawn at the last lay
+	private Vector3 tubeStart;
+	private Vector3 tubeEnd;
 	transient RSB_FlameDef flameDef;
 
 	States
@@ -154,6 +170,7 @@ class RSB_FlameEmitter : Actor
 		strength = 1.0;
 		fuelLeft = 1.0;
 		lastFed = level.maptime;
+		tubeBlock = -1;
 
 		double vol = RSB_Settings.FlameVolume();
 		if (vol > 0)
@@ -208,6 +225,7 @@ class RSB_FlameEmitter : Actor
 				return;
 			}
 			NozzleLight(double(fadeTics) / double(FADE_TICS));
+			if (tubeLaid > 0) LayTube(tubeStart, tubeEnd, double(fadeTics) / double(FADE_TICS));
 			Super.Tick();
 			return;
 		}
@@ -227,6 +245,8 @@ class RSB_FlameEmitter : Actor
 		A_RemoveLight("rsb_flame");
 		A_StopSound(CHAN_BODY);
 		DropLandLight();
+		ClearTube();
+		tubeBlock = -1;
 		Super.OnDestroy();
 	}
 
@@ -273,6 +293,95 @@ class RSB_FlameEmitter : Actor
 		A_AttachLight("rsb_flame", DynamicLight.PointLight, fd.lightColor,
 			int(fd.lightRadius * (0.75 + 0.25 * k)), 0, DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0,
 			fd.lightIntensity * mul * strength * k);
+	}
+
+	// ---- THE TUBE -----------------------------------------------------------
+	// Drawing only: level drawn lines in this emitter's own slots, cleared when it
+	// goes. No RNG; the licks are the engine's world-space noise.
+
+	private bool TubeOn()
+	{
+		let fd = flameDef;
+		return fd && fd.tubeSegments > 0 && fd.tubeColors.Size() >= 6 && RSB_Settings.Flame() && RSB_Settings.FlameTube();
+	}
+
+	// The lowest block no other emitter holds. Thinker order is the same on every
+	// machine, and nothing but drawing reads the answer.
+	private int ClaimTubeBlock()
+	{
+		for (int blk = 0; blk < RSB_Flame.TUBE_BLOCKS; blk++)
+		{
+			bool taken = false;
+			let it = ThinkerIterator.Create("RSB_FlameEmitter");
+			RSB_FlameEmitter other;
+			while (other = RSB_FlameEmitter(it.Next()))
+			{
+				if (other != self && other.tubeBlock == blk)
+				{
+					taken = true;
+					break;
+				}
+			}
+			if (!taken) return blk;
+		}
+		return -1;
+	}
+
+	// A straight run of segments from startAt to endAt. Each segment's colour runs
+	// to the next point's between the profile's stops (gradient), its halo grows by
+	// an equal share of `swell`, and every segment licks with the same turbulence,
+	// which is in world space, so the joins stay whole. Inner joins take no taper
+	// and no flare, or they would pinch and flash. `fade` dims it as a flame stops;
+	// intensity is not blended along a line, so the tip's fall-off is in the colours.
+	private void LayTube(Vector3 startAt, Vector3 endAt, double fade)
+	{
+		let fd = flameDef;
+		if (!TubeOn() || fade <= 0)
+		{
+			ClearTube();
+			return;
+		}
+		if (tubeBlock < 0) tubeBlock = ClaimTubeBlock();
+		if (tubeBlock < 0) return;   // every block is burning: this flame goes without
+		int segs = min(fd.tubeSegments, RSB_Flame.TUBE_MAX_SEGMENTS);
+		int firstSlot = RSB_Flame.TUBE_FIRST_SLOT + tubeBlock * RSB_Flame.TUBE_MAX_SEGMENTS;
+		double swellEach = (fd.tubeSwell > 0) ? fd.tubeSwell ** (1.0 / segs) : 1.0;
+		double lineIntensity = fd.tubeIntensity * strength * fade;
+		Vector3 run = endAt - startAt;
+		for (int k = 0; k < segs; k++)
+		{
+			double t0 = double(k) / segs;
+			double t1 = double(k + 1) / segs;
+			int slot = firstSlot + k;
+			level.SetDrawnLine(slot, startAt + run * t0, startAt + run * t1, fd.tubeThick,
+				fd.tubeSoft * (swellEach ** k), TubeColor(fd, t0), lineIntensity);
+			level.SetDrawnLineLook(slot, 1.0, fd.tubeHalo, 0.0, 0.0, 0.0, 0.0);
+			level.SetDrawnLineGradient(slot, TubeColor(fd, t1), swellEach);
+			level.SetDrawnLineTurbulence(slot, fd.tubeLickStrength, fd.tubeLickScale, fd.tubeLickSpeed);
+		}
+		for (int extra = segs; extra < tubeLaid; extra++) level.ClearDrawnLine(firstSlot + extra);
+		tubeLaid = segs;
+	}
+
+	private void ClearTube()
+	{
+		if (tubeBlock < 0) return;
+		int firstSlot = RSB_Flame.TUBE_FIRST_SLOT + tubeBlock * RSB_Flame.TUBE_MAX_SEGMENTS;
+		for (int k = 0; k < RSB_Flame.TUBE_MAX_SEGMENTS; k++) level.ClearDrawnLine(firstSlot + k);
+		tubeLaid = 0;
+	}
+
+	// The colour at t (0 the nozzle .. 1 the far end), between evenly spaced stops.
+	private static Color TubeColor(RSB_FlameDef fd, double t)
+	{
+		int stops = fd.tubeColors.Size() / 3;
+		double pos = clamp(t, 0.0, 1.0) * (stops - 1);
+		int lo = min(int(pos), stops - 2);
+		double mixAmt = pos - lo;
+		int cr = int(fd.tubeColors[lo * 3] + (fd.tubeColors[lo * 3 + 3] - fd.tubeColors[lo * 3]) * mixAmt + 0.5);
+		int cg = int(fd.tubeColors[lo * 3 + 1] + (fd.tubeColors[lo * 3 + 4] - fd.tubeColors[lo * 3 + 1]) * mixAmt + 0.5);
+		int cb = int(fd.tubeColors[lo * 3 + 2] + (fd.tubeColors[lo * 3 + 5] - fd.tubeColors[lo * 3 + 2]) * mixAmt + 0.5);
+		return Color(255, cr, cg, cb);
 	}
 
 	private void Burn()
@@ -332,6 +441,7 @@ class RSB_FlameEmitter : Actor
 		if (!visuals || sputterOut)
 		{
 			DropLandLight();
+			ClearTube();
 			return;
 		}
 		if (wasOut) FlameOut(0.5);
@@ -353,10 +463,11 @@ class RSB_FlameEmitter : Actor
 		// THE STREAM. A written tier variant is used as written; otherwise the tier
 		// scales the counts, and the player's slider and style scale on top. Side by
 		// side `jets` share the count between them.
+		// While the tube draws, the stream keeps the profile's `tube` share: the tube is the core.
 		double countScale = (fd.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
 		countScale *= RSB_Settings.FlameParticles() * strength;
 		int jets = max(1, fd.jets);
-		double perJet = countScale / jets;
+		double perJet = countScale / jets * (TubeOn() ? fd.tubeStreamShare : 1.0);
 		double splay = tan(clamp(fd.jetSplay, 0.0, 45.0));
 		double fuelSpd = max(1.0, fd.fuelSpeed);
 		double travelSecs = landDist / fuelSpd;
@@ -385,6 +496,11 @@ class RSB_FlameEmitter : Actor
 					RSB_Hash.Seed(level.maptime, burnSeq * 16 + i, posSeed + j * 977), planeAt, planeNormal, landFloor);
 			}
 		}
+
+		// THE TUBE, from the nozzle to where the stream lands, or as far as it reaches.
+		tubeStart = nozzle;
+		tubeEnd = nozzle + dir * landDist;
+		LayTube(tubeStart, tubeEnd, 1.0);
 
 		if (!landed)
 		{

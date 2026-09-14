@@ -1019,6 +1019,13 @@ end
 #   cling        seconds a stream puff drawn with a `particle` lives on past the
 #                wall or floor the stream hits, sliding along it (its definition's
 #                `collide = plane`); 0, the default, ends it there
+#   tube         segments (0-8), thick, soft, stream share: a drawn-line core from the
+#                nozzle to where it lands (the menu's Flame core). While it draws, the
+#                stream bursts keep that share of their particles
+#   tubelook     intensity, swell (the far end's halo over the nozzle's), halo
+#   tubecolors   r, g, b stops, 2 to 8, the nozzle's first, spread evenly along it;
+#                put the fade in the colours (a line's intensity is not blended)
+#   tubelicks    strength (0-2), scale (noise cells per map unit), speed (rising)
 #   landing      bursts where it lands (ordinary bursts), every landingtics
 #   scorch       shape, radius, life (tics)   scorchcolor r, g, b   scorchtics
 #   light        radius, intensity, flicker 0..1 (at the nozzle)   lightcolor
@@ -1171,6 +1178,10 @@ flame incinerator        # a tight, fast jet
   stream      = flame_core, flame_body, flame_tip, flame_embers
   landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke
   cling       = 0.15
+  tube        = 6, 1.0, 3, 0.5
+  tubelook    = 1.6, 3.0, 0.5
+  tubecolors  = 255, 250, 235, 255, 215, 120, 255, 140, 40, 200, 60, 12, 110, 25, 6
+  tubelicks   = 0.6, 0.06, 2.0
   landingtics = 2
   scorch      = pool, 10, 105
   scorchcolor = 255, 100, 25
@@ -1191,6 +1202,10 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   stream      = flame_core, flame_body, flame_body, flame_tip, flame_embers
   landing     = flame_splash, flame_sheet, flame_licks, flame_embers_rise, flame_smoke
   cling       = 0.3           # it sticks: puffs slide along what they hit twice as long
+  tube        = 6, 1.6, 4, 0.5
+  tubelook    = 1.4, 3.5, 0.55
+  tubecolors  = 255, 240, 210, 255, 190, 90, 255, 120, 30, 180, 45, 10, 90, 20, 5
+  tubelicks   = 0.8, 0.07, 2.5
   landingtics = 1
   scorch      = sunburst, 16, 140
   scorchcolor = 255, 90, 20

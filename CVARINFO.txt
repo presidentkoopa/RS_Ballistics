@@ -53,6 +53,7 @@ user bool   rsb_flame              = true;
 user float  rsb_flame_particles    = 1.0;
 user float  rsb_flame_light        = 1.0;
 user float  rsb_flame_volume       = 1.0;
+user bool   rsb_flame_tube         = true;      // the drawn-line core of a flame profile with `tube`
 
 // ---- preview and diagnostics
 user string rsb_preview_flame      = "incinerator";
