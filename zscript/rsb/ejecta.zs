@@ -4,7 +4,7 @@
 // The reload system's WM_Casing, moved here and driven by data. WHAT STAYS IN
 // THE RELOAD SYSTEM: the eject port, the direction, when a case comes out, and
 // live rounds (which can be caught and loaded). It calls
-//   RSB_Ejecta.Throw(profile, at, dir, carrierVel, throwSpeed, seed, shared)
+//   RSB_Ejecta.Throw(profile, at, dir, carrierVel, throwSpeed, seed, shared, casingSound)
 // Throw returns the casing, or null when none was spawned.
 //
 // TWO KINDS OF CASING, CHOSEN BY `shared`. Which one is a netplay question.
@@ -82,7 +82,9 @@ class RSB_Ejecta : Actor
 		Stop;
 	}
 
-	static Actor Throw(String whichEjecta, Vector3 at, Vector3 aim, Vector3 carrierVel, double throwSpeed, int seed, bool shared = false)
+	// casingSound: a sound for this casing's bounces instead of the profile's -- a
+	// gun card's own pick. "" keeps the profile's.
+	static Actor Throw(String whichEjecta, Vector3 at, Vector3 aim, Vector3 carrierVel, double throwSpeed, int seed, bool shared = false, String casingSound = "")
 	{
 		let reg = RSB_Registry.Get();
 		if (!reg) return null;
@@ -94,7 +96,7 @@ class RSB_Ejecta : Actor
 			return null;
 		}
 		Vector3 d = (aim.Length() > 0.000001) ? aim.Unit() : (0, 0, 1);
-		if (!shared) return RSB_LocalEjecta.Toss(reg, whichEjecta, at, d, carrierVel, throwSpeed, seed);
+		if (!shared) return RSB_LocalEjecta.Toss(reg, whichEjecta, at, d, carrierVel, throwSpeed, seed, casingSound);
 
 		let c = RSB_Ejecta(Actor.Spawn("RSB_Ejecta", at, ALLOW_REPLACE));
 		if (!c) return null;
@@ -107,7 +109,8 @@ class RSB_Ejecta : Actor
 		c.wallbouncefactor = ed.bounceWall;
 		c.bouncecount = ed.bounceCount;
 		c.Gravity = ed.gravity;
-		if (!(ed.soundName ~== "none")) c.BounceSound = ed.soundName;
+		if (casingSound.Length() > 0) c.BounceSound = casingSound;
+		else if (!(ed.soundName ~== "none")) c.BounceSound = ed.soundName;
 		c.hotTics = RSB_Settings.CasingHot() ? ed.hotTics : 0;
 		c.lifeTics = ed.lifeTics;
 		c.bBRIGHT = c.hotTics > 0;
@@ -210,7 +213,7 @@ class RSB_LocalEjecta : Actor
 		Stop;
 	}
 
-	static RSB_LocalEjecta Toss(RSB_Registry reg, String whichEjecta, Vector3 at, Vector3 d, Vector3 carrierVel, double throwSpeed, int seed)
+	static RSB_LocalEjecta Toss(RSB_Registry reg, String whichEjecta, Vector3 at, Vector3 d, Vector3 carrierVel, double throwSpeed, int seed, String casingSound = "")
 	{
 		if (!RSB_Settings.Casings()) return null;
 		let ed = reg.ResolveEjecta(whichEjecta, RSB_Tier.Name(RSB_Tier.Current()));
@@ -226,7 +229,7 @@ class RSB_LocalEjecta : Actor
 		c.bounceWall = ed.bounceWall;
 		c.bouncesLeft = ed.bounceCount;
 		c.Gravity = ed.gravity;
-		c.bounceSnd = ed.soundName;
+		c.bounceSnd = (casingSound.Length() > 0) ? casingSound : ed.soundName;
 		c.hotTics = RSB_Settings.CasingHot() ? ed.hotTics : 0;
 		c.bBRIGHT = c.hotTics > 0;
 		c.fadeFrom = int(max(1, ed.lifeTics) * clamp(RSB_Settings.CasingLife(), 0.0, 1.0));

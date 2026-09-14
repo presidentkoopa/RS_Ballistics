@@ -150,6 +150,10 @@ class RSB_FlashDef : RSB_Def
 	int    smokeCount;
 	double smokeScale;
 	double smokeAlpha;
+	// A PARTICLEDEFS definition for the smoke instead of RSB_Smoke sprites, or "".
+	// The handle is a hash of the name, cached and never tested (netplay rule).
+	String smokeParticle;
+	int    smokeHandle;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the

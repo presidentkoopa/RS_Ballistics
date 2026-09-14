@@ -252,6 +252,8 @@ class RSB_Parser
 			d.smokeCount = 0;
 			d.smokeScale = 0.02;
 			d.smokeAlpha = 0.3;
+			d.smokeParticle = "";
+			d.smokeHandle = 0;
 			return d;
 		}
 		if (kind == "ejecta")
@@ -727,6 +729,13 @@ class RSB_Parser
 			f.smokeScale = v[1].ToDouble();
 			f.smokeAlpha = v[2].ToDouble();
 			return (f.smokeCount >= 0 && f.smokeScale >= 0 && f.smokeAlpha >= 0 && f.smokeAlpha <= 1) ? "" : "smoke is count (0 or more), scale (0 or more), alpha (0..1)";
+		}
+		if (key == "smokeparticle")
+		{
+			if (v.Size() != 1) return "smokeparticle is one PARTICLEDEFS definition name, or none";
+			f.smokeParticle = (v[0] ~== "none") ? "" : v[0];
+			f.smokeHandle = 0;
+			return "";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}

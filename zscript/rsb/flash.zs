@@ -111,6 +111,19 @@ class RSB_Flash : Actor
 		}
 
 		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() + 0.5);
+		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
+		// definition: puffs drifting out of the bore, rising and hanging. The handle
+		// is a hash of the name, the same everywhere, so it is cached, never tested.
+		if (fd.smokeParticle.Length() > 0)
+		{
+			if (puffs > 0)
+			{
+				if (fd.smokeHandle == 0) fd.smokeHandle = level.ParticleDefinition(fd.smokeParticle);
+				level.SpawnParticles(fd.smokeHandle, pos + dir * 1.0, dir, puffs * 2, 30.0, 14.0, 0.6,
+					1.8, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(level.maptime, 77, posSeed));
+			}
+			puffs = 0;   // no sprite puffs as well
+		}
 		for (int i = 0; i < puffs; i++)
 		{
 			let s = Actor.Spawn("RSB_Smoke", pos + dir * 0.5, ALLOW_REPLACE);

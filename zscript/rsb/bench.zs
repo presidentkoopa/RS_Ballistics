@@ -8,7 +8,7 @@
 //
 //   netevent rsb_bench_flame2      two incinerator streams into what is ahead
 //   netevent rsb_bench_impacts60   60 impacts a second over the wall and floor ahead
-//   netevent rsb_bench_smoke200    about 200 smoke puffs alive, two flashing lights
+//   netevent rsb_bench_smoke200    about 200 GPU smoke puffs (rsb_smoke_gun) alive, two flashing lights
 //
 // Each has a Command row on the Preview page. Stand about 256 units from a wall,
 // facing it, and keep still. START and END print with the tic, to find the
@@ -35,7 +35,7 @@ class RSB_Bench : Actor
 	const BENCH_TICS  = 350;   // ten seconds
 	const FLAME_HAND  = 20;    // clear of the real hands (0, 1) and the preview's (9)
 	const SMOKE_ALIVE = 200;
-	const SMOKE_TICS  = 24;    // RSB_Smoke's six frames of four tics
+	const SMOKE_LIFE_TICS = 70;   // each GPU smoke puff lives two seconds
 	const LIGHT_EVERY = 12;
 
 	const KIND_FLAME2    = 1;
@@ -48,6 +48,7 @@ class RSB_Bench : Actor
 	private int     impactDebt;
 	private Vector3 eye;
 	private double  yaw;
+	private int     smokeDef;   // rsb_smoke_gun's handle: a hash of the name, looked up once
 
 	States
 	{
@@ -165,20 +166,22 @@ class RSB_Bench : Actor
 		}
 	}
 
+	// ABOUT SMOKE_ALIVE GPU SMOKE PUFFS ALIVE -- stage 2d's lit, alpha-blended, soft
+	// particles, the path RS_Ballistics' gunsmoke draws through. Each lives
+	// SMOKE_LIFE_TICS, so SMOKE_ALIVE / SMOKE_LIFE_TICS are spawned a tic.
 	private void Smoke()
 	{
+		if (smokeDef == 0) smokeDef = level.ParticleDefinition("rsb_smoke_gun");
 		Vector3 right = (sin(yaw), -cos(yaw), 0);
 		Vector3 ahead = eye + Aim(0.0, 0.0) * 128.0 - (0, 0, 16);
-		int perTic = (SMOKE_ALIVE + SMOKE_TICS - 1) / SMOKE_TICS;
+		int perTic = (SMOKE_ALIVE + SMOKE_LIFE_TICS - 1) / SMOKE_LIFE_TICS;
 		for (int i = 0; i < perTic; i++)
 		{
 			Vector3 at = ahead + right * RSB_Hash.Between(-64.0, 64.0, age, i, 41)
 				+ (0, 0, RSB_Hash.Between(-24.0, 40.0, age, i, 43));
-			let s = Actor.Spawn("RSB_Smoke", at, ALLOW_REPLACE);
-			if (!s) continue;
-			s.A_SetScale(0.04);
-			s.Alpha = 0.3;
-			s.Vel = (RSB_Hash.Between(-0.2, 0.2, age, i, 47), RSB_Hash.Between(-0.2, 0.2, age, i, 53), 0.2);
+			level.SpawnParticles(smokeDef, at, (0, 0, 1), 1, 40.0, 8.0, 0.5,
+				SMOKE_LIFE_TICS / double(TICRATE), 0.2, Color(255, 255, 255, 255), 1.0, 1.0,
+				RSB_Hash.Seed(age, i + 1, 59));
 		}
 		if ((age % LIGHT_EVERY) == 0)
 		{

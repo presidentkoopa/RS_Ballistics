@@ -152,17 +152,12 @@ burst chips_concrete
   orient  = flake
 end
 
-burst dust_concrete
-  count   = 6
-  cone    = 35
-  speed   = 40, 0.6
-  life    = 1.4, 0.4
-  color   = 120, 110, 95
-  glow    = 0.35
-  size    = 6, 14
-  gravity = -10
-  drag    = 2.5
-  orient  = billboard
+burst dust_concrete       # a lit dust cloud (PARTICLEDEFS rsb_dust_concrete, stage 2d)
+  count    = 5
+  cone     = 35
+  speed    = 40, 0.6
+  life     = 1.6, 0.4
+  particle = rsb_dust_concrete
 end
 
 burst splinter_wood
@@ -178,16 +173,22 @@ burst splinter_wood
   orient  = flake
 end
 
-burst dust_wood
-  count   = 4
-  cone    = 40
-  speed   = 35, 0.6
-  life    = 1.2, 0.4
-  color   = 110, 85, 55
-  glow    = 0.3
-  size    = 5, 11
-  gravity = -8
-  drag    = 2.5
+burst dust_wood          # a lit wood-dust cloud (PARTICLEDEFS rsb_dust_wood, stage 2d)
+  count    = 4
+  cone     = 40
+  speed    = 35, 0.6
+  life     = 1.3, 0.4
+  particle = rsb_dust_wood
+end
+
+burst flame_smoke        # black smoke rising off burning fuel (PARTICLEDEFS rsb_smoke_flame)
+  count    = 2
+  cone     = 25
+  speed    = 30, 0.5
+  life     = 2.4, 0.3
+  aim      = up
+  offset   = 6
+  particle = rsb_smoke_flame
 end
 
 burst glint_glass
@@ -579,6 +580,11 @@ end
 #   bursts      burst names | none
 #   flame       sprite scale (0 = none)
 #   smoke       count, scale, alpha
+#   smokeparticle  <PARTICLEDEFS definition> | none -- GPU smoke (count x 2 puffs)
+#                  instead of sprite puffs; scale and alpha then unused
+#
+# Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
+# bfg and rail have their own light and sparks, and `none` is no flash at all.
 
 flash pistol
   light      = 180, 3.0, 2
@@ -588,6 +594,7 @@ flash pistol
   bursts     = flash_core, flash_sparks
   flame      = 0.05
   smoke      = 1, 0.02, 0.3
+  smokeparticle = rsb_smoke_gun
 end
 
 flash shotgun
@@ -598,6 +605,7 @@ flash shotgun
   bursts     = flash_core, flash_sparks_wide
   flame      = 0.08
   smoke      = 3, 0.03, 0.35
+  smokeparticle = rsb_smoke_gun
 end
 
 flash rifle
@@ -608,6 +616,7 @@ flash rifle
   bursts     = flash_core, flash_sparks
   flame      = 0.06
   smoke      = 1, 0.025, 0.3
+  smokeparticle = rsb_smoke_gun
 end
 
 flash smg                # full auto: quicker, smaller, so a burst strobes
@@ -618,6 +627,7 @@ flash smg                # full auto: quicker, smaller, so a burst strobes
   bursts     = flash_core, flash_sparks
   flame      = 0.045
   smoke      = 1, 0.018, 0.22
+  smokeparticle = rsb_smoke_gun
 end
 
 flash revolver           # a big cylinder gap blast
@@ -628,6 +638,7 @@ flash revolver           # a big cylinder gap blast
   bursts     = flash_core, flash_sparks_wide
   flame      = 0.07
   smoke      = 2, 0.03, 0.32
+  smokeparticle = rsb_smoke_gun
 end
 
 flash shotgun_double     # both barrels at once
@@ -638,6 +649,91 @@ flash shotgun_double     # both barrels at once
   bursts     = flash_core, flash_sparks_wide, flash_sparks_wide
   flame      = 0.1
   smoke      = 4, 0.035, 0.38
+  smokeparticle = rsb_smoke_gun
+end
+
+# ---- guns that are not bullet guns still have a muzzle
+burst energy_sparks_plasma
+  count   = 18
+  cone    = 18
+  speed   = 300, 0.5
+  life    = 0.18, 0.4
+  color   = 120, 190, 255
+  glow    = 3.0
+  size    = 0.7, 0.2
+  drag    = 3.0
+  orient  = streak
+  stretch = 0.02
+  aim     = along
+  offset  = 0
+end
+
+burst energy_sparks_bfg
+  count   = 30
+  cone    = 30
+  speed   = 260, 0.5
+  life    = 0.3, 0.4
+  color   = 140, 255, 150
+  glow    = 3.2
+  size    = 1.0, 0.2
+  drag    = 2.5
+  orient  = streak
+  stretch = 0.02
+  aim     = along
+  offset  = 0
+end
+
+burst energy_sparks_rail
+  count   = 16
+  cone    = 8
+  speed   = 520, 0.4
+  life    = 0.15, 0.3
+  color   = 200, 220, 255
+  glow    = 3.5
+  size    = 0.6, 0.15
+  drag    = 3.0
+  orient  = streak
+  stretch = 0.025
+  aim     = along
+  offset  = 0
+end
+
+flash plasma             # a blue flicker, no powder: no flame, no smoke
+  light      = 150, 2.4, 2
+  lightcolor = 120, 180, 255
+  cone       = 16, 45, 70, 4
+  conetics   = 2
+  bursts     = energy_sparks_plasma
+end
+
+flash rocket             # the motor lighting: big warm light, sparks, smoke
+  light      = 300, 3.8, 4
+  lightcolor = 255, 190, 120
+  cone       = 34, 80, 130, 8
+  conetics   = 4
+  bursts     = flash_core, flash_sparks_wide
+  flame      = 0.1
+  smoke      = 3, 0.04, 0.4
+  smokeparticle = rsb_smoke_gun
+end
+
+flash bfg                # a green bloom
+  light      = 360, 4.0, 5
+  lightcolor = 120, 255, 140
+  cone       = 30, 70, 120, 6
+  conetics   = 4
+  bursts     = energy_sparks_bfg
+end
+
+flash rail               # a hard blue-white snap
+  light      = 200, 3.0, 3
+  lightcolor = 170, 200, 255
+  cone       = 10, 30, 140, 5
+  conetics   = 3
+  bursts     = energy_sparks_rail
+end
+
+flash none               # no flash at all: a gun whose own effect is the muzzle (the flamers)
 end
 
 
@@ -787,7 +883,7 @@ flame incinerator        # a tight, fast jet
   speed       = 950
   spread      = 1.5
   stream      = flame_core, flame_body, flame_tip, flame_embers
-  landing     = flame_splash, flame_embers_rise
+  landing     = flame_splash, flame_embers_rise, flame_smoke
   landingtics = 2
   scorch      = pool, 10, 105
   scorchcolor = 255, 100, 25
@@ -806,7 +902,7 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   speed       = 620
   spread      = 4
   stream      = flame_core, flame_body, flame_body, flame_tip, flame_embers
-  landing     = flame_splash, flame_licks, flame_embers_rise
+  landing     = flame_splash, flame_licks, flame_embers_rise, flame_smoke
   landingtics = 1
   scorch      = sunburst, 16, 140
   scorchcolor = 255, 90, 20

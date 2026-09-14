@@ -4,14 +4,20 @@
 // PACKED since engine dece74eb8d (stage 2b). An RSBDEFS burst uses one with
 // `particle = <name>` (RSB_Burst -> level.SpawnParticles, by handle).
 //
-// IN USE NOW: rsb_flame_puff and rsb_flame_tip (the flamethrower's body and tip).
-// WAITING FOR 2d, not routed yet: rsb_smoke_flame, rsb_smoke_gun,
-// rsb_dust_concrete, rsb_dust_wood. They have emissive 0, and until 2d draws
-// alpha and light they would draw nothing.
+// ALL IN USE since engine 6997b2c308 (stage 2d: lit, alpha-blended, soft):
+//   rsb_flame_puff, rsb_flame_tip   the flamethrower's body and tip (burst particle)
+//   rsb_smoke_gun                   muzzle smoke (flash `smokeparticle`), rsb_bench_smoke200
+//   rsb_smoke_flame                 black smoke where a flame lands (burst flame_smoke)
+//   rsb_dust_concrete, rsb_dust_wood  impact dust (bursts dust_concrete, dust_wood)
+// LIGHT: sector light at spawn, plus up to 32 dynamic lights in view. A muzzle
+// flash's strobe is one (A_AttachLight), so it colours nearby smoke.
+// NOT SORTED: a newer puff dims an older spark in front of it, and so on.
+// SOFT: a definition's own `soft` wins over the Soft particles slider.
+// TINT colours the smoke body; intensity scales only emissive.
 // SIZE CAP: min(maxsize, r_gpuparticles_maxsize); the cvar defaults to 8, so
 // the bigger sizes here show once it is raised (the flame plan's F5 slider).
-// `texture`, `lit`, `alpha` and `soft` are stored now and show in 2c/2d.
-// Engine notes: Engine docs/STAGE2B_IMPL_NOTES.md.
+// Engine notes: Engine docs/STAGE2B_IMPL_NOTES.md, STAGE2C_IMPL_NOTES.md,
+// STAGE2D_IMPL_NOTES.md.
 //
 // WHAT GOES HERE: only what inline bursts cannot do. Sparks, chips and glints
 // work as they are (SpawnGpuParticles draws through inline definitions). These
