@@ -23,7 +23,10 @@ class RSB_Burst play
 	//
 	// SIZESCALE: every particle's size x this -- an impact's `scale` (a rifle's cloud
 	// is bigger than a pistol's). 1 = as the burst and its definition say.
-	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null, double sizeScale = 1.0)
+	//
+	// OFFSETSCALE: the burst's offset x this -- a flash's gun size (`sizecvar`), so a backblast
+	// offset behind the muzzle stays at the rear of a resized tube.
+	static void Fire(RSB_BurstDef b, Vector3 at, Vector3 normal, Vector3 travel, double countScale, double glowScale, int seed, RSB_Surface onto = null, double sizeScale = 1.0, double offsetScale = 1.0)
 	{
 		if (!b) return;
 		int n = int(b.count * countScale + 0.5);
@@ -68,13 +71,13 @@ class RSB_Burst play
 				int share = n / kinds + ((k < n % kinds) ? 1 : 0);
 				if (share <= 0) continue;
 				int handle = (k == 0) ? Handle(b) : MoreHandle(b, k - 1);
-				level.SpawnParticles(handle, at + normal * b.offset, dir, share, Spread(b), b.speed, b.speedJitter,
+				level.SpawnParticles(handle, at + normal * (b.offset * offsetScale), dir, share, Spread(b), b.speed, b.speedJitter,
 					b.life, b.lifeJitter, b.tint, glowScale, sizeScale, (k == 0) ? seed : RSB_Hash.Seed(seed, k, 613),
 					b.shape, planeAt, planeNormal, floorAt);
 			}
 			return;
 		}
-		level.SpawnGpuParticles(at + normal * b.offset, dir, n, b.cone, b.speed, b.speedJitter,
+		level.SpawnGpuParticles(at + normal * (b.offset * offsetScale), dir, n, b.cone, b.speed, b.speedJitter,
 			b.tint, b.glow * glowScale, b.life, b.lifeJitter, b.sizeStart * sizeScale, b.sizeEnd * sizeScale, b.gravity, b.drag,
 			b.orient, b.stretch, seed);
 	}

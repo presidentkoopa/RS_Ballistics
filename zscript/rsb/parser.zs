@@ -294,6 +294,7 @@ class RSB_Parser
 			d.backHeatStrength = 0;
 			d.backHeatTics = 0;
 			d.backHeatOffset = 0;
+			d.sizeCvar = "";
 			d.throbTics = 0;
 			d.throbDepth = 0;
 			return d;
@@ -1126,6 +1127,12 @@ class RSB_Parser
 			f.throbTics = v[0].ToInt();
 			f.throbDepth = v[1].ToDouble();
 			return (f.throbTics >= 0 && f.throbDepth >= 0 && f.throbDepth <= 1) ? "" : "throb is period (tics, 0 = steady), depth (0..1)";
+		}
+		if (key == "sizecvar")
+		{
+			if (v.Size() != 1) return "sizecvar is one cvar name (the gun's size slider), or none";
+			f.sizeCvar = (v[0] ~== "none") ? "" : v[0];
+			return "";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}

@@ -136,19 +136,24 @@ class RSB_Flash : Actor
 		if (coneOn) Beam(1.0);
 
 		let reg = RSB_Registry.Get();
+		// A GUN'S SIZE (`sizecvar`): offsets along the bore follow the gun's size slider. The flash
+		// is the local rig's, so the local player's slider is the right one to read.
+		double sizeMul = 1.0;
+		if (fd.sizeCvar.Length() > 0) sizeMul = max(0.05, RSB_Settings.Cvf(fd.sizeCvar, 1.0));
+
 		double countScale = (fd.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
 		if (reg)
 		{
 			double sparkScale = countScale * RSB_Settings.FlashSparks() * vSparks;
 			for (int i = 0; i < fd.bursts.Size(); i++)
 				RSB_Burst.Fire(reg.FindBurst(fd.bursts[i]), pos, dir, dir, sparkScale, 1.0,
-					RSB_Hash.Seed(shotTic, i + 1, posSeed));
+					RSB_Hash.Seed(shotTic, i + 1, posSeed), null, 1.0, sizeMul);
 			// Bursts only some shots throw: powder specks, a wider spray.
 			for (int i = 0; i < fd.maybeBursts.Size(); i++)
 			{
 				if (RSB_Hash.Frac(shotTic, 421 + i * 2, posSeed) >= fd.maybeChance[i]) continue;
 				RSB_Burst.Fire(reg.FindBurst(fd.maybeBursts[i]), pos, dir, dir, sparkScale, 1.0,
-					RSB_Hash.Seed(shotTic, 61 + i, posSeed));
+					RSB_Hash.Seed(shotTic, 61 + i, posSeed), null, 1.0, sizeMul);
 			}
 		}
 
@@ -157,7 +162,7 @@ class RSB_Flash : Actor
 			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength * surge, fd.heatTics);
 		// THE BACKBLAST'S HOT AIR (`backheat`): a column out of the rear of the tube, behind.
 		if (fd.backHeatStrength > 0)
-			RSB_Heat.Along(pos - dir * fd.backHeatOffset, -dir, fd.backHeatLength, fd.backHeatRadius, fd.backHeatStrength * surge, fd.backHeatTics);
+			RSB_Heat.Along(pos - dir * (fd.backHeatOffset * sizeMul), -dir, fd.backHeatLength * sizeMul, fd.backHeatRadius, fd.backHeatStrength * surge, fd.backHeatTics);
 
 		// THE GROUND KICK (`groundkick`): a big gun's blast raises the floor under and just
 		// ahead of it -- dust rolling out, water thrown up -- the impact chosen by the
@@ -169,7 +174,7 @@ class RSB_Flash : Actor
 			if (groundDir.Length() > 0.001)
 			{
 				groundDir = groundDir.Unit();
-				if (level.IsPointInLevel(pos + groundDir * fd.kickAlong)) kickFrom = pos + groundDir * fd.kickAlong;
+				if (level.IsPointInLevel(pos + groundDir * (fd.kickAlong * sizeMul))) kickFrom = pos + groundDir * (fd.kickAlong * sizeMul);
 			}
 			let ground = RSB_Materials.FloorUnder(self, kickFrom, fd.kickReach);
 			if (ground) RSB_Impact.LandOn(self, ground, fd.kickImpact, groundDir);

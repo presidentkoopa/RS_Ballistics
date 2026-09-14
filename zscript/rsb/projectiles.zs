@@ -106,14 +106,30 @@ class RSB_PlasmaBall : PlasmaBall
 	transient bool             looked;
 	transient RSB_RoundLookDef lookDef;
 
+	// WHICH ROUND LOOK ITS FLIGHT AND HIT WEAR: a subclass names its own (a gun's own bolt).
+	virtual String FlightLook()
+	{
+		return "plasma_ball";
+	}
+
 	override void Tick()
 	{
 		Vector3 before = pos;
 		travel = RSB_ProjectileLook.Heading(self, travel);
 		Super.Tick();
 		if (bDestroyed) return;
-		if (!looked) { looked = true; lookDef = RSB_ProjectileLook.Look("plasma_ball"); }
+		if (!looked) { looked = true; lookDef = RSB_ProjectileLook.Look(FlightLook()); }
 		landed = RSB_ProjectileLook.AfterMove(self, lookDef, before, travel, landed);
+	}
+}
+
+// THE PLASMA CARBINE'S BOLT: the same plasma ball to the game; to the eye a tighter, hotter
+// streak with a smaller core, and sharper hits.
+class RSB_PlasmaBallCarbine : RSB_PlasmaBall
+{
+	override String FlightLook()
+	{
+		return "plasma_carbine";
 	}
 }
 

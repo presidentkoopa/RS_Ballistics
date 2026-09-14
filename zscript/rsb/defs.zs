@@ -240,6 +240,10 @@ class RSB_FlashDef : RSB_Def
 	double backHeatStrength;
 	int    backHeatTics;
 	double backHeatOffset;
+	// A GUN'S SIZE (`sizecvar`): a cvar holding the gun's size slider; every offset along the
+	// bore -- burst offsets, the backheat, the ground kick -- is multiplied by it, so a
+	// backblast stays at the rear of a resized tube. "" = size 1.
+	String sizeCvar;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a
 	// weapon firing every tic reads as one pulsing glow, not a strobe.
 	int    throbTics;
