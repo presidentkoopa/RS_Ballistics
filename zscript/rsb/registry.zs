@@ -143,6 +143,8 @@ class RSB_Registry : StaticEventHandler
 			{
 				why = MissingBurst(fl.bursts);
 				if (why == "") why = MissingBurst(fl.maybeBursts);
+				if (why == "" && fl.kickImpact.Length() > 0 && !defs.Find("impact", fl.kickImpact))
+					why = String.Format("its groundkick impact \"%s\" has no base profile in any RSBDEFS", fl.kickImpact);
 			}
 			else
 			{

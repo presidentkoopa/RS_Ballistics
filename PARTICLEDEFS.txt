@@ -239,6 +239,61 @@ particle rsb_muzzle_plume
 	orient    = billboard
 }
 
+// An old gun's blast: a ragged, redder ball of fire (heat 0.82 to 0.25), churning harder.
+particle rsb_muzzle_plume_dirty
+{
+	look      = fire
+	heat      = 0.82, 0.25
+	rise      = 34
+	roughness = 0.75
+	churn     = 3.5
+	detail    = 3
+	size      = 6 @0, 28 @0.35, 44 @1
+	color     = 255 250 240 @0, 255 250 240 @1
+	alpha     = 0 @0, 0 @1
+	emissive  = 6.0 @0, 3.2 @0.4, 0 @1
+	lit       = 0
+	gravity   = -24
+	drag      = 6
+	maxsize   = 64
+	soft      = 6
+	orient    = billboard
+}
+
+// Black soot out of an old, fouled barrel: dark, thick, rolling. Lit, never glowing.
+particle rsb_smoke_soot_gun
+{
+	size     = 5 @0, 22 @0.4, 40 @1
+	color    = 74 70 64 @0, 58 56 54 @1
+	alpha    = 0 @0, 0.5 @0.06, 0.26 @0.5, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -9
+	drag     = 2.2
+	maxsize  = 48
+	soft     = 8
+	texture  = "RSSKA0", 6, 4, once
+	orient   = billboard
+	spin     = -30, 30
+}
+
+// A fouled barrel's ribbon: darker and thicker than rsb_smoke_barrel.
+particle rsb_smoke_barrel_soot
+{
+	size     = 0.8 @0, 3.4 @0.4, 7 @1
+	color    = 96 92 86 @0, 76 74 72 @1
+	alpha    = 0 @0, 0.3 @0.1, 0.14 @0.55, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -20
+	drag     = 1.6
+	maxsize  = 9
+	soft     = 2
+	texture  = "RSSKA0", 6, 5, once
+	orient   = billboard
+	spin     = -50, 50
+}
+
 // ---------------------------------------------------------------- GUN SMOKE: PORT, CASE, BARREL
 // Lit, never glowing: a puff out of the ejection port as the case leaves, a thin wisp
 // off the hot case, and the ribbon a hot barrel curls up after a string of shots.

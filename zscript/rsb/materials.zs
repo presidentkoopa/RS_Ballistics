@@ -141,6 +141,17 @@ class RSB_Materials play
 		return s;
 	}
 
+	// THE FLOOR UNDER A POINT, within `reach` straight below it: what a big gun's blast
+	// kicks up (a flash's `groundkick`). `tracer` only runs the trace. Null when nothing
+	// is that close below.
+	static RSB_Surface FloorUnder(Actor tracer, Vector3 at, double reach)
+	{
+		if (!tracer || reach <= 0) return null;
+		FLineTraceData d;
+		if (!tracer.LineTrace(0, reach, 90, TRF_ABSPOSITION | TRF_THRUACTORS, at.z, at.x, at.y, d)) return null;
+		return FromTrace(d, (0, 0, -1));
+	}
+
 	// NO SURFACE: where a projectile blew up on a monster or in the air. Facing back
 	// along its flight, the default material, and flagged so no mark is stamped.
 	static RSB_Surface InAir(Vector3 at, Vector3 travel)

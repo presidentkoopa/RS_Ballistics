@@ -406,6 +406,84 @@ burst flash_plume_wide     # a shorter barrel's blast: a fatter ball of fire, ~2
   particle = rsb_muzzle_plume
 end
 
+burst flash_plume_twin     # both barrels at once: a huge fat ball of fire, ~3 m across (rsb_muzzle_plume)
+  count    = 18
+  cone     = 24
+  speed    = 540, 0.5
+  life     = 0.16, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume
+end
+
+burst flash_plume_dirty    # an old gun's blast: a ragged, redder ball of fire (rsb_muzzle_plume_dirty)
+  count    = 14
+  cone     = 18
+  speed    = 470, 0.5
+  life     = 0.17, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume_dirty
+end
+
+burst flash_embers         # burning powder and fouling spat out of an old barrel: embers that fall, cooling
+  count   = 16
+  cone    = 22
+  speed   = 280, 0.6
+  life    = 1.0, 0.5
+  color   = 255, 128, 44
+  glow    = 2.4
+  size    = 0.7, 0.2
+  gravity = 380
+  drag    = 1.2
+  orient  = billboard
+  aim     = along
+  offset  = 0
+end
+
+burst flash_soot           # black soot rolling out of the barrels (rsb_smoke_soot_gun: lit, never glowing)
+  count    = 7
+  cone     = 28
+  speed    = 70, 0.6
+  life     = 2.4, 0.35
+  aim      = along
+  offset   = 3
+  particle = rsb_smoke_soot_gun
+end
+
+burst dust_kick_ring       # a big gun's blast raising dust off the floor: a ring rolling out across it
+  count    = 12
+  cone     = 10
+  speed    = 170, 0.5
+  life     = 1.8, 0.35
+  aim      = normal
+  offset   = 2
+  shape    = disc
+  particle = rsb_dust_concrete
+end
+
+burst dust_kick_ring_wood  # the same off a wooden floor
+  count    = 10
+  cone     = 10
+  speed    = 150, 0.5
+  life     = 1.5, 0.35
+  aim      = normal
+  offset   = 2
+  shape    = disc
+  particle = rsb_dust_wood
+end
+
+burst dust_kick_ring_dirt  # the same off dirt and rock: heavier, darker
+  count    = 14
+  cone     = 12
+  speed    = 160, 0.5
+  life     = 1.7, 0.35
+  aim      = normal
+  offset   = 2
+  shape    = disc
+  particle = rsb_dust_dirt
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -742,6 +820,94 @@ end
 # buckshot -- one pellet of buckshot: small, so a blast peppers a wall
 # Buckshot: seven pellets a shot, each its own -- only some spark or jet dust back out,
 # so the wall takes one ragged blast, not seven identical stamps.
+# THE GROUND KICK (a flash's `groundkick`): a big gun's blast raising the floor under it.
+# Silent -- the gun is the sound -- with no mark and no light.
+impact kick_blast
+  bursts    = dust_kick_ring
+  vary      = count 0.4, size 0.3
+  sound     = none
+end
+
+impact kick_blast.wood
+  bursts    = dust_kick_ring_wood
+  vary      = count 0.4, size 0.3
+  sound     = none
+end
+
+impact kick_blast.dirt
+  bursts    = dust_kick_ring_dirt
+  vary      = count 0.4, size 0.3
+  scale     = 1.3, 1.1
+  sound     = none
+end
+
+impact kick_blast.liquid
+  bursts    = splash_liquid
+  vary      = count 0.4, size 0.3
+  scale     = 1.6, 1.3
+  sound     = none
+end
+
+impact kick_blast.metal
+  bursts    = dust_kick_ring
+  vary      = count 0.4, size 0.3
+  scale     = 0.5, 0.8
+  sound     = none
+end
+
+impact kick_blast.glass
+  bursts    = none
+  sound     = none
+end
+
+# MAGNUM BUCKSHOT: the SSGs' pellets. The same shot as buckshot to the game; to the eye
+# every pellet hits harder -- more chips, bigger clouds, dust jetting back out more often.
+impact buckshot_magnum
+  bursts    = chips_concrete, dust_concrete
+  maybe     = spark_hot 0.3, dust_jet_concrete 0.5
+  vary      = count 0.5, size 0.3
+  scale     = 0.6, 1.05
+  sound     = rsb/impact/concrete
+end
+
+impact buckshot_magnum.metal
+  bursts    = spark_metal
+  maybe     = ember_metal 0.55, spark_spray 0.4
+  vary      = count 0.5, size 0.25
+  scale     = 0.6, 0.95
+  sound     = rsb/impact/metal
+end
+
+impact buckshot_magnum.wood
+  bursts    = splinter_wood, dust_wood
+  maybe     = dust_jet_wood 0.45
+  vary      = count 0.5, size 0.3
+  scale     = 0.6, 1.05
+  sound     = rsb/impact/wood
+end
+
+impact buckshot_magnum.glass
+  bursts    = glint_glass
+  vary      = count 0.4, size 0.2
+  scale     = 0.55, 0.95
+  sound     = rsb/glass
+end
+
+impact buckshot_magnum.liquid
+  bursts    = splash_liquid
+  vary      = count 0.4, size 0.2
+  scale     = 0.55, 0.95
+  sound     = none
+end
+
+impact buckshot_magnum.dirt
+  bursts    = clods_dirt, dust_dirt
+  maybe     = dust_jet_dirt 0.45
+  vary      = count 0.5, size 0.3
+  scale     = 0.6, 1.05
+  sound     = rsb/impact/concrete
+end
+
 impact buckshot
   bursts    = chips_concrete, dust_concrete
   maybe     = spark_hot 0.25, dust_jet_concrete 0.35
@@ -1296,6 +1462,14 @@ roundlook buckshot
   whiz   = 48, rsb/whiz
 end
 
+roundlook buckshot_magnum  # the SSGs' pellets: buckshot's look, hitting harder to the eye
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = pellet_vapour
+  impact = buckshot_magnum
+  whiz   = 48, rsb/whiz
+end
+
 roundlook rifle_556
   look   = sprite, RSBT
   glide  = yes
@@ -1407,6 +1581,11 @@ end
 round buckshot
   ballistics = buckshot
   roundlook  = buckshot
+end
+
+round buckshot_magnum      # the same ballistics as buckshot (no gameplay change), the heavier look
+  ballistics = buckshot
+  roundlook  = buckshot_magnum
 end
 
 round rifle_556
@@ -1525,6 +1704,8 @@ end
 #               Needs the gun mod's RSB_Barrel.Shot and RSB_Barrel.Muzzle calls (barrel.zs).
 #   barrelsmoke <PARTICLEDEFS definition>, puffs a tic at full heat -- the ribbon off the muzzle
 #   barrelshimmer  radius, strength -- the hot air bending over the barrel
+#   groundkick  <impact profile>, reach -- a big gun's blast raises the floor under the muzzle:
+#               that impact, by the floor's surface, when the floor is within reach below
 #
 # Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
 # bfg and rail have their own light and sparks, and `none` is no flash at all.
@@ -1632,6 +1813,44 @@ flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide
   barrelheat = 0.34, 0.18, 0.35
   barrelsmoke = rsb_smoke_barrel, 3.0
   barrelshimmer = 3.5, 0.5
+end
+
+flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge white-orange twin fireball, the room lit white, the floor kicked up; clean violence
+  light      = 760, 7.0, 4
+  lightcolor = 255, 222, 172
+  cone       = 40, 90, 200, 16
+  conetics   = 5
+  bursts     = flash_core, flash_petals_wide, flash_plume_twin, flash_sparks_wide, flash_sparks_wide
+  maybe      = flash_powder 0.9, flash_tongue 0.5
+  flame      = 0.13
+  smoke      = 8, 0.04, 0.4
+  smokeparticle = rsb_smoke_gun
+  heat       = 16, 70, 1.4, 20
+  groundkick = kick_blast, 64
+  vary       = light 0.2, flame 0.3, cone 0.2, sparks 0.4, smoke 0.3
+  surge      = 0.15, 1.3
+  barrelheat = 0.8, 0.25, 0.3
+  barrelsmoke = rsb_smoke_barrel, 3.5
+  barrelshimmer = 4, 0.6
+end
+
+flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-orange fireball, black soot rolling out, embers spat and falling, a warm strobe that lingers; dirty violence
+  light      = 700, 6.2, 5
+  lightcolor = 255, 176, 100
+  cone       = 36, 86, 170, 15
+  conetics   = 6
+  bursts     = flash_core, flash_plume_dirty, flash_embers, flash_soot, flash_sparks_wide
+  maybe      = flash_powder 1.0, flash_embers 0.5, flash_petals_wide 0.4
+  flame      = 0.12
+  smoke      = 5, 0.04, 0.42
+  smokeparticle = rsb_smoke_soot_gun
+  heat       = 14, 60, 1.3, 22
+  groundkick = kick_blast, 64
+  vary       = light 0.35, flame 0.4, cone 0.3, sparks 0.55, smoke 0.45
+  surge      = 0.25, 1.4
+  barrelheat = 0.9, 0.22, 0.3
+  barrelsmoke = rsb_smoke_barrel_soot, 4.0
+  barrelshimmer = 4, 0.6
 end
 
 flash rifle
@@ -2046,6 +2265,32 @@ ejecta hull_12ga
   life    = 2100
   portsmoke = rsb_smoke_port, 4
   wisp      = rsb_casing_wisp, 20
+end
+
+ejecta hull_12ga_magnum    # the Super Shotgun's hulls, dumped from an open breech: heavy smoke, a long wisp
+  look    = model, RSB_Shell12ga
+  scale   = 1
+  speed   = 0.8, 0.2
+  bounce  = 0.3, 0.25, 3
+  gravity = 0.7
+  sound   = rsb/casing/shell
+  hot     = 0
+  life    = 2100
+  portsmoke = rsb_smoke_port, 7
+  wisp    = rsb_casing_wisp, 35
+end
+
+ejecta hull_12ga_fouled    # the Double Barrel's hulls: smoke out of fouled hulls, a dark wisp
+  look    = model, RSB_Shell12ga
+  scale   = 1
+  speed   = 0.8, 0.2
+  bounce  = 0.3, 0.25, 3
+  gravity = 0.7
+  sound   = rsb/casing/shell
+  hot     = 0
+  life    = 2100
+  portsmoke = rsb_smoke_port, 6
+  wisp    = rsb_smoke_barrel_soot, 30
 end
 
 ejecta brass_9mm

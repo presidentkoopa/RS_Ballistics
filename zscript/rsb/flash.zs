@@ -149,6 +149,22 @@ class RSB_Flash : Actor
 		if (fd.heatStrength > 0)
 			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength * surge, fd.heatTics);
 
+		// THE GROUND KICK (`groundkick`): a big gun's blast raises the floor under and just
+		// ahead of it -- dust rolling out, water thrown up -- the impact chosen by the
+		// floor's surface, when the floor is within reach below the muzzle.
+		if (fd.kickImpact.Length() > 0 && fd.kickReach > 0)
+		{
+			Vector3 groundDir = (dir.x, dir.y, 0);
+			Vector3 kickFrom = pos;
+			if (groundDir.Length() > 0.001)
+			{
+				groundDir = groundDir.Unit();
+				if (level.IsPointInLevel(pos + groundDir * 24.0)) kickFrom = pos + groundDir * 24.0;
+			}
+			let ground = RSB_Materials.FloorUnder(self, kickFrom, fd.kickReach);
+			if (ground) RSB_Impact.LandOn(self, ground, fd.kickImpact, groundDir);
+		}
+
 		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() * vSmoke + 0.5);
 		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
 		// definition: puffs drifting out of the bore, rising and hanging. The handle

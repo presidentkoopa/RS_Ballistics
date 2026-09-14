@@ -205,6 +205,10 @@ class RSB_FlashDef : RSB_Def
 	double barrelSmokePerTic;
 	double barrelShimmerRadius;
 	double barrelShimmerStrength;
+	// THE GROUND KICK (`groundkick`): an impact profile the blast throws off the floor
+	// under the muzzle, by the floor's surface, when the floor is within kickReach below.
+	String kickImpact;
+	double kickReach;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the

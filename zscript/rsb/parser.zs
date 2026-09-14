@@ -274,6 +274,8 @@ class RSB_Parser
 			d.barrelSmokePerTic = 0;
 			d.barrelShimmerRadius = 0;
 			d.barrelShimmerStrength = 0;
+			d.kickImpact = "";
+			d.kickReach = 0;
 			return d;
 		}
 		if (kind == "ejecta")
@@ -979,6 +981,19 @@ class RSB_Parser
 			f.barrelShimmerRadius = v[0].ToDouble();
 			f.barrelShimmerStrength = v[1].ToDouble();
 			return (f.barrelShimmerRadius >= 0 && f.barrelShimmerStrength >= 0) ? "" : "barrelshimmer is radius, strength -- both 0 or more";
+		}
+		if (key == "groundkick")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.kickImpact = "";
+				f.kickReach = 0;
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[1])) return "groundkick is <impact profile>, reach (map units below the muzzle) -- or none";
+			f.kickImpact = v[0];
+			f.kickReach = v[1].ToDouble();
+			return (f.kickReach > 0 && f.kickReach <= 512) ? "" : "groundkick reach must be above 0, up to 512";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
