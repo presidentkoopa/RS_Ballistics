@@ -1475,8 +1475,8 @@ end
 # hit is a little different -- more or fewer chips, a bigger or smaller cloud, and only
 # some hits spark off stone or jet dust back out. Firearm colours only.
 impact pistol_9mm
-  bursts    = chips_concrete, dust_concrete
-  maybe     = spark_hot 0.4, dust_jet_concrete 0.45
+  bursts    = chips_tight_concrete, dust_concrete
+  maybe     = spark_hot 0.7, dust_jet_concrete 0.3
   vary      = count 0.45, size 0.25
   scale     = 0.9, 0.95
   sound     = rsb/impact/concrete
@@ -1531,8 +1531,8 @@ end
 
 # The .45: heavier and slower -- more dust, a jet more often, fewer sparks.
 impact pistol_45
-  bursts    = chips_concrete, dust_concrete
-  maybe     = dust_jet_concrete 0.6, spark_hot 0.3
+  bursts    = chips_lazy_concrete, dust_bloom_concrete
+  maybe     = dust_jet_concrete 0.6, spark_hot 0.1
   vary      = count 0.4, size 0.25
   scale     = 1.05, 1.1
   sound     = rsb/impact/concrete
@@ -1541,8 +1541,8 @@ impact pistol_45
 end
 
 impact pistol_45.metal
-  bursts     = spark_metal, spark_spray
-  maybe      = ember_metal 0.7, spark_hot 0.3
+  bursts     = spark_hot, ember_metal
+  maybe      = spark_metal 0.4, spark_spray 0.3
   vary       = count 0.4, size 0.2, light 0.3
   scale      = 1.0, 1.0
   mark       = pool, 4, 34
@@ -1554,8 +1554,8 @@ impact pistol_45.metal
 end
 
 impact pistol_45.wood
-  bursts    = splinter_wood, dust_wood
-  maybe     = dust_jet_wood 0.55
+  bursts    = splinter_wood, dust_bloom_wood
+  maybe     = planks_wood 0.2, dust_jet_wood 0.55
   vary      = count 0.4, size 0.25
   scale     = 1.05, 1.1
   sound     = rsb/impact/wood
@@ -1565,7 +1565,7 @@ end
 impact pistol_45.glass
   bursts    = glint_glass
   vary      = count 0.4, size 0.2
-  scale     = 1.0, 1.0
+  scale     = 1.2, 1.0
   sound     = rsb/glass
 end
 
@@ -1577,7 +1577,7 @@ impact pistol_45.liquid
 end
 
 impact pistol_45.dirt
-  bursts    = clods_dirt, dust_dirt
+  bursts    = clods_dirt, dust_bloom_dirt
   maybe     = dust_jet_dirt 0.6
   vary      = count 0.4, size 0.25
   scale     = 1.05, 1.1
@@ -1589,8 +1589,8 @@ end
 # held on one spot, the dust builds to a haze and chips keep flying (the Matrix lobby's
 # pillars). 5.56: fine and dusty. 7.62: heavier chips, dust jetting back out more often.
 impact chaingun_556
-  bursts    = chips_concrete, dust_concrete
-  maybe     = dust_jet_concrete 0.3, spark_hot 0.2
+  bursts    = grit_concrete, dust_jet_concrete
+  maybe     = chips_concrete 0.35, spark_hot 0.35, dust_concrete 0.5
   vary      = count 0.5, size 0.35
   scale     = 0.8, 1.0
   sound     = rsb/impact/concrete
@@ -1612,8 +1612,8 @@ impact chaingun_556.metal
 end
 
 impact chaingun_556.wood
-  bursts    = splinter_wood, dust_wood
-  maybe     = dust_jet_wood 0.3
+  bursts    = splinter_wood, dust_jet_wood
+  maybe     = dust_wood 0.5
   vary      = count 0.5, size 0.35
   scale     = 0.8, 1.0
   sound     = rsb/impact/wood
@@ -1635,8 +1635,8 @@ impact chaingun_556.liquid
 end
 
 impact chaingun_556.dirt
-  bursts    = clods_dirt, dust_dirt
-  maybe     = dust_jet_dirt 0.3
+  bursts    = dust_jet_dirt, dust_dirt
+  maybe     = clods_dirt 0.4
   vary      = count 0.5, size 0.35
   scale     = 0.8, 1.0
   sound     = rsb/impact/concrete
@@ -1644,8 +1644,8 @@ impact chaingun_556.dirt
 end
 
 impact machinegun_762
-  bursts    = chips_concrete, dust_concrete
-  maybe     = dust_jet_concrete 0.55, spark_hot 0.25
+  bursts    = chips_concrete, dust_concrete, dust_jet_concrete
+  maybe     = slabs_concrete 0.25, spark_hot 0.3
   vary      = count 0.45, size 0.3
   scale     = 1.25, 1.2
   sound     = rsb/impact/concrete
@@ -1655,7 +1655,7 @@ end
 
 impact machinegun_762.metal
   bursts     = spark_metal, spark_spray
-  maybe      = ember_metal 0.5
+  maybe      = ember_metal 0.5, shards_metal 0.2
   vary       = count 0.45, size 0.25, light 0.35
   scale      = 1.1, 1.0
   mark       = pool, 4, 28
@@ -1667,8 +1667,8 @@ impact machinegun_762.metal
 end
 
 impact machinegun_762.wood
-  bursts    = splinter_wood, dust_wood
-  maybe     = dust_jet_wood 0.5
+  bursts    = splinter_wood, dust_wood, dust_jet_wood
+  maybe     = planks_wood 0.35
   vary      = count 0.45, size 0.3
   scale     = 1.25, 1.2
   sound     = rsb/impact/wood
@@ -1690,8 +1690,7 @@ impact machinegun_762.liquid
 end
 
 impact machinegun_762.dirt
-  bursts    = clods_dirt, dust_dirt
-  maybe     = dust_jet_dirt 0.5
+  bursts    = clods_dirt, dust_dirt, dust_jet_dirt
   vary      = count 0.45, size 0.3
   scale     = 1.25, 1.2
   sound     = rsb/impact/concrete
@@ -1829,8 +1828,8 @@ end
 # MAGNUM BUCKSHOT: the SSGs' pellets. The same shot as buckshot to the game; to the eye
 # every pellet hits harder -- more chips, bigger clouds, dust jetting back out more often.
 impact buckshot_magnum
-  bursts    = chips_concrete, dust_concrete
-  maybe     = spark_hot 0.3, dust_jet_concrete 0.5
+  bursts    = pepper_concrete, chips_concrete, dust_concrete
+  maybe     = spark_hot 0.3, dust_jet_concrete 0.4
   vary      = count 0.5, size 0.3
   scale     = 0.6, 1.05
   sound     = rsb/impact/concrete
@@ -1878,8 +1877,8 @@ impact buckshot_magnum.dirt
 end
 
 impact buckshot
-  bursts    = chips_concrete, dust_concrete
-  maybe     = spark_hot 0.25, dust_jet_concrete 0.35
+  bursts    = pepper_concrete, chips_concrete
+  maybe     = spark_hot 0.2, dust_jet_concrete 0.15
   vary      = count 0.5, size 0.3
   scale     = 0.45, 0.9
   sound     = rsb/impact/concrete
@@ -1887,8 +1886,8 @@ impact buckshot
 end
 
 impact buckshot.metal
-  bursts    = spark_metal
-  maybe     = ember_metal 0.45, spark_spray 0.3
+  bursts    = spark_hot
+  maybe     = spark_metal 0.4, ember_metal 0.3
   vary      = count 0.5, size 0.25
   scale     = 0.45, 0.85
   mark       = pool, 3, 25
@@ -1897,8 +1896,8 @@ impact buckshot.metal
 end
 
 impact buckshot.wood
-  bursts    = splinter_wood, dust_wood
-  maybe     = dust_jet_wood 0.25
+  bursts    = dust_wood
+  maybe     = splinter_wood 0.6, dust_jet_wood 0.15
   vary      = count 0.5, size 0.3
   scale     = 0.45, 0.9
   sound     = rsb/impact/wood
@@ -1920,8 +1919,8 @@ impact buckshot.liquid
 end
 
 impact buckshot.dirt
-  bursts    = clods_dirt, dust_dirt
-  maybe     = dust_jet_dirt 0.25
+  bursts    = dust_dirt
+  maybe     = clods_dirt 0.5, dust_jet_dirt 0.2
   vary      = count 0.5, size 0.3
   scale     = 0.45, 0.9
   sound     = rsb/impact/concrete
@@ -2092,7 +2091,7 @@ end
 
 impact rocket
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, spark_spray
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2495,7 +2494,7 @@ end
 
 impact rocket.wood
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot, spark_spray
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2506,7 +2505,7 @@ end
 
 impact rocket.dirt
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot, spark_spray
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2517,7 +2516,7 @@ end
 
 impact rocket.glass
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot, spark_spray
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2538,7 +2537,7 @@ end
 # THE RPG's WARHEAD: the rocket's blasts, hitting harder -- more of everything, a wider heat.
 impact rocket_rpg
   heat       = 84, 1.8, 36
-  bursts     = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2550,7 +2549,7 @@ end
 
 impact rocket_rpg.metal
   heat       = 84, 1.8, 36
-  bursts     = rocket_fire, rocket_embers, spark_metal, shards_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, spark_metal, shards_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot, dust_kick_ring
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2562,7 +2561,7 @@ end
 
 impact rocket_rpg.wood
   heat       = 84, 1.8, 36
-  bursts     = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2574,7 +2573,7 @@ end
 
 impact rocket_rpg.dirt
   heat       = 84, 1.8, 36
-  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2586,7 +2585,7 @@ end
 
 impact rocket_rpg.glass
   heat       = 84, 1.8, 36
-  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot
+  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -2931,7 +2930,7 @@ end
 roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
-  wake   = pistol_vapour
+  wake   = pistol45_vapour
   impact = pistol_45
   whiz   = 72, rsb/whiz
   heat   = 5, 0.45, 10
@@ -2950,7 +2949,7 @@ end
 roundlook buckshot_magnum  # the SSGs' pellets: buckshot's look, hitting harder to the eye
   look   = sprite, RSBT
   glide  = yes
-  wake   = pellet_vapour
+  wake   = pellet_vapour_magnum
   impact = buckshot_magnum
   whiz   = 48, rsb/whiz
   carve  = 4, 0.4
@@ -3044,7 +3043,7 @@ end
 roundlook machinegun_762   # the machine gun's rounds: a vapour line; every 5th a heavier tracer
   look   = sprite, RSBT
   glide  = yes
-  wake   = rifle_vapour
+  wake   = mg_vapour
   impact = machinegun_762
   whiz   = 110, rsb/crack/near
   tracer = 5, tracer_762
@@ -3834,7 +3833,7 @@ flash pistol_9mm@extreme   # THE SHOWPIECE AT EXTREME: a double crown of fire, a
 end
 
 impact pistol_9mm@extreme  # stone: chips that always spark, glowing jacket fragments, a dust jet most hits, a blink of light
-  bursts     = chips_concrete, dust_concrete, spark_hot
+  bursts     = chips_tight_concrete, dust_concrete, spark_hot
   maybe      = dust_jet_concrete 0.75, x9_hit_frags 0.6
   vary       = count 0.45, size 0.25, light 0.4
   scale      = 1.1, 1.05
@@ -4558,6 +4557,93 @@ ejecta default             # a plain case for a gun that names no casing (WM_Gun
   life    = 2100
 end
 
+# ---------------------------------------------------------------- HEAVY: EACH ROUND ITS OWN HIT
+# The bullet guns' hits used to share one set of pieces per surface, only scaled. Each round now has its
+# own character at every level: the 9mm crisp, the .45 a lazy thud, the chaingun's 5.56 chewing, the
+# machine gun's 7.62 chunky, buckshot a pepper, magnum buckshot a heavier pepper. Guns firing the same
+# shells still hit alike -- they differ at the muzzle.
+
+burst chips_tight_concrete # the 9mm's chips: fewer, fast, in a tight cone (3D chunks)
+  count    = 7
+  cone     = 28
+  speed    = 230, 0.4
+  life     = 1.0, 0.4
+  color    = 150, 146, 138
+  particle = rsb_chunk_concrete_chip1, rsb_chunk_concrete_chip2, rsb_chunk_concrete_chip3, rsb_chunk_concrete_chip4, rsb_chunk_concrete_chip5, rsb_chunk_concrete_chip6, rsb_chunk_concrete_chip7, rsb_chunk_concrete_chip8
+end
+
+burst chips_lazy_concrete  # the .45's chips: more, slower, thrown wide (3D chunks)
+  count    = 11
+  cone     = 65
+  speed    = 115, 0.5
+  life     = 1.4, 0.4
+  color    = 150, 146, 138
+  particle = rsb_chunk_concrete_chip1, rsb_chunk_concrete_chip2, rsb_chunk_concrete_chip3, rsb_chunk_concrete_chip4, rsb_chunk_concrete_chip5, rsb_chunk_concrete_chip6, rsb_chunk_concrete_chip7, rsb_chunk_concrete_chip8
+end
+
+burst grit_concrete        # the 5.56's grit: a fast narrow spray of chips along the ricochet line (3D chunks)
+  count    = 6
+  cone     = 16
+  speed    = 300, 0.4
+  life     = 0.8, 0.4
+  aim      = reflect
+  color    = 150, 146, 138
+  particle = rsb_chunk_concrete_chip5, rsb_chunk_concrete_chip6, rsb_chunk_concrete_chip7, rsb_chunk_concrete_chip8
+end
+
+burst pepper_concrete      # a pellet's hit: a small quick puff of dust (rsb_dust_concrete)
+  count    = 3
+  cone     = 30
+  speed    = 70, 0.5
+  life     = 1.0, 0.4
+  particle = rsb_dust_concrete
+end
+
+burst dust_bloom_concrete  # the .45's dust: a fat, slow bloom off the wall (rsb_dust_concrete)
+  count    = 8
+  cone     = 55
+  speed    = 55, 0.6
+  life     = 2.0, 0.4
+  particle = rsb_dust_concrete
+end
+
+burst dust_bloom_wood      # the .45 in wood: a fat, slow bloom of wood dust (rsb_dust_wood)
+  count    = 6
+  cone     = 55
+  speed    = 45, 0.6
+  life     = 1.8, 0.4
+  particle = rsb_dust_wood
+end
+
+burst dust_bloom_dirt      # the .45 in dirt: a fat, slow bloom of dirt (rsb_dust_dirt)
+  count    = 6
+  cone     = 55
+  speed    = 50, 0.6
+  life     = 1.9, 0.4
+  particle = rsb_dust_dirt
+end
+
+wake pistol45_vapour       # the .45's trail: fatter and lazier than the 9mm's, hanging a little longer (lit, never glowing)
+  spacing  = 5
+  life     = 1.1
+  drift    = 4
+  particle = rsb_bullet_vapour
+end
+
+wake pellet_vapour_magnum  # magnum pellets: heavier wisps than buckshot's
+  spacing  = 10
+  life     = 0.8
+  drift    = 3
+  particle = rsb_bullet_vapour
+end
+
+wake mg_vapour             # the machine gun's 7.62: a thicker vapour line than the chaingun's
+  spacing  = 10
+  life     = 0.7
+  drift    = 2.5
+  particle = rsb_bullet_vapour
+end
+
 # ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
 # Every Vanilla gun at the top effects level: each keeps its own character and does MORE of it,
 # on top of the level's ladder. Material variants each get their own (a material outranks a tier).
@@ -5077,10 +5163,31 @@ flash chainsaw_heavy@extreme   # the Heavy Chainsaw's engine at extreme: a lumpi
   exhaustshimmer = 5, 0.55
 end
 
-roundlook pistol_45@extreme   # the .45 at extreme: a longer-hanging vapour line, stronger bent air, a wider smoke tunnel
+wake x45_vapour            # the .45 at extreme: its fat lazy trail hanging longer (lit, never glowing)
+  spacing  = 4
+  life     = 1.6
+  drift    = 4
+  particle = rsb_bullet_vapour
+end
+
+wake xpellet_vapour_magnum  # magnum pellets at extreme: heavier wisps that hang longer
+  spacing  = 7
+  life     = 1.2
+  drift    = 3
+  particle = rsb_bullet_vapour
+end
+
+wake xmg_vapour             # the machine gun's 7.62 at extreme: a thick vapour line that hangs longer
+  spacing  = 8
+  life     = 1.0
+  drift    = 2.5
+  particle = rsb_bullet_vapour
+end
+
+roundlook pistol_45@extreme   # the .45 at extreme: its lazy trail hanging longer, stronger bent air, a wider smoke tunnel
   look   = sprite, RSBT
   glide  = yes
-  wake   = x9_vapour
+  wake   = x45_vapour
   impact = pistol_45
   whiz   = 72, rsb/whiz
   heat   = 6, 0.6, 12
@@ -5096,10 +5203,10 @@ roundlook buckshot@extreme   # pellets at extreme: wisps that hang longer, wider
   carve  = 5, 0.45
 end
 
-roundlook buckshot_magnum@extreme   # magnum pellets at extreme: wisps that hang longer, wider tunnels
+roundlook buckshot_magnum@extreme   # magnum pellets at extreme: heavier wisps that hang longer, wider tunnels
   look   = sprite, RSBT
   glide  = yes
-  wake   = xpellet_vapour
+  wake   = xpellet_vapour_magnum
   impact = buckshot_magnum
   whiz   = 48, rsb/whiz
   carve  = 5, 0.5
@@ -5126,10 +5233,10 @@ roundlook tracer_556@extreme   # a 5.56 tracer at extreme: a longer burning tail
   carve      = 6, 0.7
 end
 
-roundlook machinegun_762@extreme   # the machine gun's rounds at extreme: wider tunnels
+roundlook machinegun_762@extreme   # the machine gun's rounds at extreme: a thick trail that hangs longer, wider tunnels
   look   = sprite, RSBT
   glide  = yes
-  wake   = rifle_vapour
+  wake   = xmg_vapour
   impact = machinegun_762
   whiz   = 110, rsb/crack/near
   tracer = 5, tracer_762
@@ -5198,7 +5305,7 @@ roundlook bfg_heavy@extreme   # the Heavy BFG's ball at extreme: arcs nearly eve
 end
 
 impact pistol_45@extreme   # the .45's hits at extreme
-  bursts      = chips_concrete, dust_concrete, spark_hot
+  bursts      = chips_lazy_concrete, dust_bloom_concrete, spark_hot
   maybe       = dust_jet_concrete 0.85, x9_hit_frags 0.5
   vary        = count 0.4, size 0.25
   scale       = 1.208, 1.1
@@ -5210,8 +5317,8 @@ impact pistol_45@extreme   # the .45's hits at extreme
 end
 
 impact pistol_45.metal@extreme
-  bursts     = spark_metal, spark_spray, ember_metal
-  maybe      = spark_hot 0.6, x9_hit_frags 0.6
+  bursts     = spark_hot, ember_metal
+  maybe      = spark_metal 0.4, spark_spray 0.3, x9_hit_frags 0.6
   vary       = count 0.4, size 0.2, light 0.3
   scale      = 1.15, 1
   mark       = pool, 5, 50
@@ -5223,8 +5330,8 @@ impact pistol_45.metal@extreme
 end
 
 impact pistol_45.wood@extreme
-  bursts      = splinter_wood, dust_wood
-  maybe       = dust_jet_wood 1
+  bursts      = splinter_wood, dust_bloom_wood
+  maybe       = planks_wood 0.2, dust_jet_wood 1
   vary        = count 0.4, size 0.25
   scale       = 1.208, 1.1
   sound       = rsb/impact/wood
@@ -5234,7 +5341,7 @@ end
 impact pistol_45.glass@extreme
   bursts = glint_glass
   vary   = count 0.4, size 0.2
-  scale  = 1.3, 1
+  scale  = 1.56, 1
   sound  = rsb/glass
 end
 
@@ -5246,7 +5353,7 @@ impact pistol_45.liquid@extreme
 end
 
 impact pistol_45.dirt@extreme
-  bursts      = clods_dirt, dust_dirt
+  bursts      = clods_dirt, dust_bloom_dirt
   maybe       = dust_jet_dirt 1
   vary        = count 0.4, size 0.25
   scale       = 1.208, 1.1
@@ -5255,8 +5362,8 @@ impact pistol_45.dirt@extreme
 end
 
 impact chaingun_556@extreme   # the chaingun's hits at extreme
-  bursts      = chips_concrete, dust_concrete
-  maybe       = dust_jet_concrete 0.5, spark_hot 0.6, x9_hit_frags 0.25
+  bursts      = grit_concrete, dust_jet_concrete
+  maybe       = chips_concrete 0.35, spark_hot 0.6, dust_concrete 0.5, x9_hit_frags 0.25
   vary        = count 0.5, size 0.35
   scale       = 0.92, 1
   sound       = rsb/impact/concrete
@@ -5278,8 +5385,8 @@ impact chaingun_556.metal@extreme
 end
 
 impact chaingun_556.wood@extreme
-  bursts      = splinter_wood, dust_wood
-  maybe       = dust_jet_wood 0.5
+  bursts      = splinter_wood, dust_jet_wood
+  maybe       = dust_wood 0.5
   vary        = count 0.5, size 0.35
   scale       = 0.92, 1
   sound       = rsb/impact/wood
@@ -5301,8 +5408,8 @@ impact chaingun_556.liquid@extreme
 end
 
 impact chaingun_556.dirt@extreme
-  bursts      = clods_dirt, dust_dirt
-  maybe       = dust_jet_dirt 0.5
+  bursts      = dust_jet_dirt, dust_dirt
+  maybe       = clods_dirt 0.4
   vary        = count 0.5, size 0.35
   scale       = 0.92, 1
   sound       = rsb/impact/concrete
@@ -5310,8 +5417,8 @@ impact chaingun_556.dirt@extreme
 end
 
 impact machinegun_762@extreme   # the machine gun's hits at extreme
-  bursts      = chips_concrete, dust_concrete
-  maybe       = dust_jet_concrete 0.8, spark_hot 0.5, x9_hit_frags 0.3
+  bursts      = chips_concrete, dust_concrete, dust_jet_concrete
+  maybe       = slabs_concrete 0.25, spark_hot 0.5, x9_hit_frags 0.3
   vary        = count 0.45, size 0.3
   scale       = 1.438, 1.2
   sound       = rsb/impact/concrete
@@ -5321,6 +5428,7 @@ end
 
 impact machinegun_762.metal@extreme
   bursts     = spark_metal, spark_spray, ember_metal
+  maybe      = shards_metal 0.2
   vary       = count 0.45, size 0.25, light 0.35
   scale      = 1.265, 1
   mark       = pool, 5, 40
@@ -5332,8 +5440,8 @@ impact machinegun_762.metal@extreme
 end
 
 impact machinegun_762.wood@extreme
-  bursts      = splinter_wood, dust_wood
-  maybe       = dust_jet_wood 0.8
+  bursts      = splinter_wood, dust_wood, dust_jet_wood
+  maybe       = planks_wood 0.35
   vary        = count 0.45, size 0.3
   scale       = 1.438, 1.2
   sound       = rsb/impact/wood
@@ -5355,8 +5463,7 @@ impact machinegun_762.liquid@extreme
 end
 
 impact machinegun_762.dirt@extreme
-  bursts      = clods_dirt, dust_dirt
-  maybe       = dust_jet_dirt 0.8
+  bursts      = clods_dirt, dust_dirt, dust_jet_dirt
   vary        = count 0.45, size 0.3
   scale       = 1.438, 1.2
   sound       = rsb/impact/concrete
@@ -5364,7 +5471,7 @@ impact machinegun_762.dirt@extreme
 end
 
 impact buckshot@extreme   # buckshot's hits at extreme
-  bursts      = chips_concrete, dust_concrete
+  bursts      = pepper_concrete, chips_concrete
   maybe       = spark_hot 0.5, dust_jet_concrete 0.6
   vary        = count 0.5, size 0.3
   scale       = 0.517, 0.9
@@ -5373,8 +5480,8 @@ impact buckshot@extreme   # buckshot's hits at extreme
 end
 
 impact buckshot.metal@extreme
-  bursts    = spark_metal
-  maybe     = ember_metal 0.8, spark_spray 0.6
+  bursts    = spark_hot
+  maybe     = spark_metal 0.4, ember_metal 0.8, spark_spray 0.6
   vary      = count 0.5, size 0.25
   scale     = 0.517, 0.85
   mark      = pool, 3, 35
@@ -5383,8 +5490,8 @@ impact buckshot.metal@extreme
 end
 
 impact buckshot.wood@extreme
-  bursts      = splinter_wood, dust_wood
-  maybe       = dust_jet_wood 0.5
+  bursts      = dust_wood
+  maybe       = splinter_wood 0.6, dust_jet_wood 0.5
   vary        = count 0.5, size 0.3
   scale       = 0.517, 0.9
   sound       = rsb/impact/wood
@@ -5406,8 +5513,8 @@ impact buckshot.liquid@extreme
 end
 
 impact buckshot.dirt@extreme
-  bursts      = clods_dirt, dust_dirt
-  maybe       = dust_jet_dirt 0.5
+  bursts      = dust_dirt
+  maybe       = clods_dirt 0.5, dust_jet_dirt 0.5
   vary        = count 0.5, size 0.3
   scale       = 0.517, 0.9
   sound       = rsb/impact/concrete
@@ -5415,7 +5522,7 @@ impact buckshot.dirt@extreme
 end
 
 impact buckshot_magnum@extreme   # magnum buckshot's hits at extreme
-  bursts      = chips_concrete, dust_concrete
+  bursts      = pepper_concrete, chips_concrete, dust_concrete
   maybe       = spark_hot 0.6, dust_jet_concrete 0.8, x9_hit_frags 0.3
   vary        = count 0.5, size 0.3
   scale       = 0.69, 1.05
@@ -5490,7 +5597,7 @@ end
 
 impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
   heat        = 86, 1.9, 38
-  bursts      = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  bursts      = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, spark_spray, dust_kick_ring, spk_sparkler
   mark        = sunburst, 48, 220
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
@@ -5512,7 +5619,7 @@ end
 
 impact rocket.wood@extreme
   heat        = 86, 1.9, 38
-  bursts      = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  bursts      = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot, spark_spray, dust_kick_ring, spk_sparkler
   mark        = sunburst, 48, 220
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
@@ -5523,7 +5630,7 @@ end
 
 impact rocket.dirt@extreme
   heat        = 86, 1.9, 38
-  bursts      = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  bursts      = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot, spark_spray, dust_kick_ring, spk_sparkler
   mark        = sunburst, 48, 220
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
@@ -5534,7 +5641,7 @@ end
 
 impact rocket.glass@extreme
   heat        = 86, 1.9, 38
-  bursts      = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  bursts      = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot, spark_spray, dust_kick_ring, spk_sparkler
   mark        = sunburst, 48, 220
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
