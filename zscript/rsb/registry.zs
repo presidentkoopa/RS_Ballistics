@@ -17,6 +17,7 @@ class RSB_Registry : StaticEventHandler
 	int        lumpsRead;
 	int        refusals;
 	int        heatBlastNext;   // RSB_Heat: the next blast slot, in turn (drawing only)
+	int        trailNext;       // RSB_Trail: the next drawn-line slot for a trail, in turn (drawing only)
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()
@@ -79,6 +80,17 @@ class RSB_Registry : StaticEventHandler
 	RSB_FlameDef ResolveFlame(String base, String tierName)
 	{
 		return defs ? RSB_FlameDef(defs.Resolve("flame", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
+	RSB_TrailDef ResolveTrail(String base, String tierName)
+	{
+		return defs ? RSB_TrailDef(defs.Resolve("trail", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
+	// Trails take their drawn lines in turn; the new trail takes the oldest.
+	int NextTrailSlot()
+	{
+		int s = RSB_Trail.FIRST_SLOT + trailNext;
+		trailNext = (trailNext + 1) % RSB_Trail.SLOTS;
+		return s;
 	}
 	RSB_RoundLookDef ResolveRoundLook(String base, String tierName)
 	{

@@ -721,6 +721,16 @@ burst bfg_arcs             # the BFG's arcs: more, longer, Doom's BFG green (rsb
   particle = rsb_arc
 end
 
+burst rail_arcs            # blue-white arcs crackling where a rail hits (rsb_arc)
+  count    = 3
+  cone     = 70
+  speed    = 20, 0.5
+  life     = 0.4, 0.3
+  color    = 160, 200, 255
+  offset   = 3
+  particle = rsb_arc
+end
+
 burst rail_splash
   count   = 26
   cone    = 55
@@ -764,7 +774,7 @@ impact bfg
 end
 
 impact rail
-  bursts     = rail_splash, spark_metal, spark_spray
+  bursts     = rail_splash, spark_metal, spark_spray, rail_arcs
   mark       = ring, 5, 105
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
@@ -840,7 +850,7 @@ impact bfg.liquid
 end
 
 impact rail.wood
-  bursts     = rail_splash, splinter_wood
+  bursts     = rail_splash, splinter_wood, rail_arcs
   mark       = ring, 5, 105
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
@@ -848,7 +858,7 @@ impact rail.wood
 end
 
 impact rail.dirt
-  bursts     = rail_splash, clods_dirt
+  bursts     = rail_splash, clods_dirt, rail_arcs
   mark       = ring, 5, 105
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
@@ -856,7 +866,7 @@ impact rail.dirt
 end
 
 impact rail.glass
-  bursts     = rail_splash, glint_glass
+  bursts     = rail_splash, glint_glass, rail_arcs
   mark       = ring, 5, 105
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
@@ -972,6 +982,34 @@ impact laser_burn.glass
   light      = 110, 2.4, 5
   lightcolor = 255, 50, 30
   heat       = 18, 1.0, 14
+end
+
+
+# ---------------------------------------------------------------- TRAILS
+#   what a beam leaves in the air from muzzle to hit: RSB_Trail.Lay(profile, shooter, from, to)
+#   line          thick, soft (map units), intensity, fade tics -- the core line (0 intensity = none)
+#   linecolor     r, g, b      linecolorend  r, g, b (along the line, muzzle to hit)
+#   linelook      halo, swell (how much the halo widens as it fades)
+#   licks         strength fresh, strength dying (0-2), scale, speed -- the edges waver
+#   helix         particle, turns per 100 map units, radius, spacing -- the corkscrew
+#   helixmotion   drift (outward), life, life jitter      helixcolor r, g, b   helixmax count
+#   lights        count, radius, intensity, tics          lightcolor r, g, b
+#   heat          radius, strength, tics -- a shimmer along the trail
+# The shot is the gun's (hitscan, damage, puff); a trail only draws. Energy weapons may
+# be saturated (plasma blue, BFG green); the trail lingers and dissipates, no pulsing.
+
+trail rail                 # a Quake 2 railgun: a white-hot core in a blue halo, a blue corkscrew that loosens and fades
+  line        = 0.6, 3.5, 2.2, 32
+  linecolor   = 205, 228, 255
+  linelook    = 0.55, 2.5
+  licks       = 0.1, 0.9, 0.06, 1.2
+  helix       = rsb_rail_mote, 3.0, 3.0, 2.5
+  helixmotion = 5, 1.3, 0.3
+  helixcolor  = 80, 140, 255
+  helixmax    = 600
+  lights      = 4, 90, 1.6, 4
+  lightcolor  = 110, 160, 255
+  heat        = 6, 0.5, 20
 end
 
 

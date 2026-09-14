@@ -180,6 +180,9 @@ class RSB_Settings play
 	// keeps all of its particles.
 	static bool FlameTube() { return Cvb("rsb_flame_tube", true); }
 
+	// Energy weapon trails (a `trail` profile: the railgun's core and corkscrew).
+	static bool Trails() { return Cvb("rsb_trails", true); }
+
 	static String PreviewFlame() { return Cvs("rsb_preview_flame", "incinerator"); }
 
 	// ---- diagnostics and preview ------------------------------------------------

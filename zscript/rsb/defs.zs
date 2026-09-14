@@ -29,7 +29,7 @@
 
 class RSB_Def abstract
 {
-	String kind;     // round, ballistics, roundlook, wake, burst, impact, flash, flame, ejecta, style
+	String kind;     // round, ballistics, roundlook, wake, burst, impact, flash, flame, trail, ejecta, style
 	String id;       // as written, variant suffixes included; matched case-insensitively
 	String source;   // the lump it came from
 	int    lineNo;   // its header line
@@ -189,6 +189,43 @@ class RSB_EjectaDef : RSB_Def
 	String soundName;
 	int    hotTics;        // fullbright out of the port
 	int    lifeTics;       // on the floor before it fades
+}
+
+// A TRAIL: what a beam leaves in the air from muzzle to hit -- a fading core line, a
+// corkscrew of motes, brief lights along it, heat. Laid by RSB_Trail.Lay (trail.zs).
+class RSB_TrailDef : RSB_Def
+{
+	double lineThick;        // the hot core, map units
+	double lineSoft;         // the halo's reach, map units
+	double lineIntensity;    // 0 = no core line
+	int    lineFadeTics;
+	Color  lineColor;
+	Color  lineColorEnd;     // along the line, muzzle to hit, when set
+	bool   lineColorEndSet;
+	double lineHalo;         // SetDrawnLineLook's halo
+	double lineSwell;        // how much the halo widens as it fades
+	double licksStart;       // the edges' waver, fresh ...
+	double licksEnd;         // ... and as it dies
+	double lickScale;
+	double lickSpeed;
+	String helixParticle;    // a PARTICLEDEFS definition, or "" for no helix
+	int    helixHandle;      // its hash handle, cached, never tested (netplay rule)
+	double helixTurns;       // turns per 100 map units
+	double helixRadius;
+	double helixSpacing;     // map units between motes
+	double helixDrift;       // outward, map units a second
+	double helixLife;
+	double helixLifeJitter;
+	Color  helixColor;
+	int    helixMax;
+	int    lightCount;
+	double lightRadius;
+	double lightIntensity;
+	int    lightTics;
+	Color  lightColor;
+	double heatRadius;
+	double heatStrength;
+	int    heatTics;
 }
 
 // A FLAME: a flamethrower's stream, where it lands, its light and sounds.
@@ -364,6 +401,7 @@ class RSB_DefSet
 		kinds.Push("flash");
 		kinds.Push("flame");
 		kinds.Push("ejecta");
+		kinds.Push("trail");
 
 		String s = "";
 		for (int k = 0; k < kinds.Size(); k++)

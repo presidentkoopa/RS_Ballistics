@@ -322,3 +322,19 @@ particle rsb_debris_shard
 	spin     = -900, 900
 	collide  = plane
 }
+
+// ---------------------------------------------------------------- TRAILS
+// A mote of a railgun's corkscrew: a hot point that swells a little and dims as it
+// drifts off the line. Energy, so it glows; its colour is the trail's helixcolor.
+particle rsb_rail_mote
+{
+	size     = 1.2 @0, 2.6 @0.4, 3.4 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 2.6 @0, 1.4 @0.4, 0 @1
+	lit      = 0
+	drag     = 1.6
+	maxsize  = 8
+	soft     = 2
+	orient   = billboard
+}

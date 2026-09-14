@@ -82,7 +82,7 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame or ejecta");
+					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame, trail or ejecta");
 					refusals++;
 					refused = true;
 					continue;
@@ -277,6 +277,35 @@ class RSB_Parser
 			d.lifeTics = 700;
 			return d;
 		}
+		if (kind == "trail")
+		{
+			let d = new("RSB_TrailDef");
+			d.lineThick = 0.6;
+			d.lineSoft = 3;
+			d.lineIntensity = 0;
+			d.lineFadeTics = 30;
+			d.lineColor = white;
+			d.lineColorEnd = white;
+			d.lineColorEndSet = false;
+			d.lineHalo = 0.5;
+			d.lineSwell = 1;
+			d.lickScale = 0.06;
+			d.lickSpeed = 1;
+			d.helixParticle = "";
+			d.helixTurns = 3;
+			d.helixRadius = 3;
+			d.helixSpacing = 3;
+			d.helixDrift = 4;
+			d.helixLife = 1;
+			d.helixLifeJitter = 0.3;
+			d.helixColor = white;
+			d.helixMax = 500;
+			d.lightRadius = 80;
+			d.lightIntensity = 1.5;
+			d.lightTics = 4;
+			d.lightColor = white;
+			return d;
+		}
 		if (kind == "flame")
 		{
 			let d = new("RSB_FlameDef");
@@ -354,6 +383,8 @@ class RSB_Parser
 		if (st) return ApplyStyle(st, key, v);
 		let fm = RSB_FlameDef(d);
 		if (fm) return ApplyFlame(fm, key, v);
+		let tr = RSB_TrailDef(d);
+		if (tr) return ApplyTrail(tr, key, v);
 		return "internal: a profile of no known kind";
 	}
 
@@ -1046,6 +1077,110 @@ class RSB_Parser
 			return (fm.heatLandRadius >= 0 && fm.heatLandStrength >= 0) ? "" : "heatland is radius, strength -- both 0 or more";
 		}
 		return String.Format("unknown flame key \"%s\"", key);
+	}
+
+	// ---------------------------------------------------------------- TRAIL
+	private static String ApplyTrail(RSB_TrailDef tr, String key, out Array<String> v)
+	{
+		String why;
+		Color c;
+		if (key == "line")
+		{
+			why = Nums(v, 4); if (why != "") return why;
+			tr.lineThick = v[0].ToDouble();
+			tr.lineSoft = v[1].ToDouble();
+			tr.lineIntensity = v[2].ToDouble();
+			tr.lineFadeTics = v[3].ToInt();
+			return (tr.lineThick >= 0 && tr.lineSoft >= 0 && tr.lineIntensity >= 0 && tr.lineFadeTics >= 1) ? ""
+				: "line is thick, soft (map units), intensity (0 or more), fade tics (1 or more)";
+		}
+		if (key == "linecolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			tr.lineColor = c;
+			if (!tr.lineColorEndSet) tr.lineColorEnd = c;
+			return "";
+		}
+		if (key == "linecolorend")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			tr.lineColorEnd = c;
+			tr.lineColorEndSet = true;
+			return "";
+		}
+		if (key == "linelook")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			tr.lineHalo = v[0].ToDouble();
+			tr.lineSwell = v[1].ToDouble();
+			return (tr.lineHalo >= 0 && tr.lineSwell >= 0) ? "" : "linelook is halo, swell -- both 0 or more";
+		}
+		if (key == "licks")
+		{
+			why = Nums(v, 4); if (why != "") return why;
+			tr.licksStart = v[0].ToDouble();
+			tr.licksEnd = v[1].ToDouble();
+			tr.lickScale = v[2].ToDouble();
+			tr.lickSpeed = v[3].ToDouble();
+			return (tr.licksStart >= 0 && tr.licksStart <= 2 && tr.licksEnd >= 0 && tr.licksEnd <= 2 && tr.lickScale >= 0 && tr.lickScale <= 1) ? ""
+				: "licks is strength fresh, strength dying (0-2), scale (0-1), speed";
+		}
+		if (key == "helix")
+		{
+			if (v.Size() != 4) return "helix is particle, turns per 100 map units, radius, spacing";
+			if (!IsNum(v[1]) || !IsNum(v[2]) || !IsNum(v[3])) return "helix turns, radius and spacing must be numbers";
+			tr.helixParticle = (v[0] ~== "none") ? "" : v[0];
+			tr.helixHandle = 0;
+			tr.helixTurns = v[1].ToDouble();
+			tr.helixRadius = v[2].ToDouble();
+			tr.helixSpacing = v[3].ToDouble();
+			return (tr.helixRadius >= 0 && tr.helixSpacing > 0) ? "" : "helix radius must be 0 or more and spacing above 0";
+		}
+		if (key == "helixmotion")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			tr.helixDrift = v[0].ToDouble();
+			tr.helixLife = v[1].ToDouble();
+			tr.helixLifeJitter = v[2].ToDouble();
+			return (tr.helixLife > 0 && tr.helixLifeJitter >= 0) ? "" : "helixmotion is drift, life (above 0), life jitter (0 or more)";
+		}
+		if (key == "helixcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			tr.helixColor = c;
+			return "";
+		}
+		if (key == "helixmax")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			tr.helixMax = v[0].ToInt();
+			return (tr.helixMax >= 1 && tr.helixMax <= 4096) ? "" : "helixmax is 1 to 4096 motes";
+		}
+		if (key == "lights")
+		{
+			why = Nums(v, 4); if (why != "") return why;
+			tr.lightCount = v[0].ToInt();
+			tr.lightRadius = v[1].ToDouble();
+			tr.lightIntensity = v[2].ToDouble();
+			tr.lightTics = v[3].ToInt();
+			return (tr.lightCount >= 0 && tr.lightCount <= 16 && tr.lightRadius >= 0 && tr.lightIntensity >= 0 && tr.lightTics >= 1) ? ""
+				: "lights is count (0-16), radius, intensity, tics (1 or more)";
+		}
+		if (key == "lightcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			tr.lightColor = c;
+			return "";
+		}
+		if (key == "heat")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			tr.heatRadius = v[0].ToDouble();
+			tr.heatStrength = v[1].ToDouble();
+			tr.heatTics = v[2].ToInt();
+			return (tr.heatRadius >= 0 && tr.heatStrength >= 0 && tr.heatTics >= 0) ? "" : "heat is radius, strength, tics -- all 0 or more";
+		}
+		return String.Format("unknown trail key: %s", key);
 	}
 
 	// ---------------------------------------------------------------- STYLE

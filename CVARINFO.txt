@@ -46,6 +46,7 @@ user float  rsb_wake               = 1.0;
 user bool   rsb_whiz               = true;
 user float  rsb_whiz_range         = 1.0;
 user float  rsb_whiz_volume        = 1.0;
+user bool   rsb_trails             = true;      // energy weapon trails: the railgun's core and corkscrew
 
 // ---- casings
 user bool   rsb_casings            = true;

@@ -192,7 +192,8 @@ OptionMenu "RSB_FlightMenu"
 	Option "Round look", "rsb_round_look", "RSBRoundLooks"
 	StaticText "Changes what flies. Impacts and near-miss sounds stay each round's own.", "DarkGray"
 	Option "Smooth flight", "rsb_glide", "OnOff"
-	Slider "Trails", "rsb_wake", 0.0, 3.0, 0.1, 1
+	Slider "Round trails", "rsb_wake", 0.0, 3.0, 0.1, 1
+	Option "Railgun and energy trails", "rsb_trails", "OnOff"
 	StaticText ""
 	StaticText "Near misses: rounds fired by others whiz or crack past your head.", "DarkGray"
 	Option "Whiz and crack", "rsb_whiz", "OnOff"
