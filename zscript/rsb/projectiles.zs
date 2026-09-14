@@ -53,8 +53,22 @@ class RSB_ProjectileLook play
 		RSB_Wake.Lay(lk.wake, before, mo.pos, travel);
 		if (lk.carveAmount > 0 && lk.carveRadius > 0)
 			level.CarveSmoke(before, mo.pos, lk.carveRadius, lk.carveAmount);
+		FlightSmoke(lk, before, mo.pos);
 		Motor(mo, lk, travel);
 		return landed;
+	}
+
+	// SMOKE INTO THE ROOM along its flight (a look's `smoke`, engine 13b/13e): a capsule over the
+	// step BEHIND this one -- last tic's carve has passed there, so the trail hangs where the
+	// tunnel was, not inside the one torn this tic. By the effects level, like every room smoke.
+	static void FlightSmoke(RSB_RoundLookDef lk, Vector3 before, Vector3 now)
+	{
+		if (!lk || lk.smokeAmount <= 0 || lk.smokeRadius <= 0) return;
+		int tier = RSB_Tier.Current();
+		if (tier <= RSB_Tier.T_OFF) return;
+		Vector3 step = now - before;
+		if (step == (0, 0, 0)) return;
+		level.EmitSmoke(before - step, lk.smokeRadius, lk.smokeAmount * RSB_Tier.SmokeScale(tier), lk.smokeHeat, (0, 0, 0), before, lk.smokeSoot);
 	}
 
 	// THE MOTOR (a look's `motor`): a burst out of its tail each tic it flies.
@@ -109,6 +123,7 @@ class RSB_PlasmaBall : PlasmaBall
 	// Sound Selection pick), and Doom's SeeSound (weapons/plasmaf) on spawn doubled it.
 	Default
 	{
+		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		SeeSound "";
 	}
 
@@ -150,6 +165,7 @@ class RSB_Rocket : Rocket
 	// Sound Selection pick), and Doom's SeeSound (weapons/rocklf) on spawn doubled it.
 	Default
 	{
+		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		SeeSound "";
 	}
 
@@ -217,6 +233,12 @@ class RSB_RocketRPG : RSB_Rocket
 // card fire sound is already the only one: nothing to silence here.
 class RSB_BFGBall : BFGBall
 {
+	// Loaded with the map, not on its first use: no stutter (engine precache).
+	Default
+	{
+		+PRECACHEALWAYS
+	}
+
 	private Vector3 travel;
 	private bool    landed;
 	private Vector3 launchedAt;    // where its air shimmer can begin
@@ -288,6 +310,7 @@ class RSB_BFGExtra : BFGExtra
 {
 	Default
 	{
+		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		+PUFFGETSOWNER
 	}
 

@@ -282,12 +282,17 @@ OptionMenu "RSB_SmokeMenu"
 	StaticText "is lit by flashes and lights, and shows lasers passing through it.", "DarkGray"
 	StaticText ""
 	StaticText "Room smoke: guns, blasts, flames and cuts fill it; blasts shove it; rounds tear it.", "Gold"
-	StaticText "Lit by one light value a frame for now; each light's own glow comes with the light grid.", "DarkGray"
+	StaticText "Lit by flashes, lamps and tracers. Rockets and flames leave black soot.", "DarkGray"
 	Option "Smoke volume", "r_smoke", "OnOff"
 	Slider "Smoke quality (1 = 59 MB, 2 = 157 MB, 3 = 328 MB, 4 = 472 MB)", "r_smoke_quality", 1, 4, 1, 0
 	Slider "Smoke detail (48 recommended)", "r_smoke_steps", 16, 128, 8, 0
 	Slider "Smoke thickness", "r_smoke_density_scale", 0.0, 3.0, 0.05, 2
 	Slider "Smoke lingering", "r_smoke_dissipation_scale", 0.25, 3.0, 0.05, 2
+	StaticText ""
+	StaticText "Lasers and the flashlight in the smoke. On is the look; off is for comparing.", "DarkGray"
+	Option "Lasers in smoke (A/B check)", "r_smoke_beams", "OnOff"
+	Option "Lasers keep their depth in smoke (A/B check)", "r_smoke_beams_depth", "OnOff"
+	Option "Flashlight cones dimmed by smoke (A/B check)", "r_smoke_cones_depth", "OnOff"
 	StaticText ""
 	StaticText "Puffs at the muzzle, flame and impact are GPU particles, on top of the room smoke.", "DarkGray"
 	Slider "Muzzle smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
@@ -313,6 +318,10 @@ OptionMenu "RSB_DebrisMenu"
 	Option "Debris pieces", "r_debris_pool", "DebrisPoolSizes"
 	StaticText "On: chunks bounce, roll and lie where they land for the fight; sparks skitter", "DarkGray"
 	StaticText "off walls; embers cool on the floor. Blasts shove what is lying there.", "DarkGray"
+	StaticText ""
+	Option "Debris landing sounds", "r_debris_sounds", "OnOff"
+	Slider "Debris landing sound volume", "r_debris_sounds_volume", 0.0, 1.0, 0.05, 2
+	StaticText "One patter where a hit's pieces land. Needs Debris that stays.", "DarkGray"
 	StaticText ""
 	Option "Casings", "rsb_casings", "OnOff"
 	Slider "Casing time on the floor", "rsb_casing_life", 0.0, 1.0, 0.05, 2

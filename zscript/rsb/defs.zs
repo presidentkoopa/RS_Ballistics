@@ -92,6 +92,12 @@ class RSB_RoundLookDef : RSB_Def
 	// CARVING THE ROOM'S SMOKE (engine 13b, `carve`): each tic of flight, a tunnel this wide.
 	double carveRadius;
 	double carveAmount;
+	// SMOKE INTO THE ROOM along its flight (engine 13b/13e, `smoke`): each tic a capsule over the
+	// step behind it -- a rocket's trail hanging in the room. 0 amount = none.
+	double smokeRadius;
+	double smokeAmount;
+	double smokeHeat;
+	double smokeSoot;
 }
 
 // A WAKE: what a round sheds as it flies.
@@ -190,6 +196,7 @@ class RSB_ImpactDef : RSB_Def
 	double smokeVolRadius;
 	double smokeVolAmount;
 	double smokeVolHeat;
+	double smokeVolSoot;     // its share of soot, 0..1 (engine 13e): black smoke that sends back no light
 	double pushRadius;       // `push`: a blast shoving the room's smoke (and debris); 0 = none
 	double pushStrength;
 }
@@ -287,6 +294,7 @@ class RSB_FlashDef : RSB_Def
 	double exhaustSmokeAmount;
 	double exhaustSmokeHeat;
 	double exhaustSmokeSpeed;
+	double exhaustSmokeSoot;
 	double exhaustShimmerRadius;
 	double exhaustShimmerStrength;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a
@@ -297,6 +305,7 @@ class RSB_FlashDef : RSB_Def
 	double smokeVolRadius;
 	double smokeVolAmount;
 	double smokeVolHeat;
+	double smokeVolSoot;     // its share of soot, 0..1 (engine 13e): black smoke that sends back no light
 	double smokeVolSpeed;    // out along the bore, map units a second
 	double smokeVolAlong;    // from the muzzle along the bore (negative behind), x the gun's size
 	double pushRadius;       // `push`: shove the room's smoke (and debris) outward; 0 = none
@@ -425,6 +434,7 @@ class RSB_FlameDef : RSB_Def
 	double smokeVolRadius;
 	double smokeVolAmount;
 	double smokeVolHeat;
+	double smokeVolSoot;     // its share of soot, 0..1 (engine 13e): black smoke that sends back no light
 }
 
 // A HOTSPOT: a spot a sustained beam or stream heats up (an impact's `hotspot`). Many hits
@@ -457,6 +467,7 @@ class RSB_HotspotDef : RSB_Def
 	double smokeVolRadius;
 	double smokeVolAmount;
 	double smokeVolHeat;
+	double smokeVolSoot;     // its share of soot, 0..1 (engine 13e): black smoke that sends back no light
 }
 
 // RECOIL (GAMEPLAY, recoil.zs): how a gun's kick turns where its rounds go, and how the kick

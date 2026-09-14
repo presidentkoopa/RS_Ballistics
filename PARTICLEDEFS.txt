@@ -725,6 +725,9 @@ particle rsb_debris_chip
 	friction    = 0.7
 	restlife    = 20
 	restfade    = 1.5
+	landsound   = "rsb/debris/chips"
+	landvolume  = 0.25
+	landpitch   = 1.0, 1.25
 }
 
 particle rsb_debris_splinter
@@ -745,6 +748,9 @@ particle rsb_debris_splinter
 	friction    = 0.7
 	restlife    = 20
 	restfade    = 1.5
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.2
+	landpitch   = 1.3, 1.55
 }
 
 particle rsb_debris_clod
@@ -765,6 +771,9 @@ particle rsb_debris_clod
 	friction    = 0.7
 	restlife    = 20
 	restfade    = 1.5
+	landsound   = "rsb/debris/dirt"
+	landvolume  = 0.25
+	landpitch   = 0.95, 1.2
 }
 
 // Glass: see-through, catching the room's light on its edges as it turns.
@@ -786,6 +795,9 @@ particle rsb_debris_shard
 	friction    = 0.7
 	restlife    = 20
 	restfade    = 1.5
+	landsound   = "rsb/debris/glass"
+	landvolume  = 0.25
+	landpitch   = 1.25, 1.55
 }
 
 // ---------------------------------------------------------------- TRAILS
@@ -832,6 +844,9 @@ particle rsb_chunk_concrete_chip1
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_chip2
@@ -852,6 +867,9 @@ particle rsb_chunk_concrete_chip2
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_chip3
@@ -872,6 +890,9 @@ particle rsb_chunk_concrete_chip3
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_chip4
@@ -892,6 +913,9 @@ particle rsb_chunk_concrete_chip4
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_slab1
@@ -912,6 +936,9 @@ particle rsb_chunk_concrete_slab1
 	friction    = 0.8
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/rubble"
+	landvolume  = 0.6
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_concrete_slab2
@@ -932,6 +959,9 @@ particle rsb_chunk_concrete_slab2
 	friction    = 0.8
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/rubble"
+	landvolume  = 0.6
+	landpitch   = 0.85, 1.05
 }
 
 // ---------------------------------------------------------------- WOOD
@@ -953,6 +983,9 @@ particle rsb_chunk_wood_splinter1
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_splinter2
@@ -973,6 +1006,9 @@ particle rsb_chunk_wood_splinter2
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_splinter3
@@ -993,6 +1029,9 @@ particle rsb_chunk_wood_splinter3
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_plank1
@@ -1013,6 +1052,9 @@ particle rsb_chunk_wood_plank1
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 // ---------------------------------------------------------------- METAL
@@ -1034,6 +1076,9 @@ particle rsb_chunk_metal_shard1
 	friction    = 0.35
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/metal", "rsb/debris/metal_big"
+	landvolume  = 0.45
+	landpitch   = 0.95, 1.2
 }
 
 particle rsb_chunk_metal_shard2
@@ -1054,6 +1099,9 @@ particle rsb_chunk_metal_shard2
 	friction    = 0.35
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/metal", "rsb/debris/metal_big"
+	landvolume  = 0.45
+	landpitch   = 0.95, 1.2
 }
 
 particle rsb_chunk_metal_shard3
@@ -1074,6 +1122,9 @@ particle rsb_chunk_metal_shard3
 	friction    = 0.35
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/metal", "rsb/debris/metal_big"
+	landvolume  = 0.45
+	landpitch   = 0.95, 1.2
 }
 
 // ---------------------------------------------------------------- GLASS
@@ -1095,6 +1146,9 @@ particle rsb_chunk_glass_shard1
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 particle rsb_chunk_glass_shard2
@@ -1115,6 +1169,9 @@ particle rsb_chunk_glass_shard2
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 particle rsb_chunk_glass_shard3
@@ -1135,6 +1192,9 @@ particle rsb_chunk_glass_shard3
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 // ---------------------------------------------------------------- DIRT
@@ -1156,6 +1216,9 @@ particle rsb_chunk_dirt_clod1
 	friction    = 0.9
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt", "rsb/debris/dirt_big"
+	landvolume  = 0.4
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_dirt_clod2
@@ -1176,6 +1239,9 @@ particle rsb_chunk_dirt_clod2
 	friction    = 0.9
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt", "rsb/debris/dirt_big"
+	landvolume  = 0.4
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_dirt_clod3
@@ -1196,6 +1262,9 @@ particle rsb_chunk_dirt_clod3
 	friction    = 0.9
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt", "rsb/debris/dirt_big"
+	landvolume  = 0.4
+	landpitch   = 0.85, 1.05
 }
 
 // ---------------------------------------------------------------- MORE 3D CHUNKS
@@ -1220,6 +1289,9 @@ particle rsb_chunk_concrete_chip5
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_chip6
@@ -1240,6 +1312,9 @@ particle rsb_chunk_concrete_chip6
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_chip7
@@ -1260,6 +1335,9 @@ particle rsb_chunk_concrete_chip7
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_chip8
@@ -1280,6 +1358,9 @@ particle rsb_chunk_concrete_chip8
 	friction    = 0.6
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/chips", "rsb/debris/rubble"
+	landvolume  = 0.35
+	landpitch   = 0.9, 1.15
 }
 
 particle rsb_chunk_concrete_slab3
@@ -1300,6 +1381,9 @@ particle rsb_chunk_concrete_slab3
 	friction    = 0.8
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/rubble"
+	landvolume  = 0.6
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_concrete_rubble1
@@ -1320,6 +1404,9 @@ particle rsb_chunk_concrete_rubble1
 	friction    = 0.8
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/rubble"
+	landvolume  = 0.6
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_concrete_rubble2
@@ -1340,6 +1427,9 @@ particle rsb_chunk_concrete_rubble2
 	friction    = 0.8
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/rubble"
+	landvolume  = 0.6
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_concrete_rubble3
@@ -1360,6 +1450,9 @@ particle rsb_chunk_concrete_rubble3
 	friction    = 0.8
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/rubble"
+	landvolume  = 0.6
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_wood_splinter4
@@ -1380,6 +1473,9 @@ particle rsb_chunk_wood_splinter4
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_splinter5
@@ -1400,6 +1496,9 @@ particle rsb_chunk_wood_splinter5
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_plank2
@@ -1420,6 +1519,9 @@ particle rsb_chunk_wood_plank2
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_woodchip1
@@ -1440,6 +1542,9 @@ particle rsb_chunk_wood_woodchip1
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_woodchip2
@@ -1460,6 +1565,9 @@ particle rsb_chunk_wood_woodchip2
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_wood_woodchip3
@@ -1480,6 +1588,9 @@ particle rsb_chunk_wood_woodchip3
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/wood"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.45
 }
 
 particle rsb_chunk_metal_shard4
@@ -1500,6 +1611,9 @@ particle rsb_chunk_metal_shard4
 	friction    = 0.35
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/metal", "rsb/debris/metal_big"
+	landvolume  = 0.45
+	landpitch   = 0.95, 1.2
 }
 
 particle rsb_chunk_metal_shard5
@@ -1520,6 +1634,9 @@ particle rsb_chunk_metal_shard5
 	friction    = 0.35
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/metal", "rsb/debris/metal_big"
+	landvolume  = 0.45
+	landpitch   = 0.95, 1.2
 }
 
 particle rsb_chunk_metal_nut1
@@ -1540,6 +1657,9 @@ particle rsb_chunk_metal_nut1
 	friction    = 0.3
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/nut"
+	landvolume  = 0.4
+	landpitch   = 1.3, 1.6
 }
 
 particle rsb_chunk_metal_strip1
@@ -1560,6 +1680,9 @@ particle rsb_chunk_metal_strip1
 	friction    = 0.35
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/metal", "rsb/debris/metal_big"
+	landvolume  = 0.45
+	landpitch   = 0.95, 1.2
 }
 
 particle rsb_chunk_glass_shard4
@@ -1580,6 +1703,9 @@ particle rsb_chunk_glass_shard4
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 particle rsb_chunk_glass_shard5
@@ -1600,6 +1726,9 @@ particle rsb_chunk_glass_shard5
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 particle rsb_chunk_glass_sliver1
@@ -1620,6 +1749,9 @@ particle rsb_chunk_glass_sliver1
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 particle rsb_chunk_glass_sliver2
@@ -1640,6 +1772,9 @@ particle rsb_chunk_glass_sliver2
 	friction    = 0.25
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.35
+	landpitch   = 1.15, 1.45
 }
 
 particle rsb_chunk_dirt_clod4
@@ -1660,6 +1795,9 @@ particle rsb_chunk_dirt_clod4
 	friction    = 0.9
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt", "rsb/debris/dirt_big"
+	landvolume  = 0.4
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_dirt_clod5
@@ -1680,6 +1818,9 @@ particle rsb_chunk_dirt_clod5
 	friction    = 0.9
 	restlife    = 45
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt", "rsb/debris/dirt_big"
+	landvolume  = 0.4
+	landpitch   = 0.85, 1.05
 }
 
 particle rsb_chunk_dirt_pebble1
@@ -1700,6 +1841,9 @@ particle rsb_chunk_dirt_pebble1
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt"
+	landvolume  = 0.3
+	landpitch   = 1.3, 1.6
 }
 
 particle rsb_chunk_dirt_pebble2
@@ -1720,6 +1864,9 @@ particle rsb_chunk_dirt_pebble2
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt"
+	landvolume  = 0.3
+	landpitch   = 1.3, 1.6
 }
 
 particle rsb_chunk_dirt_pebble3
@@ -1740,6 +1887,9 @@ particle rsb_chunk_dirt_pebble3
 	friction    = 0.5
 	restlife    = 60
 	restfade    = 2.0
+	landsound   = "rsb/debris/dirt"
+	landvolume  = 0.3
+	landpitch   = 1.3, 1.6
 }
 
 // ---------------------------------------------------------------- IMPACT SPARKS

@@ -4,7 +4,7 @@ import_debris_sounds.py -- the debris landing sounds (engine #11: PARTICLEDEFS `
 
 Copies the chosen RS_Main sounds (owner, 2026-09-14: "RS_Main is fair game") into
 sounds/rsb/debris/<group>/, names each by its real format, and writes:
-  - SNDINFO: rsb/debris/<group> as a $random with a $limit (the engine caps the rest)
+  - SNDINFO: rsb/debris/<group> as a $random, each file with a $limit (the engine caps the name)
   - ASSETS.md: where each copy came from, with the source's SHA-1
 Sounds RS_Ballistics already ships are aliased, not copied. Picks were measured
 (duration, loudness, brightness) -- see _staged/DEBRIS_SOUNDS_PLAN.md.
@@ -36,7 +36,7 @@ GROUPS = {
     "brass_rifle": [(MAIN + "/combatfx/casings/DSRIFLC%d.ogg" % i, "copy") for i in (1, 2, 3)]
                   + [(MAIN + "/combatfx/casings/CHGNCAS2", "copy")],
 }
-LIMIT = 3
+LIMIT = 2
 SND_BEGIN = "// ---- BEGIN debris landing sounds (tools/import_debris_sounds.py)"
 SND_END = "// ---- END debris landing sounds"
 ASSET_BEGIN = "<!-- BEGIN debris landing sounds (tools/import_debris_sounds.py) -->"
@@ -90,8 +90,10 @@ for group, items in GROUPS.items():
         name = "rsb/debris/%s%d" % (group, i)
         names.append(name)
         snd_lines.append("%-28s %s" % (name, rel))
+        # $limit goes on each FILE: SNDINFO counts the files of a $random on their own, so a
+        # $limit on the $random name caps nothing (engine #11 notes). The engine caps the name.
+        snd_lines.append("$limit %s %d" % (name, LIMIT))
     snd_lines.append("$random rsb/debris/%s { %s }" % (group, " ".join(names)))
-    snd_lines.append("$limit rsb/debris/%s %d" % (group, LIMIT))
     snd_lines.append("")
 
 snd_path = os.path.join(ROOT, "SNDINFO.txt")

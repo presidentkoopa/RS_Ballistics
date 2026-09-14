@@ -39,6 +39,7 @@ class RSB_Bullet : FastProjectile
 {
 	Default
 	{
+		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		Radius 2;
 		Height 2;
 		Speed 245;          // map units per tic; Launch sets the live value from the ballistics
@@ -252,6 +253,7 @@ class RSB_Bullet : FastProjectile
 		// CARVING THE ROOM'S SMOKE (engine 13b, the look's `carve`): a tunnel along this tic's flight.
 		if (flightDef && flightDef.carveAmount > 0 && flightDef.carveRadius > 0)
 			level.CarveSmoke(before, pos, flightDef.carveRadius, flightDef.carveAmount);
+		if (flightDef) RSB_ProjectileLook.FlightSmoke(flightDef, before, pos);
 	}
 
 	// THE AIR IT TEARS THROUGH (its flight look's `heat`): bent air over the last heatReach

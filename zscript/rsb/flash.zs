@@ -29,6 +29,7 @@ class RSB_Flash : Actor
 {
 	Default
 	{
+		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -193,7 +194,7 @@ class RSB_Flash : Actor
 		// SMOKE INTO THE ROOM (engine 13b, `smokevolume`) and A SHOVE (`push`): muzzle haze that
 		// builds over a string of shots, out of the muzzle or a tube's rear; a blast pushing it.
 		if (fd.smokeVolAmount > 0 && RSB_Settings.FlashSmoke() > 0)
-			level.EmitSmoke(pos + dir * (fd.smokeVolAlong * sizeMul + fd.smokeVolRadius * 0.5), fd.smokeVolRadius, fd.smokeVolAmount * vSmoke * RSB_Settings.FlashSmoke(), fd.smokeVolHeat, dir * fd.smokeVolSpeed);
+			level.EmitSmoke(pos + dir * (fd.smokeVolAlong * sizeMul + fd.smokeVolRadius * 0.5), fd.smokeVolRadius, fd.smokeVolAmount * vSmoke * RSB_Settings.FlashSmoke(), fd.smokeVolHeat, dir * fd.smokeVolSpeed, (0, 0, 0), fd.smokeVolSoot);
 		if (fd.pushRadius > 0 && fd.pushStrength > 0)
 			level.PushEffectImpulse(pos + dir * (fd.pushAlong * sizeMul), fd.pushRadius, fd.pushStrength * surge * RSB_Tier.PushScale(tier));
 

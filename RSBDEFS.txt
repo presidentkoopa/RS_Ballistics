@@ -2096,7 +2096,7 @@ impact rocket
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
-  smokevolume = 64, 1.8, 3.0
+  smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
 end
 
@@ -2285,7 +2285,7 @@ hotspot saw_cut_metal         # a chain held on metal: a rooster tail raked alon
   markcolor  = 255, 140, 60
   shimmer    = 8, 0.6
   sound      = none
-  smokevolume = 10, 0.35
+  smokevolume = 10, 0.35, 0.25
 end
 
 hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, a fine dust cloud, splinters, friction smoke; no light
@@ -2293,7 +2293,7 @@ hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, a fine du
   heat       = 0.3, 1.2, 1.0
   bursts     = sawdust_spray 16, saw_dust_wood 8, splinter_wood 3, saw_smoke_wood 3
   sound      = none
-  smokevolume = 12, 0.45
+  smokevolume = 12, 0.45, 0.45
 end
 
 hotspot saw_cut_dirt         # a chain held in dirt and rock: clods, a rolling dust cloud, specks off the stones in it
@@ -2339,7 +2339,7 @@ hotspot saw_cut_metal_heavy         # the Heavy Chainsaw on metal: a violent roo
   markcolor  = 255, 140, 60
   shimmer    = 8, 0.6
   sound      = none
-  smokevolume = 12, 0.45
+  smokevolume = 12, 0.45, 0.25
 end
 
 hotspot saw_cut_wood_heavy         # the Heavy Chainsaw on wood: sawdust spraying, a thick dust cloud, splinters, friction smoke; no light
@@ -2347,7 +2347,7 @@ hotspot saw_cut_wood_heavy         # the Heavy Chainsaw on wood: sawdust sprayin
   heat       = 0.3, 1.2, 1.0
   bursts     = sawdust_spray 24, saw_dust_wood 12, splinter_wood 4.5, saw_smoke_wood 4.5
   sound      = none
-  smokevolume = 14, 0.55
+  smokevolume = 14, 0.55, 0.45
 end
 
 hotspot saw_cut_dirt_heavy         # the Heavy Chainsaw in dirt and rock: clods, a rolling dust cloud, glowing beads and specks off the stones
@@ -2488,7 +2488,7 @@ impact rocket.metal
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
-  smokevolume = 64, 1.8, 3.0
+  smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
 end
 
@@ -2499,7 +2499,7 @@ impact rocket.wood
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
-  smokevolume = 64, 1.8, 3.0
+  smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
 end
 
@@ -2510,7 +2510,7 @@ impact rocket.dirt
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
-  smokevolume = 64, 1.8, 3.0
+  smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
 end
 
@@ -2521,7 +2521,7 @@ impact rocket.glass
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
-  smokevolume = 64, 1.8, 3.0
+  smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
 end
 
@@ -2530,7 +2530,7 @@ impact rocket.liquid
   bursts     = rocket_fire, splash_liquid, rocket_smoke, rocket_fireball, rocket_soot
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
-  smokevolume = 64, 1.8, 3.0
+  smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
 end
 
@@ -2543,7 +2543,7 @@ impact rocket_rpg
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
   scale      = 1.25, 1.15
-  smokevolume = 80, 1.8, 3.5
+  smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
 end
 
@@ -2555,7 +2555,7 @@ impact rocket_rpg.metal
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
   scale      = 1.25, 1.15
-  smokevolume = 80, 1.8, 3.5
+  smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
 end
 
@@ -2567,7 +2567,7 @@ impact rocket_rpg.wood
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
   scale      = 1.25, 1.15
-  smokevolume = 80, 1.8, 3.5
+  smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
 end
 
@@ -2579,7 +2579,7 @@ impact rocket_rpg.dirt
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
   scale      = 1.25, 1.15
-  smokevolume = 80, 1.8, 3.5
+  smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
 end
 
@@ -2591,7 +2591,7 @@ impact rocket_rpg.glass
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
   scale      = 1.25, 1.15
-  smokevolume = 80, 1.8, 3.5
+  smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
 end
 
@@ -2601,7 +2601,7 @@ impact rocket_rpg.liquid
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
   scale      = 1.25, 1.15
-  smokevolume = 80, 1.8, 3.5
+  smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
 end
 
@@ -3101,6 +3101,7 @@ roundlook rocket
   motor  = rocket_motor
   heat   = 6, 0.7, 12, 160
   carve  = 10, 0.9
+  smoke  = 10, 0.35, 0.6, 0.7
 end
 
 roundlook rocket_rpg_boost # an RPG rocket's first metres: the booster's thin smoke thread, no flame yet
@@ -3108,6 +3109,7 @@ roundlook rocket_rpg_boost # an RPG rocket's first metres: the booster's thin sm
   wake   = rpg_boost_smoke
   impact = rocket_rpg
   carve  = 8, 0.7
+  smoke  = 6, 0.15, 0.3, 0.35
 end
 
 roundlook rocket_rpg       # the RPG's sustainer burning: a hard bright flame, a thick hanging smoke trail, shimmer behind
@@ -3118,6 +3120,7 @@ roundlook rocket_rpg       # the RPG's sustainer burning: a hard bright flame, a
   heat   = 7, 0.8, 12, 200
   onset  = rpg_ignition
   carve  = 10, 0.9
+  smoke  = 12, 0.5, 0.8, 0.8
 end
 
 roundlook bfg_ball         # the BFG's ball (the vanilla sprite): a big green core, arcs crackling round it, a shimmer behind
@@ -3617,7 +3620,7 @@ flash chainsaw             # THE CHAINSAW'S ENGINE (no shot; RSB_Exhaust.Run): a
   exhaust        = exhaust_puff 14
   exhaustidle    = 0.3
   exhaustblip    = exhaust_blip, 0.5
-  exhaustsmoke   = 8, 0.35, 0.8, 40
+  exhaustsmoke   = 8, 0.35, 0.8, 40, 0.3
   exhaustshimmer = 3, 0.35
 end
 
@@ -3625,7 +3628,7 @@ flash chainsaw_heavy       # THE HEAVY CHAINSAW'S ENGINE: a bigger two-stroke, l
   exhaust        = exhaust_puff_heavy 16, exhaust_puff 6
   exhaustidle    = 0.4
   exhaustblip    = exhaust_blip, 0.4
-  exhaustsmoke   = 10, 0.5, 0.9, 50
+  exhaustsmoke   = 10, 0.5, 0.9, 50, 0.35
   exhaustshimmer = 4, 0.45
 end
 
@@ -4092,7 +4095,7 @@ flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -
   barrelheat = 0.5, 0.2, 0.4
   barrelsmoke = rsb_smoke_barrel, 3.0
   barrelshimmer = 4, 0.55
-  smokevolume = 24, 1.4, 1.2, 90, 8
+  smokevolume = 24, 1.4, 1.2, 90, 8, 0.5
   push = 64, 260
 end
 
@@ -4114,7 +4117,7 @@ flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning p
   barrelsmoke = rsb_smoke_barrel, 2.6
   barrelshimmer = 3.5, 0.5
   sizecvar   = wm_rpg_scale
-  smokevolume = 36, 1.6, 1.6, 220, -51.5
+  smokevolume = 36, 1.6, 1.6, 220, -51.5, 0.6
   push = 112, 450, -51.5
 end
 
@@ -4407,7 +4410,7 @@ flame incinerator        # a tight, fast jet
   pilot       = pilot_flame
   sputter     = 0.15, rsb/flame/hiss
   flameout    = flame_out_puff
-  smokevolume = 16, 0.5, 1.5
+  smokevolume = 16, 0.5, 1.5, 0.8
 end
 
 flame napalm             # wide and slower; it sticks and burns where it lands
@@ -4435,7 +4438,7 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   jets        = 2, 1.0, 3       # twin jets through a round shroud, splaying into a wide spray
   sputter     = 0.15, rsb/flame/hiss
   flameout    = flame_out_puff
-  smokevolume = 20, 0.25, 1.5
+  smokevolume = 20, 0.25, 1.5, 0.95
 end
 
 
@@ -4794,7 +4797,7 @@ hotspot xsaw_cut_metal   # the Chainsaw's cut in metal at extreme
   markcolor   = 255, 140, 60
   shimmer     = 10, 0.8
   sound       = none
-  smokevolume = 12, 0.45
+  smokevolume = 12, 0.45, 0.25
 end
 
 hotspot xsaw_cut_wood   # the Chainsaw's cut in wood at extreme
@@ -4802,7 +4805,7 @@ hotspot xsaw_cut_wood   # the Chainsaw's cut in wood at extreme
   heat        = 0.3, 1.2, 1.0
   bursts      = sawdust_spray 22, saw_dust_wood 12, splinter_wood 4, saw_smoke_wood 4
   sound       = none
-  smokevolume = 14, 0.55
+  smokevolume = 14, 0.55, 0.45
 end
 
 hotspot xsaw_cut_dirt   # the Chainsaw's cut in dirt at extreme
@@ -4848,7 +4851,7 @@ hotspot xsaw_cut_metal_heavy   # the Heavy Chainsaw's cut in metal at extreme
   markcolor   = 255, 140, 60
   shimmer     = 10, 0.8
   sound       = none
-  smokevolume = 14, 0.55
+  smokevolume = 14, 0.55, 0.25
 end
 
 hotspot xsaw_cut_wood_heavy   # the Heavy Chainsaw's cut in wood at extreme
@@ -4856,7 +4859,7 @@ hotspot xsaw_cut_wood_heavy   # the Heavy Chainsaw's cut in wood at extreme
   heat        = 0.3, 1.2, 1.0
   bursts      = sawdust_spray 32, saw_dust_wood 18, splinter_wood 6, saw_smoke_wood 6
   sound       = none
-  smokevolume = 16, 0.7
+  smokevolume = 16, 0.7, 0.45
 end
 
 hotspot xsaw_cut_dirt_heavy   # the Heavy Chainsaw's cut in dirt at extreme
@@ -5067,7 +5070,7 @@ flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned 
   barrelheat      = 0.5, 0.2, 0.4
   barrelsmoke     = rsb_smoke_barrel, 3.0
   barrelshimmer   = 4, 0.55
-  smokevolume     = 30, 1.8, 1.2, 100, 8
+  smokevolume     = 30, 1.8, 1.2, 100, 8, 0.5
   push            = 96, 360
   barrelglow      = 1.2, 30, 1.0
   barrelglowcolor = 255, 120, 50
@@ -5091,7 +5094,7 @@ flash rocket_rpg@extreme   # the RPG at extreme: a bigger, hotter backblast that
   barrelsmoke   = rsb_smoke_barrel, 2.6
   barrelshimmer = 3.5, 0.5
   sizecvar      = wm_rpg_scale
-  smokevolume   = 44, 2.0, 1.6, 260, -51.5
+  smokevolume   = 44, 2.0, 1.6, 260, -51.5, 0.6
   push          = 140, 540, -51.5
 end
 
@@ -5162,7 +5165,7 @@ flash chainsaw@extreme   # the Chainsaw's engine at extreme: a busier exhaust, a
   exhaust        = exhaust_puff 20
   exhaustidle    = 0.3
   exhaustblip    = exhaust_blip, 0.4
-  exhaustsmoke   = 10, 0.45, 0.8, 50
+  exhaustsmoke   = 10, 0.45, 0.8, 50, 0.3
   exhaustshimmer = 4, 0.45
 end
 
@@ -5170,7 +5173,7 @@ flash chainsaw_heavy@extreme   # the Heavy Chainsaw's engine at extreme: a lumpi
   exhaust        = exhaust_puff_heavy 22, exhaust_puff 10
   exhaustidle    = 0.45
   exhaustblip    = exhaust_blip, 0.35
-  exhaustsmoke   = 12, 0.6, 0.9, 60
+  exhaustsmoke   = 12, 0.6, 0.9, 60, 0.35
   exhaustshimmer = 5, 0.55
 end
 
@@ -5272,6 +5275,7 @@ roundlook rocket@extreme   # a rocket at extreme: embers spitting from the motor
   motor      = rocket_motor
   heat       = 8, 0.9, 14, 200
   carve      = 12, 0.95
+  smoke      = 10, 0.35, 0.6, 0.7
   motormaybe = spk_embers 0.4
 end
 
@@ -5283,6 +5287,7 @@ roundlook rocket_rpg@extreme   # the RPG's rocket at extreme: heavy embers off t
   heat       = 9, 1.0, 14, 240
   onset      = rpg_ignition
   carve      = 12, 0.95
+  smoke      = 12, 0.5, 0.8, 0.8
   motormaybe = spk_embers_heavy 0.4
 end
 
@@ -5659,7 +5664,7 @@ impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring 
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
   lightcolor  = 255, 170, 90
-  smokevolume = 72, 2.0, 3.2
+  smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
 end
 
@@ -5670,7 +5675,7 @@ impact rocket.metal@extreme
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
   lightcolor  = 255, 170, 90
-  smokevolume = 72, 2.0, 3.2
+  smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
 end
 
@@ -5681,7 +5686,7 @@ impact rocket.wood@extreme
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
   lightcolor  = 255, 170, 90
-  smokevolume = 72, 2.0, 3.2
+  smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
 end
 
@@ -5692,7 +5697,7 @@ impact rocket.dirt@extreme
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
   lightcolor  = 255, 170, 90
-  smokevolume = 72, 2.0, 3.2
+  smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
 end
 
@@ -5703,7 +5708,7 @@ impact rocket.glass@extreme
   markcolor   = 255, 120, 40
   light       = 520, 4.8, 14
   lightcolor  = 255, 170, 90
-  smokevolume = 72, 2.0, 3.2
+  smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
 end
 
@@ -5712,7 +5717,7 @@ impact rocket.liquid@extreme
   bursts      = rocket_fire, splash_liquid, rocket_smoke, rocket_fireball, rocket_soot, spk_sparkler
   light       = 520, 4.8, 14
   lightcolor  = 255, 170, 90
-  smokevolume = 72, 2.0, 3.2
+  smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
 end
 
@@ -5724,7 +5729,7 @@ impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ri
   light       = 560, 5.0, 14
   lightcolor  = 255, 170, 90
   scale       = 1.25, 1.15
-  smokevolume = 90, 2.0, 3.6
+  smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
 end
 
@@ -5736,7 +5741,7 @@ impact rocket_rpg.metal@extreme
   light       = 560, 5.0, 14
   lightcolor  = 255, 170, 90
   scale       = 1.25, 1.15
-  smokevolume = 90, 2.0, 3.6
+  smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
 end
 
@@ -5748,7 +5753,7 @@ impact rocket_rpg.wood@extreme
   light       = 560, 5.0, 14
   lightcolor  = 255, 170, 90
   scale       = 1.25, 1.15
-  smokevolume = 90, 2.0, 3.6
+  smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
 end
 
@@ -5760,7 +5765,7 @@ impact rocket_rpg.dirt@extreme
   light       = 560, 5.0, 14
   lightcolor  = 255, 170, 90
   scale       = 1.25, 1.15
-  smokevolume = 90, 2.0, 3.6
+  smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
 end
 
@@ -5772,7 +5777,7 @@ impact rocket_rpg.glass@extreme
   light       = 560, 5.0, 14
   lightcolor  = 255, 170, 90
   scale       = 1.25, 1.15
-  smokevolume = 90, 2.0, 3.6
+  smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
 end
 
@@ -5782,7 +5787,7 @@ impact rocket_rpg.liquid@extreme
   light       = 560, 5.0, 14
   lightcolor  = 255, 170, 90
   scale       = 1.25, 1.15
-  smokevolume = 90, 2.0, 3.6
+  smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
 end
 

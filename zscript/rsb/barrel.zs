@@ -267,7 +267,7 @@ class RSB_Exhaust play
 		// SMOKE INTO THE ROOM (engine 13b): a thin haze that builds while it runs, thicker revved.
 		if (fd.exhaustSmokeAmount > 0 && fd.exhaustSmokeRadius > 0)
 			level.EmitSmoke(port + blow * (fd.exhaustSmokeRadius * 0.5), fd.exhaustSmokeRadius, fd.exhaustSmokeAmount * share * smokeMul,
-				fd.exhaustSmokeHeat, blow * fd.exhaustSmokeSpeed);
+				fd.exhaustSmokeHeat, blow * fd.exhaustSmokeSpeed, (0, 0, 0), fd.exhaustSmokeSoot);
 		// HOT AIR at the port, strongest revved.
 		if (fd.exhaustShimmerStrength > 0 && fd.exhaustShimmerRadius > 0)
 			RSB_Heat.Blast(port + blow * fd.exhaustShimmerRadius, fd.exhaustShimmerRadius, fd.exhaustShimmerStrength * share, EVERY + 4);

@@ -7,8 +7,8 @@ lumps turns into:
 - spent casings and hulls, and chainsaw engine exhaust
 - impacts by surface material: sparks, 3D chunks, dust, splinters, glints, splashes,
   marks and ricochets -- each round type with its own hit character
-- room-filling smoke the guns, blasts and flames fill and the rounds tear (engine smoke volume)
-- debris that bounces, collides with the whole level and stays for the fight (engine collision and debris pool)
+- room-filling smoke the guns, blasts, flames and rockets fill and the rounds tear; rockets and flames leave black soot (engine smoke volume)
+- debris that bounces, collides with the whole level, patters as it lands and stays for the fight (engine collision and debris pool)
 - flamethrowers: a licking drawn-line core, flame that slides along what it hits,
   scorch and black smoke
 - looks for plasma, rockets, the BFG, the railgun and the chainsaw
@@ -22,13 +22,14 @@ settings.
 
 ## Requirements
 
-- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 15908db746 or later.
+- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at bc127b9917 or later.
   RS_Ballistics uses engine features plain GZDoom does not have: GPU particle
   definitions (`PARTICLEDEFS`, `SpawnParticles`, mesh particles, level collision,
   the debris pool), surface materials (`SURFACES`, `TexMan.GetSurface`), drawn-line
   looks (`SetDrawnLine*`), generated particle looks, heat shimmer
-  (`SetHeatSource`) and the smoke volume (`EmitSmoke`, `CarveSmoke`,
-  `PushEffectImpulse`). It will not load on other engines.
+  (`SetHeatSource`), the smoke volume (`EmitSmoke` with soot, `CarveSmoke`,
+  `PushEffectImpulse`), debris landing sounds (`landsound`) and precaching
+  (`+PRECACHEALWAYS`). It will not load on other engines.
 - Mods that fire its rounds or call its hooks (RS_VR_Reload, RS_VR_Weapons) require
   it and load after it.
 

@@ -196,6 +196,7 @@ class RSB_LocalEjecta : Actor
 {
 	Default
 	{
+		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION

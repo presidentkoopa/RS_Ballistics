@@ -190,68 +190,89 @@ $limit rsb/flame/loop 4
 // PARTICLEDEFS `landsound` names these. Picked by measurement: short, quiet, bright for small pieces.
 
 rsb/debris/chips1            sounds/rsb/debris/chips/impact6.wav
+$limit rsb/debris/chips1 2
 rsb/debris/chips2            sounds/rsb/debris/chips/impact9.mp3
+$limit rsb/debris/chips2 2
 rsb/debris/chips3            sounds/rsb/debris/chips/impact5.wav
+$limit rsb/debris/chips3 2
 $random rsb/debris/chips { rsb/debris/chips1 rsb/debris/chips2 rsb/debris/chips3 }
-$limit rsb/debris/chips 3
 
 rsb/debris/rubble1           sounds/rsb/debris/rubble/rockhit1.wav
+$limit rsb/debris/rubble1 2
 rsb/debris/rubble2           sounds/rsb/debris/rubble/dsmothud.ogg
+$limit rsb/debris/rubble2 2
 $random rsb/debris/rubble { rsb/debris/rubble1 rsb/debris/rubble2 }
-$limit rsb/debris/rubble 3
 
 rsb/debris/metal1            sounds/rsb/debris/metal/dsbounc1.ogg
+$limit rsb/debris/metal1 2
 rsb/debris/metal2            sounds/rsb/debris/metal/dsbounc2.ogg
+$limit rsb/debris/metal2 2
 rsb/debris/metal3            sounds/rsb/debris/metal/dsbounc3.ogg
+$limit rsb/debris/metal3 2
 rsb/debris/metal4            sounds/rsb/debris/metal/dsbounc4.ogg
+$limit rsb/debris/metal4 2
 rsb/debris/metal5            sounds/rsb/debris/metal/dsbounc5.ogg
+$limit rsb/debris/metal5 2
 rsb/debris/metal6            sounds/rsb/debris/metal/dsbounc6.ogg
+$limit rsb/debris/metal6 2
 $random rsb/debris/metal { rsb/debris/metal1 rsb/debris/metal2 rsb/debris/metal3 rsb/debris/metal4 rsb/debris/metal5 rsb/debris/metal6 }
-$limit rsb/debris/metal 3
 
 rsb/debris/metal_big1        sounds/rsb/debris/metal_big/dsaounc1.ogg
+$limit rsb/debris/metal_big1 2
 rsb/debris/metal_big2        sounds/rsb/debris/metal_big/dsaounc2.ogg
+$limit rsb/debris/metal_big2 2
 rsb/debris/metal_big3        sounds/rsb/debris/metal_big/dsaounc3.ogg
+$limit rsb/debris/metal_big3 2
 rsb/debris/metal_big4        sounds/rsb/debris/metal_big/dsaounc4.ogg
+$limit rsb/debris/metal_big4 2
 rsb/debris/metal_big5        sounds/rsb/debris/metal_big/dsaounc5.ogg
+$limit rsb/debris/metal_big5 2
 rsb/debris/metal_big6        sounds/rsb/debris/metal_big/dsaounc6.ogg
+$limit rsb/debris/metal_big6 2
 $random rsb/debris/metal_big { rsb/debris/metal_big1 rsb/debris/metal_big2 rsb/debris/metal_big3 rsb/debris/metal_big4 rsb/debris/metal_big5 rsb/debris/metal_big6 }
-$limit rsb/debris/metal_big 3
 
 rsb/debris/nut1              sounds/rsb/debris/metal/dsbounc1.ogg
+$limit rsb/debris/nut1 2
 rsb/debris/nut2              sounds/rsb/debris/metal/dsbounc3.ogg
+$limit rsb/debris/nut2 2
 rsb/debris/nut3              sounds/rsb/debris/metal/dsbounc4.ogg
+$limit rsb/debris/nut3 2
 $random rsb/debris/nut { rsb/debris/nut1 rsb/debris/nut2 rsb/debris/nut3 }
-$limit rsb/debris/nut 3
 
 rsb/debris/glass1            sounds/rsb/glass/dsbottle.ogg
+$limit rsb/debris/glass1 2
 $random rsb/debris/glass { rsb/debris/glass1 }
-$limit rsb/debris/glass 3
 
 rsb/debris/glass_big1        sounds/rsb/debris/glass_big/ice_shatter.ogg
+$limit rsb/debris/glass_big1 2
 $random rsb/debris/glass_big { rsb/debris/glass_big1 }
-$limit rsb/debris/glass_big 3
 
 rsb/debris/dirt1             sounds/rsb/debris/dirt/gbounce.wav
+$limit rsb/debris/dirt1 2
 rsb/debris/dirt2             sounds/rsb/debris/dirt/grnbnce.wav
+$limit rsb/debris/dirt2 2
 $random rsb/debris/dirt { rsb/debris/dirt1 rsb/debris/dirt2 }
-$limit rsb/debris/dirt 3
 
 rsb/debris/dirt_big1         sounds/rsb/debris/rubble/dsmothud.ogg
+$limit rsb/debris/dirt_big1 2
 $random rsb/debris/dirt_big { rsb/debris/dirt_big1 }
-$limit rsb/debris/dirt_big 3
 
 rsb/debris/wood1             sounds/rsb/impact_wood/blt_imp_wood_near_01.ogg
+$limit rsb/debris/wood1 2
 rsb/debris/wood2             sounds/rsb/impact_wood/blt_imp_wood_near_02.ogg
+$limit rsb/debris/wood2 2
 rsb/debris/wood3             sounds/rsb/impact_wood/blt_imp_wood_near_05.ogg
+$limit rsb/debris/wood3 2
 $random rsb/debris/wood { rsb/debris/wood1 rsb/debris/wood2 rsb/debris/wood3 }
-$limit rsb/debris/wood 3
 
 rsb/debris/brass_rifle1      sounds/rsb/debris/brass_rifle/dsriflc1.ogg
+$limit rsb/debris/brass_rifle1 2
 rsb/debris/brass_rifle2      sounds/rsb/debris/brass_rifle/dsriflc2.ogg
+$limit rsb/debris/brass_rifle2 2
 rsb/debris/brass_rifle3      sounds/rsb/debris/brass_rifle/dsriflc3.ogg
+$limit rsb/debris/brass_rifle3 2
 rsb/debris/brass_rifle4      sounds/rsb/debris/brass_rifle/chgncas2.wav
+$limit rsb/debris/brass_rifle4 2
 $random rsb/debris/brass_rifle { rsb/debris/brass_rifle1 rsb/debris/brass_rifle2 rsb/debris/brass_rifle3 rsb/debris/brass_rifle4 }
-$limit rsb/debris/brass_rifle 3
 
 // ---- END debris landing sounds

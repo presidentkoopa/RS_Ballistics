@@ -315,6 +315,7 @@ class RSB_Parser
 			d.exhaustSmokeAmount = 0;
 			d.exhaustSmokeHeat = 0;
 			d.exhaustSmokeSpeed = 0;
+			d.exhaustSmokeSoot = 0;
 			d.exhaustShimmerRadius = 0;
 			d.exhaustShimmerStrength = 0;
 			d.throbTics = 0;
@@ -676,7 +677,24 @@ class RSB_Parser
 			lk.carveAmount = v[1].ToDouble();
 			return (lk.carveRadius >= 0 && lk.carveAmount >= 0) ? "" : "carve is radius, amount -- both 0 or more";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset or carve", key);
+		if (key == "smoke")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				lk.smokeRadius = 0;
+				lk.smokeAmount = 0;
+				return "";
+			}
+			String sw = NumsBetween(v, 3, 4);
+			if (sw != "") return sw;
+			lk.smokeRadius = v[0].ToDouble();
+			lk.smokeAmount = v[1].ToDouble();
+			lk.smokeHeat = v[2].ToDouble();
+			lk.smokeSoot = (v.Size() == 4) ? v[3].ToDouble() : 0.0;
+			return (lk.smokeRadius >= 1 && lk.smokeRadius <= 256 && lk.smokeAmount >= 0 && lk.smokeSoot >= 0 && lk.smokeSoot <= 1) ? ""
+				: "smoke is radius (1..256), amount, heat[, soot 0..1] -- smoke into the room along its flight -- or none";
+		}
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset, carve or smoke", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE
@@ -987,11 +1005,12 @@ class RSB_Parser
 		}
 		if (key == "smokevolume")
 		{
-			why = Nums(v, 3); if (why != "") return why;
+			why = NumsBetween(v, 3, 4); if (why != "") return why;
 			im.smokeVolRadius = v[0].ToDouble();
 			im.smokeVolAmount = v[1].ToDouble();
 			im.smokeVolHeat = v[2].ToDouble();
-			return (im.smokeVolRadius > 0 && im.smokeVolAmount >= 0) ? "" : "smokevolume is radius (above 0), amount, heat";
+			im.smokeVolSoot = (v.Size() == 4) ? v[3].ToDouble() : 0.0;
+			return (im.smokeVolRadius > 0 && im.smokeVolAmount >= 0 && im.smokeVolSoot >= 0 && im.smokeVolSoot <= 1) ? "" : "smokevolume is radius (above 0), amount, heat[, soot 0..1]";
 		}
 		if (key == "push")
 		{
@@ -1320,12 +1339,13 @@ class RSB_Parser
 		}
 		if (key == "exhaustsmoke")
 		{
-			why = Nums(v, 4); if (why != "") return why;
+			why = NumsBetween(v, 4, 5); if (why != "") return why;
 			f.exhaustSmokeRadius = v[0].ToDouble();
 			f.exhaustSmokeAmount = v[1].ToDouble();
 			f.exhaustSmokeHeat = v[2].ToDouble();
 			f.exhaustSmokeSpeed = v[3].ToDouble();
-			return (f.exhaustSmokeRadius > 0 && f.exhaustSmokeAmount >= 0) ? "" : "exhaustsmoke is radius (above 0), amount, heat, speed";
+			f.exhaustSmokeSoot = (v.Size() == 5) ? v[4].ToDouble() : 0.0;
+			return (f.exhaustSmokeRadius > 0 && f.exhaustSmokeAmount >= 0 && f.exhaustSmokeSoot >= 0 && f.exhaustSmokeSoot <= 1) ? "" : "exhaustsmoke is radius (above 0), amount, heat, speed[, soot 0..1]";
 		}
 		if (key == "exhaustshimmer")
 		{
@@ -1336,14 +1356,15 @@ class RSB_Parser
 		}
 		if (key == "smokevolume")
 		{
-			if (v.Size() < 4 || v.Size() > 5) return "smokevolume is radius, amount, heat, speed[, along]";
+			if (v.Size() < 4 || v.Size() > 6) return "smokevolume is radius, amount, heat, speed[, along[, soot]]";
 			for (int i = 0; i < v.Size(); i++) if (!IsNum(v[i])) return "smokevolume values must be numbers";
 			f.smokeVolRadius = v[0].ToDouble();
 			f.smokeVolAmount = v[1].ToDouble();
 			f.smokeVolHeat = v[2].ToDouble();
 			f.smokeVolSpeed = v[3].ToDouble();
-			f.smokeVolAlong = (v.Size() == 5) ? v[4].ToDouble() : 0.0;
-			return (f.smokeVolRadius > 0 && f.smokeVolAmount >= 0) ? "" : "smokevolume radius must be above 0, amount 0 or more";
+			f.smokeVolAlong = (v.Size() >= 5) ? v[4].ToDouble() : 0.0;
+			f.smokeVolSoot = (v.Size() == 6) ? v[5].ToDouble() : 0.0;
+			return (f.smokeVolRadius > 0 && f.smokeVolAmount >= 0 && f.smokeVolSoot >= 0 && f.smokeVolSoot <= 1) ? "" : "smokevolume radius must be above 0, amount 0 or more, soot 0..1";
 		}
 		if (key == "push")
 		{
@@ -1648,11 +1669,12 @@ class RSB_Parser
 		}
 		if (key == "smokevolume")
 		{
-			why = Nums(v, 3); if (why != "") return why;
+			why = NumsBetween(v, 3, 4); if (why != "") return why;
 			fm.smokeVolRadius = v[0].ToDouble();
 			fm.smokeVolAmount = v[1].ToDouble();
 			fm.smokeVolHeat = v[2].ToDouble();
-			return (fm.smokeVolRadius > 0 && fm.smokeVolAmount >= 0) ? "" : "smokevolume is radius (above 0), amount, heat";
+			fm.smokeVolSoot = (v.Size() == 4) ? v[3].ToDouble() : 0.0;
+			return (fm.smokeVolRadius > 0 && fm.smokeVolAmount >= 0 && fm.smokeVolSoot >= 0 && fm.smokeVolSoot <= 1) ? "" : "smokevolume is radius (above 0), amount, heat[, soot 0..1]";
 		}
 		return String.Format("unknown flame key \"%s\"", key);
 	}
@@ -1859,10 +1881,11 @@ class RSB_Parser
 		}
 		if (key == "smokevolume")
 		{
-			why = Nums(v, 2); if (why != "") return why;
+			why = NumsBetween(v, 2, 3); if (why != "") return why;
 			hs.smokeVolRadius = v[0].ToDouble();
 			hs.smokeVolAmount = v[1].ToDouble();
-			return (hs.smokeVolRadius > 0 && hs.smokeVolAmount >= 0) ? "" : "smokevolume is radius (above 0), amount";
+			hs.smokeVolSoot = (v.Size() == 3) ? v[2].ToDouble() : 0.0;
+			return (hs.smokeVolRadius > 0 && hs.smokeVolAmount >= 0 && hs.smokeVolSoot >= 0 && hs.smokeVolSoot <= 1) ? "" : "smokevolume is radius (above 0), amount[, soot 0..1]";
 		}
 		return String.Format("unknown hotspot key \"%s\"", key);
 	}
@@ -1968,6 +1991,16 @@ class RSB_Parser
 	{
 		if (v.Size() != need)
 			return String.Format("wants %d value%s, got %d", need, (need == 1) ? "" : "s", v.Size());
+		for (int i = 0; i < v.Size(); i++)
+			if (!IsNum(v[i])) return String.Format("\"%s\" is not a number", v[i]);
+		return "";
+	}
+
+	// Nums with optional trailing values: from `least` to `most` numbers.
+	private static String NumsBetween(out Array<String> v, int least, int most)
+	{
+		if (v.Size() < least || v.Size() > most)
+			return String.Format("wants %d to %d values, got %d", least, most, v.Size());
 		for (int i = 0; i < v.Size(); i++)
 			if (!IsNum(v[i])) return String.Format("\"%s\" is not a number", v[i]);
 		return "";
