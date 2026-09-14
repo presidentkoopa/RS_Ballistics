@@ -5596,6 +5596,52 @@ impact plasma.liquid@extreme
   lightcolor = 120, 180, 255
 end
 
+flash plasma_carbine@extreme   # the Blue Plasma Rifle at extreme: a crackle of arcs every shot, streaks off the vents most shots, an emitter that glows sooner
+  light           = 180, 3.6, 2
+  lightcolor      = 150, 200, 255
+  cone            = 12, 36, 70, 5
+  conetics        = 2
+  bursts          = plasma_core, plasma_vent_ring, plasma_crackle_muzzle
+  maybe           = energy_sparks_plasma 0.9
+  flame           = 0
+  vary            = light 0.35, cone 0.3, sparks 0.5
+  barrelheat      = 0.09, 0.35, 0.2
+  barrelshimmer   = 3.5, 0.6
+  barrelglow      = 0.5, 26, 1.7
+  barrelglowcolor = 160, 205, 255
+end
+
+roundlook plasma_carbine@extreme   # the Blue Plasma Rifle's bolt at extreme: bent air round the hot bolt, a wider tunnel
+  look   = none
+  wake   = plasma_streak
+  impact = plasma_carbine
+  motor  = plasma_glow_small
+  carve  = 8, 0.7
+  heat   = 5, 0.45, 8
+end
+
+impact plasma_carbine@extreme   # the Blue Plasma Rifle's hit at extreme: arcs most hits, a wider ring, a longer light
+  heat       = 18, 0.9, 10
+  bursts     = plasma_splash, plasma_ozone
+  maybe      = plasma_arcs 0.7, plasma_motes 0.8
+  vary       = count 0.4, size 0.2, light 0.3
+  scale      = 1.2, 0.85
+  mark       = ring, 7, 80
+  markcolor  = 150, 200, 255
+  light      = 130, 3.2, 4
+  lightcolor = 150, 200, 255
+end
+
+impact plasma_carbine.liquid@extreme
+  heat       = 14, 0.7, 8
+  bursts     = plasma_splash, splash_liquid, plasma_ozone
+  maybe      = plasma_arcs 0.6
+  vary       = count 0.4, size 0.2, light 0.3
+  scale      = 1.2, 0.85
+  light      = 130, 3.2, 4
+  lightcolor = 150, 200, 255
+end
+
 impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
   heat        = 86, 1.9, 38
   bursts      = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, spark_spray, dust_kick_ring, spk_sparkler
