@@ -931,45 +931,125 @@ burst bfg_spray_flare      # where a BFG ray strikes a body: a green flare
   aim     = normal
 end
 
-burst saw_sparks           # a chain biting stone: a spray of hot sparks thrown off the cut
-  count   = 10
-  cone    = 40
-  speed   = 380, 0.5
-  life    = 0.4, 0.4
-  color   = 255, 200, 130
-  glow    = 3.5
-  size    = 0.7, 0.15
-  gravity = 500
-  drag    = 1.2
-  orient  = streak
-  stretch = 0.025
-  aim     = normal
+# A hotspot fires every burst off the face of the cut, straight back at the eye, so the saw's
+# streaks are DISCS: fanned across the wall they streak sideways instead of dropping toward you
+# in one short vertical line. Specks, beads and stars are billboards and can fly straight out.
+
+burst saw_sparks_stone     # a chain biting stone: textured grit sparks fanned out along the face of the cut (rsb_spark_impact)
+  count    = 8
+  shape    = disc
+  cone     = 25
+  speed    = 360, 0.5
+  life     = 0.3, 0.4
+  aim      = normal
+  offset   = 1
+  particle = rsb_spark_impact
 end
 
-burst saw_sparks_heavy     # a chain biting metal: a rooster tail of sparks
-  count   = 16
-  cone    = 45
-  speed   = 420, 0.5
-  life    = 0.5, 0.4
-  color   = 255, 206, 140
-  glow    = 4.0
-  size    = 0.8, 0.15
-  gravity = 520
-  drag    = 1.0
-  orient  = streak
-  stretch = 0.03
-  aim     = normal
+burst saw_grit             # tiny flickering specks of hot grit thrown straight out of the cut (rsb_spark_speck)
+  count    = 5
+  cone     = 50
+  speed    = 160, 0.5
+  life     = 0.25, 0.4
+  aim      = normal
+  offset   = 1
+  particle = rsb_spark_speck
 end
 
-burst saw_dust             # stone dust ground out of the cut (rsb_dust_concrete: lit, never glowing)
-  count    = 2
+burst saw_sparks_metal     # a chain biting metal: a rooster tail of photoreal streaks raked along the face (rsb_spark_ricochet)
+  count    = 12
+  shape    = disc
+  cone     = 18
+  speed    = 480, 0.5
+  life     = 0.45, 0.4
+  aim      = normal
+  offset   = 1
+  particle = rsb_spark_ricochet
+end
+
+burst saw_sparkler_metal   # a torn fleck of steel bursting white-hot as it leaves the cut (rsb_spark_sparkler)
+  count    = 1
   cone     = 40
-  speed    = 120, 0.5
+  speed    = 200, 0.5
+  life     = 0.3, 0.3
+  aim      = normal
+  offset   = 2
+  particle = rsb_spark_sparkler
+end
+
+burst saw_smoke_metal      # burnt chain oil and scorched steel smoking off the cut (rsb_smoke_soot_gun: lit, never glowing)
+  count    = 1
+  cone     = 30
+  speed    = 25, 0.5
+  life     = 1.4, 0.3
+  aim      = up
+  offset   = 3
+  particle = rsb_smoke_soot_gun
+end
+
+burst hsaw_sparks_stone    # the Heavy Chainsaw on stone: longer photoreal streaks raked wider along the face (rsb_spark_ricochet)
+  count    = 10
+  shape    = disc
+  cone     = 30
+  speed    = 420, 0.5
+  life     = 0.4, 0.4
+  aim      = normal
+  offset   = 1
+  particle = rsb_spark_ricochet
+end
+
+burst hsaw_beads           # the Heavy Chainsaw: glowing beads of torn chain and grit tumbling out, falling as they cool (rsb_spark_ember)
+  count    = 3
+  cone     = 45
+  speed    = 150, 0.5
+  life     = 0.8, 0.4
+  aim      = normal
+  offset   = 1
+  particle = rsb_spark_ember
+end
+
+burst hsaw_sparks_metal    # the Heavy Chainsaw on metal: a violent rooster tail, faster, wider, longer-lived (rsb_spark_ricochet)
+  count    = 16
+  shape    = disc
+  cone     = 26
+  speed    = 560, 0.5
+  life     = 0.55, 0.4
+  aim      = normal
+  offset   = 1
+  particle = rsb_spark_ricochet
+end
+
+burst hsaw_stars           # the Heavy Chainsaw on metal: the brightest grains flashing and gone (rsb_spark_star)
+  count    = 2
+  cone     = 60
+  speed    = 90, 0.5
+  life     = 0.2, 0.4
+  aim      = normal
+  offset   = 2
+  particle = rsb_spark_star
+end
+
+burst saw_dust             # stone dust ground out of the cut and blown along the wall (rsb_dust_concrete: lit, never glowing)
+  count    = 3
+  shape    = disc
+  cone     = 30
+  speed    = 140, 0.5
   life     = 1.4, 0.4
   color    = 150, 146, 138
   aim      = normal
   offset   = 2
   particle = rsb_dust_concrete
+end
+
+burst saw_dust_wood        # fine wood dust hanging off the cut (rsb_dust_wood: lit, never glowing)
+  count    = 2
+  shape    = disc
+  cone     = 30
+  speed    = 110, 0.5
+  life     = 1.6, 0.4
+  aim      = normal
+  offset   = 2
+  particle = rsb_dust_wood
 end
 
 burst sawdust_spray        # sawdust thrown out of a cut in wood (lit flakes, never glowing)
@@ -2155,48 +2235,51 @@ end
 # feeds a hotspot that builds one continuous cut; a bite only now and then throws something of its own.
 # The saw's own engine and hit sounds are the gun's. Bodies it cuts bleed: that is their own mod's.
 
-hotspot saw_cut_stone         # a chain held on stone: sparks thrown off the cut, dust rising, chips; no glow (stone is not hot)
+hotspot saw_cut_stone         # a chain held on stone: grit sparks fanned along the cut, specks, dust blown along the wall, chips; no glow (stone is not hot)
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = saw_sparks 14, saw_dust 8, chips_concrete 2
+  bursts     = saw_sparks_stone 14, saw_grit 6, saw_dust 12, chips_concrete 2
   light      = 60, 1.4
   lightcolor = 255, 190, 120
   sound      = none
   smokevolume = 14, 0.6
 end
 
-hotspot saw_cut_metal         # a chain held on metal: a rooster tail of sparks and a gouge that glows hot, the air bending over it
+hotspot saw_cut_metal         # a chain held on metal: a rooster tail raked along the face, white-hot steel flecks, a gouge that glows hot, burnt-oil smoke, the air bending over it
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = saw_sparks_heavy 20, spark_spray 6, ember_metal 4
+  bursts     = saw_sparks_metal 20, saw_sparkler_metal 3, spark_spray 6, ember_metal 4, saw_smoke_metal 3
   light      = 80, 1.8
   lightcolor = 255, 196, 130
   mark       = gouge, 2, 7, 6, 40
   markcolor  = 255, 140, 60
   shimmer    = 8, 0.6
   sound      = none
+  smokevolume = 10, 0.35
 end
 
-hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, splinters, friction smoke; no light
+hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, a fine dust cloud, splinters, friction smoke; no light
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = sawdust_spray 16, splinter_wood 3, saw_smoke_wood 3
+  bursts     = sawdust_spray 16, saw_dust_wood 8, splinter_wood 3, saw_smoke_wood 3
   sound      = none
   smokevolume = 12, 0.45
 end
 
-hotspot saw_cut_dirt         # a chain held in dirt and rock: clods and dust
+hotspot saw_cut_dirt         # a chain held in dirt and rock: clods, a rolling dust cloud, specks off the stones in it
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = clods_dirt 3, dust_dirt 4, saw_sparks 3
+  bursts     = clods_dirt 3, dust_dirt 8, saw_grit 4
   sound      = none
+  smokevolume = 16, 0.7
 end
 
-hotspot saw_cut_glass         # a chain held on glass: shards
+hotspot saw_cut_glass         # a chain held on glass: shards, fine glass dust, a few specks
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = glint_glass 4, saw_sparks 4
+  bursts     = glint_glass 4, saw_dust 4, saw_grit 2
   sound      = none
+  smokevolume = 10, 0.3
 end
 
 hotspot saw_cut_liquid         # a chain in water: spray
@@ -2206,48 +2289,51 @@ hotspot saw_cut_liquid         # a chain in water: spray
   sound      = none
 end
 
-hotspot saw_cut_stone_heavy         # a chain held on stone: sparks thrown off the cut, dust rising, chips; no glow (stone is not hot) -- the Heavy Chainsaw's, heavier
+hotspot saw_cut_stone_heavy         # the Heavy Chainsaw on stone: longer streaks raked wide, glowing beads tumbling out, a dust storm along the wall, chips
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = saw_sparks 21, saw_dust 12, chips_concrete 3
+  bursts     = hsaw_sparks_stone 18, hsaw_beads 5, saw_dust 18, chips_concrete 3
   light      = 72, 1.68
   lightcolor = 255, 190, 120
   sound      = none
-  smokevolume = 14, 0.6
+  smokevolume = 18, 0.8
 end
 
-hotspot saw_cut_metal_heavy         # a chain held on metal: a rooster tail of sparks and a gouge that glows hot, the air bending over it -- the Heavy Chainsaw's, heavier
+hotspot saw_cut_metal_heavy         # the Heavy Chainsaw on metal: a violent rooster tail, flashing stars, white-hot steel flecks, a glowing gouge, burnt-oil smoke
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = saw_sparks_heavy 30, spark_spray 9, ember_metal 6
+  bursts     = hsaw_sparks_metal 26, hsaw_stars 6, saw_sparkler_metal 6, spark_spray 9, ember_metal 6, saw_smoke_metal 5
   light      = 96, 2.16
   lightcolor = 255, 196, 130
   mark       = gouge, 2, 7, 6, 40
   markcolor  = 255, 140, 60
   shimmer    = 8, 0.6
   sound      = none
-end
-
-hotspot saw_cut_wood_heavy         # a chain held on wood: sawdust spraying, splinters, friction smoke; no light -- the Heavy Chainsaw's, heavier
-  merge      = 16
-  heat       = 0.3, 1.2, 1.0
-  bursts     = sawdust_spray 24, splinter_wood 4.5, saw_smoke_wood 4.5
-  sound      = none
   smokevolume = 12, 0.45
 end
 
-hotspot saw_cut_dirt_heavy         # a chain held in dirt and rock: clods and dust -- the Heavy Chainsaw's, heavier
+hotspot saw_cut_wood_heavy         # the Heavy Chainsaw on wood: sawdust spraying, a thick dust cloud, splinters, friction smoke; no light
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = clods_dirt 4.5, dust_dirt 6, saw_sparks 4.5
+  bursts     = sawdust_spray 24, saw_dust_wood 12, splinter_wood 4.5, saw_smoke_wood 4.5
   sound      = none
+  smokevolume = 14, 0.55
 end
 
-hotspot saw_cut_glass_heavy         # a chain held on glass: shards -- the Heavy Chainsaw's, heavier
+hotspot saw_cut_dirt_heavy         # the Heavy Chainsaw in dirt and rock: clods, a rolling dust cloud, glowing beads and specks off the stones
   merge      = 16
   heat       = 0.3, 1.2, 1.0
-  bursts     = glint_glass 6, saw_sparks 6
+  bursts     = clods_dirt 4.5, dust_dirt 12, hsaw_beads 3, saw_grit 5
   sound      = none
+  smokevolume = 20, 0.8
+end
+
+hotspot saw_cut_glass_heavy         # the Heavy Chainsaw on glass: shards, glass dust, a few specks
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = glint_glass 6, saw_dust 6, saw_grit 3
+  sound      = none
+  smokevolume = 12, 0.35
 end
 
 hotspot saw_cut_liquid_heavy         # a chain in water: spray -- the Heavy Chainsaw's, heavier
