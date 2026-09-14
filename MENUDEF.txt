@@ -306,7 +306,13 @@ OptionMenu "RSB_DebrisMenu"
 	Option "Particles collide with the level", "r_particlecollision", "OnOff"
 	Slider "Collision quality (2 recommended, about 35 MB)", "r_particlecollision_quality", 1, 3, 1, 0
 	StaticText "On: sparks, embers, chips and chunks stop at walls and floors anywhere in the level", "DarkGray"
-	StaticText "and fade instead of passing through. Bouncing and staying come with the debris pool.", "DarkGray"
+	StaticText "and fade instead of passing through.", "DarkGray"
+	StaticText ""
+	Option "Debris that stays", "r_debris", "OnOff"
+	Slider "Debris time on the ground (seconds; 60 = the mod's own)", "r_debris_life", 5, 600, 5, 0
+	Option "Debris pieces", "r_debris_pool", "DebrisPoolSizes"
+	StaticText "On: chunks bounce, roll and lie where they land for the fight; sparks skitter", "DarkGray"
+	StaticText "off walls; embers cool on the floor. Blasts shove what is lying there.", "DarkGray"
 	StaticText ""
 	Option "Casings", "rsb_casings", "OnOff"
 	Slider "Casing time on the floor", "rsb_casing_life", 0.0, 1.0, 0.05, 2

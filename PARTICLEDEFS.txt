@@ -320,6 +320,8 @@ particle rsb_spark_streak
 	orient   = streak
 	stretch  = 0.03
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // A photoreal spark: a hot head and a long fading tail.
@@ -338,6 +340,8 @@ particle rsb_spark_photo
 	orient   = streak
 	stretch  = 0.04
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // A four-point star: the brightest grains flashing and gone.
@@ -356,6 +360,8 @@ particle rsb_spark_star
 	orient   = billboard
 	spin     = -360, 360
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // Tiny spark clusters, flickering through their frames.
@@ -374,6 +380,8 @@ particle rsb_spark_speck
 	orient   = billboard
 	spin     = -180, 180
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // A glowing ember: slower, longer, falling as it cools to dark red.
@@ -391,6 +399,10 @@ particle rsb_spark_ember
 	texture  = "RSKEA0", 1, 1, loop
 	orient   = billboard
 	collide  = level
+	restitution = 0.2
+	friction    = 0.6
+	restlife    = 1.5
+	restfade    = 0.6
 }
 
 // A photoreal sparkler burst: a big gun's biggest shots, one bright starburst.
@@ -409,6 +421,8 @@ particle rsb_spark_sparkler
 	orient   = billboard
 	spin     = -90, 90
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // ---------------------------------------------------------------- PLASMA
@@ -697,7 +711,7 @@ particle rsb_debris_chip
 {
 	size     = 2.2 @0, 2.2 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	alpha    = 1 @0, 1 @0.75, 0 @1
+	alpha    = 1 @0, 1 @1
 	emissive = 0 @0, 0 @1
 	lit      = 1
 	gravity  = 620
@@ -707,13 +721,17 @@ particle rsb_debris_chip
 	orient   = flake
 	spin     = -720, 720
 	collide  = level
+	restitution = 0.2
+	friction    = 0.7
+	restlife    = 20
+	restfade    = 1.5
 }
 
 particle rsb_debris_splinter
 {
 	size     = 3.6 @0, 3.6 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	alpha    = 1 @0, 1 @0.75, 0 @1
+	alpha    = 1 @0, 1 @1
 	emissive = 0 @0, 0 @1
 	lit      = 1
 	gravity  = 520
@@ -723,13 +741,17 @@ particle rsb_debris_splinter
 	orient   = flake
 	spin     = -540, 540
 	collide  = level
+	restitution = 0.2
+	friction    = 0.7
+	restlife    = 20
+	restfade    = 1.5
 }
 
 particle rsb_debris_clod
 {
 	size     = 3.0 @0, 3.0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	alpha    = 1 @0, 1 @0.7, 0 @1
+	alpha    = 1 @0, 1 @1
 	emissive = 0 @0, 0 @1
 	lit      = 1
 	gravity  = 700
@@ -739,6 +761,10 @@ particle rsb_debris_clod
 	orient   = flake
 	spin     = -480, 480
 	collide  = level
+	restitution = 0.2
+	friction    = 0.7
+	restlife    = 20
+	restfade    = 1.5
 }
 
 // Glass: see-through, catching the room's light on its edges as it turns.
@@ -746,7 +772,7 @@ particle rsb_debris_shard
 {
 	size     = 2.6 @0, 2.6 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	alpha    = 0.8 @0, 0.8 @0.7, 0 @1
+	alpha    = 0.8 @0, 0.8 @1
 	emissive = 0 @0, 0 @1
 	lit      = 1
 	gravity  = 650
@@ -756,6 +782,10 @@ particle rsb_debris_shard
 	orient   = flake
 	spin     = -900, 900
 	collide  = level
+	restitution = 0.2
+	friction    = 0.7
+	restlife    = 20
+	restfade    = 1.5
 }
 
 // ---------------------------------------------------------------- TRAILS
@@ -790,7 +820,7 @@ particle rsb_chunk_concrete_chip1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -798,6 +828,10 @@ particle rsb_chunk_concrete_chip1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_chip2
@@ -806,7 +840,7 @@ particle rsb_chunk_concrete_chip2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 244 242 236 @0, 244 242 236 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -814,6 +848,10 @@ particle rsb_chunk_concrete_chip2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_chip3
@@ -822,7 +860,7 @@ particle rsb_chunk_concrete_chip3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 250 242 @0, 255 250 242 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -830,6 +868,10 @@ particle rsb_chunk_concrete_chip3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_chip4
@@ -838,7 +880,7 @@ particle rsb_chunk_concrete_chip4
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 236 234 230 @0, 236 234 230 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -846,6 +888,10 @@ particle rsb_chunk_concrete_chip4
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_slab1
@@ -854,7 +900,7 @@ particle rsb_chunk_concrete_slab1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 250 246 240 @0, 250 246 240 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.4
 	spin     = -360, 360
@@ -862,6 +908,10 @@ particle rsb_chunk_concrete_slab1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.15
+	friction    = 0.8
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_slab2
@@ -870,7 +920,7 @@ particle rsb_chunk_concrete_slab2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 238 236 232 @0, 238 236 232 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.4
 	spin     = -360, 360
@@ -878,6 +928,10 @@ particle rsb_chunk_concrete_slab2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.15
+	friction    = 0.8
+	restlife    = 60
+	restfade    = 2.0
 }
 
 // ---------------------------------------------------------------- WOOD
@@ -887,7 +941,7 @@ particle rsb_chunk_wood_splinter1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 450
 	drag     = 1.0
 	spin     = -720, 720
@@ -895,6 +949,10 @@ particle rsb_chunk_wood_splinter1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_splinter2
@@ -903,7 +961,7 @@ particle rsb_chunk_wood_splinter2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 236 230 222 @0, 236 230 222 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 450
 	drag     = 1.0
 	spin     = -720, 720
@@ -911,6 +969,10 @@ particle rsb_chunk_wood_splinter2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_splinter3
@@ -919,7 +981,7 @@ particle rsb_chunk_wood_splinter3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 248 238 @0, 255 248 238 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 450
 	drag     = 1.0
 	spin     = -720, 720
@@ -927,6 +989,10 @@ particle rsb_chunk_wood_splinter3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_plank1
@@ -935,7 +1001,7 @@ particle rsb_chunk_wood_plank1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 244 238 230 @0, 244 238 230 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.6
 	spin     = -420, 420
@@ -943,6 +1009,10 @@ particle rsb_chunk_wood_plank1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 // ---------------------------------------------------------------- METAL
@@ -952,7 +1022,7 @@ particle rsb_chunk_metal_shard1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
@@ -960,6 +1030,10 @@ particle rsb_chunk_metal_shard1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.3
+	friction    = 0.35
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_metal_shard2
@@ -968,7 +1042,7 @@ particle rsb_chunk_metal_shard2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 236 238 244 @0, 236 238 244 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
@@ -976,6 +1050,10 @@ particle rsb_chunk_metal_shard2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.3
+	friction    = 0.35
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_metal_shard3
@@ -984,7 +1062,7 @@ particle rsb_chunk_metal_shard3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 248 250 255 @0, 248 250 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
@@ -992,6 +1070,10 @@ particle rsb_chunk_metal_shard3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.3
+	friction    = 0.35
+	restlife    = 60
+	restfade    = 2.0
 }
 
 // ---------------------------------------------------------------- GLASS
@@ -1001,7 +1083,7 @@ particle rsb_chunk_glass_shard1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
@@ -1009,6 +1091,10 @@ particle rsb_chunk_glass_shard1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_glass_shard2
@@ -1017,7 +1103,7 @@ particle rsb_chunk_glass_shard2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 240 246 248 @0, 240 246 248 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
@@ -1025,6 +1111,10 @@ particle rsb_chunk_glass_shard2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_glass_shard3
@@ -1033,7 +1123,7 @@ particle rsb_chunk_glass_shard3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 250 252 255 @0, 250 252 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
@@ -1041,6 +1131,10 @@ particle rsb_chunk_glass_shard3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 // ---------------------------------------------------------------- DIRT
@@ -1050,7 +1144,7 @@ particle rsb_chunk_dirt_clod1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
@@ -1058,6 +1152,10 @@ particle rsb_chunk_dirt_clod1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.05
+	friction    = 0.9
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_clod2
@@ -1066,7 +1164,7 @@ particle rsb_chunk_dirt_clod2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 236 230 224 @0, 236 230 224 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
@@ -1074,6 +1172,10 @@ particle rsb_chunk_dirt_clod2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.05
+	friction    = 0.9
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_clod3
@@ -1082,7 +1184,7 @@ particle rsb_chunk_dirt_clod3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 250 244 236 @0, 250 244 236 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
@@ -1090,6 +1192,10 @@ particle rsb_chunk_dirt_clod3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.05
+	friction    = 0.9
+	restlife    = 45
+	restfade    = 2.0
 }
 
 // ---------------------------------------------------------------- MORE 3D CHUNKS
@@ -1102,7 +1208,7 @@ particle rsb_chunk_concrete_chip5
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 248 246 240 @0, 248 246 240 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -1110,6 +1216,10 @@ particle rsb_chunk_concrete_chip5
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_chip6
@@ -1118,7 +1228,7 @@ particle rsb_chunk_concrete_chip6
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 240 238 232 @0, 240 238 232 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -1126,6 +1236,10 @@ particle rsb_chunk_concrete_chip6
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_chip7
@@ -1134,7 +1248,7 @@ particle rsb_chunk_concrete_chip7
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 252 246 @0, 255 252 246 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -1142,6 +1256,10 @@ particle rsb_chunk_concrete_chip7
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_chip8
@@ -1150,7 +1268,7 @@ particle rsb_chunk_concrete_chip8
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 234 232 228 @0, 234 232 228 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -540, 540
@@ -1158,6 +1276,10 @@ particle rsb_chunk_concrete_chip8
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_slab3
@@ -1166,7 +1288,7 @@ particle rsb_chunk_concrete_slab3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 244 240 234 @0, 244 240 234 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.4
 	spin     = -360, 360
@@ -1174,6 +1296,10 @@ particle rsb_chunk_concrete_slab3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.15
+	friction    = 0.8
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_rubble1
@@ -1182,7 +1308,7 @@ particle rsb_chunk_concrete_rubble1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 246 242 236 @0, 246 242 236 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 750
 	drag     = 0.35
 	spin     = -300, 300
@@ -1190,6 +1316,10 @@ particle rsb_chunk_concrete_rubble1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.15
+	friction    = 0.8
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_rubble2
@@ -1198,7 +1328,7 @@ particle rsb_chunk_concrete_rubble2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 236 234 230 @0, 236 234 230 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 750
 	drag     = 0.35
 	spin     = -300, 300
@@ -1206,6 +1336,10 @@ particle rsb_chunk_concrete_rubble2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.15
+	friction    = 0.8
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_concrete_rubble3
@@ -1214,7 +1348,7 @@ particle rsb_chunk_concrete_rubble3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 252 248 242 @0, 252 248 242 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 750
 	drag     = 0.35
 	spin     = -300, 300
@@ -1222,6 +1356,10 @@ particle rsb_chunk_concrete_rubble3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.15
+	friction    = 0.8
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_splinter4
@@ -1230,7 +1368,7 @@ particle rsb_chunk_wood_splinter4
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 248 240 230 @0, 248 240 230 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 450
 	drag     = 1
 	spin     = -720, 720
@@ -1238,6 +1376,10 @@ particle rsb_chunk_wood_splinter4
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_splinter5
@@ -1246,7 +1388,7 @@ particle rsb_chunk_wood_splinter5
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 240 232 220 @0, 240 232 220 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 450
 	drag     = 1
 	spin     = -720, 720
@@ -1254,6 +1396,10 @@ particle rsb_chunk_wood_splinter5
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 10, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_plank2
@@ -1262,7 +1408,7 @@ particle rsb_chunk_wood_plank2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 246 238 228 @0, 246 238 228 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.6
 	spin     = -420, 420
@@ -1270,6 +1416,10 @@ particle rsb_chunk_wood_plank2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_woodchip1
@@ -1278,7 +1428,7 @@ particle rsb_chunk_wood_woodchip1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 252 244 232 @0, 252 244 232 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 420
 	drag     = 1.4
 	spin     = -900, 900
@@ -1286,6 +1436,10 @@ particle rsb_chunk_wood_woodchip1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 12, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_woodchip2
@@ -1294,7 +1448,7 @@ particle rsb_chunk_wood_woodchip2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 240 230 216 @0, 240 230 216 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 420
 	drag     = 1.4
 	spin     = -900, 900
@@ -1302,6 +1456,10 @@ particle rsb_chunk_wood_woodchip2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 12, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_wood_woodchip3
@@ -1310,7 +1468,7 @@ particle rsb_chunk_wood_woodchip3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 248 238 226 @0, 248 238 226 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 420
 	drag     = 1.4
 	spin     = -900, 900
@@ -1318,6 +1476,10 @@ particle rsb_chunk_wood_woodchip3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSSLA0", 4, 12, loop
 	orient   = flake
+	restitution = 0.35
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_metal_shard4
@@ -1326,7 +1488,7 @@ particle rsb_chunk_metal_shard4
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 250 252 255 @0, 250 252 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
@@ -1334,6 +1496,10 @@ particle rsb_chunk_metal_shard4
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.3
+	friction    = 0.35
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_metal_shard5
@@ -1342,7 +1508,7 @@ particle rsb_chunk_metal_shard5
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 238 240 246 @0, 238 240 246 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.5
 	spin     = -600, 600
@@ -1350,6 +1516,10 @@ particle rsb_chunk_metal_shard5
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.3
+	friction    = 0.35
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_metal_nut1
@@ -1358,7 +1528,7 @@ particle rsb_chunk_metal_nut1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 232 234 238 @0, 232 234 238 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.4
 	spin     = -720, 720
@@ -1366,6 +1536,10 @@ particle rsb_chunk_metal_nut1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.45
+	friction    = 0.3
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_metal_strip1
@@ -1374,7 +1548,7 @@ particle rsb_chunk_metal_strip1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 244 246 250 @0, 244 246 250 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 600
 	drag     = 0.6
 	spin     = -480, 480
@@ -1382,6 +1556,10 @@ particle rsb_chunk_metal_strip1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCHA0", 4, 14, loop
 	orient   = flake
+	restitution = 0.3
+	friction    = 0.35
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_glass_shard4
@@ -1390,7 +1568,7 @@ particle rsb_chunk_glass_shard4
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 250 252 255 @0, 250 252 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
@@ -1398,6 +1576,10 @@ particle rsb_chunk_glass_shard4
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_glass_shard5
@@ -1406,7 +1588,7 @@ particle rsb_chunk_glass_shard5
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 242 248 250 @0, 242 248 250 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 550
 	drag     = 0.8
 	spin     = -900, 900
@@ -1414,6 +1596,10 @@ particle rsb_chunk_glass_shard5
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_glass_sliver1
@@ -1422,7 +1608,7 @@ particle rsb_chunk_glass_sliver1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 255 255 255 @0, 255 255 255 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 520
 	drag     = 0.9
 	spin     = -1080, 1080
@@ -1430,6 +1616,10 @@ particle rsb_chunk_glass_sliver1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_glass_sliver2
@@ -1438,7 +1628,7 @@ particle rsb_chunk_glass_sliver2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 246 250 252 @0, 246 250 252 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 520
 	drag     = 0.9
 	spin     = -1080, 1080
@@ -1446,6 +1636,10 @@ particle rsb_chunk_glass_sliver2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSGSA0", 4, 16, loop
 	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_clod4
@@ -1454,7 +1648,7 @@ particle rsb_chunk_dirt_clod4
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 246 240 232 @0, 246 240 232 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
@@ -1462,6 +1656,10 @@ particle rsb_chunk_dirt_clod4
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.05
+	friction    = 0.9
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_clod5
@@ -1470,7 +1668,7 @@ particle rsb_chunk_dirt_clod5
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 236 228 220 @0, 236 228 220 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 650
 	drag     = 0.7
 	spin     = -480, 480
@@ -1478,6 +1676,10 @@ particle rsb_chunk_dirt_clod5
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.05
+	friction    = 0.9
+	restlife    = 45
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_pebble1
@@ -1486,7 +1688,7 @@ particle rsb_chunk_dirt_pebble1
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 232 230 226 @0, 232 230 226 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.5
 	spin     = -600, 600
@@ -1494,6 +1696,10 @@ particle rsb_chunk_dirt_pebble1
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.4
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_pebble2
@@ -1502,7 +1708,7 @@ particle rsb_chunk_dirt_pebble2
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 244 240 236 @0, 244 240 236 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.5
 	spin     = -600, 600
@@ -1510,6 +1716,10 @@ particle rsb_chunk_dirt_pebble2
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.4
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 particle rsb_chunk_dirt_pebble3
@@ -1518,7 +1728,7 @@ particle rsb_chunk_dirt_pebble3
 	lit      = 1
 	emissive = 0 @0, 0 @1
 	color    = 224 222 218 @0, 224 222 218 @1
-	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	size     = 1.2 @0, 1.2 @1
 	gravity  = 700
 	drag     = 0.5
 	spin     = -600, 600
@@ -1526,6 +1736,10 @@ particle rsb_chunk_dirt_pebble3
 	alpha    = 1 @0, 1 @1
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
+	restitution = 0.4
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
 }
 
 // ---------------------------------------------------------------- IMPACT SPARKS
@@ -1547,6 +1761,8 @@ particle rsb_spark_impact
 	orient   = streak
 	stretch  = 0.025
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // A ricochet off metal: long photoreal streaks, a hot head and a tail.
@@ -1565,6 +1781,8 @@ particle rsb_spark_ricochet
 	orient   = streak
 	stretch  = 0.035
 	collide  = level
+	restitution = 0.35
+	friction    = 0.15
 }
 
 // Hot metal torn off by a hit: glowing beads that fall and cool.
@@ -1582,4 +1800,8 @@ particle rsb_ember_metal
 	texture  = "RSKEA0", 1, 1, loop
 	orient   = billboard
 	collide  = level
+	restitution = 0.2
+	friction    = 0.6
+	restlife    = 1.5
+	restfade    = 0.6
 }
