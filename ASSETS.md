@@ -135,3 +135,16 @@ Written by `tools/import_fx.py`. Not packed (build.ps1 packs an allowlist).
 
 - `models/rocket/rocket.kvx` from `RS_Main/voxels/MISLA.kvx` (md5 f7b380190fbec2d614d45354c0efdaa8), copied unchanged by `tools/import_rocket_voxel.py`. Byte-identical to `DXR-main/wadsrc/static/voxels/MISLA.kvx`; no author recorded in either.
 - `models/rocket/rocket_pal.png` generated from that file's own palette.
+
+## RSK*: the textured spark library (tools/import_sparks.py)
+
+- `sprites/RSKSA0.png` from `RS_Main/sprites/combatfx/sparks/RSS4A0.png` (sha1 2b9cd8a9b271244e7ccb98edef3cb8b06726b973)
+- `sprites/RSKRA0.png` from `ART SOURCE/SPRITES/PARTICLES/photorealisticspark/spark.png` (sha1 8bd9c613a6460704b7b1b67eb51f5130c044b23e), rotate
+- `sprites/RSKTA0.png` from `RS_Main/sprites/combatfx/sparks/RSS1A0.png` (sha1 910c839098963a268b94588e11f714465bc50d10)
+- `sprites/RSKPA0.png` from `RS_Main/sprites/combatfx/sparks/RSS0A0.png` (sha1 3c2ebc639e0c77e3ec7942432278f590f58bcb78)
+- `sprites/RSKPB0.png` from `RS_Main/sprites/combatfx/sparks/RSS0B0.png` (sha1 3c19128c8940c94f54cfccab0d633443d12b8772)
+- `sprites/RSKPC0.png` from `RS_Main/sprites/combatfx/sparks/RSS0C0.png` (sha1 1d0948af5b0f66c19ddf42f1516824a7722ab3a6)
+- `sprites/RSKPD0.png` from `RS_Main/sprites/combatfx/sparks/RSS0D0.png` (sha1 665d837f90016af8aec51c860c7feb93a267a22a)
+- `sprites/RSKEA0.png` from `RS_Main/sprites/combatfx/sparks/RSS0S0.png` (sha1 8e6dcc59b40c37d754f09fd726572bf1e2a437e5)
+- `sprites/RSKEB0.png` from `RS_Main/sprites/combatfx/sparks/RSS4B0.png` (sha1 c314b8b4f74291a79390b674937ac57510979556)
+- `sprites/RSKBA0.png` from `ART SOURCE/SPRITES/PARTICLES/photorealisticspark/yellowflare.png` (sha1 cb2fccf98403a8d9f0dfd76ccc3f9e41bfac00ac), shrink

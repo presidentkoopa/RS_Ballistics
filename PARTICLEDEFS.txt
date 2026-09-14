@@ -296,6 +296,112 @@ particle rsb_smoke_barrel_soot
 	spin     = -50, 50
 }
 
+// ---------------------------------------------------------------- MUZZLE SPARKS
+// The textured spark library (tools/import_sparks.py): burning powder out of a bore. Light and
+// fast, slowed by drag, barely falling -- so a spark flying straight away from the eye stays a
+// short bright dot and one flying sideways streaks outward from the muzzle, instead of every
+// spark dropping into the same short vertical line. Each cools white, yellow, orange, red
+// (only hot things glow). Additive.
+particle rsb_spark_streak
+{
+	size     = 1.6 @0, 1.2 @0.6, 0.6 @1
+	color    = 255 250 230 @0, 255 200 110 @0.35, 255 120 40 @0.75, 200 50 20 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 5.0 @0, 3.0 @0.4, 0 @1
+	lit      = 0
+	gravity  = 60
+	drag     = 5
+	maxsize  = 6
+	soft     = 1
+	texture  = "RSKSA0", 1, 1, loop
+	orient   = streak
+	stretch  = 0.03
+}
+
+// A photoreal spark: a hot head and a long fading tail.
+particle rsb_spark_photo
+{
+	size     = 2.2 @0, 1.4 @0.6, 0.8 @1
+	color    = 255 252 240 @0, 255 214 130 @0.3, 255 130 50 @0.7, 190 50 20 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 4.5 @0, 2.8 @0.4, 0 @1
+	lit      = 0
+	gravity  = 40
+	drag     = 4
+	maxsize  = 8
+	soft     = 1
+	texture  = "RSKRA0", 1, 1, loop
+	orient   = streak
+	stretch  = 0.04
+}
+
+// A four-point star: the brightest grains flashing and gone.
+particle rsb_spark_star
+{
+	size     = 1.5 @0, 4 @0.3, 0 @1
+	color    = 255 240 200 @0, 255 170 80 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 6.0 @0, 3.0 @0.4, 0 @1
+	lit      = 0
+	gravity  = 0
+	drag     = 6
+	maxsize  = 8
+	soft     = 1
+	texture  = "RSKTA0", 1, 1, loop
+	orient   = billboard
+	spin     = -360, 360
+}
+
+// Tiny spark clusters, flickering through their frames.
+particle rsb_spark_speck
+{
+	size     = 2.5 @0, 3 @0.5, 1.5 @1
+	color    = 255 220 150 @0, 255 130 50 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 4.0 @0, 2.2 @0.5, 0 @1
+	lit      = 0
+	gravity  = 80
+	drag     = 4
+	maxsize  = 6
+	soft     = 1
+	texture  = "RSKPA0", 4, 20, loop
+	orient   = billboard
+	spin     = -180, 180
+}
+
+// A glowing ember: slower, longer, falling as it cools to dark red.
+particle rsb_spark_ember
+{
+	size     = 0.9 @0, 0.7 @0.6, 0.3 @1
+	color    = 255 190 100 @0, 255 110 30 @0.5, 160 40 10 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 3.5 @0, 2.0 @0.5, 0 @1
+	lit      = 0
+	gravity  = 180
+	drag     = 1.2
+	maxsize  = 3
+	soft     = 1
+	texture  = "RSKEA0", 1, 1, loop
+	orient   = billboard
+}
+
+// A photoreal sparkler burst: a big gun's biggest shots, one bright starburst.
+particle rsb_spark_sparkler
+{
+	size     = 6 @0, 16 @0.3, 18 @1
+	color    = 255 250 220 @0, 255 190 90 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 5.0 @0, 2.5 @0.4, 0 @1
+	lit      = 0
+	gravity  = 0
+	drag     = 0
+	maxsize  = 24
+	soft     = 2
+	texture  = "RSKBA0", 1, 1, loop
+	orient   = billboard
+	spin     = -90, 90
+}
+
 // ---------------------------------------------------------------- PLASMA
 // A plasma bolt's hot core: a soft blue-white glow around the vanilla ball, following it.
 // Energy, so it may glow blue.

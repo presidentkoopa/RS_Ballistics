@@ -292,7 +292,7 @@ burst flash_sparks
   color   = 255, 196, 110
   glow    = 2.5
   size    = 0.8, 0.2
-  gravity = 250
+  gravity = 40
   drag    = 3.0
   orient  = streak
   stretch = 0.02
@@ -308,7 +308,7 @@ burst flash_sparks_wide
   color   = 255, 190, 100
   glow    = 2.8
   size    = 0.9, 0.2
-  gravity = 250
+  gravity = 40
   drag    = 3.0
   orient  = streak
   stretch = 0.02
@@ -352,7 +352,7 @@ burst flash_powder         # unburnt powder: hot specks thrown out ahead, droppi
   color   = 255, 170, 70
   glow    = 2.2
   size    = 0.45, 0.1
-  gravity = 320
+  gravity = 120
   drag    = 2.5
   orient  = streak
   stretch = 0.015
@@ -436,7 +436,7 @@ burst flash_embers         # burning powder and fouling spat out of an old barre
   color   = 255, 128, 44
   glow    = 2.4
   size    = 0.7, 0.2
-  gravity = 380
+  gravity = 200
   drag    = 1.2
   orient  = billboard
   aim     = along
@@ -603,7 +603,7 @@ burst rpg_backblast_sparks # burning propellant thrown out behind with the backb
   color   = 255, 196, 110
   glow    = 3.0
   size    = 0.9, 0.2
-  gravity = 250
+  gravity = 40
   drag    = 3.0
   orient  = streak
   stretch = 0.02
@@ -999,6 +999,137 @@ burst saw_smoke_wood       # friction smoke curling off wood the chain is burnin
   aim      = up
   offset   = 3
   particle = rsb_smoke_gun
+end
+
+burst spk_streaks_fine   # the 9mm's bore sparks: a few crisp streaks, fanned out
+  count    = 7
+  cone     = 20
+  speed    = 700, 0.5
+  life     = 0.12, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_streak
+end
+
+burst spk_heavy_streaks  # heavier sparks: fatter photoreal streaks, slower
+  count    = 7
+  cone     = 24
+  speed    = 560, 0.5
+  life     = 0.16, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_photo
+end
+
+burst spk_photo_narrow   # a long barrel's sparks: long photoreal streaks thrown far and straight
+  count    = 6
+  cone     = 9
+  speed    = 900, 0.4
+  life     = 0.16, 0.4
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_photo
+end
+
+burst spk_photo_wide     # a big blast's sparks: photoreal streaks fanned wide
+  count    = 10
+  cone     = 30
+  speed    = 760, 0.5
+  life     = 0.18, 0.4
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_photo
+end
+
+burst spk_streaks_wide   # a wide spray of streaks
+  count    = 14
+  cone     = 34
+  speed    = 640, 0.5
+  life     = 0.14, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_streak
+end
+
+burst spk_chaingun       # a chaingun round's few sparks: short, fast, stuttering
+  count    = 4
+  cone     = 22
+  speed    = 620, 0.6
+  life     = 0.1, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_streak
+end
+
+burst spk_stars          # star twinkles: the brightest grains flashing
+  count    = 3
+  cone     = 26
+  speed    = 180, 0.6
+  life     = 0.07, 0.4
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_star
+end
+
+burst spk_specks         # tiny flickering spark clusters
+  count    = 6
+  cone     = 24
+  speed    = 360, 0.6
+  life     = 0.2, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_speck
+end
+
+burst spk_specks_wide    # a wide cloud of flickering spark clusters
+  count    = 10
+  cone     = 45
+  speed    = 320, 0.6
+  life     = 0.24, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_speck
+end
+
+burst spk_embers         # glowing embers thrown out, falling as they cool
+  count    = 6
+  cone     = 26
+  speed    = 240, 0.6
+  life     = 0.7, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_ember
+end
+
+burst spk_embers_heavy   # a shower of glowing embers
+  count    = 12
+  cone     = 36
+  speed    = 260, 0.6
+  life     = 0.9, 0.5
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_ember
+end
+
+burst spk_sparkler       # one photoreal starburst at the muzzle, a big gun's biggest shots
+  count    = 1
+  cone     = 0
+  speed    = 0, 0
+  life     = 0.08, 0.3
+  aim      = along
+  offset   = 3
+  particle = rsb_spark_sparkler
+end
+
+burst spk_brake_ring     # sparks thrown out sideways by a muzzle brake, a ring round the bore
+  count    = 16
+  cone     = 10
+  speed    = 600, 0.4
+  life     = 0.14, 0.4
+  aim      = along
+  offset   = 0
+  shape    = disc
+  particle = rsb_spark_streak
 end
 
 burst trail_hot
@@ -3160,8 +3291,8 @@ flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turn
   lightcolor = 255, 222, 170
   cone       = 18, 50, 95, 6
   conetics   = 3
-  bursts     = flash_core_9mm, flash_petals, flash_sparks
-  maybe      = flash_powder 0.45, flash_sparks_wide 0.2
+  bursts     = flash_core_9mm, flash_petals, spk_streaks_fine
+  maybe      = spk_stars 0.5, spk_specks 0.45, spk_embers 0.25
   flame      = 0.055
   smoke      = 2, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
@@ -3179,8 +3310,8 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   lightcolor = 255, 204, 136
   cone       = 24, 62, 85, 6
   conetics   = 4
-  bursts     = flash_core, flash_petals, flash_sparks
-  maybe      = flash_powder 0.6
+  bursts     = flash_core, flash_petals, spk_heavy_streaks
+  maybe      = spk_embers 0.6, spk_specks 0.35, spk_stars 0.2
   flame      = 0.07
   smoke      = 3, 0.025, 0.32
   smokeparticle = rsb_smoke_gun
@@ -3209,8 +3340,8 @@ flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire
   lightcolor = 255, 226, 176
   cone       = 16, 48, 190, 11
   conetics   = 3
-  bursts     = flash_core, flash_tongue, flash_plume_long, flash_sparks
-  maybe      = flash_powder 0.5
+  bursts     = flash_core, flash_tongue, flash_plume_long, spk_photo_narrow
+  maybe      = spk_embers 0.5, spk_stars 0.3
   flame      = 0.075
   smoke      = 3, 0.03, 0.34
   smokeparticle = rsb_smoke_gun
@@ -3228,8 +3359,8 @@ flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide
   lightcolor = 255, 194, 118
   cone       = 34, 84, 120, 12
   conetics   = 5
-  bursts     = flash_core, flash_petals_wide, flash_plume_wide, flash_sparks_wide
-  maybe      = flash_powder 0.9, flash_sparks_wide 0.35
+  bursts     = flash_core, flash_petals_wide, flash_plume_wide, spk_streaks_wide
+  maybe      = spk_specks_wide 0.8, spk_embers 0.4
   flame      = 0.1
   smoke      = 6, 0.034, 0.38
   smokeparticle = rsb_smoke_gun
@@ -3247,8 +3378,8 @@ flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge w
   lightcolor = 255, 222, 172
   cone       = 40, 90, 200, 16
   conetics   = 5
-  bursts     = flash_core, flash_petals_wide, flash_plume_twin, flash_sparks_wide, flash_sparks_wide
-  maybe      = flash_powder 0.9, flash_tongue 0.5
+  bursts     = flash_core, flash_petals_wide, flash_plume_twin, spk_photo_wide, spk_streaks_wide
+  maybe      = spk_sparkler 0.35, spk_embers_heavy 0.6, flash_tongue 0.5
   flame      = 0.13
   smoke      = 8, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
@@ -3268,8 +3399,8 @@ flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-oran
   lightcolor = 255, 176, 100
   cone       = 36, 86, 170, 15
   conetics   = 6
-  bursts     = flash_core, flash_plume_dirty, flash_embers, flash_soot, flash_sparks_wide
-  maybe      = flash_powder 1.0, flash_embers 0.5, flash_petals_wide 0.4
+  bursts     = flash_core, flash_plume_dirty, spk_embers_heavy, flash_soot, spk_specks_wide
+  maybe      = spk_streaks_wide 0.6, flash_petals_wide 0.4
   flame      = 0.12
   smoke      = 5, 0.04, 0.42
   smokeparticle = rsb_smoke_soot_gun
@@ -3289,8 +3420,8 @@ flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanill
   lightcolor = 255, 232, 188
   cone       = 26, 70, 180, 14
   conetics   = 3
-  bursts     = flash_core, flash_tongue, flash_brake_fire, flash_brake_smoke, flash_sparks_wide
-  maybe      = flash_powder 0.6
+  bursts     = flash_core, flash_tongue, flash_brake_fire, flash_brake_smoke, spk_brake_ring
+  maybe      = spk_stars 0.4
   flame      = 0.09
   smoke      = 5, 0.04, 0.38
   smokeparticle = rsb_smoke_gun
@@ -3311,7 +3442,7 @@ flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow
   cone       = 14, 40, 90, 5
   conetics   = 2
   bursts     = flash_core
-  maybe      = flash_petals 0.5, flash_sparks 0.45, flash_powder 0.15
+  maybe      = flash_petals 0.5, spk_chaingun 0.6, spk_specks 0.2
   flame      = 0.045
   smoke      = 1, 0.018, 0.22
   smokeparticle = rsb_smoke_gun
@@ -3331,7 +3462,7 @@ flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange st
   cone       = 22, 56, 110, 7
   conetics   = 3
   bursts     = flash_core, flash_petals
-  maybe      = flash_sparks_wide 0.35, flash_powder 0.3
+  maybe      = spk_heavy_streaks 0.45, spk_embers 0.3
   flame      = 0.06
   smoke      = 2, 0.025, 0.3
   smokeparticle = rsb_smoke_gun
@@ -3349,7 +3480,7 @@ flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure 
   light      = 120, 1.8, 2
   lightcolor = 255, 190, 120
   bursts     = flash_launcher_puff
-  maybe      = flash_powder 0.3
+  maybe      = spk_embers 0.3
   flame      = 0.03
   smoke      = 5, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
@@ -3504,8 +3635,8 @@ flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -
   lightcolor = 255, 186, 110
   cone       = 30, 76, 160, 12
   conetics   = 4
-  bursts     = flash_core, flash_plume_wide, flash_sparks_wide, rl_exhaust_back
-  maybe      = flash_powder 0.6
+  bursts     = flash_core, flash_plume_wide, rl_exhaust_back, spk_specks_wide
+  maybe      = spk_embers_heavy 0.6
   flame      = 0.11
   smoke      = 6, 0.04, 0.4
   smokeparticle = rsb_smoke_rocket
@@ -3526,7 +3657,7 @@ flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning p
   cone       = 24, 64, 120, 10
   conetics   = 4
   bursts     = flash_core, flash_petals, rpg_backblast_fire, rpg_backblast_smoke, rpg_backblast_sparks
-  maybe      = flash_powder 0.5
+  maybe      = spk_stars 0.3
   flame      = 0.07
   smoke      = 3, 0.035, 0.36
   smokeparticle = rsb_smoke_gun
