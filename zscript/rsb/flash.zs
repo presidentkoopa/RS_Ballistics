@@ -3,7 +3,7 @@
 // bursts at the bore, a flame sprite and a puff of smoke -- each scaled by the
 // player's menu settings and style.
 //
-// The reload system's WM_MuzzleFlash, moved here and driven by data:
+// Once the reload system's own flash (WM_MuzzleFlash, since removed), now data:
 //
 //   THE STROBE. One over-bright tic on the shot, fading over lightTics, then
 //   dark: a real muzzle flash is over in a millisecond, and a light that holds

@@ -1,7 +1,7 @@
 // ============================================================================
 // EJECTA: SPENT CASINGS AND HULLS, from an `ejecta` profile.
 //
-// The reload system's WM_Casing, moved here and driven by data. WHAT STAYS IN
+// Once the reload system's casing (WM_Casing, since removed), now data. WHAT STAYS IN
 // THE RELOAD SYSTEM: the eject port, the direction, when a case comes out, and
 // live rounds (which can be caught and loaded). It calls
 //   RSB_Ejecta.Throw(profile, at, dir, carrierVel, throwSpeed, seed, shared, casingSound)

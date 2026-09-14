@@ -20,7 +20,7 @@
 //            else, whizzes or cracks.
 //   impact   RSB_Impact, by material, style and tier.
 //
-// THE CONTRACT the fire action relies on (kept from WM_Bullet):
+// THE CONTRACT the fire action relies on (RS_VR_Reload's WM_Gun.LaunchRound and ApplyShotDamage):
 //   damageMin, damageMax    set per round by the shooter; 0/0 = the ballistics
 //                           profile's damageBase x 1d(damageDice).
 //
