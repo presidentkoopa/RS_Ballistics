@@ -340,7 +340,10 @@ class RSB_LocalEjecta : Actor
 	// ONE TIC OF FLIGHT: fall, then trace the move and bounce off what it meets.
 	private void Fly()
 	{
-		flight.z -= GetGravity();
+		// FALL. Not GetGravity(): this actor is +NOGRAVITY (so the engine's mover leaves it alone),
+		// and GetGravity() returns 0 for every +NOGRAVITY actor -- which left casings drifting on
+		// their throw line, bouncing off ceilings and settling slowly (owner, 2026-09-14).
+		flight.z -= Gravity * level.gravity * CurSector.gravity * 0.00125;
 		frame = (age / 2) % 5;
 		pitch += pitchSpin;
 		roll += rollSpin;

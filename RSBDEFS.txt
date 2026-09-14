@@ -3898,8 +3898,33 @@ roundlook pistol_9mm@extreme   # the Pistolet's round at extreme: the longer vap
   carve  = 7, 0.9
 end
 
-# (No brass_9mm@extreme: the Tec9 -- Vanilla+ -- throws brass_9mm too. Extreme brass for the
-# Pistolet alone waits for a Pistolet-only ejecta profile named on its sheet.)
+# THE PISTOLET'S OWN BRASS. brass_9mm is shared with the Tec9 (Vanilla+), so the Pistolet's
+# sheet names this copy instead: identical below Extreme, its own at Extreme.
+ejecta brass_9mm_pistolet  # the Pistolet's 9mm brass: the same as brass_9mm
+  look    = model, RSB_Casing9mm
+  scale   = 1
+  speed   = 1.1, 0.2
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 14
+end
+
+ejecta brass_9mm_pistolet@extreme  # the Pistolet's brass at extreme: glows hot longer, a bigger puff out of the port, a longer wisp -- its flight unchanged
+  look    = model, RSB_Casing9mm
+  scale   = 1
+  speed   = 1.1, 0.2
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 24
+  life    = 2100
+  portsmoke = rsb_smoke_port, 4
+  wisp    = rsb_casing_wisp, 30
+end
 
 flash rifle
   light      = 220, 3.2, 2
