@@ -2,27 +2,35 @@
 
 **The combat-effects generator for the UZDXREMA (DoomXR) mod family.** Data in
 lumps turns into:
-- real rounds in flight, with tracers and near-miss whiz and crack
-- muzzle flashes, gunsmoke and sparks
-- spent casings and hulls
-- impacts by surface material: sparks, chips, dust, splinters, glints, splashes,
-  marks and ricochets
+- real rounds in flight, with tracers, vapour trails, heat shimmer and near-miss whiz and crack
+- muzzle flashes (every shot its own: sparks lean, spread and burn differently), gunsmoke and a smoking, glowing barrel
+- spent casings and hulls, and chainsaw engine exhaust
+- impacts by surface material: sparks, 3D chunks, dust, splinters, glints, splashes,
+  marks and ricochets -- each round type with its own hit character
+- room-filling smoke the guns, blasts and flames fill and the rounds tear (engine smoke volume)
+- debris that bounces, collides with the whole level and stays for the fight (engine collision and debris pool)
 - flamethrowers: a licking drawn-line core, flame that slides along what it hits,
   scorch and black smoke
 - looks for plasma, rockets, the BFG, the railgun and the chainsaw
+- gameplay recoil for the guns that use it (the one gameplay system here: a server switch)
 
-The same system covers everything from no effects at all to heavy spectacle, in
-VR. Effects are picked per player by style, effects tier and menu settings.
+The same system covers everything from no effects at all to EXTREME, in VR. The
+effects level (off, plain, normal, heavy, extreme) scales counts, lights, sizes,
+smoke, shoves, shimmer, mark life, glow and tracers; `@extreme` profiles add what
+only the top level shows. Effects are picked per player by level, style and menu
+settings.
 
 ## Requirements
 
-- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 8125f36976 or later.
+- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 15908db746 or later.
   RS_Ballistics uses engine features plain GZDoom does not have: GPU particle
-  definitions (`PARTICLEDEFS`, `SpawnParticles`), surface materials (`SURFACES`,
-  `TexMan.GetSurface`), drawn-line looks (`SetDrawnLine*`) and generated
-  particle looks (`look = dust | fire`). It will not load on other engines.
-- Mods that fire its rounds (RS_VR_Reload, RS_VR_Weapons) require it and load
-  after it.
+  definitions (`PARTICLEDEFS`, `SpawnParticles`, mesh particles, level collision,
+  the debris pool), surface materials (`SURFACES`, `TexMan.GetSurface`), drawn-line
+  looks (`SetDrawnLine*`), generated particle looks, heat shimmer
+  (`SetHeatSource`) and the smoke volume (`EmitSmoke`, `CarveSmoke`,
+  `PushEffectImpulse`). It will not load on other engines.
+- Mods that fire its rounds or call its hooks (RS_VR_Reload, RS_VR_Weapons) require
+  it and load after it.
 
 ## Load order
 
@@ -30,16 +38,20 @@ VR. Effects are picked per player by style, effects tier and menu settings.
 2. `RS_VR_Reload`
 3. `RS_VR_Weapons`
 
+(The owner's full order has more mods around these; RS_Ballistics always loads
+before the two that use it.)
+
 ## What is in the package
 
 | Lump / folder | What it holds |
 |---|---|
-| `RSBDEFS` | Profiles: styles, bursts, impacts, rounds (ballistics + looks), wakes, flashes, flames, ejecta. Any loaded mod may ship its own; a later profile with the same name wins. |
-| `PARTICLEDEFS` | GPU particle definitions: flame puffs, smoke, dust. |
+| `RSBDEFS` | Profiles: styles, bursts, impacts, rounds (ballistics + looks), wakes, flashes (incl. `sparkvary`, exhaust, charge), flames, trails, hotspots, ejecta, recoil. `<profile>@extreme` and the other level variants. Any loaded mod may ship its own; a later profile with the same name wins. |
+| `PARTICLEDEFS` | GPU particle definitions: flame, smoke, dust, the textured spark library, 3D debris chunks (mesh), debris keys. |
 | `SURFACES` | Which textures are metal, wood, glass, liquid or dirt. |
-| `zscript/rsb` | The generator: parser, registry, bullet, impacts, flashes, casings, flamethrowers, previews, benchmarks. |
-| `MENUDEF`, `CVARINFO` | Options → RS Ballistics: every look has a setting, plus Preview and Benchmarks rows. |
-| `sounds`, `sprites` | Impact, ricochet, whiz, crack, casing and flame sounds; tracer, casing, flash and smoke sprites. |
+| `zscript/rsb` | The generator: parser, registry, bullets, impacts, flashes, barrel heat and exhaust, hotspots, casings, flamethrowers, recoil, previews, benchmarks. |
+| `MENUDEF`, `CVARINFO`, `KEYCONF` | Options -> Ballistics & Effects: every look has a setting, "All effects on", Recoil under GAMEPLAY, Preview and Benchmarks rows. |
+| `sounds`, `sprites`, `models` | Impact, ricochet, whiz, crack, casing, flame and debris landing sounds; tracer, casing, flash, spark and smoke sprites; casing, rocket and debris models. |
+| `tools` | Generators and importers: casings, chunks, sparks, the rocket voxel, debris sounds. |
 
 A bad profile is refused and named with its lump and line; the rest still load.
 
@@ -47,6 +59,9 @@ A bad profile is refused and named with its lump and line; the rest still load.
 
 - What the game knows about a round (speed, size, damage) comes only from its
   `ballistics` profile, identical on every machine, with no player setting.
+- Gameplay recoil is decided in the weapon's own action on every machine, from the
+  map clock, the shot count, crouching and the owner's speed; `sv_rsb_recoil` is a
+  server switch; recoil profiles have no local variants.
 - Every look is presentation for the machine that draws it: no playsim RNG (hashes
   instead), nothing a netgame compares, never read back by gameplay.
 - Anything tied to a player is keyed by its owner, never `consoleplayer`.
@@ -65,7 +80,7 @@ owner's `E:\DOOMWork` layout (the shared tools folder and the engine build).
 
 - **Sounds and sprites** come from the owner's permitted asset pools: the RS_Main
   asset folders and the owner's ART SOURCE library, matched by hash on 2026-09-14.
-  `ASSETS.md` lists each effect sprite's source.
+  `ASSETS.md` lists each effect sprite's and debris sound's source.
 - **Generated by this package, owned outright:** the debris sprites (chips,
   splinters, clods, glass shards), and the 9mm, .45 and .357 casings and the
   12-gauge shell (`tools/gen_casings.py`), and the 3D debris chunks
@@ -81,6 +96,9 @@ owner's `E:\DOOMWork` layout (the shared tools folder and the engine build).
 
 ## Design docs
 
-The design documents live in the owner's `Engine docs` folder, not in this
+The engine design documents live in the owner's `Engine docs` folder, not in this
 repository: `RS_BALLISTICS_PLAN.md`, `ENGINE_SUPPORT_LIST.md`,
-`GPU_PARTICLES_STAGE2_PLAN.md`, `FLAME_ENGINE_PLAN.md`, `SURFACE_MATERIALS_PLAN.md`.
+`GPU_PARTICLES_STAGE2_PLAN.md`, `FLAME_ENGINE_PLAN.md`, `SURFACE_MATERIALS_PLAN.md`,
+`SMOKE_VOLUME_PLAN.md`, `COLLISION_DEBRIS_MESH_PLAN.md`, `SURFACE_DAMAGE_PLAN.md`,
+`WALL_DAMAGE_ART_PLAN.md`. This package's own plans are in `_staged/`: collision and
+debris, debris sounds, smoke tuning, recoil, enemy ballistics.
