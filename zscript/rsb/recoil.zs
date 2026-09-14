@@ -129,10 +129,11 @@ class RSB_Recoil play
 	}
 
 	// THE PER-SHOT JOLT the arm and the prop show (render only): back (map units), rise and
-	// roll (degrees), and the tics it takes -- times the player's "Recoil kick (visual)".
+	// roll (degrees), and the tics it takes -- times the player's "Recoil kick (visual)". The
+	// server's switch is ALL recoil (the owner): off, no jolt either.
 	clearscope static double, double, double, int ViewJolt(String profile)
 	{
-		let rd = Profile(profile);
+		let rd = Enabled() ? Profile(profile) : null;
 		if (!rd) return 0, 0, 0, 0;
 		double k = ViewScale();
 		return rd.viewBack * k, rd.viewRise * k, rd.viewRoll * k, rd.viewTics;

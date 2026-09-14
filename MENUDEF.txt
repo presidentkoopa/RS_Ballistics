@@ -135,8 +135,9 @@ OptionMenu "RSB_RecoilMenu"
 	StaticText "holding the trigger walks them up and sideways, the first shot is dead on,", "DarkGray"
 	StaticText "and crouching or standing still steadies it. Plasma and BFG never kick.", "DarkGray"
 	StaticText ""
-	StaticText "Gameplay recoil is one rule the server sets for every player; the kick you", "DarkGray"
-	StaticText "see is your own. Both rows arrive when the guns read their recoil profiles.", "Gold"
+	StaticText "Recoil is one switch the server sets for every player, and it is ALL recoil:", "DarkGray"
+	StaticText "off, rounds fly dead on and no gun kicks, not even to the eye. On, how hard the", "DarkGray"
+	StaticText "kick looks is your own. Both rows arrive when the guns read their recoil profiles.", "Gold"
 }
 
 OptionMenu "RSB_ParticleMenu"

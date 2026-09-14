@@ -4557,3 +4557,1389 @@ ejecta default             # a plain case for a gun that names no casing (WM_Gun
   hot     = 12
   life    = 2100
 end
+
+# ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
+# Every Vanilla gun at the top effects level: each keeps its own character and does MORE of it,
+# on top of the level's ladder. Material variants each get their own (a material outranks a tier).
+# Some bases are shared with Vanilla+ guns (buckshot, brass_45/556/762, rocket, plasma_ball, bfg_ball,
+# the saw puff), so those guns take these at Extreme too. Looks only.
+
+burst x45_bloom            # the .45 at extreme: a short fat ball of orange fire at the muzzle (rsb_muzzle_plume)
+  count    = 3
+  cone     = 16
+  speed    = 220, 0.4
+  life     = 0.08, 0.3
+  aim      = along
+  offset   = 1
+  particle = rsb_muzzle_plume
+end
+
+burst x45_smoke_ring       # the .45 at extreme: a slow ring of smoke rolling off the muzzle (rsb_smoke_gun, disc)
+  count    = 5
+  shape    = disc
+  cone     = 12
+  speed    = 90, 0.4
+  life     = 1.4, 0.35
+  aim      = along
+  offset   = 1
+  particle = rsb_smoke_gun
+end
+
+burst xm37_gout            # the M37 at extreme: the gout of fire reaching further, ~5 m (rsb_muzzle_plume)
+  count    = 8
+  cone     = 3
+  speed    = 1000, 0.4
+  life     = 0.16, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume
+end
+
+burst xdoom_fireball       # Doom's pump at extreme: a fatter, slower rolling fireball (rsb_muzzle_plume)
+  count    = 8
+  cone     = 30
+  speed    = 300, 0.5
+  life     = 0.2, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume
+end
+
+burst xssg_twin            # the Super Shotgun at extreme: a second, bigger twin fireball (rsb_muzzle_plume)
+  count    = 12
+  cone     = 30
+  speed    = 650, 0.5
+  life     = 0.2, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume
+end
+
+burst xssg_shock           # the Super Shotgun at extreme: a shock ring of smoke blown out around the muzzle (rsb_smoke_gun, disc)
+  count    = 14
+  shape    = disc
+  cone     = 8
+  speed    = 320, 0.4
+  life     = 1.2, 0.35
+  aim      = along
+  offset   = 2
+  particle = rsb_smoke_gun
+end
+
+burst xbp_brake_ring       # the bullpup at extreme: a second, wider ring of fire off the brake (rsb_muzzle_plume, disc)
+  count    = 20
+  shape    = disc
+  cone     = 6
+  speed    = 620, 0.35
+  life     = 0.12, 0.25
+  aim      = along
+  offset   = 1
+  particle = rsb_muzzle_plume
+end
+
+burst xbp_spike            # the bullpup at extreme: a long white-hot spike straight out
+  count   = 12
+  cone    = 3
+  speed   = 520, 0.3
+  life    = 0.08, 0.25
+  color   = 255, 240, 214
+  glow    = 7.0
+  size    = 2.2, 0.5
+  orient  = streak
+  stretch = 0.06
+  aim     = along
+  offset  = 0
+end
+
+burst xgl_ring             # the 40 mm at extreme: a ring of smoke rolling out of the tube mouth (rsb_smoke_gun, disc)
+  count    = 8
+  shape    = disc
+  cone     = 10
+  speed    = 140, 0.4
+  life     = 1.8, 0.35
+  aim      = along
+  offset   = 3
+  particle = rsb_smoke_gun
+end
+
+wake xpellet_vapour        # pellets at extreme: wisps that hang longer (lit, never glowing)
+  spacing  = 8
+  life     = 1.0
+  drift    = 2
+  particle = rsb_bullet_vapour
+end
+
+wake xtracer_hot           # a 5.56 tracer at extreme: a longer burning tail
+  spacing = 4
+  size    = 1.3, 0.2
+  life    = 0.22
+  drift   = 2
+  drag    = 4
+  color   = 255, 190, 110
+  glow    = 3.2
+end
+
+hotspot xsaw_cut_stone   # the Chainsaw's cut in stone at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = saw_sparks_stone 20, saw_grit 10, saw_dust 18, chips_concrete 3, hsaw_beads 2
+  light       = 72, 1.7
+  lightcolor  = 255, 190, 120
+  sound       = none
+  smokevolume = 16, 0.7
+end
+
+hotspot xsaw_cut_metal   # the Chainsaw's cut in metal at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = saw_sparks_metal 28, saw_sparkler_metal 6, hsaw_stars 4, spark_spray 9, ember_metal 7, saw_smoke_metal 4
+  light       = 100, 2.2
+  lightcolor  = 255, 196, 130
+  mark        = gouge, 2, 9, 5, 60
+  markcolor   = 255, 140, 60
+  shimmer     = 10, 0.8
+  sound       = none
+  smokevolume = 12, 0.45
+end
+
+hotspot xsaw_cut_wood   # the Chainsaw's cut in wood at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = sawdust_spray 22, saw_dust_wood 12, splinter_wood 4, saw_smoke_wood 4
+  sound       = none
+  smokevolume = 14, 0.55
+end
+
+hotspot xsaw_cut_dirt   # the Chainsaw's cut in dirt at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = clods_dirt 4, dust_dirt 12, saw_grit 6, hsaw_beads 2
+  sound       = none
+  smokevolume = 18, 0.8
+end
+
+hotspot xsaw_cut_glass   # the Chainsaw's cut in glass at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = glint_glass 6, saw_dust 6, saw_grit 3
+  sound       = none
+  smokevolume = 12, 0.35
+end
+
+hotspot xsaw_cut_liquid   # the Chainsaw's cut in liquid at extreme
+  merge  = 16
+  heat   = 0.3, 1.2, 1.0
+  bursts = splash_liquid 9
+  sound  = none
+end
+
+hotspot xsaw_cut_stone_heavy   # the Heavy Chainsaw's cut in stone at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = hsaw_sparks_stone 26, hsaw_beads 8, saw_dust 26, chips_concrete 4, saw_grit 6
+  light       = 90, 2.0
+  lightcolor  = 255, 190, 120
+  sound       = none
+  smokevolume = 22, 1.0
+end
+
+hotspot xsaw_cut_metal_heavy   # the Heavy Chainsaw's cut in metal at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = hsaw_sparks_metal 36, hsaw_stars 9, saw_sparkler_metal 9, spark_spray 12, ember_metal 9, saw_smoke_metal 6
+  light       = 120, 2.6
+  lightcolor  = 255, 196, 130
+  mark        = gouge, 2, 9, 5, 60
+  markcolor   = 255, 140, 60
+  shimmer     = 10, 0.8
+  sound       = none
+  smokevolume = 14, 0.55
+end
+
+hotspot xsaw_cut_wood_heavy   # the Heavy Chainsaw's cut in wood at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = sawdust_spray 32, saw_dust_wood 18, splinter_wood 6, saw_smoke_wood 6
+  sound       = none
+  smokevolume = 16, 0.7
+end
+
+hotspot xsaw_cut_dirt_heavy   # the Heavy Chainsaw's cut in dirt at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = clods_dirt 6, dust_dirt 18, hsaw_beads 5, saw_grit 7
+  sound       = none
+  smokevolume = 24, 1.0
+end
+
+hotspot xsaw_cut_glass_heavy   # the Heavy Chainsaw's cut in glass at extreme
+  merge       = 16
+  heat        = 0.3, 1.2, 1.0
+  bursts      = glint_glass 9, saw_dust 9, saw_grit 4
+  sound       = none
+  smokevolume = 14, 0.45
+end
+
+hotspot xsaw_cut_liquid_heavy   # the Heavy Chainsaw's cut in liquid at extreme
+  merge  = 16
+  heat   = 0.3, 1.2, 1.0
+  bursts = splash_liquid 13
+  sound  = none
+end
+
+flash pistol_45@extreme   # the .45 at extreme: a fat orange ball of fire and a slow smoke ring each shot, embers spitting, a barrel that glows after a string
+  light           = 250, 3.7, 4
+  lightcolor      = 255, 204, 136
+  cone            = 24, 62, 85, 6
+  conetics        = 4
+  bursts          = flash_core, flash_petals, spk_heavy_streaks, x45_bloom, x45_smoke_ring
+  maybe           = spk_embers 0.9, spk_specks 0.6, spk_stars 0.35, spk_embers_heavy 0.4
+  flame           = 0.07
+  smoke           = 3, 0.025, 0.32
+  smokeparticle   = rsb_smoke_gun
+  heat            = 4, 16, 0.7, 12
+  vary            = light 0.25, flame 0.3, cone 0.2, sparks 0.45, smoke 0.4
+  surge           = 0.3, 1.5
+  barrelheat      = 0.2, 0.22, 0.35
+  barrelsmoke     = rsb_smoke_barrel, 2
+  barrelshimmer   = 2.5, 0.4
+  smokevolume     = 18, 1.5, 0.5, 90, 6
+  barrelglow      = 1.4, 20, 1.0
+  barrelglowcolor = 255, 110, 45
+  push            = 40, 160
+end
+
+flash shotgun_m37@extreme   # the M37 at extreme: the gout reaches ~5 m, photoreal sparks fanned wide, powder hanging in the air, a barrel that glows
+  light           = 560, 6.2, 3
+  lightcolor      = 255, 226, 176
+  cone            = 16, 48, 190, 11
+  conetics        = 3
+  bursts          = flash_core, flash_tongue, flash_plume_long, spk_photo_narrow, xm37_gout, spk_photo_wide
+  maybe           = spk_embers 0.5, spk_stars 0.3, spk_sparkler 0.4, spk_embers_heavy 0.5, flash_powder 0.7
+  flame           = 0.075
+  smoke           = 3, 0.03, 0.34
+  smokeparticle   = rsb_smoke_gun
+  heat            = 7, 120, 1.1, 18
+  vary            = light 0.15, flame 0.2, cone 0.15, sparks 0.35, smoke 0.3
+  surge           = 0.08, 1.25
+  barrelheat      = 0.26, 0.22, 0.45
+  barrelsmoke     = rsb_smoke_barrel, 2.0
+  barrelshimmer   = 2.5, 0.4
+  smokevolume     = 22, 1.1, 0.8, 180, 8
+  push            = 64, 220
+  barrelglow      = 1.2, 22, 0.9
+  barrelglowcolor = 255, 110, 45
+end
+
+flash shotgun_doom@extreme   # Doom's pump at extreme: a fatter rolling fireball, powder and embers everywhere, a strobe that lingers longer
+  light           = 620, 5.4, 6
+  lightcolor      = 255, 194, 118
+  cone            = 34, 84, 120, 12
+  conetics        = 6
+  bursts          = flash_core, flash_petals_wide, flash_plume_wide, spk_streaks_wide, xdoom_fireball, flash_powder
+  maybe           = spk_specks_wide 1, spk_embers 0.8, flash_embers 0.6, spk_sparkler 0.3
+  flame           = 0.1
+  smoke           = 6, 0.034, 0.38
+  smokeparticle   = rsb_smoke_gun
+  heat            = 7, 40, 0.9, 16
+  vary            = light 0.3, flame 0.35, cone 0.3, sparks 0.5, smoke 0.45
+  surge           = 0.3, 1.5
+  barrelheat      = 0.34, 0.18, 0.35
+  barrelsmoke     = rsb_smoke_barrel, 3.0
+  barrelshimmer   = 3.5, 0.5
+  smokevolume     = 26, 1.3, 0.8, 150, 8
+  push            = 64, 230
+  barrelglow      = 1.2, 24, 1.0
+  barrelglowcolor = 255, 105, 40
+end
+
+flash shotgun_ssg@extreme   # the Super Shotgun at extreme: a second bigger twin fireball, a shock ring of smoke, a starburst, the room lit longer, the floor kicked harder
+  light           = 900, 8.0, 5
+  lightcolor      = 255, 222, 172
+  cone            = 40, 90, 200, 16
+  conetics        = 5
+  bursts          = flash_core, flash_petals_wide, flash_plume_twin, spk_photo_wide, spk_streaks_wide, xssg_twin, xssg_shock, spk_sparkler
+  maybe           = spk_embers_heavy 1, flash_tongue 0.8, flash_embers 0.5
+  flame           = 0.13
+  smoke           = 8, 0.04, 0.4
+  smokeparticle   = rsb_smoke_gun
+  heat            = 20, 90, 1.7, 24
+  groundkick      = kick_blast, 96
+  vary            = light 0.2, flame 0.3, cone 0.2, sparks 0.4, smoke 0.3
+  surge           = 0.15, 1.3
+  barrelheat      = 0.8, 0.25, 0.3
+  barrelsmoke     = rsb_smoke_barrel, 3.5
+  barrelshimmer   = 4, 0.6
+  smokevolume     = 36, 1.8, 1.2, 240, 12
+  push            = 128, 420
+  barrelglow      = 1.0, 28, 1.2
+  barrelglowcolor = 255, 100, 40
+end
+
+flash shotgun_bullpup@extreme   # the bullpup at extreme: a second, wider ring of fire off the brake, a long white-hot spike, stars round the brake -- still the same hammer every shot
+  light           = 800, 8.2, 3
+  lightcolor      = 255, 232, 188
+  cone            = 26, 70, 180, 14
+  conetics        = 3
+  bursts          = flash_core, flash_tongue, flash_brake_fire, flash_brake_smoke, spk_brake_ring, xbp_brake_ring, xbp_spike
+  maybe           = spk_stars 0.8, spk_sparkler 0.3
+  flame           = 0.09
+  smoke           = 5, 0.04, 0.38
+  smokeparticle   = rsb_smoke_gun
+  heat            = 14, 64, 1.5, 18
+  groundkick      = kick_blast, 88
+  vary            = light 0.1, flame 0.15, cone 0.1, sparks 0.25, smoke 0.2
+  surge           = 0.05, 1.2
+  barrelheat      = 0.55, 0.24, 0.35
+  barrelsmoke     = rsb_smoke_barrel, 3.0
+  barrelshimmer   = 3.5, 0.55
+  smokevolume     = 28, 1.4, 1.0, 150, 8
+  push            = 96, 300
+  barrelglow      = 1.1, 26, 1.1
+  barrelglowcolor = 255, 105, 40
+end
+
+flash chaingun_556@extreme   # the chaingun at extreme: a crown and bore sparks every round, a barrel that glows sooner and brighter
+  light           = 220, 3.6, 1
+  lightcolor      = 255, 226, 180
+  cone            = 14, 40, 90, 5
+  conetics        = 2
+  bursts          = flash_core, flash_petals, spk_chaingun
+  maybe           = spk_specks 0.5, spk_stars 0.3, spk_embers 0.3
+  flame           = 0.045
+  smoke           = 1, 0.018, 0.22
+  smokeparticle   = rsb_smoke_gun
+  vary            = light 0.45, flame 0.5, cone 0.35, sparks 0.6, smoke 0.6
+  surge           = 0.1, 1.35
+  barrelheat      = 0.06, 0.15, 0.4
+  barrelsmoke     = rsb_smoke_barrel, 2.2
+  barrelshimmer   = 3.5, 0.6
+  barrelglow      = 1.0, 30, 1.5
+  barrelglowcolor = 255, 110, 40
+  smokevolume     = 26, 0.45, 0.4, 60, 12
+end
+
+flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and embers, a heat line off the muzzle, a barrel that glows sooner, brighter and wider
+  light           = 280, 4.2, 2
+  lightcolor      = 255, 206, 140
+  cone            = 22, 56, 110, 7
+  conetics        = 3
+  bursts          = flash_core, flash_petals, spk_heavy_streaks
+  maybe           = spk_embers 0.6, spk_sparkler 0.15, spk_stars 0.3
+  flame           = 0.06
+  smoke           = 2, 0.025, 0.3
+  smokeparticle   = rsb_smoke_gun
+  vary            = light 0.25, flame 0.3, cone 0.2, sparks 0.4, smoke 0.4
+  surge           = 0.12, 1.3
+  barrelheat      = 0.075, 0.14, 0.4
+  barrelsmoke     = rsb_smoke_barrel, 3.0
+  barrelshimmer   = 5.5, 0.85
+  barrelglow      = 1.0, 36, 1.8
+  barrelglowcolor = 255, 104, 36
+  smokevolume     = 30, 0.55, 0.5, 70, 12
+  heat            = 5, 24, 0.7, 10
+end
+
+flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling out of the tube, embers, a heavier thump of light
+  light         = 150, 2.2, 3
+  lightcolor    = 255, 190, 120
+  bursts        = flash_launcher_puff, xgl_ring
+  maybe         = spk_embers 0.6
+  flame         = 0.03
+  smoke         = 5, 0.04, 0.4
+  smokeparticle = rsb_smoke_gun
+  heat          = 5, 12, 0.5, 10
+  vary          = light 0.2, smoke 0.3
+  smokevolume   = 24, 1.4, 0.4, 60, 6
+end
+
+flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned out, embers and a starburst, the floor kicked harder, the room lit longer, the tube glowing after a volley
+  light           = 640, 6.0, 5
+  lightcolor      = 255, 186, 110
+  cone            = 30, 76, 160, 12
+  conetics        = 4
+  bursts          = flash_core, flash_plume_wide, rl_exhaust_back, spk_specks_wide, spk_photo_wide
+  maybe           = spk_embers_heavy 1, flash_embers 0.6, spk_sparkler 0.4
+  flame           = 0.11
+  smoke           = 6, 0.04, 0.4
+  smokeparticle   = rsb_smoke_rocket
+  heat            = 16, 64, 1.6, 22
+  groundkick      = kick_blast, 96
+  vary            = light 0.2, flame 0.25, cone 0.2, sparks 0.35, smoke 0.3
+  surge           = 0.1, 1.25
+  barrelheat      = 0.5, 0.2, 0.4
+  barrelsmoke     = rsb_smoke_barrel, 3.0
+  barrelshimmer   = 4, 0.55
+  smokevolume     = 30, 1.8, 1.2, 100, 8
+  push            = 96, 360
+  barrelglow      = 1.2, 30, 1.0
+  barrelglowcolor = 255, 120, 50
+end
+
+flash rocket_rpg@extreme   # the RPG at extreme: a bigger, hotter backblast that shoves and kicks the floor harder, stars at the front
+  light         = 700, 6.2, 5
+  lightcolor    = 255, 196, 124
+  cone          = 24, 64, 120, 10
+  conetics      = 4
+  bursts        = flash_core, flash_petals, rpg_backblast_fire, rpg_backblast_smoke, rpg_backblast_sparks
+  maybe         = spk_stars 0.6, spk_embers_heavy 0.6
+  flame         = 0.07
+  smoke         = 3, 0.035, 0.36
+  smokeparticle = rsb_smoke_gun
+  backheat      = 18, 80, 1.9, 26, 51.5
+  groundkick    = kick_blast, 96, -51.5
+  vary          = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  surge         = 0.12, 1.3
+  barrelheat    = 0.45, 0.2, 0.4
+  barrelsmoke   = rsb_smoke_barrel, 2.6
+  barrelshimmer = 3.5, 0.5
+  sizecvar      = wm_rpg_scale
+  smokevolume   = 44, 2.0, 1.6, 260, -51.5
+  push          = 140, 540, -51.5
+end
+
+flash plasma_rifle@extreme   # the plasma rifle at extreme: a crackle of arcs every shot, a ring of vented streaks, brighter blue air, an emitter that glows sooner
+  light           = 210, 3.3, 3
+  lightcolor      = 120, 180, 255
+  cone            = 18, 50, 80, 5
+  conetics        = 2
+  bursts          = plasma_core, energy_sparks_plasma, plasma_crackle_muzzle, plasma_vent_ring
+  flame           = 0
+  vary            = light 0.2, cone 0.15, sparks 0.4
+  barrelheat      = 0.07, 0.35, 0.2
+  barrelshimmer   = 3.5, 0.6
+  barrelglow      = 0.6, 30, 1.6
+  barrelglowcolor = 140, 190, 255
+end
+
+flash rail@extreme   # the railgun at extreme: a harder snap, a double spray of sparks, bent air along the barrel
+  light      = 260, 3.6, 4
+  lightcolor = 170, 200, 255
+  cone       = 14, 40, 160, 6
+  conetics   = 3
+  bursts     = energy_sparks_rail, energy_sparks_rail
+  heat       = 4, 60, 0.7, 12
+end
+
+flash bfg_9000@extreme   # the BFG at extreme: a bigger storm gathering as it charges, a brighter release, the air bending harder
+  heat             = 20, 60, 1.7, 28
+  light            = 460, 5.0, 6
+  lightcolor       = 120, 255, 140
+  cone             = 30, 70, 130, 7
+  conetics         = 4
+  bursts           = energy_sparks_bfg, energy_sparks_bfg, bfg_release_core
+  maybe            = bfg_charge_arcs 0.8
+  flame            = 0
+  chargebursts     = bfg_charge_motes 27, bfg_charge_arcs 9, bfg_charge_core 15
+  chargelight      = 240, 3.6
+  chargelightcolor = 120, 255, 140
+  chargeshimmer    = 12, 0.9
+  barrelheat       = 0.5, 0.25, 0.3
+  barrelshimmer    = 5, 0.7
+  barrelglow       = 0.5, 50, 1.9
+  barrelglowcolor  = 120, 255, 140
+  push             = 128, 420
+end
+
+flash bfg_heavy@extreme   # the Heavy BFG at extreme: the sun gathering -- a storm of motes and arcs, a blinding release
+  heat             = 26, 72, 2.1, 32
+  light            = 580, 6.0, 7
+  lightcolor       = 130, 255, 150
+  cone             = 36, 80, 150, 9
+  conetics         = 5
+  bursts           = energy_sparks_bfg, energy_sparks_bfg, energy_sparks_bfg, bfg_release_core
+  maybe            = bfg_charge_arcs 1.0
+  flame            = 0
+  chargebursts     = bfg_charge_motes 40, bfg_charge_arcs 14, bfg_charge_core 20
+  chargelight      = 300, 4.4
+  chargelightcolor = 130, 255, 150
+  chargeshimmer    = 16, 1.2
+  barrelheat       = 0.6, 0.22, 0.3
+  barrelshimmer    = 6, 0.9
+  barrelglow       = 0.4, 60, 2.4
+  barrelglowcolor  = 130, 255, 150
+  push             = 160, 520
+end
+
+flash chainsaw@extreme   # the Chainsaw's engine at extreme: a busier exhaust, a thicker stream, blips on smaller snaps
+  exhaust        = exhaust_puff 20
+  exhaustidle    = 0.3
+  exhaustblip    = exhaust_blip, 0.4
+  exhaustsmoke   = 10, 0.45, 0.8, 50
+  exhaustshimmer = 4, 0.45
+end
+
+flash chainsaw_heavy@extreme   # the Heavy Chainsaw's engine at extreme: a lumpier, smokier two-stroke
+  exhaust        = exhaust_puff_heavy 22, exhaust_puff 10
+  exhaustidle    = 0.45
+  exhaustblip    = exhaust_blip, 0.35
+  exhaustsmoke   = 12, 0.6, 0.9, 60
+  exhaustshimmer = 5, 0.55
+end
+
+roundlook pistol_45@extreme   # the .45 at extreme: a longer-hanging vapour line, stronger bent air, a wider smoke tunnel
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = x9_vapour
+  impact = pistol_45
+  whiz   = 72, rsb/whiz
+  heat   = 6, 0.6, 12
+  carve  = 8, 0.9
+end
+
+roundlook buckshot@extreme   # pellets at extreme: wisps that hang longer, wider tunnels
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = xpellet_vapour
+  impact = buckshot
+  whiz   = 48, rsb/whiz
+  carve  = 5, 0.45
+end
+
+roundlook buckshot_magnum@extreme   # magnum pellets at extreme: wisps that hang longer, wider tunnels
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = xpellet_vapour
+  impact = buckshot_magnum
+  whiz   = 48, rsb/whiz
+  carve  = 5, 0.5
+end
+
+roundlook chaingun_556@extreme   # the chaingun's rounds at extreme: wider tunnels (and tracers twice as often, from the level)
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = chaingun_556
+  whiz   = 96, rsb/crack/near
+  tracer = 4, tracer_556
+  carve  = 5, 0.45
+end
+
+roundlook tracer_556@extreme   # a 5.56 tracer at extreme: a longer burning tail, a brighter light
+  look       = sprite, RSBT
+  glide      = yes
+  wake       = xtracer_hot
+  impact     = chaingun_556
+  whiz       = 96, rsb/crack/near
+  light      = 60, 1.5
+  lightcolor = 255, 176, 96
+  carve      = 6, 0.7
+end
+
+roundlook machinegun_762@extreme   # the machine gun's rounds at extreme: wider tunnels
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = machinegun_762
+  whiz   = 110, rsb/crack/near
+  tracer = 5, tracer_762
+  carve  = 6, 0.5
+end
+
+roundlook tracer_762@extreme   # a 7.62 tracer at extreme: a brighter light
+  look       = sprite, RSBT
+  glide      = yes
+  wake       = tracer_hot_heavy
+  impact     = machinegun_762
+  whiz       = 110, rsb/crack/near
+  light      = 80, 1.8
+  lightcolor = 255, 170, 90
+  carve      = 7, 0.75
+end
+
+roundlook rocket@extreme   # a rocket at extreme: embers spitting from the motor, stronger bent air behind, a wider tunnel
+  look       = none
+  wake       = rocket_smoke
+  impact     = rocket
+  motor      = rocket_motor
+  heat       = 8, 0.9, 14, 200
+  carve      = 12, 0.95
+  motormaybe = spk_embers 0.4
+end
+
+roundlook rocket_rpg@extreme   # the RPG's rocket at extreme: heavy embers off the sustainer, stronger bent air behind, a wider tunnel
+  look       = none
+  wake       = rocket_smoke_heavy
+  impact     = rocket_rpg
+  motor      = rocket_motor_hot
+  heat       = 9, 1.0, 14, 240
+  onset      = rpg_ignition
+  carve      = 12, 0.95
+  motormaybe = spk_embers_heavy 0.4
+end
+
+roundlook plasma_ball@extreme   # a plasma ball at extreme: the air bending round the hot ball, a wider tunnel
+  look   = none
+  wake   = plasma_trail
+  impact = plasma
+  motor  = plasma_glow
+  carve  = 10, 0.8
+  heat   = 6, 0.5, 10
+end
+
+roundlook bfg_ball@extreme   # the BFG's ball at extreme: arcs crackling more often, stronger bent air, a wider tunnel
+  look       = none
+  wake       = bfg_trail
+  impact     = bfg
+  motor      = bfg_glow
+  motormaybe = bfg_ball_arcs 0.6
+  heat       = 18, 1.2, 16, 180
+  carve      = 26, 1.0
+end
+
+roundlook bfg_heavy@extreme   # the Heavy BFG's ball at extreme: arcs nearly every tic, the air bending hard, a wider tunnel
+  look       = none
+  wake       = bfg_trail_heavy
+  impact     = bfg_heavy
+  motor      = bfg_glow_heavy
+  motormaybe = bfg_ball_arcs 0.9
+  heat       = 22, 1.4, 18, 220
+  carve      = 34, 1.0
+end
+
+impact pistol_45@extreme   # the .45's hits at extreme
+  bursts      = chips_concrete, dust_concrete, spark_hot
+  maybe       = dust_jet_concrete 0.85, x9_hit_frags 0.5
+  vary        = count 0.4, size 0.25
+  scale       = 1.208, 1.1
+  sound       = rsb/impact/concrete
+  glance      = 16, rsb/ricochet, spark_hot
+  smokevolume = 16, 1.1, 0
+  light       = 34, 0.9, 2
+  lightcolor  = 255, 200, 140
+end
+
+impact pistol_45.metal@extreme
+  bursts     = spark_metal, spark_spray, ember_metal
+  maybe      = spark_hot 0.6, x9_hit_frags 0.6
+  vary       = count 0.4, size 0.2, light 0.3
+  scale      = 1.15, 1
+  mark       = pool, 5, 50
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 75, 1.8, 4
+  lightcolor = 255, 190, 120
+  glance     = 22, rsb/ricochet, spark_metal
+end
+
+impact pistol_45.wood@extreme
+  bursts      = splinter_wood, dust_wood
+  maybe       = dust_jet_wood 1
+  vary        = count 0.4, size 0.25
+  scale       = 1.208, 1.1
+  sound       = rsb/impact/wood
+  smokevolume = 14, 0.7, 0
+end
+
+impact pistol_45.glass@extreme
+  bursts = glint_glass
+  vary   = count 0.4, size 0.2
+  scale  = 1.3, 1
+  sound  = rsb/glass
+end
+
+impact pistol_45.liquid@extreme
+  bursts = splash_liquid
+  vary   = count 0.4, size 0.2
+  scale  = 1.15, 1.05
+  sound  = none
+end
+
+impact pistol_45.dirt@extreme
+  bursts      = clods_dirt, dust_dirt
+  maybe       = dust_jet_dirt 1
+  vary        = count 0.4, size 0.25
+  scale       = 1.208, 1.1
+  sound       = rsb/impact/concrete
+  smokevolume = 18, 1.2, 0
+end
+
+impact chaingun_556@extreme   # the chaingun's hits at extreme
+  bursts      = chips_concrete, dust_concrete
+  maybe       = dust_jet_concrete 0.5, spark_hot 0.6, x9_hit_frags 0.25
+  vary        = count 0.5, size 0.35
+  scale       = 0.92, 1
+  sound       = rsb/impact/concrete
+  glance      = 14, rsb/ricochet, spark_hot
+  smokevolume = 14, 0.64, 0
+end
+
+impact chaingun_556.metal@extreme
+  bursts     = spark_metal
+  maybe      = spark_spray 0.6, ember_metal 0.6
+  vary       = count 0.5, size 0.25, light 0.4
+  scale      = 0.92, 0.9
+  mark       = pool, 3, 30
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 50, 1.2, 2
+  lightcolor = 255, 190, 120
+  glance     = 20, rsb/ricochet, spark_metal
+end
+
+impact chaingun_556.wood@extreme
+  bursts      = splinter_wood, dust_wood
+  maybe       = dust_jet_wood 0.5
+  vary        = count 0.5, size 0.35
+  scale       = 0.92, 1
+  sound       = rsb/impact/wood
+  smokevolume = 12, 0.4, 0
+end
+
+impact chaingun_556.glass@extreme
+  bursts = glint_glass
+  vary   = count 0.4, size 0.2
+  scale  = 0.92, 0.9
+  sound  = rsb/glass
+end
+
+impact chaingun_556.liquid@extreme
+  bursts = splash_liquid
+  vary   = count 0.4, size 0.2
+  scale  = 0.92, 0.9
+  sound  = none
+end
+
+impact chaingun_556.dirt@extreme
+  bursts      = clods_dirt, dust_dirt
+  maybe       = dust_jet_dirt 0.5
+  vary        = count 0.5, size 0.35
+  scale       = 0.92, 1
+  sound       = rsb/impact/concrete
+  smokevolume = 16, 0.72, 0
+end
+
+impact machinegun_762@extreme   # the machine gun's hits at extreme
+  bursts      = chips_concrete, dust_concrete
+  maybe       = dust_jet_concrete 0.8, spark_hot 0.5, x9_hit_frags 0.3
+  vary        = count 0.45, size 0.3
+  scale       = 1.438, 1.2
+  sound       = rsb/impact/concrete
+  glance      = 14, rsb/ricochet, spark_hot
+  smokevolume = 14, 0.8, 0
+end
+
+impact machinegun_762.metal@extreme
+  bursts     = spark_metal, spark_spray, ember_metal
+  vary       = count 0.45, size 0.25, light 0.35
+  scale      = 1.265, 1
+  mark       = pool, 5, 40
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 75, 1.7, 3
+  lightcolor = 255, 190, 120
+  glance     = 20, rsb/ricochet, spark_metal
+end
+
+impact machinegun_762.wood@extreme
+  bursts      = splinter_wood, dust_wood
+  maybe       = dust_jet_wood 0.8
+  vary        = count 0.45, size 0.3
+  scale       = 1.438, 1.2
+  sound       = rsb/impact/wood
+  smokevolume = 12, 0.5, 0
+end
+
+impact machinegun_762.glass@extreme
+  bursts = glint_glass
+  vary   = count 0.4, size 0.2
+  scale  = 1.265, 1
+  sound  = rsb/glass
+end
+
+impact machinegun_762.liquid@extreme
+  bursts = splash_liquid
+  vary   = count 0.4, size 0.2
+  scale  = 1.265, 1.05
+  sound  = none
+end
+
+impact machinegun_762.dirt@extreme
+  bursts      = clods_dirt, dust_dirt
+  maybe       = dust_jet_dirt 0.8
+  vary        = count 0.45, size 0.3
+  scale       = 1.438, 1.2
+  sound       = rsb/impact/concrete
+  smokevolume = 16, 0.9, 0
+end
+
+impact buckshot@extreme   # buckshot's hits at extreme
+  bursts      = chips_concrete, dust_concrete
+  maybe       = spark_hot 0.5, dust_jet_concrete 0.6
+  vary        = count 0.5, size 0.3
+  scale       = 0.517, 0.9
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.28, 0
+end
+
+impact buckshot.metal@extreme
+  bursts    = spark_metal
+  maybe     = ember_metal 0.8, spark_spray 0.6
+  vary      = count 0.5, size 0.25
+  scale     = 0.517, 0.85
+  mark      = pool, 3, 35
+  markcolor = 255, 170, 80
+  sound     = rsb/impact/metal
+end
+
+impact buckshot.wood@extreme
+  bursts      = splinter_wood, dust_wood
+  maybe       = dust_jet_wood 0.5
+  vary        = count 0.5, size 0.3
+  scale       = 0.517, 0.9
+  sound       = rsb/impact/wood
+  smokevolume = 12, 0.18, 0
+end
+
+impact buckshot.glass@extreme
+  bursts = glint_glass
+  vary   = count 0.4, size 0.2
+  scale  = 0.46, 0.85
+  sound  = rsb/glass
+end
+
+impact buckshot.liquid@extreme
+  bursts = splash_liquid
+  vary   = count 0.4, size 0.2
+  scale  = 0.46, 0.85
+  sound  = none
+end
+
+impact buckshot.dirt@extreme
+  bursts      = clods_dirt, dust_dirt
+  maybe       = dust_jet_dirt 0.5
+  vary        = count 0.5, size 0.3
+  scale       = 0.517, 0.9
+  sound       = rsb/impact/concrete
+  smokevolume = 16, 0.32, 0
+end
+
+impact buckshot_magnum@extreme   # magnum buckshot's hits at extreme
+  bursts      = chips_concrete, dust_concrete
+  maybe       = spark_hot 0.6, dust_jet_concrete 0.8, x9_hit_frags 0.3
+  vary        = count 0.5, size 0.3
+  scale       = 0.69, 1.05
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.24, 0
+end
+
+impact buckshot_magnum.metal@extreme
+  bursts     = spark_metal
+  maybe      = ember_metal 0.9, spark_spray 0.7
+  vary       = count 0.5, size 0.25
+  scale      = 0.69, 0.95
+  sound      = rsb/impact/metal
+  mark       = pool, 3, 30
+  markcolor  = 255, 170, 80
+  light      = 30, 0.8, 2
+  lightcolor = 255, 190, 120
+end
+
+impact buckshot_magnum.wood@extreme
+  bursts      = splinter_wood, dust_wood
+  maybe       = dust_jet_wood 0.75
+  vary        = count 0.5, size 0.3
+  scale       = 0.69, 1.05
+  sound       = rsb/impact/wood
+  smokevolume = 12, 0.15, 0
+end
+
+impact buckshot_magnum.glass@extreme
+  bursts = glint_glass
+  vary   = count 0.4, size 0.2
+  scale  = 0.632, 0.95
+  sound  = rsb/glass
+end
+
+impact buckshot_magnum.liquid@extreme
+  bursts = splash_liquid
+  vary   = count 0.4, size 0.2
+  scale  = 0.632, 0.95
+  sound  = none
+end
+
+impact buckshot_magnum.dirt@extreme
+  bursts      = clods_dirt, dust_dirt
+  maybe       = dust_jet_dirt 0.75
+  vary        = count 0.5, size 0.3
+  scale       = 0.69, 1.05
+  sound       = rsb/impact/concrete
+  smokevolume = 16, 0.27, 0
+end
+
+impact plasma@extreme   # a plasma hit at extreme: arcs every hit, a wider scorched ring, a longer light
+  heat        = 24, 1.0, 12
+  bursts      = plasma_splash, plasma_motes, plasma_ozone
+  maybe       = plasma_arcs 1
+  vary        = count 0.35, size 0.2, light 0.25
+  mark        = ring, 10, 100
+  markcolor   = 120, 180, 255
+  light       = 170, 2.9, 6
+  lightcolor  = 120, 180, 255
+  smokevolume = 14, 0.45, 1.0
+end
+
+impact plasma.liquid@extreme
+  heat       = 20, 0.8, 10
+  bursts     = plasma_splash, splash_liquid, plasma_ozone
+  maybe      = plasma_motes 0.9, plasma_arcs 0.8
+  vary       = count 0.35, size 0.2, light 0.25
+  light      = 170, 2.9, 6
+  lightcolor = 120, 180, 255
+end
+
+impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
+  heat        = 86, 1.9, 38
+  bursts      = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 48, 220
+  markcolor   = 255, 120, 40
+  light       = 520, 4.8, 14
+  lightcolor  = 255, 170, 90
+  smokevolume = 72, 2.0, 3.2
+  push        = 300, 760
+end
+
+impact rocket.metal@extreme
+  heat        = 86, 1.9, 38
+  bursts      = rocket_fire, rocket_embers, spark_metal, shards_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 48, 220
+  markcolor   = 255, 120, 40
+  light       = 520, 4.8, 14
+  lightcolor  = 255, 170, 90
+  smokevolume = 72, 2.0, 3.2
+  push        = 300, 760
+end
+
+impact rocket.wood@extreme
+  heat        = 86, 1.9, 38
+  bursts      = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 48, 220
+  markcolor   = 255, 120, 40
+  light       = 520, 4.8, 14
+  lightcolor  = 255, 170, 90
+  smokevolume = 72, 2.0, 3.2
+  push        = 300, 760
+end
+
+impact rocket.dirt@extreme
+  heat        = 86, 1.9, 38
+  bursts      = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 48, 220
+  markcolor   = 255, 120, 40
+  light       = 520, 4.8, 14
+  lightcolor  = 255, 170, 90
+  smokevolume = 72, 2.0, 3.2
+  push        = 300, 760
+end
+
+impact rocket.glass@extreme
+  heat        = 86, 1.9, 38
+  bursts      = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 48, 220
+  markcolor   = 255, 120, 40
+  light       = 520, 4.8, 14
+  lightcolor  = 255, 170, 90
+  smokevolume = 72, 2.0, 3.2
+  push        = 300, 760
+end
+
+impact rocket.liquid@extreme
+  heat        = 86, 1.9, 38
+  bursts      = rocket_fire, splash_liquid, rocket_smoke, rocket_fireball, rocket_soot, spk_sparkler
+  light       = 520, 4.8, 14
+  lightcolor  = 255, 170, 90
+  smokevolume = 72, 2.0, 3.2
+  push        = 300, 760
+end
+
+impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
+  heat        = 100, 2.1, 42
+  bursts      = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 52, 240
+  markcolor   = 255, 120, 40
+  light       = 560, 5.0, 14
+  lightcolor  = 255, 170, 90
+  scale       = 1.25, 1.15
+  smokevolume = 90, 2.0, 3.6
+  push        = 360, 900
+end
+
+impact rocket_rpg.metal@extreme
+  heat        = 100, 2.1, 42
+  bursts      = rocket_fire, rocket_embers, spark_metal, shards_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 52, 240
+  markcolor   = 255, 120, 40
+  light       = 560, 5.0, 14
+  lightcolor  = 255, 170, 90
+  scale       = 1.25, 1.15
+  smokevolume = 90, 2.0, 3.6
+  push        = 360, 900
+end
+
+impact rocket_rpg.wood@extreme
+  heat        = 100, 2.1, 42
+  bursts      = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 52, 240
+  markcolor   = 255, 120, 40
+  light       = 560, 5.0, 14
+  lightcolor  = 255, 170, 90
+  scale       = 1.25, 1.15
+  smokevolume = 90, 2.0, 3.6
+  push        = 360, 900
+end
+
+impact rocket_rpg.dirt@extreme
+  heat        = 100, 2.1, 42
+  bursts      = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 52, 240
+  markcolor   = 255, 120, 40
+  light       = 560, 5.0, 14
+  lightcolor  = 255, 170, 90
+  scale       = 1.25, 1.15
+  smokevolume = 90, 2.0, 3.6
+  push        = 360, 900
+end
+
+impact rocket_rpg.glass@extreme
+  heat        = 100, 2.1, 42
+  bursts      = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring, spk_sparkler
+  mark        = sunburst, 52, 240
+  markcolor   = 255, 120, 40
+  light       = 560, 5.0, 14
+  lightcolor  = 255, 170, 90
+  scale       = 1.25, 1.15
+  smokevolume = 90, 2.0, 3.6
+  push        = 360, 900
+end
+
+impact rocket_rpg.liquid@extreme
+  heat        = 100, 2.1, 42
+  bursts      = rocket_fire, splash_liquid, rocket_smoke, rocket_fireball, rocket_soot, spk_sparkler
+  light       = 560, 5.0, 14
+  lightcolor  = 255, 170, 90
+  scale       = 1.25, 1.15
+  smokevolume = 90, 2.0, 3.6
+  push        = 360, 900
+end
+
+impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starburst, a bigger hex ring, a longer light
+  heat        = 130, 2.1, 40
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, chips_concrete, slabs_concrete, rubble_concrete, bfg_wave_heavy, spk_sparkler
+  mark        = hexring, 44, 260
+  markcolor   = 140, 255, 150
+  light       = 600, 5.2, 18
+  lightcolor  = 140, 255, 150
+  smokevolume = 80, 0.9, 2.6
+  push        = 440, 1000
+end
+
+impact bfg.metal@extreme
+  heat        = 130, 2.1, 40
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, spark_metal, shards_metal, bfg_wave_heavy, spk_sparkler
+  mark        = hexring, 44, 260
+  markcolor   = 140, 255, 150
+  light       = 600, 5.2, 18
+  lightcolor  = 140, 255, 150
+  smokevolume = 80, 0.9, 2.6
+  push        = 440, 1000
+end
+
+impact bfg.wood@extreme
+  heat        = 130, 2.1, 40
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, splinter_wood, planks_wood, bfg_wave_heavy, spk_sparkler
+  mark        = hexring, 44, 260
+  markcolor   = 140, 255, 150
+  light       = 600, 5.2, 18
+  lightcolor  = 140, 255, 150
+  smokevolume = 80, 0.9, 2.6
+  push        = 440, 1000
+end
+
+impact bfg.dirt@extreme
+  heat        = 130, 2.1, 40
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, clods_dirt, dust_dirt, bfg_wave_heavy, spk_sparkler
+  mark        = hexring, 44, 260
+  markcolor   = 140, 255, 150
+  light       = 600, 5.2, 18
+  lightcolor  = 140, 255, 150
+  smokevolume = 80, 0.9, 2.6
+  push        = 440, 1000
+end
+
+impact bfg.glass@extreme
+  heat        = 130, 2.1, 40
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, glint_glass, bfg_wave_heavy, spk_sparkler
+  mark        = hexring, 44, 260
+  markcolor   = 140, 255, 150
+  light       = 600, 5.2, 18
+  lightcolor  = 140, 255, 150
+  smokevolume = 80, 0.9, 2.6
+  push        = 440, 1000
+end
+
+impact bfg.liquid@extreme
+  heat        = 130, 2.1, 40
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, splash_liquid, bfg_wave_heavy, spk_sparkler
+  light       = 600, 5.2, 18
+  lightcolor  = 140, 255, 150
+  smokevolume = 80, 0.9, 2.6
+  push        = 440, 1000
+end
+
+impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a storm of energy sparks, a bigger hex ring, the room lit longer
+  heat        = 168, 2.4, 46
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, chips_concrete, slabs_concrete, rubble_concrete, spk_sparkler, energy_sparks_bfg
+  scale       = 1.4, 1.25
+  mark        = hexring, 58, 300
+  markcolor   = 150, 255, 160
+  light       = 760, 5.8, 20
+  lightcolor  = 150, 255, 160
+  smokevolume = 110, 1.1, 3.1
+  push        = 520, 1250
+end
+
+impact bfg_heavy.metal@extreme
+  heat        = 168, 2.4, 46
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, spark_metal, shards_metal, spk_sparkler, energy_sparks_bfg
+  scale       = 1.4, 1.25
+  mark        = hexring, 58, 300
+  markcolor   = 150, 255, 160
+  light       = 760, 5.8, 20
+  lightcolor  = 150, 255, 160
+  smokevolume = 110, 1.1, 3.1
+  push        = 520, 1250
+end
+
+impact bfg_heavy.wood@extreme
+  heat        = 168, 2.4, 46
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, splinter_wood, planks_wood, spk_sparkler, energy_sparks_bfg
+  scale       = 1.4, 1.25
+  mark        = hexring, 58, 300
+  markcolor   = 150, 255, 160
+  light       = 760, 5.8, 20
+  lightcolor  = 150, 255, 160
+  smokevolume = 110, 1.1, 3.1
+  push        = 520, 1250
+end
+
+impact bfg_heavy.dirt@extreme
+  heat        = 168, 2.4, 46
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, clods_dirt, dust_dirt, spk_sparkler, energy_sparks_bfg
+  scale       = 1.4, 1.25
+  mark        = hexring, 58, 300
+  markcolor   = 150, 255, 160
+  light       = 760, 5.8, 20
+  lightcolor  = 150, 255, 160
+  smokevolume = 110, 1.1, 3.1
+  push        = 520, 1250
+end
+
+impact bfg_heavy.glass@extreme
+  heat        = 168, 2.4, 46
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, glint_glass, spk_sparkler, energy_sparks_bfg
+  scale       = 1.4, 1.25
+  mark        = hexring, 58, 300
+  markcolor   = 150, 255, 160
+  light       = 760, 5.8, 20
+  lightcolor  = 150, 255, 160
+  smokevolume = 110, 1.1, 3.1
+  push        = 520, 1250
+end
+
+impact bfg_heavy.liquid@extreme
+  heat        = 168, 2.4, 46
+  bursts      = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, splash_liquid, spk_sparkler, energy_sparks_bfg
+  scale       = 1.4, 1.25
+  light       = 760, 5.8, 20
+  lightcolor  = 150, 255, 160
+  smokevolume = 110, 1.1, 3.1
+  push        = 520, 1250
+end
+
+impact bfg_spray@extreme   # where a BFG ray strikes at extreme: a starburst in the flare, a longer light
+  bursts     = bfg_spray_flare, bfg_arcs, x9_hit_star
+  sound      = none
+  light      = 150, 2.8, 12
+  lightcolor = 140, 255, 150
+end
+
+impact rail@extreme   # a rail hit at extreme: arcs and a starburst, a wider glowing ring, bent air where it struck
+  bursts     = rail_splash, spark_metal, spark_spray, rail_arcs, x9_hit_star
+  mark       = ring, 7, 160
+  markcolor  = 180, 210, 255
+  light      = 140, 3.0, 6
+  lightcolor = 180, 210, 255
+  heat       = 10, 0.8, 12
+end
+
+impact rail.wood@extreme
+  bursts     = rail_splash, splinter_wood, rail_arcs, x9_hit_star
+  mark       = ring, 7, 160
+  markcolor  = 180, 210, 255
+  light      = 140, 3.0, 6
+  lightcolor = 180, 210, 255
+  heat       = 10, 0.8, 12
+end
+
+impact rail.dirt@extreme
+  bursts     = rail_splash, clods_dirt, rail_arcs, x9_hit_star
+  mark       = ring, 7, 160
+  markcolor  = 180, 210, 255
+  light      = 140, 3.0, 6
+  lightcolor = 180, 210, 255
+  heat       = 10, 0.8, 12
+end
+
+impact rail.glass@extreme
+  bursts     = rail_splash, glint_glass, rail_arcs, x9_hit_star
+  mark       = ring, 7, 160
+  markcolor  = 180, 210, 255
+  light      = 140, 3.0, 6
+  lightcolor = 180, 210, 255
+  heat       = 10, 0.8, 12
+end
+
+impact rail.liquid@extreme
+  bursts     = rail_splash, splash_liquid, x9_hit_star
+  light      = 140, 3.0, 6
+  lightcolor = 180, 210, 255
+  heat       = 10, 0.8, 12
+end
+
+impact saw@extreme   # the Chainsaw's bite at extreme: its own heavier cut
+  maybe   = spark_hot 0.6
+  sound   = none
+  hotspot = xsaw_cut_stone
+end
+
+impact saw_heavy@extreme   # the Heavy Chainsaw's bite at extreme: its own heavier cut
+  maybe   = spark_hot 0.6
+  sound   = none
+  hotspot = xsaw_cut_stone_heavy
+end
+
+impact saw.metal@extreme
+  maybe   = spark_metal 0.45
+  sound   = none
+  hotspot = xsaw_cut_metal
+end
+
+impact saw_heavy.metal@extreme
+  maybe   = spark_metal 0.45
+  sound   = none
+  hotspot = xsaw_cut_metal_heavy
+end
+
+impact saw.wood@extreme
+  maybe   = splinter_wood 0.225
+  sound   = none
+  hotspot = xsaw_cut_wood
+end
+
+impact saw_heavy.wood@extreme
+  maybe   = splinter_wood 0.225
+  sound   = none
+  hotspot = xsaw_cut_wood_heavy
+end
+
+impact saw.dirt@extreme
+  maybe   = clods_dirt 0.3
+  sound   = none
+  hotspot = xsaw_cut_dirt
+end
+
+impact saw_heavy.dirt@extreme
+  maybe   = clods_dirt 0.3
+  sound   = none
+  hotspot = xsaw_cut_dirt_heavy
+end
+
+impact saw.glass@extreme
+  maybe   = glint_glass 0.45
+  sound   = none
+  hotspot = xsaw_cut_glass
+end
+
+impact saw_heavy.glass@extreme
+  maybe   = glint_glass 0.45
+  sound   = none
+  hotspot = xsaw_cut_glass_heavy
+end
+
+impact saw.liquid@extreme
+  maybe   = splash_liquid 0.45
+  sound   = none
+  hotspot = xsaw_cut_liquid
+end
+
+impact saw_heavy.liquid@extreme
+  maybe   = splash_liquid 0.45
+  sound   = none
+  hotspot = xsaw_cut_liquid_heavy
+end
+
+ejecta brass_45@extreme   # the .45's brass at extreme: glows longer, more port smoke, a longer wisp
+  look      = model, RSB_Casing45
+  scale     = 1
+  speed     = 1.0, 0.2
+  bounce    = 0.45, 0.3, 4
+  gravity   = 0.6
+  sound     = rsb/casing/medium
+  hot       = 26
+  life      = 2100
+  portsmoke = rsb_smoke_port, 5
+  wisp      = rsb_casing_wisp, 32
+end
+
+ejecta brass_556@extreme   # 5.56 brass at extreme: glows longer, more port smoke, a longer wisp
+  look      = model, RSB_CasingRifle556
+  scale     = 1
+  speed     = 1.2, 0.25
+  bounce    = 0.5, 0.35, 5
+  gravity   = 0.6
+  sound     = rsb/casing/small
+  hot       = 18
+  life      = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp      = rsb_casing_wisp, 14
+end
+
+ejecta brass_762@extreme   # 7.62 brass at extreme: glows longer, more port smoke, a longer wisp
+  look      = model, RSB_CasingRifle762
+  scale     = 1
+  speed     = 1.2, 0.25
+  bounce    = 0.45, 0.3, 4
+  gravity   = 0.6
+  sound     = rsb/casing/medium
+  hot       = 24
+  life      = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp      = rsb_casing_wisp, 18
+end
+
+ejecta hull_12ga@extreme   # shotgun hulls at extreme: more smoke out of the port, a longer wisp
+  look      = model, RSB_Shell12ga
+  scale     = 1
+  speed     = 0.8, 0.2
+  bounce    = 0.3, 0.25, 3
+  gravity   = 0.7
+  sound     = rsb/casing/shell
+  hot       = 0
+  life      = 2100
+  portsmoke = rsb_smoke_port, 7
+  wisp      = rsb_casing_wisp, 36
+end
+
+ejecta hull_12ga_magnum@extreme   # Super Shotgun hulls at extreme: heavy smoke out of the breech, a long wisp
+  look      = model, RSB_Shell12ga
+  scale     = 1
+  speed     = 0.8, 0.2
+  bounce    = 0.3, 0.25, 3
+  gravity   = 0.7
+  sound     = rsb/casing/shell
+  hot       = 0
+  life      = 2100
+  portsmoke = rsb_smoke_port, 10
+  wisp      = rsb_casing_wisp, 50
+end
+
