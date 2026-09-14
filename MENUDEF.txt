@@ -1,7 +1,13 @@
 // ============================================================================
-// RS_Ballistics menu. Every control here is checked by tools/menu_lint.py on
-// each build against CVARINFO and the code: a control for a cvar nothing reads
-// fails the build.
+// RS_Ballistics menu: Options -> "Ballistics & Effects". Every rsb_ control here
+// is checked by tools/menu_lint.py on each build against CVARINFO and the code: a
+// control for a cvar nothing reads fails the build.
+//
+// THE OWNER'S RULE (2026-09-14): our effects are ON by default, at good quality,
+// and there are lots of them. The page groups every effect, the engine's
+// renderer-read effect cvars included (they respond while the menu is open), and
+// its first row sets them all to their recommended values (KEYCONF
+// rsb_all_effects_on), because a changed default never reaches a saved ini.
 //
 // Settings apply to the next shot, impact or casing. Preview rows fire a test
 // effect through a netevent; close the menu (or keep the world visible) to see
@@ -13,8 +19,14 @@ OptionValue "RSBTiers"
 	0, "Off -- no effects (sounds stay)"
 	1, "Plain"
 	2, "Normal"
-	3, "Heavy"
+	3, "Heavy (recommended)"
 	4, "Extreme"
+}
+
+OptionValue "RSBAtlasSizes"
+{
+	128, "128 px"
+	256, "256 px (recommended)"
 }
 
 OptionString "RSBStyles"
@@ -74,29 +86,63 @@ OptionValue "RSBLogLevels"
 
 AddOptionMenu "OptionsMenu"
 {
-	Submenu "RS Ballistics", "RSB_Options"
+	Submenu "Ballistics & Effects", "RSB_Options"
 }
 
 OptionMenu "RSB_Options"
 {
-	Title "RS BALLISTICS"
-	StaticText "Every muzzle flash, round, casing and impact, generated from RSBDEFS.", "DarkGray"
+	Title "BALLISTICS & EFFECTS"
+	StaticText "Every round, flash, casing, impact, flame and effect our mods make.", "DarkGray"
 	StaticText "Looks only: nothing here changes damage, speed or netplay.", "DarkGray"
+	StaticText ""
+	Command "All effects on (recommended)", "rsb_all_effects_on"
+	StaticText "Sets every effect on these pages, and the engine's, to its recommended value.", "DarkGray"
 	StaticText ""
 	StaticText "THE DIAL", "Gold"
 	Option "Effects level", "rsb_tier", "RSBTiers"
 	Option "Style", "rsb_style", "RSBStyles"
 	StaticText ""
-	StaticText "TUNE", "Gold"
+	StaticText "EFFECTS", "Gold"
+	Submenu "Sparks and particles", "RSB_ParticleMenu"
 	Submenu "Impacts", "RSB_ImpactMenu"
 	Submenu "Muzzle flash", "RSB_FlashMenu"
 	Submenu "Rounds in flight", "RSB_FlightMenu"
 	Submenu "Casings", "RSB_CasingMenu"
 	Submenu "Flamethrowers", "RSB_FlameMenu"
+	Submenu "Heat shimmer", "RSB_HeatMenu"
+	Submenu "Lights", "RSB_LightMenu"
+	Submenu "Smoke", "RSB_SmokeMenu"
+	Submenu "Debris", "RSB_DebrisMenu"
+	Submenu "Wall damage", "RSB_DamageMenu"
+	StaticText ""
+	StaticText "PERFORMANCE AND QUALITY", "Gold"
+	Submenu "Quality and performance", "RSB_QualityMenu"
 	StaticText ""
 	StaticText "TRY IT", "Gold"
 	Submenu "Preview -- see it without firing", "RSB_PreviewMenu"
 	Submenu "Diagnostics", "RSB_DiagnosticsMenu"
+}
+
+OptionMenu "RSB_ParticleMenu"
+{
+	Title "SPARKS AND PARTICLES"
+	StaticText "The engine's GPU particles: every spark, ember, chip, splinter, glint,", "DarkGray"
+	StaticText "dust cloud, smoke puff and flame. These respond while the menu is open.", "DarkGray"
+	StaticText ""
+	Option "GPU particles", "r_gpuparticles", "OnOff"
+	Slider "Particle size cap (64 recommended)", "r_gpuparticles_maxsize", 2, 64, 1, 0
+	Slider "Soft particles (map units, 8 recommended)", "r_gpuparticles_soft", 0, 32, 1, 0
+	Slider "Particle lights (32 recommended)", "r_gpuparticles_lights", 0, 32, 1, 0
+	Option "Particle atlas size", "r_gpuparticles_atlas_size", "RSBAtlasSizes"
+	StaticText ""
+	Slider "Particle size", "r_gpuparticles_sizescale", 0.25, 3.0, 0.05, 2
+	Slider "Particle brightness", "r_gpuparticles_intensity", 0.25, 3.0, 0.05, 2
+	Slider "Spark streak length", "r_gpuparticles_stretch", 0.25, 3.0, 0.05, 2
+	StaticText ""
+	Slider "Impact particles", "rsb_impact_particles", 0.0, 3.0, 0.1, 1
+	Slider "Spark brightness", "rsb_impact_glow", 0.0, 3.0, 0.1, 1
+	Slider "Bore sparks", "rsb_flash_sparks", 0.0, 3.0, 0.1, 1
+	Option "Drawn lines (flame cores)", "r_drawnlines", "OnOff"
 }
 
 OptionMenu "RSB_ImpactMenu"
@@ -165,6 +211,98 @@ OptionMenu "RSB_CasingMenu"
 	Slider "Time on the floor (share of the full time)", "rsb_casing_life", 0.0, 1.0, 0.05, 2
 }
 
+OptionMenu "RSB_FlameMenu"
+{
+	Title "FLAMETHROWERS"
+	StaticText "The stream of fire, the fire where it lands, its light and its roar.", "DarkGray"
+	StaticText "Black smoke rises where it lands; the air above it shimmers (Heat shimmer).", "DarkGray"
+	StaticText ""
+	Option "Flame effects", "rsb_flame", "OnOff"
+	Option "Flame core (drawn lines)", "rsb_flame_tube", "OnOff"
+	Slider "Flames", "rsb_flame_particles", 0.0, 3.0, 0.1, 1
+	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
+	Slider "Flame volume", "rsb_flame_volume", 0.0, 1.0, 0.05, 2
+}
+
+OptionMenu "RSB_HeatMenu"
+{
+	Title "HEAT SHIMMER"
+	StaticText "The air bends over flames, where rockets, BFG balls and plasma land,", "DarkGray"
+	StaticText "and out of heavy muzzles. The engine draws it; RS_Ballistics places it.", "DarkGray"
+	StaticText ""
+	Option "Heat shimmer", "r_heatrefraction", "OnOff"
+	Slider "Heat shimmer strength", "r_heatrefraction_scale", 0, 4, 0.25, 2
+	StaticText ""
+	Option "Test column ahead of you", "r_heatrefraction_test", "OnOff"
+}
+
+OptionMenu "RSB_LightMenu"
+{
+	Title "LIGHTS"
+	StaticText "Every light an effect makes: muzzle strobes, impact flashes, fire.", "DarkGray"
+	StaticText ""
+	Slider "Muzzle flash light", "rsb_flash_light", 0.0, 3.0, 0.1, 1
+	Slider "Muzzle flash reach", "rsb_flash_size", 0.25, 3.0, 0.05, 2
+	StaticText ""
+	Option "Impact light", "rsb_impact_lights", "OnOff"
+	Slider "Impact light brightness", "rsb_impact_light", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Slider "Lights on smoke and dust (32 recommended)", "r_gpuparticles_lights", 0, 32, 1, 0
+}
+
+OptionMenu "RSB_SmokeMenu"
+{
+	Title "SMOKE"
+	StaticText "Room-filling gunsmoke that drifts through doorways, is stopped by walls,", "DarkGray"
+	StaticText "is lit by flashes and lights, and shows lasers passing through it.", "DarkGray"
+	StaticText ""
+	StaticText "The engine's smoke volume is being built. Its rows arrive here with it.", "Gold"
+	StaticText ""
+	StaticText "Today: muzzle, flame and impact smoke are GPU particles.", "DarkGray"
+	Slider "Muzzle smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
+}
+
+OptionMenu "RSB_DebrisMenu"
+{
+	Title "DEBRIS"
+	StaticText "Real 3D chunks per material, sparks that bounce off the level, debris", "DarkGray"
+	StaticText "that stays for the fight.", "DarkGray"
+	StaticText ""
+	StaticText "The engine's debris and mesh particles come after smoke. Rows arrive with them.", "Gold"
+	StaticText ""
+	Option "Casings", "rsb_casings", "OnOff"
+	Slider "Casing time on the floor", "rsb_casing_life", 0.0, 1.0, 0.05, 2
+}
+
+OptionMenu "RSB_DamageMenu"
+{
+	Title "WALL DAMAGE"
+	StaticText "Bullet holes, gouges, soot and scorch that last, and metal that glows hot.", "DarkGray"
+	StaticText ""
+	StaticText "The engine's wall damage comes last in its build order. Rows arrive with it.", "Gold"
+	StaticText ""
+	StaticText "Today: glowing impact marks.", "DarkGray"
+	Option "Glowing marks", "rsb_marks", "OnOff"
+	Slider "How long marks glow", "rsb_mark_life", 0.1, 5.0, 0.1, 1
+}
+
+OptionMenu "RSB_QualityMenu"
+{
+	Title "QUALITY AND PERFORMANCE"
+	StaticText "The effects level scales every count. The engine's performance log times", "DarkGray"
+	StaticText "each effect; the benchmarks give it a load that repeats.", "DarkGray"
+	StaticText ""
+	Option "Effects level", "rsb_tier", "RSBTiers"
+	Option "Particle atlas size", "r_gpuparticles_atlas_size", "RSBAtlasSizes"
+	StaticText ""
+	Slider "Performance log (seconds, 0 = off)", "r_perflog", 0, 30, 1, 0
+	Command "Two flame streams", "netevent rsb_bench_flame2"
+	Command "60 impacts a second", "netevent rsb_bench_impacts60"
+	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
+}
+
 OptionMenu "RSB_PreviewMenu"
 {
 	Title "PREVIEW"
@@ -188,23 +326,10 @@ OptionMenu "RSB_PreviewMenu"
 	StaticText ""
 	StaticText "BENCHMARKS", "Gold"
 	StaticText "Ten seconds each, for the engine's performance log. Turn the log on", "DarkGray"
-	StaticText "first (Developer options), face a wall about 256 units away, keep still.", "DarkGray"
+	StaticText "first (Quality and performance), face a wall about 256 units away, keep still.", "DarkGray"
 	Command "Two flame streams", "netevent rsb_bench_flame2"
 	Command "60 impacts a second", "netevent rsb_bench_impacts60"
 	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
-}
-
-OptionMenu "RSB_FlameMenu"
-{
-	Title "FLAMETHROWERS"
-	StaticText "The stream of fire, the fire where it lands, its light and its roar.", "DarkGray"
-	StaticText "Black smoke rises where it lands. Heat shimmer: Developer options, Heat shimmer.", "DarkGray"
-	StaticText ""
-	Option "Flame effects", "rsb_flame", "OnOff"
-	Option "Flame core (drawn lines)", "rsb_flame_tube", "OnOff"
-	Slider "Flames", "rsb_flame_particles", 0.0, 3.0, 0.1, 1
-	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
-	Slider "Flame volume", "rsb_flame_volume", 0.0, 1.0, 0.05, 2
 }
 
 OptionMenu "RSB_DiagnosticsMenu"

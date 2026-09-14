@@ -1,0 +1,12 @@
+// ============================================================================
+// RS_Ballistics console aliases.
+//
+// rsb_all_effects_on: Options -> Ballistics & Effects -> "All effects on
+// (recommended)". Sets every effect cvar, RS_Ballistics' and the engine's
+// renderer-read ones, to its recommended value. A changed CVARINFO default never
+// reaches an ini that already holds a value, so this row is how an existing
+// install gets them. Sound volumes, the round look, the style and diagnostics are
+// choices, not effects, and are left alone.
+// ============================================================================
+
+alias rsb_all_effects_on "rsb_tier 3; rsb_impacts 1; rsb_impact_particles 1; rsb_impact_glow 1; rsb_impact_lights 1; rsb_impact_light 1; rsb_marks 1; rsb_mark_life 1; rsb_ricochets 1; rsb_flash_light 1; rsb_flash_size 1; rsb_flash_cone 1; rsb_flash_cone_density 1; rsb_flash_flame 1; rsb_flash_flame_size 1; rsb_flash_sparks 1; rsb_flash_smoke 1; rsb_glide 1; rsb_wake 1; rsb_whiz 1; rsb_whiz_range 1; rsb_casings 1; rsb_casing_size 1; rsb_casing_hot 1; rsb_casing_life 1; rsb_flame 1; rsb_flame_particles 1; rsb_flame_light 1; rsb_flame_tube 1; r_gpuparticles 1; r_gpuparticles_maxsize 64; r_gpuparticles_soft 8; r_gpuparticles_lights 32; r_gpuparticles_atlas_size 256; r_gpuparticles_sizescale 1; r_gpuparticles_intensity 1; r_gpuparticles_stretch 1; r_drawnlines 1; r_heatrefraction 1; r_heatrefraction_scale 1; echo Ballistics and Effects: every effect is on at its recommended value"

@@ -5,12 +5,17 @@
 // choices: the dial, the style, switches and multipliers. All user cvars -- looks
 // only, each player's own, nothing a netgame compares.
 //
+// THE OWNER'S RULE (2026-09-14): our effects are ON by default, at good quality.
+// A changed default does not reach an ini that already holds a value, so
+// Options -> Ballistics & Effects -> "All effects on (recommended)" (KEYCONF
+// rsb_all_effects_on) sets these and the engine's effect cvars.
+//
 // Every one must be read by the ZScript (zscript/rsb/settings.zs):
 // tools/menu_lint.py fails the build on one that nothing reads.
 // ============================================================================
 
 // ---- the dial
-user int    rsb_tier               = 2;       // 0 off, 1 plain, 2 normal, 3 heavy, 4 extreme
+user int    rsb_tier               = 3;       // 0 off, 1 plain, 2 normal, 3 heavy (recommended), 4 extreme
 user string rsb_style              = "";      // "" default, or a style profile's name
 
 // ---- impacts
