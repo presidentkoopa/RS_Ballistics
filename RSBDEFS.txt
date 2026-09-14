@@ -39,8 +39,9 @@
 # THIS FORMAT IS THE PROTOTYPE of the engine's effect-definition lump
 # (Engine docs/ENGINE_SUPPORT_LIST.md): keep kinds and keys general.
 #
-# GPU PARTICLES ARE ADDITIVE GLOW TODAY. "Dust" below is a dim warm glow until
-# lit, alpha-blended smoke lands in the engine (list item #7).
+# GPU PARTICLES. A burst with no `particle` is inline additive glow (sparks, chips,
+# glints). A burst with `particle = <definition>` draws a PARTICLEDEFS definition,
+# which can be lit, alpha-blended, soft and textured (dust, smoke, flame puffs).
 # ============================================================================
 
 
@@ -1056,7 +1057,7 @@ end
 #                the jet coughs, and the sound plays as it catches again
 #   flameout     bursts when the trigger lets go (not from an empty canister)
 # GPU particles are drawn at min(the definition's maxsize, r_gpuparticles_maxsize).
-# That cvar is 8 until the owner raises the engine's size-cap slider (F5), so big
+# That cvar is 8 until it is raised in Developer options (GPU particle size cap), so big
 # puffs show only then.
 
 burst flame_core

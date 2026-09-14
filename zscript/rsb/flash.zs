@@ -216,8 +216,10 @@ class RSB_Flash : Actor
 	}
 }
 
-// A PUFF OF BARREL SMOKE. Authored sprites, not particles: GPU particles are
-// additive glow until lit smoke lands in the engine (ENGINE_SUPPORT_LIST.md #7).
+// A PUFF OF BARREL SMOKE as an authored sprite: the fallback for a flash profile
+// with no `smokeparticle`. Every gun flash RS_Ballistics ships names one
+// (rsb_smoke_gun, lit GPU smoke since stage 2d), so these draw only for a
+// profile another package writes without it.
 class RSB_Smoke : Actor
 {
 	Default
