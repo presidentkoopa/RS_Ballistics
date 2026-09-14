@@ -130,3 +130,8 @@ Written by `tools/import_fx.py`. Not packed (build.ps1 packs an allowlist).
 - `sprites/RSGSB0.png` generated
 - `sprites/RSGSC0.png` generated
 - `sprites/RSGSD0.png` generated
+
+## The rocket voxel (models/rocket)
+
+- `models/rocket/rocket.kvx` from `RS_Main/voxels/MISLA.kvx` (md5 f7b380190fbec2d614d45354c0efdaa8), copied unchanged by `tools/import_rocket_voxel.py`. Byte-identical to `DXR-main/wadsrc/static/voxels/MISLA.kvx`; no author recorded in either.
+- `models/rocket/rocket_pal.png` generated from that file's own palette.

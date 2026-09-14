@@ -82,6 +82,10 @@ class RSB_RoundLookDef : RSB_Def
 	double lightRadius;
 	double lightIntensity;
 	Color  lightColor;
+	// A PROJECTILE'S MOTOR (`motor`): a burst out of its tail each tic it flies. And a look
+	// taking over MID-FLIGHT plays its `onset` flash there (an RPG's sustainer lighting).
+	String motorBurst;
+	String onsetFlash;
 }
 
 // A WAKE: what a round sheds as it flies.
@@ -227,6 +231,14 @@ class RSB_FlashDef : RSB_Def
 	// under the muzzle, by the floor's surface, when the floor is within kickReach below.
 	String kickImpact;
 	double kickReach;
+	double kickAlong;      // map units along the level bore from the muzzle to the kick; negative = behind
+	// THE BACKBLAST'S HOT AIR (`backheat`): a column out of the rear of the tube, starting
+	// backHeatOffset behind the muzzle and running backHeatLength further back.
+	double backHeatRadius;
+	double backHeatLength;
+	double backHeatStrength;
+	int    backHeatTics;
+	double backHeatOffset;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the

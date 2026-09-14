@@ -545,6 +545,82 @@ burst shards_metal         # torn, bent metal thrown off a blast (3D chunks, lit
   particle = rsb_chunk_metal_shard1, rsb_chunk_metal_shard2, rsb_chunk_metal_shard3
 end
 
+burst rocket_motor         # a rocket motor's flame out of its tail each tic (rsb_rocket_motor)
+  count    = 2
+  cone     = 8
+  speed    = 90, 0.4
+  life     = 0.07, 0.3
+  aim      = back
+  offset   = -8
+  particle = rsb_rocket_motor
+end
+
+burst rocket_motor_hot     # an RPG's sustainer: a harder, longer flame
+  count    = 3
+  cone     = 10
+  speed    = 130, 0.4
+  life     = 0.09, 0.3
+  aim      = back
+  offset   = -8
+  particle = rsb_rocket_motor
+end
+
+burst rl_exhaust_back      # the Rocket Launcher's exhaust rolling back over the gun (rsb_smoke_rocket)
+  count    = 6
+  cone     = 26
+  speed    = 90, 0.5
+  life     = 2.2, 0.35
+  aim      = back
+  offset   = -16
+  particle = rsb_smoke_rocket
+end
+
+burst rpg_backblast_fire   # the RPG's backblast: a gout of fire out of the rear of the tube (rsb_muzzle_plume)
+  count    = 16
+  cone     = 18
+  speed    = 620, 0.4
+  life     = 0.16, 0.3
+  aim      = back
+  offset   = -40
+  particle = rsb_muzzle_plume
+end
+
+burst rpg_backblast_smoke  # the backblast's smoke: a thick cloud thrown out behind (rsb_smoke_rocket)
+  count    = 12
+  cone     = 30
+  speed    = 260, 0.5
+  life     = 2.6, 0.35
+  aim      = back
+  offset   = -40
+  particle = rsb_smoke_rocket
+end
+
+burst rpg_backblast_sparks # burning propellant thrown out behind with the backblast
+  count   = 30
+  cone    = 24
+  speed   = 520, 0.5
+  life    = 0.3, 0.4
+  color   = 255, 196, 110
+  glow    = 3.0
+  size    = 0.9, 0.2
+  gravity = 250
+  drag    = 3.0
+  orient  = streak
+  stretch = 0.02
+  aim     = back
+  offset  = -40
+end
+
+burst rpg_ignition_fire    # an RPG's sustainer lighting mid-flight: a burst of flame out of its tail (rsb_muzzle_plume)
+  count    = 7
+  cone     = 30
+  speed    = 160, 0.5
+  life     = 0.12, 0.3
+  aim      = back
+  offset   = -6
+  particle = rsb_muzzle_plume
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -1370,6 +1446,66 @@ impact rocket.liquid
   lightcolor = 255, 170, 90
 end
 
+# THE RPG's WARHEAD: the rocket's blasts, hitting harder -- more of everything, a wider heat.
+impact rocket_rpg
+  heat       = 84, 1.8, 36
+  bursts     = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rocket_smoke, rocket_fireball, rocket_soot
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+  scale      = 1.25, 1.15
+end
+
+impact rocket_rpg.metal
+  heat       = 84, 1.8, 36
+  bursts     = rocket_fire, rocket_embers, spark_metal, shards_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+  scale      = 1.25, 1.15
+end
+
+impact rocket_rpg.wood
+  heat       = 84, 1.8, 36
+  bursts     = rocket_fire, rocket_embers, splinter_wood, planks_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+  scale      = 1.25, 1.15
+end
+
+impact rocket_rpg.dirt
+  heat       = 84, 1.8, 36
+  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+  scale      = 1.25, 1.15
+end
+
+impact rocket_rpg.glass
+  heat       = 84, 1.8, 36
+  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot
+  mark       = sunburst, 40, 140
+  markcolor  = 255, 120, 40
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+  scale      = 1.25, 1.15
+end
+
+impact rocket_rpg.liquid
+  heat       = 84, 1.8, 36
+  bursts     = rocket_fire, splash_liquid, rocket_smoke, rocket_fireball, rocket_soot
+  light      = 400, 4.0, 10
+  lightcolor = 255, 170, 90
+  scale      = 1.25, 1.15
+end
+
+
 impact bfg.liquid
   heat       = 110, 1.8, 35
   bursts     = bfg_splash, bfg_motes, splash_liquid, bfg_arcs
@@ -1617,6 +1753,8 @@ end
 # burning tracer); its impacts and near-miss sound stay this look's. `light = radius,
 # intensity` and `lightcolor`: a light the round carries in flight (a tracer lighting what
 # it passes).
+# `motor = <burst>`: a projectile's tail fires that burst each tic it flies. `onset = <flash>`:
+# played where the projectile is when this look takes over mid-flight (an RPG's sustainer).
 roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
@@ -1764,6 +1902,23 @@ roundlook rocket
   look   = none
   wake   = rocket_smoke
   impact = rocket
+  motor  = rocket_motor
+  heat   = 6, 0.7, 12, 160
+end
+
+roundlook rocket_rpg_boost # an RPG rocket's first metres: the booster's thin smoke thread, no flame yet
+  look   = none
+  wake   = rpg_boost_smoke
+  impact = rocket_rpg
+end
+
+roundlook rocket_rpg       # the RPG's sustainer burning: a hard bright flame, a thick hanging smoke trail, shimmer behind
+  look   = none
+  wake   = rocket_smoke_heavy
+  impact = rocket_rpg
+  motor  = rocket_motor_hot
+  heat   = 7, 0.8, 12, 200
+  onset  = rpg_ignition
 end
 
 roundlook bfg_ball
@@ -1923,10 +2078,24 @@ wake bfg_trail           # green sparks and glow off the BFG ball
   glow    = 2.0
 end
 
-wake rocket_smoke        # lit grey smoke off the motor
-  perstep  = 2
-  life     = 1.8
+wake rocket_smoke        # thick lit smoke off the motor, laid by distance: it hangs as the rocket's trail
+  spacing  = 7
+  life     = 2.6
   drift    = 10
+  particle = rsb_smoke_rocket
+end
+
+wake rocket_smoke_heavy    # an RPG sustainer's trail: thicker, lingering longer
+  spacing  = 5
+  life     = 3.2
+  drift    = 9
+  particle = rsb_smoke_rocket
+end
+
+wake rpg_boost_smoke       # an RPG booster's thin smoke thread
+  spacing  = 10
+  life     = 1.6
+  drift    = 4
   particle = rsb_smoke_gun
 end
 
@@ -1952,7 +2121,10 @@ end
 #   barrelsmoke <PARTICLEDEFS definition>, puffs a tic at full heat -- the ribbon off the muzzle
 #   barrelshimmer  radius, strength -- the hot air bending over the barrel
 #   groundkick  <impact profile>, reach -- a big gun's blast raises the floor under the muzzle:
-#               that impact, by the floor's surface, when the floor is within reach below
+#               that impact, by the floor's surface, when the floor is within reach below;
+#               an optional third value is how far along the bore it lands (24; negative behind)
+#   backheat    radius, length, strength, tics, offset -- hot air out of the rear of the tube,
+#               starting offset behind the muzzle (a backblast)
 #   barrelglow  from heat, radius, intensity -- a barrel run hot glows: a dull light at the
 #               muzzle past that heat (full auto, long bursts); barrelglowcolor r, g, b
 #
@@ -2280,6 +2452,55 @@ flash rocket             # the motor lighting: big warm light, sparks, smoke
   flame      = 0.1
   smoke      = 3, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
+end
+
+flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -- a hard orange flare out the front, exhaust rolling back over the gun, the floor kicked up, the room lit orange
+  light      = 520, 5.0, 4
+  lightcolor = 255, 186, 110
+  cone       = 30, 76, 160, 12
+  conetics   = 4
+  bursts     = flash_core, flash_plume_wide, flash_sparks_wide, rl_exhaust_back
+  maybe      = flash_powder 0.6
+  flame      = 0.11
+  smoke      = 6, 0.04, 0.4
+  smokeparticle = rsb_smoke_rocket
+  heat       = 12, 48, 1.3, 18
+  groundkick = kick_blast, 72
+  vary       = light 0.2, flame 0.25, cone 0.2, sparks 0.35, smoke 0.3
+  surge      = 0.1, 1.25
+  barrelheat = 0.5, 0.2, 0.4
+  barrelsmoke = rsb_smoke_barrel, 3.0
+  barrelshimmer = 4, 0.55
+end
+
+flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning propellant blasting out of the rear of the tube, heat bending the air behind, the floor kicked up behind; a smaller flash at the front
+  light      = 600, 5.5, 4
+  lightcolor = 255, 196, 124
+  cone       = 24, 64, 120, 10
+  conetics   = 4
+  bursts     = flash_core, flash_petals, rpg_backblast_fire, rpg_backblast_smoke, rpg_backblast_sparks
+  maybe      = flash_powder 0.5
+  flame      = 0.07
+  smoke      = 3, 0.035, 0.36
+  smokeparticle = rsb_smoke_gun
+  backheat   = 14, 60, 1.5, 22, 40
+  groundkick = kick_blast, 72, -40
+  vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  surge      = 0.12, 1.3
+  barrelheat = 0.45, 0.2, 0.4
+  barrelsmoke = rsb_smoke_barrel, 2.6
+  barrelshimmer = 3.5, 0.5
+end
+
+flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a flash, a burst of flame, a puff of smoke (no cone: it is not a gun's)
+  light      = 260, 4.0, 3
+  lightcolor = 255, 200, 130
+  bursts     = rpg_ignition_fire, flash_sparks
+  flame      = 0.05
+  smoke      = 3, 0.03, 0.34
+  smokeparticle = rsb_smoke_gun
+  heat       = 6, 30, 0.9, 12
+  vary       = light 0.2, smoke 0.3
 end
 
 flash bfg                # a green bloom

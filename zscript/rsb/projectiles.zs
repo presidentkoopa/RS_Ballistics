@@ -51,7 +51,44 @@ class RSB_ProjectileLook play
 			return true;
 		}
 		RSB_Wake.Lay(lk.wake, before, mo.pos, travel);
+		Motor(mo, lk, travel);
 		return landed;
+	}
+
+	// THE MOTOR (a look's `motor`): a burst out of its tail each tic it flies.
+	static void Motor(Actor mo, RSB_RoundLookDef lk, Vector3 travel)
+	{
+		if (!mo || !lk || lk.motorBurst.Length() == 0 || travel == (0, 0, 0)) return;
+		int tier = RSB_Tier.Current();
+		if (tier <= RSB_Tier.T_OFF) return;
+		let reg = RSB_Registry.Get();
+		if (!reg) return;
+		RSB_Burst.Fire(reg.FindBurst(lk.motorBurst), mo.pos, travel, travel, RSB_Tier.CountScale(tier), 1.0,
+			RSB_Hash.Seed(level.maptime, 211, RSB_Hash.OfPos(mo.pos)));
+	}
+
+	// A LOOK TAKING OVER MID-FLIGHT (its `onset`): that flash where the projectile is -- an
+	// RPG's sustainer lighting. An onset flash should have no cone (it has no beam slot).
+	const ONSET_BEAM_SLOT = 7;
+	static void Onset(Actor mo, RSB_RoundLookDef lk, Vector3 travel)
+	{
+		if (!mo || !lk || lk.onsetFlash.Length() == 0) return;
+		RSB_Flash.Fire(lk.onsetFlash, mo.pos, (travel != (0, 0, 0)) ? travel : (1, 0, 0), ONSET_BEAM_SLOT, mo.Vel);
+	}
+
+	// THE AIR IT TEARS THROUGH (a look's `heat`), as a round's (RSB_Bullet.LayAirHeat): bent air
+	// over the last heatReach units behind it, in one blast slot of its own. Returns the slot.
+	static int AirHeat(Actor mo, RSB_RoundLookDef lk, Vector3 launchedAt, int slot)
+	{
+		if (!mo || !lk || lk.heatStrength <= 0 || lk.heatRadius <= 0) return slot;
+		if (RSB_Tier.Current() <= RSB_Tier.T_OFF) return slot;
+		Vector3 path = mo.pos - launchedAt;
+		double len = path.Length();
+		if (len < 1.0) return slot;
+		Vector3 dir = path / len;
+		if (slot == 0) slot = RSB_Heat.ClaimBlast();
+		RSB_Heat.AirWake(slot, mo.pos - dir * min(len, lk.heatReach), mo.pos, lk.heatRadius, lk.heatStrength, lk.heatTics);
+		return slot;
 	}
 }
 
@@ -89,19 +126,63 @@ class RSB_Rocket : Rocket
 		SeeSound "";
 	}
 
+	const SPIN = 14;   // degrees a tic about its length: the model (MODELDEF, USEACTORROLL) spins as it flies
+
 	private Vector3 travel;
 	private bool    landed;
+	private int     flightAge;     // tics since launch: which look it flies in (FlightLook)
+	private Vector3 launchedAt;    // where its air shimmer can begin
+	private bool    launchKnown;
 	transient bool             looked;
+	transient String           lookName;
 	transient RSB_RoundLookDef lookDef;
+	transient int              heatSlot;
+
+	// WHICH ROUND LOOK IT FLIES IN at this age. One look for the whole flight here; an RPG's
+	// rocket (RSB_RocketRPG) boosts first, then its sustainer lights (the look's `onset`).
+	virtual String FlightLook(int age)
+	{
+		return "rocket";
+	}
 
 	override void Tick()
 	{
 		Vector3 before = pos;
 		travel = RSB_ProjectileLook.Heading(self, travel);
+		if (!launchKnown)
+		{
+			launchKnown = true;
+			launchedAt = pos;
+		}
 		Super.Tick();
 		if (bDestroyed) return;
-		if (!looked) { looked = true; lookDef = RSB_ProjectileLook.Look("rocket"); }
+		flightAge++;
+		String want = FlightLook(flightAge);
+		if (!looked || !(want ~== lookName))
+		{
+			bool midFlight = looked;
+			looked = true;
+			lookName = want;
+			lookDef = RSB_ProjectileLook.Look(want);
+			if (midFlight && !landed) RSB_ProjectileLook.Onset(self, lookDef, travel);
+		}
+		// THE MODEL flies nose first and spins (MODELDEF models/rocket). Looks only.
+		if (Vel != (0, 0, 0)) pitch = -VectorAngle(Vel.xy.Length(), Vel.z);
+		roll += SPIN;
 		landed = RSB_ProjectileLook.AfterMove(self, lookDef, before, travel, landed);
+		if (!landed) heatSlot = RSB_ProjectileLook.AirHeat(self, lookDef, launchedAt, heatSlot);
+	}
+}
+
+// AN RPG'S ROCKET: the same rocket to the game; to the eye it leaves on its booster -- a thin
+// smoke thread -- and its sustainer lights a few metres out with a flash and a hard flame.
+class RSB_RocketRPG : RSB_Rocket
+{
+	const BOOST_TICS = 10;   // about 6 m at the rocket's speed
+
+	override String FlightLook(int age)
+	{
+		return (age < BOOST_TICS) ? "rocket_rpg_boost" : "rocket_rpg";
 	}
 }
 

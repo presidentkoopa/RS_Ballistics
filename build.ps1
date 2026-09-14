@@ -64,7 +64,7 @@ $must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO
           'zscript/rsb/registry.zs', 'zscript/rsb/settings.zs', 'zscript/rsb/materials.zs',
           'zscript/rsb/impact.zs', 'zscript/rsb/bullet.zs', 'zscript/rsb/flash.zs',
           'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs', 'zscript/rsb/flamer.zs', 'zscript/rsb/bench.zs', 'zscript/rsb/projectiles.zs', 'zscript/rsb/heat.zs', 'zscript/rsb/trail.zs', 'zscript/rsb/casings.zs', 'zscript/rsb/barrel.zs',
-          'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png',
+          'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png', 'models/rocket/rocket.kvx', 'models/rocket/rocket_pal.png', 'models/debris/chunk.png',
           'sounds/rsb/impact_concrete/bulletimpact1.ogg', 'sounds/rsb/whiz/whizby1.wav', 'sounds/rsb/flame/flamer_loop.ogg')
 foreach ($m in $must) {
     if ($names -notcontains $m) { throw "verification failed: $m missing" }

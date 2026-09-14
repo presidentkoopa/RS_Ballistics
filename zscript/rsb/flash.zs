@@ -148,6 +148,9 @@ class RSB_Flash : Actor
 		// HEAT SHIMMER out of the muzzle (RSB_Heat): a column of hot air along the shot.
 		if (fd.heatStrength > 0)
 			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength * surge, fd.heatTics);
+		// THE BACKBLAST'S HOT AIR (`backheat`): a column out of the rear of the tube, behind.
+		if (fd.backHeatStrength > 0)
+			RSB_Heat.Along(pos - dir * fd.backHeatOffset, -dir, fd.backHeatLength, fd.backHeatRadius, fd.backHeatStrength * surge, fd.backHeatTics);
 
 		// THE GROUND KICK (`groundkick`): a big gun's blast raises the floor under and just
 		// ahead of it -- dust rolling out, water thrown up -- the impact chosen by the
@@ -159,7 +162,7 @@ class RSB_Flash : Actor
 			if (groundDir.Length() > 0.001)
 			{
 				groundDir = groundDir.Unit();
-				if (level.IsPointInLevel(pos + groundDir * 24.0)) kickFrom = pos + groundDir * 24.0;
+				if (level.IsPointInLevel(pos + groundDir * fd.kickAlong)) kickFrom = pos + groundDir * fd.kickAlong;
 			}
 			let ground = RSB_Materials.FloorUnder(self, kickFrom, fd.kickReach);
 			if (ground) RSB_Impact.LandOn(self, ground, fd.kickImpact, groundDir);

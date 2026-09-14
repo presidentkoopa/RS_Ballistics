@@ -189,6 +189,8 @@ class RSB_Parser
 			d.lightRadius = 0;
 			d.lightIntensity = 0;
 			d.lightColor = Color(255, 255, 190, 120);
+			d.motorBurst = "";
+			d.onsetFlash = "";
 			return d;
 		}
 		if (kind == "wake")
@@ -285,6 +287,12 @@ class RSB_Parser
 			d.barrelGlowColor = Color(255, 255, 110, 40);
 			d.kickImpact = "";
 			d.kickReach = 0;
+			d.kickAlong = 24;
+			d.backHeatRadius = 0;
+			d.backHeatLength = 0;
+			d.backHeatStrength = 0;
+			d.backHeatTics = 0;
+			d.backHeatOffset = 0;
 			return d;
 		}
 		if (kind == "ejecta")
@@ -559,7 +567,19 @@ class RSB_Parser
 			lk.lightColor = lc;
 			return "";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light or lightcolor", key);
+		if (key == "motor")
+		{
+			if (v.Size() != 1) return "motor is one burst profile name, or none";
+			lk.motorBurst = (v[0] ~== "none") ? "" : v[0];
+			return "";
+		}
+		if (key == "onset")
+		{
+			if (v.Size() != 1) return "onset is one flash profile name, or none";
+			lk.onsetFlash = (v[0] ~== "none") ? "" : v[0];
+			return "";
+		}
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor or onset", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE
@@ -1032,9 +1052,11 @@ class RSB_Parser
 				f.kickReach = 0;
 				return "";
 			}
-			if (v.Size() != 2 || !IsNum(v[1])) return "groundkick is <impact profile>, reach (map units below the muzzle) -- or none";
+			if (v.Size() < 2 || v.Size() > 3 || !IsNum(v[1]) || (v.Size() == 3 && !IsNum(v[2])))
+				return "groundkick is <impact profile>, reach (map units below the muzzle)[, along (from the muzzle, negative behind)] -- or none";
 			f.kickImpact = v[0];
 			f.kickReach = v[1].ToDouble();
+			f.kickAlong = (v.Size() == 3) ? v[2].ToDouble() : 24.0;
 			return (f.kickReach > 0 && f.kickReach <= 512) ? "" : "groundkick reach must be above 0, up to 512";
 		}
 		if (key == "barrelglow")
@@ -1051,6 +1073,17 @@ class RSB_Parser
 			why = ReadColor(v, c); if (why != "") return why;
 			f.barrelGlowColor = c;
 			return "";
+		}
+		if (key == "backheat")
+		{
+			why = Nums(v, 5); if (why != "") return why;
+			f.backHeatRadius = v[0].ToDouble();
+			f.backHeatLength = v[1].ToDouble();
+			f.backHeatStrength = v[2].ToDouble();
+			f.backHeatTics = v[3].ToInt();
+			f.backHeatOffset = v[4].ToDouble();
+			return (f.backHeatRadius >= 0 && f.backHeatLength >= 0 && f.backHeatStrength >= 0 && f.backHeatTics >= 0) ? ""
+				: "backheat is radius, length, strength, tics, offset behind the muzzle";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}

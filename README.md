@@ -70,6 +70,9 @@ owner's `E:\DOOMWork` layout (the shared tools folder and the engine build).
   splinters, clods, glass shards), and the 9mm, .45 and .357 casings and the
   12-gauge shell (`tools/gen_casings.py`), and the 3D debris chunks
   (`tools/gen_chunks.py`: concrete, wood, metal, glass and dirt).
+- **The rocket in flight** (`models/rocket/rocket.kvx`) is RS_Main's
+  `voxels/MISLA.kvx`, copied unchanged (`tools/import_rocket_voxel.py`); the same file is in
+  the DXR engine's own static resources, and neither records its author.
 - **Force Unleashed**, Ermac's (iAmErmac) VR mod, under the MIT License
   (`licenses/force_unleashed_MIT.txt`): the rifle casing
   (`models/casings/casing_rifle.md3`) is its chaingun belt round with the bullet cut

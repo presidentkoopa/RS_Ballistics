@@ -227,6 +227,10 @@ class RSB_Registry : StaticEventHandler
 					why = String.Format("its wake \"%s\" is not defined in any RSBDEFS", lk.wake);
 				else if (lk.tracerEvery > 0 && !defs.Find("roundlook", lk.tracerLook))
 					why = String.Format("its tracer look \"%s\" has no base profile in any RSBDEFS", lk.tracerLook);
+				else if (lk.motorBurst.Length() > 0 && !FindBurst(lk.motorBurst))
+					why = String.Format("its motor burst \"%s\" is not defined in any RSBDEFS", lk.motorBurst);
+				else if (lk.onsetFlash.Length() > 0 && !defs.Find("flash", lk.onsetFlash))
+					why = String.Format("its onset flash \"%s\" has no base profile in any RSBDEFS", lk.onsetFlash);
 			}
 			if (why == "") continue;
 			let d = defs.defs[i];

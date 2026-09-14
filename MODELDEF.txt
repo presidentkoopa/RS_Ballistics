@@ -109,3 +109,36 @@ Model RSB_Shell12ga
 	FrameIndex RSCS E 0 0
 }
 
+
+// ============================================================================
+// THE ROCKET IN FLIGHT: Doom's rocket as a voxel (models/rocket/rocket.kvx, RS_Main's
+// voxels/MISLA.kvx; tools/import_rocket_voxel.py), drawn as a model so it flies nose first
+// (USEACTORPITCH) and spins (USEACTORROLL) -- RSB_Rocket sets both each tic. Only the
+// flight frame (MISL A); the blast frames stay Doom's sprites. A voxel drawn as a model is
+// coloured through its palette skin (rocket_pal.png), which MODELDEF must name.
+// AngleOffset 270: this voxel set faces right (as RS_Main's and RS_VRBody's).
+// ============================================================================
+
+Model RSB_Rocket
+{
+	Path "models/rocket"
+	Model 0 "rocket.kvx"
+	Skin 0 "rocket_pal.png"
+	Scale 1.0 1.0 1.0
+	AngleOffset 270
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex MISL A 0 0
+}
+
+Model RSB_RocketRPG
+{
+	Path "models/rocket"
+	Model 0 "rocket.kvx"
+	Skin 0 "rocket_pal.png"
+	Scale 1.0 1.0 1.0
+	AngleOffset 270
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex MISL A 0 0
+}
