@@ -136,8 +136,11 @@ OptionMenu "RSB_RecoilMenu"
 	StaticText "and crouching or standing still steadies it. Plasma and BFG never kick.", "DarkGray"
 	StaticText ""
 	StaticText "Recoil is one switch the server sets for every player, and it is ALL recoil:", "DarkGray"
-	StaticText "off, rounds fly dead on and no gun kicks, not even to the eye. On, how hard the", "DarkGray"
-	StaticText "kick looks is your own. Both rows arrive when the guns read their recoil profiles.", "Gold"
+	StaticText "off, rounds fly dead on and no gun kicks, not even to the eye.", "DarkGray"
+	Option "Gameplay recoil (server: every player)", "sv_rsb_recoil", "OnOff"
+	StaticText ""
+	StaticText "While recoil is on, how hard the kick looks is your own.", "DarkGray"
+	Slider "Kick strength (looks)", "rsb_recoil_view", 0.0, 2.0, 0.1, 1
 }
 
 OptionMenu "RSB_ParticleMenu"
