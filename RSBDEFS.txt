@@ -939,6 +939,68 @@ burst bfg_spray_flare      # where a BFG ray strikes a body: a green flare
   aim     = normal
 end
 
+burst saw_sparks           # a chain biting stone: a spray of hot sparks thrown off the cut
+  count   = 10
+  cone    = 40
+  speed   = 380, 0.5
+  life    = 0.4, 0.4
+  color   = 255, 200, 130
+  glow    = 3.5
+  size    = 0.7, 0.15
+  gravity = 500
+  drag    = 1.2
+  orient  = streak
+  stretch = 0.025
+  aim     = normal
+end
+
+burst saw_sparks_heavy     # a chain biting metal: a rooster tail of sparks
+  count   = 16
+  cone    = 45
+  speed   = 420, 0.5
+  life    = 0.5, 0.4
+  color   = 255, 206, 140
+  glow    = 4.0
+  size    = 0.8, 0.15
+  gravity = 520
+  drag    = 1.0
+  orient  = streak
+  stretch = 0.03
+  aim     = normal
+end
+
+burst saw_dust             # stone dust ground out of the cut (rsb_dust_concrete: lit, never glowing)
+  count    = 2
+  cone     = 40
+  speed    = 120, 0.5
+  life     = 1.4, 0.4
+  color    = 150, 146, 138
+  aim      = normal
+  offset   = 2
+  particle = rsb_dust_concrete
+end
+
+burst sawdust_spray        # sawdust thrown out of a cut in wood (lit flakes, never glowing)
+  count    = 6
+  cone     = 35
+  speed    = 260, 0.5
+  life     = 0.8, 0.4
+  color    = 196, 160, 110
+  aim      = normal
+  offset   = 1
+  particle = rsb_debris_splinter
+end
+
+burst saw_smoke_wood       # friction smoke curling off wood the chain is burning through (rsb_smoke_gun: lit)
+  count    = 1
+  cone     = 30
+  speed    = 30, 0.5
+  life     = 1.6, 0.3
+  aim      = up
+  offset   = 3
+  particle = rsb_smoke_gun
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -1916,10 +1978,178 @@ impact rail
   lightcolor = 180, 210, 255
 end
 
-impact saw               # sparks where the chain bites a wall; the saw has its own sound
-  bursts     = spark_metal, ember_metal, spark_spray
-  light      = 60, 1.5, 3
-  lightcolor = 255, 200, 140
+# THE CHAINSAWS: the chain bites about nine times a second while the bar is held on a surface, so each bite
+# feeds a hotspot that builds one continuous cut; a bite only now and then throws something of its own.
+# The saw's own engine and hit sounds are the gun's. Bodies it cuts bleed: that is their own mod's.
+
+hotspot saw_cut_stone         # a chain held on stone: sparks thrown off the cut, dust rising, chips; no glow (stone is not hot)
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = saw_sparks 14, saw_dust 8, chips_concrete 2
+  light      = 60, 1.4
+  lightcolor = 255, 190, 120
+  sound      = none
+end
+
+hotspot saw_cut_metal         # a chain held on metal: a rooster tail of sparks and a gouge that glows hot, the air bending over it
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = saw_sparks_heavy 20, spark_spray 6, ember_metal 4
+  light      = 80, 1.8
+  lightcolor = 255, 196, 130
+  mark       = gouge, 2, 7, 6, 40
+  markcolor  = 255, 140, 60
+  shimmer    = 8, 0.6
+  sound      = none
+end
+
+hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, splinters, friction smoke; no light
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = sawdust_spray 16, splinter_wood 3, saw_smoke_wood 3
+  sound      = none
+end
+
+hotspot saw_cut_dirt         # a chain held in dirt and rock: clods and dust
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = clods_dirt 3, dust_dirt 4, saw_sparks 3
+  sound      = none
+end
+
+hotspot saw_cut_glass         # a chain held on glass: shards
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = glint_glass 4, saw_sparks 4
+  sound      = none
+end
+
+hotspot saw_cut_liquid         # a chain in water: spray
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = splash_liquid 6
+  sound      = none
+end
+
+hotspot saw_cut_stone_heavy         # a chain held on stone: sparks thrown off the cut, dust rising, chips; no glow (stone is not hot) -- the Heavy Chainsaw's, heavier
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = saw_sparks 21, saw_dust 12, chips_concrete 3
+  light      = 72, 1.68
+  lightcolor = 255, 190, 120
+  sound      = none
+end
+
+hotspot saw_cut_metal_heavy         # a chain held on metal: a rooster tail of sparks and a gouge that glows hot, the air bending over it -- the Heavy Chainsaw's, heavier
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = saw_sparks_heavy 30, spark_spray 9, ember_metal 6
+  light      = 96, 2.16
+  lightcolor = 255, 196, 130
+  mark       = gouge, 2, 7, 6, 40
+  markcolor  = 255, 140, 60
+  shimmer    = 8, 0.6
+  sound      = none
+end
+
+hotspot saw_cut_wood_heavy         # a chain held on wood: sawdust spraying, splinters, friction smoke; no light -- the Heavy Chainsaw's, heavier
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = sawdust_spray 24, splinter_wood 4.5, saw_smoke_wood 4.5
+  sound      = none
+end
+
+hotspot saw_cut_dirt_heavy         # a chain held in dirt and rock: clods and dust -- the Heavy Chainsaw's, heavier
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = clods_dirt 4.5, dust_dirt 6, saw_sparks 4.5
+  sound      = none
+end
+
+hotspot saw_cut_glass_heavy         # a chain held on glass: shards -- the Heavy Chainsaw's, heavier
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = glint_glass 6, saw_sparks 6
+  sound      = none
+end
+
+hotspot saw_cut_liquid_heavy         # a chain in water: spray -- the Heavy Chainsaw's, heavier
+  merge      = 16
+  heat       = 0.3, 1.2, 1.0
+  bursts     = splash_liquid 9
+  sound      = none
+end
+
+impact saw
+  maybe      = spark_hot 0.4
+  sound      = none
+  hotspot    = saw_cut_stone
+end
+
+impact saw.metal
+  maybe      = spark_metal 0.3
+  sound      = none
+  hotspot    = saw_cut_metal
+end
+
+impact saw.wood
+  maybe      = splinter_wood 0.15
+  sound      = none
+  hotspot    = saw_cut_wood
+end
+
+impact saw.dirt
+  maybe      = clods_dirt 0.2
+  sound      = none
+  hotspot    = saw_cut_dirt
+end
+
+impact saw.glass
+  maybe      = glint_glass 0.3
+  sound      = none
+  hotspot    = saw_cut_glass
+end
+
+impact saw.liquid
+  maybe      = splash_liquid 0.3
+  sound      = none
+  hotspot    = saw_cut_liquid
+end
+
+impact saw_heavy
+  maybe      = spark_hot 0.4
+  sound      = none
+  hotspot    = saw_cut_stone_heavy
+end
+
+impact saw_heavy.metal
+  maybe      = spark_metal 0.3
+  sound      = none
+  hotspot    = saw_cut_metal_heavy
+end
+
+impact saw_heavy.wood
+  maybe      = splinter_wood 0.15
+  sound      = none
+  hotspot    = saw_cut_wood_heavy
+end
+
+impact saw_heavy.dirt
+  maybe      = clods_dirt 0.2
+  sound      = none
+  hotspot    = saw_cut_dirt_heavy
+end
+
+impact saw_heavy.glass
+  maybe      = glint_glass 0.3
+  sound      = none
+  hotspot    = saw_cut_glass_heavy
+end
+
+impact saw_heavy.liquid
+  maybe      = splash_liquid 0.3
+  sound      = none
+  hotspot    = saw_cut_liquid_heavy
 end
 
 # ---- the same arsenal on each material. A variant REPLACES its base -- nothing is
@@ -2090,22 +2320,6 @@ impact rail.liquid
   bursts     = rail_splash, splash_liquid
   light      = 100, 2.5, 4
   lightcolor = 180, 210, 255
-end
-
-impact saw.wood          # the chain throws splinters and dust, not sparks
-  bursts     = splinter_wood, dust_wood
-end
-
-impact saw.dirt
-  bursts     = clods_dirt, dust_dirt
-end
-
-impact saw.glass
-  bursts     = glint_glass
-end
-
-impact saw.liquid
-  bursts     = splash_liquid
 end
 
 

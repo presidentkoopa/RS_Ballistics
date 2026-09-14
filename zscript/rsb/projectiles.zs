@@ -364,6 +364,13 @@ class RSB_SawPuff : RSB_HitPuff
 	override String ImpactProfile() { return "saw"; }
 }
 
+// A HEAVY CHAINSAW'S CUT: the same puff to the game; to the eye a heavier cut (impact saw_heavy).
+// A gun names it as its saw's puff (the reload system's WM_Gun saw puff).
+class RSB_SawPuffHeavy : RSB_HitPuff
+{
+	override String ImpactProfile() { return "saw_heavy"; }
+}
+
 // A LASER BURNING A SURFACE: pass it as a laser attack's puff (A_RailAttack or
 // LineAttack). Plays the `laser_burn` impact where the beam hit. First user: the
 // Unmaker (WM_Unmaker).
