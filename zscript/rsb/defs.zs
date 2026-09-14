@@ -172,6 +172,7 @@ class RSB_ImpactDef : RSB_Def
 	int    heatTics;
 	double countScale;     // `scale`: every burst's particle count x this (how hard a weapon class bites); 1 = as written
 	double sizeScale;      // `scale`: every burst's particle size x this
+	String hotspot;        // a hotspot profile each hit feeds (a sustained beam), or ""
 	// EVERY HIT ITS OWN, hashed per hit: `vary` wobbles counts, sizes and the light;
 	// `maybe` bursts fire on only some hits, each at its own chance.
 	double varyCount;
@@ -239,6 +240,10 @@ class RSB_FlashDef : RSB_Def
 	double backHeatStrength;
 	int    backHeatTics;
 	double backHeatOffset;
+	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a
+	// weapon firing every tic reads as one pulsing glow, not a strobe.
+	int    throbTics;
+	double throbDepth;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the
@@ -360,6 +365,34 @@ class RSB_FlameDef : RSB_Def
 	double heatLandStrength;
 }
 
+// A HOTSPOT: a spot a sustained beam or stream heats up (an impact's `hotspot`). Many hits
+// a second on one place feed ONE spot, whose light, mark, sound and bursts grow with its heat
+// and die away as it cools (hotspot.zs).
+class RSB_HotspotDef : RSB_Def
+{
+	double mergeRadius;         // a hit this close to a live spot feeds it
+	double heatPerHit;
+	double coolPerSecond;
+	double heatMax;             // full heat: everything at its strongest
+	Array<String> bursts;       // emitted while it burns ...
+	Array<double> burstRates;   // ... each this many times a second at full heat
+	double lightRadius;         // 0 = no light
+	double lightIntensity;
+	Color  lightColor;
+	int    throbTics;           // the light pulses on this beat (0 = steady)
+	double throbDepth;
+	int    markShape;           // a STAMP_* id; -1 = no mark
+	double markRadiusCold;
+	double markRadiusHot;
+	Color  markColor;
+	int    markEvery;           // tics between stamps
+	int    markLife;            // each stamp's life, tics
+	double shimmerRadius;       // 0 = none
+	double shimmerStrength;
+	String loopSound;           // a looping SNDINFO name, or "none"
+	double loopVolume;          // at full heat
+}
+
 // A STYLE: a named look the player picks in the menu. Multipliers over every
 // profile, plus any `~style` variants written for it.
 class RSB_StyleDef : RSB_Def
@@ -478,6 +511,7 @@ class RSB_DefSet
 		kinds.Push("flame");
 		kinds.Push("ejecta");
 		kinds.Push("trail");
+		kinds.Push("hotspot");
 
 		String s = "";
 		for (int k = 0; k < kinds.Size(); k++)

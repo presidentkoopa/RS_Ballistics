@@ -101,6 +101,13 @@ class RSB_Flash : Actor
 		double vCone   = RSB_Hash.Wobble(fd.varyCone, shotTic, 407, posSeed) * surge;
 		double vSparks = RSB_Hash.Wobble(fd.varySparks, shotTic, 409, posSeed) * surge;
 		double vSmoke  = RSB_Hash.Wobble(fd.varySmoke, shotTic, 411, posSeed) * surge;
+		// A THROB (`throb`): light and cone swell and ease on a beat by the map clock.
+		if (fd.throbTics > 0)
+		{
+			double beat = (1.0 - fd.throbDepth) + fd.throbDepth * (0.5 + 0.5 * sin(shotTic * 360.0 / fd.throbTics));
+			vLight *= beat;
+			vCone *= beat;
+		}
 
 		double flameSize = fd.flameScale * RSB_Settings.FlashFlameSize() * vFlame;
 		if (tier <= RSB_Tier.T_OFF || flameSize <= 0 || !RSB_Settings.FlashFlame()) bINVISIBLE = true;

@@ -189,8 +189,18 @@ class RSB_Impact play
 	{
 		if (!mo || impactBase.Length() == 0 || impactBase ~== "none") return;
 		RSB_Surface surf = null;
-		// On a monster the trace would pass through it to a wall behind: not that wall.
-		if (!(inAirToo && mo.BlockingMobj)) surf = RSB_Materials.Probe(mo, travel);
+		if (mo.bMISSILE && mo.BlockingMobj)
+		{
+			// A PROJECTILE THAT HIT A THING lands ON it, never on the wall a trace would find
+			// behind it: material "flesh" when the thing bleeds (an impact's `.flesh` variant),
+			// no mark. Only a missile: a corpse's stale BlockingMobj must not hide its floor.
+			surf = RSB_Materials.InAir(mo.pos, travel);
+			if (!mo.BlockingMobj.bNOBLOOD) surf.material = "flesh";
+		}
+		else
+		{
+			surf = RSB_Materials.Probe(mo, travel);
+		}
 		if (inAirToo && !surf) surf = RSB_Materials.InAir(mo.pos, travel);
 		LandOn(mo, surf, impactBase, travel);
 	}
@@ -229,6 +239,10 @@ class RSB_Impact play
 			glancing = abs(travel dot surf.normal) < sin(im.glanceDeg);
 		if (glancing && vol > 0 && !(im.glanceSound ~== "none"))
 			soundAt.A_StartSound(im.glanceSound, CHAN_AUTO, CHANF_OVERLAP, vol);
+
+		// A HOTSPOT (`hotspot`): a sustained beam's hits feed one spot that heats up (hotspot.zs).
+		// Fed at every effects level, so its sound plays even with the visuals off.
+		if (im.hotspot.Length() > 0) RSB_Hotspot.Feed(im.hotspot, surf);
 
 		if (tier <= RSB_Tier.T_OFF || !RSB_Settings.Impacts()) return;
 

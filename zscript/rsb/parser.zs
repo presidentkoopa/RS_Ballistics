@@ -82,7 +82,7 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame, trail or ejecta");
+					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame, trail, hotspot or ejecta");
 					refusals++;
 					refused = true;
 					continue;
@@ -250,6 +250,7 @@ class RSB_Parser
 			d.glanceBurst = "none";
 			d.countScale = 1;
 			d.sizeScale = 1;
+			d.hotspot = "";
 			return d;
 		}
 		if (kind == "flash")
@@ -293,6 +294,8 @@ class RSB_Parser
 			d.backHeatStrength = 0;
 			d.backHeatTics = 0;
 			d.backHeatOffset = 0;
+			d.throbTics = 0;
+			d.throbDepth = 0;
 			return d;
 		}
 		if (kind == "ejecta")
@@ -316,6 +319,30 @@ class RSB_Parser
 			d.wispParticle = "";
 			d.wispHandle = 0;
 			d.wispTics = 0;
+			return d;
+		}
+		if (kind == "hotspot")
+		{
+			let d = new("RSB_HotspotDef");
+			d.mergeRadius = 20;
+			d.heatPerHit = 0.05;
+			d.coolPerSecond = 0.5;
+			d.heatMax = 1;
+			d.lightRadius = 0;
+			d.lightIntensity = 1;
+			d.lightColor = Color(255, 255, 80, 40);
+			d.throbTics = 0;
+			d.throbDepth = 0;
+			d.markShape = -1;
+			d.markRadiusCold = 2;
+			d.markRadiusHot = 8;
+			d.markColor = Color(255, 255, 80, 40);
+			d.markEvery = 8;
+			d.markLife = 40;
+			d.shimmerRadius = 0;
+			d.shimmerStrength = 0;
+			d.loopSound = "none";
+			d.loopVolume = 1;
 			return d;
 		}
 		if (kind == "trail")
@@ -426,6 +453,8 @@ class RSB_Parser
 		if (fm) return ApplyFlame(fm, key, v);
 		let tr = RSB_TrailDef(d);
 		if (tr) return ApplyTrail(tr, key, v);
+		let hs = RSB_HotspotDef(d);
+		if (hs) return ApplyHotspot(hs, key, v);
 		return "internal: a profile of no known kind";
 	}
 
@@ -882,6 +911,12 @@ class RSB_Parser
 			}
 			return (im.maybeBursts.Size() > 0) ? "" : "maybe is <burst> <chance 0..1>, ... or none";
 		}
+		if (key == "hotspot")
+		{
+			if (v.Size() != 1) return "hotspot is one hotspot profile name, or none";
+			im.hotspot = (v[0] ~== "none") ? "" : v[0];
+			return "";
+		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
 
@@ -1084,6 +1119,13 @@ class RSB_Parser
 			f.backHeatOffset = v[4].ToDouble();
 			return (f.backHeatRadius >= 0 && f.backHeatLength >= 0 && f.backHeatStrength >= 0 && f.backHeatTics >= 0) ? ""
 				: "backheat is radius, length, strength, tics, offset behind the muzzle";
+		}
+		if (key == "throb")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.throbTics = v[0].ToInt();
+			f.throbDepth = v[1].ToDouble();
+			return (f.throbTics >= 0 && f.throbDepth >= 0 && f.throbDepth <= 1) ? "" : "throb is period (tics, 0 = steady), depth (0..1)";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
@@ -1485,6 +1527,105 @@ class RSB_Parser
 	}
 
 	// ---------------------------------------------------------------- STYLE
+	// ---------------------------------------------------------------- HOTSPOT
+	private static String ApplyHotspot(RSB_HotspotDef hs, String key, out Array<String> v)
+	{
+		String why;
+		Color c;
+		if (key == "merge")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			hs.mergeRadius = v[0].ToDouble();
+			return (hs.mergeRadius > 0) ? "" : "merge radius must be above 0";
+		}
+		if (key == "heat")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			hs.heatPerHit = v[0].ToDouble();
+			hs.coolPerSecond = v[1].ToDouble();
+			hs.heatMax = v[2].ToDouble();
+			return (hs.heatPerHit > 0 && hs.coolPerSecond > 0 && hs.heatMax > 0) ? "" : "heat is per hit, lost a second, full -- each above 0";
+		}
+		if (key == "bursts")
+		{
+			hs.bursts.Clear();
+			hs.burstRates.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 70.0, word, amount);
+				if (why != "") return "bursts " .. why .. " -- bursts is <burst> <times a second at full heat>, ...";
+				hs.bursts.Push(word);
+				hs.burstRates.Push(amount);
+			}
+			return "";
+		}
+		if (key == "light")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			hs.lightRadius = v[0].ToDouble();
+			hs.lightIntensity = v[1].ToDouble();
+			return (hs.lightRadius >= 0 && hs.lightIntensity >= 0) ? "" : "light is radius, intensity -- both 0 or more";
+		}
+		if (key == "lightcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			hs.lightColor = c;
+			return "";
+		}
+		if (key == "throb")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			hs.throbTics = v[0].ToInt();
+			hs.throbDepth = v[1].ToDouble();
+			return (hs.throbTics >= 0 && hs.throbDepth >= 0 && hs.throbDepth <= 1) ? "" : "throb is period (tics, 0 = steady), depth (0..1)";
+		}
+		if (key == "mark")
+		{
+			if (v.Size() != 5) return "mark is shape, radius cold, radius hot, every (tics), life (tics)";
+			int shape = ShapeId(v[0]);
+			if (shape < 0) return String.Format("mark shape \"%s\" is not a stamp shape (pool, sunburst, ring...)", v[0]);
+			for (int i = 1; i < 5; i++)
+				if (!IsNum(v[i])) return "mark radii, every and life must be numbers";
+			hs.markShape = shape;
+			hs.markRadiusCold = v[1].ToDouble();
+			hs.markRadiusHot = v[2].ToDouble();
+			hs.markEvery = v[3].ToInt();
+			hs.markLife = v[4].ToInt();
+			return (hs.markRadiusCold > 0 && hs.markRadiusHot > 0 && hs.markEvery >= 1 && hs.markLife >= 1) ? ""
+				: "mark radii must be above 0, every and life 1 or more";
+		}
+		if (key == "markcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			hs.markColor = c;
+			return "";
+		}
+		if (key == "shimmer")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			hs.shimmerRadius = v[0].ToDouble();
+			hs.shimmerStrength = v[1].ToDouble();
+			return (hs.shimmerRadius >= 0 && hs.shimmerStrength >= 0) ? "" : "shimmer is radius, strength -- both 0 or more";
+		}
+		if (key == "sound")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				hs.loopSound = "none";
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[1])) return "sound is <looping SNDINFO name>, volume at full heat -- or none";
+			hs.loopSound = v[0];
+			hs.loopVolume = v[1].ToDouble();
+			return (hs.loopVolume >= 0) ? "" : "sound volume must be 0 or more";
+		}
+		return String.Format("unknown hotspot key \"%s\"", key);
+	}
+
+
 	private static String ApplyStyle(RSB_StyleDef st, String key, out Array<String> v)
 	{
 		if (key == "particles" || key == "glow" || key == "lights" || key == "marks" || key == "flash"

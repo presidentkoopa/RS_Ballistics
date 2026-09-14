@@ -581,7 +581,7 @@ burst rpg_backblast_fire   # the RPG's backblast: a gout of fire out of the rear
   speed    = 620, 0.4
   life     = 0.16, 0.3
   aim      = back
-  offset   = -40
+  offset   = -51.5
   particle = rsb_muzzle_plume
 end
 
@@ -591,7 +591,7 @@ burst rpg_backblast_smoke  # the backblast's smoke: a thick cloud thrown out beh
   speed    = 260, 0.5
   life     = 2.6, 0.35
   aim      = back
-  offset   = -40
+  offset   = -51.5
   particle = rsb_smoke_rocket
 end
 
@@ -608,7 +608,7 @@ burst rpg_backblast_sparks # burning propellant thrown out behind with the backb
   orient  = streak
   stretch = 0.02
   aim     = back
-  offset  = -40
+  offset  = -51.5
 end
 
 burst rpg_ignition_fire    # an RPG's sustainer lighting mid-flight: a burst of flame out of its tail (rsb_muzzle_plume)
@@ -619,6 +619,128 @@ burst rpg_ignition_fire    # an RPG's sustainer lighting mid-flight: a burst of 
   aim      = back
   offset   = -6
   particle = rsb_muzzle_plume
+end
+
+burst unmaker_core         # the Unmaker's muzzle: a white-hot core bleeding red, every tic
+  count   = 3
+  cone    = 10
+  speed   = 120, 0.3
+  life    = 0.05, 0.3
+  color   = 255, 150, 120
+  glow    = 5.0
+  size    = 1.6, 0.4
+  orient  = streak
+  stretch = 0.02
+  aim     = along
+  offset  = 0
+end
+
+burst unmaker_arcs         # blood-red arcs crawling at the Unmaker's muzzle (rsb_arc)
+  count    = 1
+  cone     = 60
+  speed    = 20, 0.5
+  life     = 0.22, 0.3
+  color    = 255, 40, 30
+  aim      = along
+  offset   = 1
+  particle = rsb_arc
+end
+
+burst unmaker_spatter      # red-hot spatter off a burning spot
+  count   = 4
+  cone    = 60
+  speed   = 220, 0.5
+  life    = 0.4, 0.4
+  color   = 255, 100, 60
+  glow    = 3.2
+  size    = 0.8, 0.2
+  gravity = 380
+  drag    = 2.0
+  orient  = streak
+  stretch = 0.025
+  aim     = normal
+end
+
+burst unmaker_slag         # molten slag dripping off the burn, cooling as it falls
+  count   = 2
+  cone    = 35
+  speed   = 40, 0.5
+  life    = 1.0, 0.4
+  color   = 255, 80, 40
+  glow    = 2.6
+  size    = 1.3, 0.4
+  gravity = 520
+  drag    = 0.8
+  aim     = normal
+  offset  = 1
+end
+
+burst unmaker_smoke        # smoke stacking off the burn into a column (rsb_soot_puff: lit, never glowing)
+  count    = 1
+  cone     = 25
+  speed    = 40, 0.5
+  life     = 2.6, 0.3
+  aim      = up
+  offset   = 4
+  particle = rsb_soot_puff
+end
+
+burst flesh_cook_steam     # flesh (or water) cooking under a beam: a puff of grey steam (rsb_smoke_gun: lit, never glowing)
+  count    = 2
+  cone     = 40
+  speed    = 50, 0.5
+  life     = 1.2, 0.35
+  aim      = normal
+  offset   = 1
+  particle = rsb_smoke_gun
+end
+
+burst flesh_char_flecks    # charred flecks off cooking flesh: dark, lit, never glowing (rsb_debris_chip)
+  count    = 3
+  cone     = 60
+  speed    = 140, 0.5
+  life     = 0.7, 0.4
+  color    = 70, 40, 34
+  aim      = normal
+  particle = rsb_debris_chip
+end
+
+burst melt_embers          # embers falling off a melting body, cooling
+  count   = 5
+  cone    = 70
+  speed   = 60, 0.6
+  life    = 1.1, 0.5
+  color   = 255, 110, 40
+  glow    = 2.4
+  size    = 0.7, 0.2
+  gravity = 260
+  drag    = 1.2
+  aim     = up
+  offset  = 8
+end
+
+burst melt_smoke_rise      # smoke rising off a melting body (rsb_soot_puff: lit, never glowing)
+  count    = 3
+  cone     = 30
+  speed    = 45, 0.5
+  life     = 2.4, 0.3
+  aim      = up
+  offset   = 10
+  particle = rsb_soot_puff
+end
+
+burst melt_slag_splash     # glowing slag splashing as a body slumps into its pool
+  count   = 14
+  cone    = 75
+  speed   = 150, 0.5
+  life    = 0.9, 0.4
+  color   = 255, 80, 40
+  glow    = 2.8
+  size    = 1.4, 0.3
+  gravity = 500
+  drag    = 1.0
+  aim     = normal
+  offset  = 2
 end
 
 burst trail_hot
@@ -642,6 +764,95 @@ end
 # A `material` block here is refused.
 
 
+# ---------------------------------------------------------------- HOTSPOTS
+#   merge       radius -- a hit this close to a live spot feeds it (map units)
+#   heat        per hit, lost a second, full -- the spot is at its strongest at full
+#   bursts      <burst> <times a second at full heat>, ... -- emitted while it burns
+#   light       radius, intensity        lightcolor  r, g, b
+#   throb       period (tics, 0 = steady), depth (0..1) -- the light pulses on a beat
+#   mark        shape, radius cold, radius hot, every (tics), life (tics) -- re-stamped as it grows
+#   markcolor   r, g, b
+#   shimmer     radius, strength -- a column of hot air every few tics
+#   sound       <looping SNDINFO name>, volume at full heat | none
+# An impact names one with `hotspot`: a beam or stream held on one place feeds ONE spot that
+# heats up, instead of landing every hit on its own (no stutter, no buzz).
+
+hotspot unmaker_burn       # a wall under the Unmaker: a molten spot that grows, glows, throbs with the beam, drips slag, stacks smoke and sizzles
+  merge      = 24
+  heat       = 0.05, 0.7, 1.6
+  bursts     = unmaker_spatter 8, unmaker_slag 5, unmaker_smoke 12, laser_spray 3
+  light      = 120, 3.0
+  lightcolor = 255, 50, 28
+  throb      = 5, 0.45
+  mark       = pool, 3, 14, 6, 45
+  markcolor  = 255, 70, 30
+  shimmer    = 16, 1.2
+  sound      = rsb/flame/pilot, 0.9
+end
+
+hotspot unmaker_burn_metal # metal under the Unmaker: brighter and sparkier, the molten mark hotter and wider
+  merge      = 24
+  heat       = 0.05, 0.6, 1.6
+  bursts     = unmaker_spatter 12, spark_metal 3, unmaker_slag 6, unmaker_smoke 8, laser_spray 4
+  light      = 130, 3.3
+  lightcolor = 255, 60, 30
+  throb      = 5, 0.45
+  mark       = pool, 3, 16, 6, 60
+  markcolor  = 255, 90, 40
+  shimmer    = 16, 1.3
+  sound      = rsb/flame/pilot, 1.0
+end
+
+hotspot unmaker_burn_wood  # wood under the Unmaker: it chars and smokes hard
+  merge      = 24
+  heat       = 0.05, 0.8, 1.6
+  bursts     = unmaker_spatter 4, unmaker_smoke 18, dust_wood 3
+  light      = 110, 2.6
+  lightcolor = 255, 50, 25
+  throb      = 5, 0.45
+  mark       = pool, 3, 13, 6, 45
+  markcolor  = 255, 60, 25
+  shimmer    = 16, 1.1
+  sound      = rsb/flame/pilot, 0.8
+end
+
+hotspot unmaker_burn_dirt  # dirt and rock under the Unmaker: melting to glassy slag, dust and smoke
+  merge      = 24
+  heat       = 0.05, 0.7, 1.6
+  bursts     = unmaker_spatter 5, unmaker_slag 4, unmaker_smoke 12, dust_dirt 2
+  light      = 115, 2.8
+  lightcolor = 255, 50, 26
+  throb      = 5, 0.45
+  mark       = pool, 3, 14, 6, 50
+  markcolor  = 255, 70, 28
+  shimmer    = 16, 1.2
+  sound      = rsb/flame/pilot, 0.85
+end
+
+hotspot unmaker_burn_glass # glass under the Unmaker: shards and molten spatter, a small bright mark
+  merge      = 24
+  heat       = 0.05, 0.8, 1.6
+  bursts     = unmaker_spatter 7, glint_glass 2, unmaker_smoke 6
+  light      = 120, 3.0
+  lightcolor = 255, 56, 30
+  throb      = 5, 0.45
+  mark       = pool, 2, 9, 6, 40
+  markcolor  = 255, 80, 36
+  shimmer    = 14, 1.0
+  sound      = rsb/flame/pilot, 0.8
+end
+
+hotspot unmaker_burn_liquid # water under the Unmaker: boiling, steam pouring off, no mark
+  merge      = 28
+  heat       = 0.05, 0.9, 1.6
+  bursts     = flesh_cook_steam 14, splash_liquid 3
+  light      = 90, 2.0
+  lightcolor = 255, 50, 30
+  throb      = 5, 0.45
+  shimmer    = 20, 1.5
+  sound      = rsb/flame/pilot, 1.0
+end
+
 # ---------------------------------------------------------------- IMPACTS
 #   bursts      burst names, or none
 #   mark        shape, radius (map units), life (tics)
@@ -657,6 +868,8 @@ end
 #   vary        count <0..0.9>, size <..>, light <..> -- each hit that part comes out up
 #               to this much bigger or smaller (hashed per hit)
 #   maybe       <burst> <chance 0..1>, ... -- bursts only some hits throw
+#   hotspot     <hotspot profile> -- each hit feeds that hotspot instead of landing on its own:
+#               for a beam or stream held on one place (see HOTSPOTS)
 #   heat        radius, strength, tics -- heat shimmer where it lands, fading (the
 #               engine's; turned on in Ballistics & Effects, Heat shimmer)
 #   scale       count, size -- every burst's particle count and size times these:
@@ -1648,6 +1861,69 @@ impact laser_burn.glass
   heat       = 18, 1.0, 14
 end
 
+# THE UNMAKER (owner: "frightening as fuck", kills that MELT). Its bolt lands 35 times a
+# second on one place, so a hit only feeds its hotspot and now and then spits; the spot does
+# the rest. On a live body it cooks -- steam and charred flecks, no sparks.
+impact unmaker
+  maybe     = unmaker_spatter 0.15
+  sound     = none
+  hotspot   = unmaker_burn
+end
+
+impact unmaker.metal
+  maybe     = unmaker_spatter 0.2, spark_hot 0.08
+  sound     = none
+  hotspot   = unmaker_burn_metal
+end
+
+impact unmaker.wood
+  maybe     = unmaker_spatter 0.1
+  sound     = none
+  hotspot   = unmaker_burn_wood
+end
+
+impact unmaker.dirt
+  maybe     = unmaker_spatter 0.1
+  sound     = none
+  hotspot   = unmaker_burn_dirt
+end
+
+impact unmaker.glass
+  maybe     = unmaker_spatter 0.15
+  sound     = none
+  hotspot   = unmaker_burn_glass
+end
+
+impact unmaker.liquid
+  maybe     = splash_liquid 0.1
+  sound     = none
+  hotspot   = unmaker_burn_liquid
+end
+
+impact unmaker.flesh
+  maybe     = flesh_cook_steam 0.35, flesh_char_flecks 0.15
+  sound     = none
+end
+
+# A BODY THE UNMAKER KILLED, MELTING (called by the weapons lane's melt): the pool once as it
+# slumps, then the melt every few tics, both on the floor under it facing up.
+impact unmaker_melt_pool
+  bursts     = melt_slag_splash, laser_droplets, melt_smoke_rise
+  mark       = pool, 20, 160
+  markcolor  = 255, 70, 28
+  sound      = rsb/flame/hiss
+  light      = 90, 2.4, 14
+  lightcolor = 255, 56, 28
+  heat       = 22, 1.0, 30
+end
+
+impact unmaker_melt
+  bursts     = melt_smoke_rise, melt_embers, unmaker_slag
+  sound      = none
+  light      = 60, 1.4, 6
+  lightcolor = 255, 60, 30
+end
+
 
 # ---------------------------------------------------------------- TRAILS
 #   what a beam leaves in the air from muzzle to hit: RSB_Trail.Lay(profile, shooter, from, to)
@@ -2127,6 +2403,8 @@ end
 #               starting offset behind the muzzle (a backblast)
 #   barrelglow  from heat, radius, intensity -- a barrel run hot glows: a dull light at the
 #               muzzle past that heat (full auto, long bursts); barrelglowcolor r, g, b
+#   throb       period (tics), depth (0..1) -- light and cone swell and ease on a beat: a gun
+#               firing every tic reads as one pulsing glow, not a strobe
 #
 # Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
 # bfg and rail have their own light and sparks, and `none` is no flash at all.
@@ -2483,8 +2761,8 @@ flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning p
   flame      = 0.07
   smoke      = 3, 0.035, 0.36
   smokeparticle = rsb_smoke_gun
-  backheat   = 14, 60, 1.5, 22, 40
-  groundkick = kick_blast, 72, -40
+  backheat   = 14, 60, 1.5, 22, 51.5
+  groundkick = kick_blast, 72, -51.5
   vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
   surge      = 0.12, 1.3
   barrelheat = 0.45, 0.2, 0.4
@@ -2501,6 +2779,22 @@ flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a fla
   smokeparticle = rsb_smoke_gun
   heat       = 6, 30, 0.9, 12
   vary       = light 0.2, smoke 0.3
+end
+
+flash unmaker              # THE UNMAKER, firing every tic: one hellish red glow throbbing on the beam's beat, not a strobe -- a white-hot core bleeding red, blood-red arcs crawling at the muzzle, red lit air; no powder, no smoke; the skull runs red-hot (barrel glow and shimmer)
+  light      = 200, 3.4, 2
+  lightcolor = 255, 44, 26
+  cone       = 18, 52, 110, 7
+  conetics   = 2
+  bursts     = unmaker_core
+  maybe      = unmaker_arcs 0.45, laser_spray 0.1
+  flame      = 0
+  throb      = 5, 0.5
+  vary       = light 0.08, cone 0.08, sparks 0.4
+  barrelheat = 0.03, 0.4, 0.1
+  barrelshimmer = 4, 0.6
+  barrelglow = 0.3, 34, 1.6
+  barrelglowcolor = 255, 40, 20
 end
 
 flash bfg                # a green bloom

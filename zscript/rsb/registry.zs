@@ -21,6 +21,7 @@ class RSB_Registry : StaticEventHandler
 	Array<RSB_BarrelHeat> barrels;   // RSB_Barrel: heat per gun (drawing only; cleared each map)
 	Array<int>             roundCounts;   // RSB_Bullet: rounds each player's hand has fired, for tracers (drawing only)
 	Array<Actor>           casings;       // casings in the world, oldest first: the shared casing cap -- ours and any mod's that asked (RSB_Service casing.keep); cleared each map
+	Array<RSB_Hotspot>     hotspots;      // live hotspots, oldest first (hotspot.zs; cleared each map)
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()
@@ -39,6 +40,7 @@ class RSB_Registry : StaticEventHandler
 		said.Clear();
 		barrels.Clear();
 		casings.Clear();
+		hotspots.Clear();
 		if (!defs) Load();
 		String style = RSB_Settings.StyleName();
 		RSB_Log.Info(String.Format("RS_Ballistics: %d profile(s) from %d RSBDEFS lump(s), %d refused, effects %s, style %s -- %s",
@@ -125,6 +127,11 @@ class RSB_Registry : StaticEventHandler
 	{
 		return defs ? RSB_TrailDef(defs.Resolve("trail", base, "", tierName, RSB_Settings.StyleName())) : null;
 	}
+
+	RSB_HotspotDef ResolveHotspot(String base, String tierName)
+	{
+		return defs ? RSB_HotspotDef(defs.Resolve("hotspot", base, "", tierName, RSB_Settings.StyleName())) : null;
+	}
 	// Trails take their drawn lines in turn; the new trail takes the oldest.
 	int NextTrailSlot()
 	{
@@ -174,6 +181,8 @@ class RSB_Registry : StaticEventHandler
 			{
 				why = MissingBurst(im.bursts);
 				if (why == "") why = MissingBurst(im.maybeBursts);
+				if (why == "" && im.hotspot.Length() > 0 && !defs.Find("hotspot", im.hotspot))
+					why = String.Format("its hotspot \"%s\" is not defined in any RSBDEFS", im.hotspot);
 				if (why == "" && !(im.glanceBurst ~== "none") && !FindBurst(im.glanceBurst))
 					why = String.Format("its glance burst \"%s\" is not defined in any RSBDEFS", im.glanceBurst);
 			}
@@ -186,6 +195,8 @@ class RSB_Registry : StaticEventHandler
 			}
 			else
 			{
+				let hs = RSB_HotspotDef(defs.defs[i]);
+				if (hs) why = MissingBurst(hs.bursts);
 				let fm = RSB_FlameDef(defs.defs[i]);
 				if (fm)
 				{
