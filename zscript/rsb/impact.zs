@@ -59,7 +59,7 @@ class RSB_Burst play
 				floorAt = FloorBelow(onto.at, onto.normal);
 			}
 			level.SpawnParticles(Handle(b), at + normal * b.offset, dir, n, Spread(b), b.speed, b.speedJitter,
-				b.life, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed,
+				b.life, b.lifeJitter, b.tint, glowScale, 1.0, seed,
 				b.shape, planeAt, planeNormal, floorAt);
 			return;
 		}
@@ -81,7 +81,7 @@ class RSB_Burst play
 		if (b.particle.Length() > 0)
 		{
 			level.SpawnParticles(Handle(b), at + dir * b.offset, dir, n, Spread(b), speedValue, b.speedJitter,
-				lifeValue, b.lifeJitter, Color(255, 255, 255, 255), glowScale, 1.0, seed,
+				lifeValue, b.lifeJitter, b.tint, glowScale, 1.0, seed,
 				b.shape, planeAt, planeNormal, floorAt);
 			return;
 		}

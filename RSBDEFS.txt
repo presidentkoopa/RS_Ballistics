@@ -143,17 +143,13 @@ burst ember_metal
   orient  = billboard
 end
 
-burst chips_concrete
-  count   = 10
-  cone    = 45
-  speed   = 160, 0.5
-  life    = 0.6, 0.4
-  color   = 180, 170, 150
-  glow    = 0.6
-  size    = 0.8, 0.5
-  gravity = 600
-  drag    = 1.2
-  orient  = flake
+burst chips_concrete       # lit chips of broken concrete (rsb_debris_chip), never glowing
+  count    = 9
+  cone     = 45
+  speed    = 170, 0.5
+  life     = 1.2, 0.4
+  color    = 150, 146, 138
+  particle = rsb_debris_chip
 end
 
 burst dust_concrete       # a lit dust cloud (PARTICLEDEFS rsb_dust_concrete, stage 2d)
@@ -164,17 +160,13 @@ burst dust_concrete       # a lit dust cloud (PARTICLEDEFS rsb_dust_concrete, st
   particle = rsb_dust_concrete
 end
 
-burst splinter_wood
-  count   = 12
-  cone    = 50
-  speed   = 180, 0.5
-  life    = 0.8, 0.4
-  color   = 170, 120, 70
-  glow    = 0.7
-  size    = 1.0, 0.6
-  gravity = 550
-  drag    = 1.0
-  orient  = flake
+burst splinter_wood        # lit wood splinters (rsb_debris_splinter)
+  count    = 10
+  cone     = 50
+  speed    = 180, 0.5
+  life     = 1.2, 0.4
+  color    = 176, 128, 80
+  particle = rsb_debris_splinter
 end
 
 burst dust_wood          # a lit wood-dust cloud (PARTICLEDEFS rsb_dust_wood, stage 2d)
@@ -195,17 +187,13 @@ burst flame_smoke        # black smoke rising off burning fuel (PARTICLEDEFS rsb
   particle = rsb_smoke_flame
 end
 
-burst glint_glass
-  count   = 18
-  cone    = 60
-  speed   = 150, 0.5
-  life    = 0.7, 0.4
-  color   = 200, 230, 255
-  glow    = 2.2
-  size    = 0.5, 0.2
-  gravity = 500
-  drag    = 1.0
-  orient  = flake
+burst glint_glass          # glass shards turning in the room's light (rsb_debris_shard)
+  count    = 14
+  cone     = 60
+  speed    = 150, 0.5
+  life     = 1.0, 0.4
+  color    = 205, 225, 235
+  particle = rsb_debris_shard
 end
 
 burst splash_liquid
@@ -223,17 +211,31 @@ burst splash_liquid
   aim     = up
 end
 
-burst clods_dirt
-  count   = 10
-  cone    = 40
-  speed   = 150, 0.5
-  life    = 0.7, 0.4
-  color   = 110, 90, 60
-  glow    = 0.5
-  size    = 1.2, 0.7
-  gravity = 650
-  drag    = 1.0
-  orient  = flake
+burst clods_dirt           # lit dirt clods (rsb_debris_clod)
+  count    = 9
+  cone     = 40
+  speed    = 150, 0.5
+  life     = 1.1, 0.4
+  color    = 116, 96, 68
+  particle = rsb_debris_clod
+end
+
+burst dust_dirt            # a rolling dirt cloud (rsb_dust_dirt)
+  count    = 4
+  cone     = 35
+  speed    = 40, 0.6
+  life     = 1.4, 0.4
+  particle = rsb_dust_dirt
+end
+
+burst spark_spray          # a spray of hot streaks off metal (rsb_spark_spray)
+  count    = 1
+  cone     = 8
+  speed    = 0, 0
+  life     = 0.2, 0.2
+  aim      = reflect
+  offset   = 1
+  particle = rsb_spark_spray
 end
 
 burst flash_core
@@ -331,7 +333,7 @@ impact bullet@plain
 end
 
 impact bullet.metal
-  bursts     = spark_metal, ember_metal
+  bursts     = spark_metal, ember_metal, spark_spray
   mark       = pool, 4, 35
   markcolor  = 255, 170, 80
   sound      = rsb/impact/metal
@@ -358,7 +360,7 @@ impact bullet.liquid
 end
 
 impact bullet.dirt
-  bursts    = clods_dirt, dust_concrete
+  bursts     = clods_dirt, dust_dirt
   sound     = rsb/impact/concrete
 end
 
@@ -433,6 +435,25 @@ burst rocket_smoke       # the smoke after the blast (PARTICLEDEFS)
   particle = rsb_smoke_flame
 end
 
+burst rocket_fireball      # the fireball itself, burning out to a smoky shell (rsb_fireball)
+  count    = 1
+  cone     = 0
+  speed    = 0, 0
+  life     = 0.7, 0.15
+  offset   = 12
+  particle = rsb_fireball
+end
+
+burst rocket_soot          # soot rolling off the blast (rsb_soot_puff)
+  count    = 4
+  cone     = 60
+  speed    = 40, 0.5
+  life     = 1.6, 0.3
+  aim      = up
+  offset   = 10
+  particle = rsb_soot_puff
+end
+
 burst bfg_splash
   count   = 48
   cone    = 85
@@ -458,6 +479,26 @@ burst bfg_motes
   drag    = 1.5
 end
 
+burst plasma_arcs          # electric arcs crawling where a plasma bolt lands (rsb_arc)
+  count    = 2
+  cone     = 60
+  speed    = 15, 0.5
+  life     = 0.35, 0.3
+  color    = 120, 190, 255
+  offset   = 3
+  particle = rsb_arc
+end
+
+burst bfg_arcs             # the BFG's arcs: more, longer, Doom's BFG green (rsb_arc)
+  count    = 4
+  cone     = 80
+  speed    = 25, 0.5
+  life     = 0.5, 0.3
+  color    = 140, 255, 150
+  offset   = 4
+  particle = rsb_arc
+end
+
 burst rail_splash
   count   = 26
   cone    = 55
@@ -475,7 +516,7 @@ end
 
 impact plasma
   heat       = 20, 0.8, 18
-  bursts     = plasma_splash, plasma_motes
+  bursts     = plasma_splash, plasma_motes, plasma_arcs
   mark       = ring, 8, 70
   markcolor  = 120, 180, 255
   light      = 140, 2.5, 5
@@ -484,7 +525,7 @@ end
 
 impact rocket
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, chips_concrete, rocket_smoke
+  bursts     = rocket_fire, rocket_embers, chips_concrete, rocket_smoke, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -493,7 +534,7 @@ end
 
 impact bfg
   heat       = 110, 1.8, 35
-  bursts     = bfg_splash, bfg_motes
+  bursts     = bfg_splash, bfg_motes, bfg_arcs
   mark       = hexring, 36, 175
   markcolor  = 140, 255, 150
   light      = 500, 4.5, 14
@@ -501,7 +542,7 @@ impact bfg
 end
 
 impact rail
-  bursts     = rail_splash, spark_metal
+  bursts     = rail_splash, spark_metal, spark_spray
   mark       = ring, 5, 105
   markcolor  = 180, 210, 255
   light      = 100, 2.5, 4
@@ -509,7 +550,7 @@ impact rail
 end
 
 impact saw               # sparks where the chain bites a wall; the saw has its own sound
-  bursts     = spark_metal, ember_metal
+  bursts     = spark_metal, ember_metal, spark_spray
   light      = 60, 1.5, 3
   lightcolor = 255, 200, 140
 end
@@ -521,14 +562,14 @@ end
 # so only their liquid landing differs.
 impact plasma.liquid
   heat       = 20, 0.8, 18
-  bursts     = plasma_splash, plasma_motes, splash_liquid
+  bursts     = plasma_splash, plasma_motes, splash_liquid, plasma_arcs
   light      = 140, 2.5, 5
   lightcolor = 120, 180, 255
 end
 
 impact rocket.metal
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, spark_metal, rocket_smoke
+  bursts     = rocket_fire, rocket_embers, spark_metal, rocket_smoke, spark_spray, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -537,7 +578,7 @@ end
 
 impact rocket.wood
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, splinter_wood, dust_wood, rocket_smoke
+  bursts     = rocket_fire, rocket_embers, splinter_wood, dust_wood, rocket_smoke, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -546,7 +587,7 @@ end
 
 impact rocket.dirt
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_concrete, rocket_smoke
+  bursts     = rocket_fire, rocket_embers, clods_dirt, dust_dirt, rocket_smoke, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -555,7 +596,7 @@ end
 
 impact rocket.glass
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke
+  bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke, rocket_fireball, rocket_soot
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
   light      = 400, 4.0, 10
@@ -564,14 +605,14 @@ end
 
 impact rocket.liquid
   heat       = 72, 1.6, 32
-  bursts     = rocket_fire, splash_liquid, rocket_smoke
+  bursts     = rocket_fire, splash_liquid, rocket_smoke, rocket_fireball, rocket_soot
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
 end
 
 impact bfg.liquid
   heat       = 110, 1.8, 35
-  bursts     = bfg_splash, bfg_motes, splash_liquid
+  bursts     = bfg_splash, bfg_motes, splash_liquid, bfg_arcs
   light      = 500, 4.5, 14
   lightcolor = 140, 255, 150
 end
@@ -611,7 +652,7 @@ impact saw.wood          # the chain throws splinters and dust, not sparks
 end
 
 impact saw.dirt
-  bursts     = clods_dirt, dust_concrete
+  bursts     = clods_dirt, dust_dirt
 end
 
 impact saw.glass
@@ -1191,12 +1232,22 @@ burst flame_sheet        # fire spreading ACROSS the wall or floor it lands on (
   particle = rsb_flame_puff
 end
 
+burst flame_lick           # a tongue of flame licking up where fire lands (rsb_flame_lick)
+  count    = 3
+  cone     = 25
+  speed    = 20, 0.5
+  life     = 0.9, 0.3
+  aim      = up
+  offset   = 2
+  particle = rsb_flame_lick
+end
+
 flame incinerator        # a tight, fast jet
   reach       = 520
   speed       = 950
   spread      = 1.5
   stream      = flame_core, flame_body, flame_tip, flame_embers
-  landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke
+  landing    = flame_splash, flame_sheet, flame_embers_rise, flame_smoke, flame_lick
   cling       = 0.15
   tube        = 6, 1.0, 3, 0.5
   tubelook    = 1.6, 3.0, 0.5
@@ -1222,7 +1273,7 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   speed       = 620
   spread      = 4
   stream      = flame_core, flame_body, flame_body, flame_tip, flame_embers
-  landing     = flame_splash, flame_sheet, flame_licks, flame_embers_rise, flame_smoke
+  landing    = flame_splash, flame_sheet, flame_licks, flame_embers_rise, flame_smoke, flame_lick
   cling       = 0.3           # it sticks: puffs slide along what they hit twice as long
   tube        = 6, 1.6, 4, 0.5
   tubelook    = 1.4, 3.5, 0.55
