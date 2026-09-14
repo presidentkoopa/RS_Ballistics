@@ -58,13 +58,22 @@ class RSB_ProjectileLook play
 	// THE MOTOR (a look's `motor`): a burst out of its tail each tic it flies.
 	static void Motor(Actor mo, RSB_RoundLookDef lk, Vector3 travel)
 	{
-		if (!mo || !lk || lk.motorBurst.Length() == 0 || travel == (0, 0, 0)) return;
+		if (!mo || !lk || (lk.motorBurst.Length() == 0 && lk.motorMaybe.Size() == 0) || travel == (0, 0, 0)) return;
 		int tier = RSB_Tier.Current();
 		if (tier <= RSB_Tier.T_OFF) return;
 		let reg = RSB_Registry.Get();
 		if (!reg) return;
-		RSB_Burst.Fire(reg.FindBurst(lk.motorBurst), mo.pos, travel, travel, RSB_Tier.CountScale(tier), 1.0,
-			RSB_Hash.Seed(level.maptime, 211, RSB_Hash.OfPos(mo.pos)));
+		int posSeed = RSB_Hash.OfPos(mo.pos);
+		if (lk.motorBurst.Length() > 0)
+			RSB_Burst.Fire(reg.FindBurst(lk.motorBurst), mo.pos, travel, travel, RSB_Tier.CountScale(tier), 1.0,
+				RSB_Hash.Seed(level.maptime, 211, posSeed));
+		// Some tics more (`motormaybe`): arcs crackling round a ball, say.
+		for (int i = 0; i < lk.motorMaybe.Size(); i++)
+		{
+			if (RSB_Hash.Frac(level.maptime, 223 + i * 2, posSeed) >= lk.motorMaybeChance[i]) continue;
+			RSB_Burst.Fire(reg.FindBurst(lk.motorMaybe[i]), mo.pos, travel, travel, RSB_Tier.CountScale(tier), 1.0,
+				RSB_Hash.Seed(level.maptime, 227 + i, posSeed));
+		}
 	}
 
 	// A LOOK TAKING OVER MID-FLIGHT (its `onset`): that flash where the projectile is -- an
@@ -208,17 +217,113 @@ class RSB_BFGBall : BFGBall
 {
 	private Vector3 travel;
 	private bool    landed;
+	private Vector3 launchedAt;    // where its air shimmer can begin
+	private bool    launchKnown;
 	transient bool             looked;
 	transient RSB_RoundLookDef lookDef;
+	transient int              heatSlot;
+
+	// WHICH ROUND LOOK IT WEARS, and WHICH ACTOR ITS SPRAY LEAVES on what the rays strike: a
+	// subclass names its own (the Heavy BFG's).
+	virtual String FlightLook()
+	{
+		return "bfg_ball";
+	}
+
+	virtual class<Actor> SprayClass()
+	{
+		return "RSB_BFGExtra";
+	}
+
+	// THE BFGBALL'S OWN DEATH, frame for frame, its spray leaving RSB_BFGExtra (a BFGExtra to
+	// the game: the same damage type and flags, so the rays hurt exactly as Doom's).
+	States
+	{
+	Death:
+		BFE1 AB 8 Bright;
+		BFE1 C 8 Bright { A_BFGSpray(SprayClass()); }
+		BFE1 DEF 8 Bright;
+		Stop;
+	}
 
 	override void Tick()
 	{
 		Vector3 before = pos;
 		travel = RSB_ProjectileLook.Heading(self, travel);
+		if (!launchKnown)
+		{
+			launchKnown = true;
+			launchedAt = pos;
+		}
 		Super.Tick();
 		if (bDestroyed) return;
-		if (!looked) { looked = true; lookDef = RSB_ProjectileLook.Look("bfg_ball"); }
+		if (!looked) { looked = true; lookDef = RSB_ProjectileLook.Look(FlightLook()); }
 		landed = RSB_ProjectileLook.AfterMove(self, lookDef, before, travel, landed);
+		if (!landed) heatSlot = RSB_ProjectileLook.AirHeat(self, lookDef, launchedAt, heatSlot);
+	}
+}
+
+// THE HEAVY BFG'S BALL: the same BFGBall to the game; to the eye a bigger, brighter core,
+// more arcs, a heavier trail, blast and rays.
+class RSB_BFGBallHeavy : RSB_BFGBall
+{
+	override String FlightLook()
+	{
+		return "bfg_heavy";
+	}
+
+	override class<Actor> SprayClass()
+	{
+		return "RSB_BFGExtraHeavy";
+	}
+}
+
+// WHAT A BFG RAY LEAVES on what it strikes: Doom's BFGExtra (its flash sprite, damage type and
+// flags, so the ray's damage is Doom's), plus a green ray drawn from the shooter to it and a
+// flare where it strikes. +PUFFGETSOWNER only hands it the shooter (A_BFGSpray sets its
+// target), which nothing in the game reads.
+class RSB_BFGExtra : BFGExtra
+{
+	Default
+	{
+		+PUFFGETSOWNER
+	}
+
+	private bool rayed;
+
+	virtual String RayTrail()
+	{
+		return "bfg_ray";
+	}
+
+	virtual String StrikeImpact()
+	{
+		return "bfg_spray";
+	}
+
+	override void Tick()
+	{
+		// Its first tic, when A_BFGSpray has handed it the shooter.
+		if (!rayed)
+		{
+			rayed = true;
+			RSB_Impact.LandOn(self, RSB_Materials.InAir(pos, (0, 0, -1)), StrikeImpact(), (0, 0, -1));
+			if (target) RSB_Trail.Lay(RayTrail(), target, target.pos + (0, 0, target.Height * 0.6), pos);
+		}
+		Super.Tick();
+	}
+}
+
+class RSB_BFGExtraHeavy : RSB_BFGExtra
+{
+	override String RayTrail()
+	{
+		return "bfg_ray_heavy";
+	}
+
+	override String StrikeImpact()
+	{
+		return "bfg_spray_heavy";
 	}
 }
 

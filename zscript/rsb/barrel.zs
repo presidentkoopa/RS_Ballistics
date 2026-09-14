@@ -25,6 +25,8 @@ class RSB_BarrelHeat
 	Actor        gun;
 	RSB_FlashDef fd;
 	RSB_BarrelGlow glowLight;  // the dull light of a barrel run hot, while it glows
+	Array<double>  chargeCarry;  // parts of a charge burst owed from the last tic
+	RSB_BarrelGlow chargeLight;  // the light gathering at the muzzle while it charges
 	double       heat;        // 0 cold; smoking from fd.barrelSmokeFrom, hardest at 1
 	int          heatTic;     // the map tic `heat` is current to
 	double       carry;       // part of a puff owed from the last tic
@@ -99,6 +101,47 @@ class RSB_Barrel play
 		if (fd.barrelShimmerStrength > 0 && fd.barrelShimmerRadius > 0 && (level.maptime % SHIMMER_EVERY) == 0)
 			RSB_Heat.Along(at, rise, fd.barrelShimmerRadius * 5.0, fd.barrelShimmerRadius,
 				fd.barrelShimmerStrength * amount, SHIMMER_EVERY + 4);
+	}
+
+	// A CHARGE: every tic a gun winds up (a BFG's charge), with how far along it is (0..1).
+	// The flash profile's charge keys gather at the muzzle -- bursts at rates growing with
+	// the charge, a light swelling, the air bending -- and stop when the calls stop (the
+	// shot's own flash takes over). Keyed by the gun actor, like the barrel. Looks only.
+	static void Charge(Actor gun, String flashProfile, Vector3 at, Vector3 dir, double fraction)
+	{
+		if (!gun || flashProfile.Length() == 0 || flashProfile ~== "none") return;
+		let reg = RSB_Registry.Get();
+		if (!reg) return;
+		let fd = reg.ResolveFlash(flashProfile, RSB_Tier.Name(RSB_Tier.Current()));
+		if (!fd) return;
+		if (fd.chargeBursts.Size() == 0 && fd.chargeLightRadius <= 0 && fd.chargeShimmerStrength <= 0) return;
+		int tier = RSB_Tier.Current();
+		if (tier <= RSB_Tier.T_OFF) return;
+		let b = Find(reg, gun, true);
+		double f = clamp(fraction, 0.0, 1.0);
+		Vector3 bore = (dir.Length() > 0.000001) ? dir.Unit() : (1, 0, 0);
+		int now = level.maptime;
+		int posSeed = RSB_Hash.OfPos(at);
+
+		double countScale = RSB_Tier.CountScale(tier) * RSB_Settings.FlashSparks();
+		while (b.chargeCarry.Size() < fd.chargeBursts.Size()) b.chargeCarry.Push(0);
+		for (int i = 0; i < fd.chargeBursts.Size(); i++)
+		{
+			b.chargeCarry[i] += fd.chargeRates[i] * f / double(TICRATE);
+			int n = int(b.chargeCarry[i]);
+			b.chargeCarry[i] -= n;
+			for (int k = 0; k < min(n, 4); k++)
+				RSB_Burst.Fire(reg.FindBurst(fd.chargeBursts[i]), at, bore, bore, countScale, 1.0, RSB_Hash.Seed(now, 700 + i * 8 + k, posSeed));
+		}
+		if (fd.chargeShimmerStrength > 0 && fd.chargeShimmerRadius > 0 && (now % SHIMMER_EVERY) == 0)
+			RSB_Heat.Blast(at, fd.chargeShimmerRadius * (0.4 + 0.6 * f), fd.chargeShimmerStrength * f, SHIMMER_EVERY + 4);
+		if (fd.chargeLightRadius > 0 && fd.chargeLightIntensity > 0 && RSB_Settings.FlashLight() > 0)
+		{
+			if (!b.chargeLight) b.chargeLight = RSB_BarrelGlow(Actor.Spawn("RSB_BarrelGlow", at, NO_REPLACE));
+			if (b.chargeLight)
+				b.chargeLight.Hold(at, fd.chargeLightColor, fd.chargeLightRadius * (0.3 + 0.7 * f),
+					fd.chargeLightIntensity * f * f * RSB_Settings.FlashLight());
+		}
 	}
 
 	// THE GLOW OF A BARREL RUN HOT (`barrelglow`): past glowFrom heat, a dull light at the

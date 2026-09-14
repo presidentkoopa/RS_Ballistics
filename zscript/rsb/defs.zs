@@ -86,6 +86,9 @@ class RSB_RoundLookDef : RSB_Def
 	// taking over MID-FLIGHT plays its `onset` flash there (an RPG's sustainer lighting).
 	String motorBurst;
 	String onsetFlash;
+	// MORE OF THE MOTOR (`motormaybe`): bursts some tics fire as well, each at its chance.
+	Array<String> motorMaybe;
+	Array<double> motorMaybeChance;
 }
 
 // A WAKE: what a round sheds as it flies.
@@ -244,6 +247,15 @@ class RSB_FlashDef : RSB_Def
 	// bore -- burst offsets, the backheat, the ground kick -- is multiplied by it, so a
 	// backblast stays at the rear of a resized tube. "" = size 1.
 	String sizeCvar;
+	// A CHARGE (RSB_Barrel.Charge, every tic a gun winds up): bursts gathering at the muzzle,
+	// each this many times a second at full charge; a light swelling; the air bending.
+	Array<String> chargeBursts;
+	Array<double> chargeRates;
+	double chargeLightRadius;
+	double chargeLightIntensity;
+	Color  chargeLightColor;
+	double chargeShimmerRadius;
+	double chargeShimmerStrength;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a
 	// weapon firing every tic reads as one pulsing glow, not a strobe.
 	int    throbTics;

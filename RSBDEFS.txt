@@ -812,6 +812,133 @@ burst plasma_ozone         # a puff of hazy ozone where plasma burns (rsb_smoke_
   particle = rsb_smoke_gun
 end
 
+burst bfg_glow             # the green core round a flying BFG ball, laid each tic (rsb_bfg_glow)
+  count    = 1
+  cone     = 0
+  speed    = 0, 0
+  life     = 0.08, 0.2
+  aim      = along
+  offset   = 0
+  particle = rsb_bfg_glow
+end
+
+burst bfg_glow_heavy       # the Heavy BFG ball's bigger core (rsb_bfg_glow_heavy)
+  count    = 1
+  cone     = 0
+  speed    = 0, 0
+  life     = 0.09, 0.2
+  aim      = along
+  offset   = 0
+  particle = rsb_bfg_glow_heavy
+end
+
+burst bfg_ball_arcs        # arcs crackling round a flying BFG ball (rsb_arc)
+  count    = 1
+  cone     = 90
+  speed    = 30, 0.5
+  life     = 0.25, 0.3
+  color    = 140, 255, 150
+  aim      = along
+  offset   = 6
+  particle = rsb_arc
+end
+
+burst bfg_wave             # a BFG blast's shockwave racing out across the surface (rsb_bfg_wave, a disc)
+  count    = 24
+  cone     = 8
+  speed    = 520, 0.3
+  life     = 0.35, 0.2
+  aim      = normal
+  offset   = 3
+  shape    = disc
+  particle = rsb_bfg_wave
+end
+
+burst bfg_wave_heavy       # the Heavy BFG's: wider and longer
+  count    = 34
+  cone     = 8
+  speed    = 620, 0.3
+  life     = 0.45, 0.2
+  aim      = normal
+  offset   = 3
+  shape    = disc
+  particle = rsb_bfg_wave
+end
+
+burst bfg_ozone            # a haze of ozone hanging after a BFG blast (rsb_smoke_rocket: lit, never glowing)
+  count    = 6
+  cone     = 80
+  speed    = 60, 0.5
+  life     = 3.0, 0.35
+  aim      = normal
+  offset   = 8
+  particle = rsb_smoke_rocket
+end
+
+burst bfg_charge_motes     # green motes drawn in toward the muzzle as a BFG charges
+  count   = 3
+  cone    = 60
+  speed   = 70, 0.4
+  life    = 0.2, 0.3
+  color   = 170, 255, 180
+  glow    = 2.4
+  size    = 1.4, 0.2
+  drag    = 1.0
+  aim     = back
+  offset  = 10
+end
+
+burst bfg_charge_arcs      # arcs crawling over a charging BFG's muzzle (rsb_arc)
+  count    = 1
+  cone     = 80
+  speed    = 10, 0.5
+  life     = 0.2, 0.3
+  color    = 140, 255, 150
+  aim      = along
+  offset   = 2
+  particle = rsb_arc
+end
+
+burst bfg_charge_core      # the green-white core swelling in a charging BFG's muzzle
+  count   = 2
+  cone    = 30
+  speed   = 20, 0.5
+  life    = 0.1, 0.3
+  color   = 200, 255, 205
+  glow    = 4.0
+  size    = 2.5, 0.5
+  aim     = along
+  offset  = 1
+end
+
+burst bfg_release_core     # the BFG's release: a big green-white bloom out of the muzzle
+  count   = 10
+  cone    = 40
+  speed   = 220, 0.3
+  life    = 0.08, 0.2
+  color   = 200, 255, 205
+  glow    = 6.0
+  size    = 3.0, 0.6
+  orient  = streak
+  stretch = 0.02
+  aim     = along
+  offset  = 0
+end
+
+burst bfg_spray_flare      # where a BFG ray strikes a body: a green flare
+  count   = 20
+  cone    = 90
+  speed   = 180, 0.5
+  life    = 0.4, 0.4
+  color   = 140, 255, 150
+  glow    = 3.2
+  size    = 1.1, 0.2
+  drag    = 2.0
+  orient  = streak
+  stretch = 0.02
+  aim     = normal
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -1652,13 +1779,133 @@ impact rocket
   lightcolor = 255, 170, 90
 end
 
+# THE BFG'S BLAST: a shockwave racing across the surface, lit ozone hanging, chunks by surface;
+# the Heavy BFG's hits harder, wider, brighter.
 impact bfg
   heat       = 110, 1.8, 35
-  bursts     = bfg_splash, bfg_motes, bfg_arcs
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, chips_concrete, slabs_concrete
   mark       = hexring, 36, 175
   markcolor  = 140, 255, 150
   light      = 500, 4.5, 14
   lightcolor = 140, 255, 150
+end
+
+impact bfg.metal
+  heat       = 110, 1.8, 35
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, spark_metal, shards_metal
+  mark       = hexring, 36, 175
+  markcolor  = 140, 255, 150
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+end
+
+impact bfg.wood
+  heat       = 110, 1.8, 35
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, splinter_wood, planks_wood
+  mark       = hexring, 36, 175
+  markcolor  = 140, 255, 150
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+end
+
+impact bfg.dirt
+  heat       = 110, 1.8, 35
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, clods_dirt, dust_dirt
+  mark       = hexring, 36, 175
+  markcolor  = 140, 255, 150
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+end
+
+impact bfg.glass
+  heat       = 110, 1.8, 35
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, glint_glass
+  mark       = hexring, 36, 175
+  markcolor  = 140, 255, 150
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+end
+
+impact bfg.liquid
+  heat       = 110, 1.8, 35
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave, bfg_ozone, splash_liquid
+  light      = 500, 4.5, 14
+  lightcolor = 140, 255, 150
+
+end
+
+impact bfg_heavy
+  heat       = 140, 2.0, 40
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, chips_concrete, slabs_concrete
+  scale      = 1.4, 1.25
+  mark       = hexring, 48, 210
+  markcolor  = 150, 255, 160
+  light      = 640, 5.0, 16
+  lightcolor = 150, 255, 160
+end
+
+impact bfg_heavy.metal
+  heat       = 140, 2.0, 40
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, spark_metal, shards_metal
+  scale      = 1.4, 1.25
+  mark       = hexring, 48, 210
+  markcolor  = 150, 255, 160
+  light      = 640, 5.0, 16
+  lightcolor = 150, 255, 160
+end
+
+impact bfg_heavy.wood
+  heat       = 140, 2.0, 40
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, splinter_wood, planks_wood
+  scale      = 1.4, 1.25
+  mark       = hexring, 48, 210
+  markcolor  = 150, 255, 160
+  light      = 640, 5.0, 16
+  lightcolor = 150, 255, 160
+end
+
+impact bfg_heavy.dirt
+  heat       = 140, 2.0, 40
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, clods_dirt, dust_dirt
+  scale      = 1.4, 1.25
+  mark       = hexring, 48, 210
+  markcolor  = 150, 255, 160
+  light      = 640, 5.0, 16
+  lightcolor = 150, 255, 160
+end
+
+impact bfg_heavy.glass
+  heat       = 140, 2.0, 40
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, glint_glass
+  scale      = 1.4, 1.25
+  mark       = hexring, 48, 210
+  markcolor  = 150, 255, 160
+  light      = 640, 5.0, 16
+  lightcolor = 150, 255, 160
+end
+
+impact bfg_heavy.liquid
+  heat       = 140, 2.0, 40
+  bursts     = bfg_splash, bfg_motes, bfg_arcs, bfg_wave_heavy, bfg_ozone, splash_liquid
+  scale      = 1.4, 1.25
+  light      = 640, 5.0, 16
+  lightcolor = 150, 255, 160
+
+end
+
+impact bfg_spray           # where a BFG ray strikes (on Doom's BFE2 flash): a green flare, arcs, a brief light
+  bursts     = bfg_spray_flare, bfg_arcs
+  sound      = none
+  light      = 120, 2.4, 10
+  lightcolor = 140, 255, 150
+end
+
+impact bfg_spray_heavy
+  bursts     = bfg_spray_flare, bfg_arcs
+  scale      = 1.4, 1.2
+  sound      = none
+  light      = 160, 2.8, 12
+  lightcolor = 150, 255, 160
 end
 
 impact rail
@@ -1814,12 +2061,6 @@ impact rocket_rpg.liquid
 end
 
 
-impact bfg.liquid
-  heat       = 110, 1.8, 35
-  bursts     = bfg_splash, bfg_motes, splash_liquid, bfg_arcs
-  light      = 500, 4.5, 14
-  lightcolor = 140, 255, 150
-end
 
 impact rail.wood
   bursts     = rail_splash, splinter_wood, rail_arcs
@@ -2033,6 +2274,34 @@ end
 # The shot is the gun's (hitscan, damage, puff); a trail only draws. Energy weapons may
 # be saturated (plasma blue, BFG green); the trail lingers and dissipates, no pulsing.
 
+trail bfg_ray              # a BFG ray from the shooter to what it strikes: a green core in a green halo, sparks drifting off it
+  line        = 0.8, 5.0, 2.0, 22
+  linecolor   = 200, 255, 205
+  linecolorend = 120, 255, 140
+  linelook    = 0.7, 2.0
+  licks       = 0.2, 1.0, 0.05, 1.5
+  helix       = rsb_rail_mote, 1.0, 4.0, 6.0
+  helixmotion = 6, 0.9, 0.3
+  helixcolor  = 120, 255, 140
+  helixmax    = 300
+  lights      = 2, 120, 1.8, 8
+  lightcolor  = 140, 255, 150
+end
+
+trail bfg_ray_heavy        # the Heavy BFG's rays: thicker, brighter, longer to fade
+  line        = 1.1, 7.0, 2.4, 28
+  linecolor   = 210, 255, 215
+  linecolorend = 130, 255, 150
+  linelook    = 0.75, 2.2
+  licks       = 0.25, 1.1, 0.05, 1.5
+  helix       = rsb_rail_mote, 1.0, 5.5, 5.0
+  helixmotion = 7, 1.0, 0.3
+  helixcolor  = 130, 255, 150
+  helixmax    = 400
+  lights      = 3, 150, 2.2, 10
+  lightcolor  = 150, 255, 160
+end
+
 trail rail                 # a Quake 2 railgun: a white-hot core in a blue halo, a blue corkscrew that loosens and fades
   line        = 0.6, 3.5, 2.2, 32
   linecolor   = 205, 228, 255
@@ -2126,6 +2395,7 @@ end
 # it passes).
 # `motor = <burst>`: a projectile's tail fires that burst each tic it flies. `onset = <flash>`:
 # played where the projectile is when this look takes over mid-flight (an RPG's sustainer).
+# `motormaybe = <burst> <chance a tic>, ...`: more tail bursts some tics (arcs round a ball).
 roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
@@ -2300,10 +2570,22 @@ roundlook rocket_rpg       # the RPG's sustainer burning: a hard bright flame, a
   onset  = rpg_ignition
 end
 
-roundlook bfg_ball
+roundlook bfg_ball         # the BFG's ball (the vanilla sprite): a big green core, arcs crackling round it, a shimmer behind
   look   = none
   wake   = bfg_trail
   impact = bfg
+  motor  = bfg_glow
+  motormaybe = bfg_ball_arcs 0.35
+  heat   = 14, 1.0, 14, 140
+end
+
+roundlook bfg_heavy        # the Heavy BFG's ball (RSB_BFGBallHeavy): the sun -- a bigger core, more arcs, a heavier trail and blast
+  look   = none
+  wake   = bfg_trail_heavy
+  impact = bfg_heavy
+  motor  = bfg_glow_heavy
+  motormaybe = bfg_ball_arcs 0.6
+  heat   = 18, 1.2, 16, 180
 end
 
 wake tracer_bright
@@ -2457,14 +2739,24 @@ wake plasma_streak         # the carbine's bolt: a tight, hot streak of blue-whi
   glow    = 2.4
 end
 
-wake bfg_trail           # green sparks and glow off the BFG ball
-  perstep = 5
+wake bfg_trail           # green sparks shed by the BFG ball, laid by distance
+  spacing = 6
   size    = 2.2, 0.3
-  life    = 0.45
+  life    = 0.5
   drift   = 14
   drag    = 2.5
   color   = 140, 255, 150
   glow    = 2.0
+end
+
+wake bfg_trail_heavy       # the Heavy BFG ball's: denser, bigger, lingering
+  spacing = 5
+  size    = 3.0, 0.4
+  life    = 0.6
+  drift   = 18
+  drag    = 2.2
+  color   = 150, 255, 160
+  glow    = 2.4
 end
 
 wake rocket_smoke        # thick lit smoke off the motor, laid by distance: it hangs as the rocket's trail
@@ -2516,6 +2808,10 @@ end
 #               starting offset behind the muzzle (a backblast)
 #   sizecvar    <cvar> -- the gun's size slider: every offset along the bore (burst offsets,
 #               backheat, ground kick) is multiplied by it
+#   chargebursts <burst> <times a second at full charge>, ... -- gathering at the muzzle every
+#               tic the gun charges (RSB_Barrel.Charge from the gun mod, with how far along)
+#   chargelight radius, intensity      chargelightcolor r, g, b -- swelling as it charges
+#   chargeshimmer radius, strength -- the air bending at the muzzle as it charges
 #   barrelglow  from heat, radius, intensity -- a barrel run hot glows: a dull light at the
 #               muzzle past that heat (full auto, long bursts); barrelglowcolor r, g, b
 #   throb       period (tics), depth (0..1) -- light and cone swell and ease on a beat: a gun
@@ -2950,6 +3246,44 @@ flash bfg                # a green bloom
   cone       = 30, 70, 120, 6
   conetics   = 4
   bursts     = energy_sparks_bfg
+end
+
+flash bfg_9000             # THE BFG: while it charges green motes and arcs gather at the muzzle and a green light swells; on release a green bloom and a burst of energy
+  heat       = 16, 48, 1.4, 24
+  light      = 380, 4.2, 5
+  lightcolor = 120, 255, 140
+  cone       = 30, 70, 130, 7
+  conetics   = 4
+  bursts     = energy_sparks_bfg, bfg_release_core
+  maybe      = bfg_charge_arcs 0.8
+  flame      = 0
+  chargebursts = bfg_charge_motes 18, bfg_charge_arcs 6, bfg_charge_core 10
+  chargelight = 180, 3.0
+  chargelightcolor = 120, 255, 140
+  chargeshimmer = 12, 0.9
+  barrelheat = 0.5, 0.25, 0.3
+  barrelshimmer = 5, 0.7
+  barrelglow = 0.6, 40, 1.6
+  barrelglowcolor = 120, 255, 140
+end
+
+flash bfg_heavy            # THE HEAVY BFG, the sun: a bigger storm gathering while it charges, a blinding green release, the air bending hard
+  heat       = 22, 60, 1.8, 28
+  light      = 480, 5.2, 6
+  lightcolor = 130, 255, 150
+  cone       = 36, 80, 150, 9
+  conetics   = 5
+  bursts     = energy_sparks_bfg, energy_sparks_bfg, bfg_release_core
+  maybe      = bfg_charge_arcs 1.0
+  flame      = 0
+  chargebursts = bfg_charge_motes 28, bfg_charge_arcs 10, bfg_charge_core 14
+  chargelight = 240, 3.8
+  chargelightcolor = 130, 255, 150
+  chargeshimmer = 16, 1.2
+  barrelheat = 0.6, 0.22, 0.3
+  barrelshimmer = 6, 0.9
+  barrelglow = 0.5, 48, 2.0
+  barrelglowcolor = 130, 255, 150
 end
 
 flash rail               # a hard blue-white snap

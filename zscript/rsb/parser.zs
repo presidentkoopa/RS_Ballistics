@@ -295,6 +295,11 @@ class RSB_Parser
 			d.backHeatTics = 0;
 			d.backHeatOffset = 0;
 			d.sizeCvar = "";
+			d.chargeLightRadius = 0;
+			d.chargeLightIntensity = 0;
+			d.chargeLightColor = Color(255, 255, 255, 255);
+			d.chargeShimmerRadius = 0;
+			d.chargeShimmerStrength = 0;
 			d.throbTics = 0;
 			d.throbDepth = 0;
 			return d;
@@ -609,7 +614,23 @@ class RSB_Parser
 			lk.onsetFlash = (v[0] ~== "none") ? "" : v[0];
 			return "";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor or onset", key);
+		if (key == "motormaybe")
+		{
+			lk.motorMaybe.Clear();
+			lk.motorMaybeChance.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				String mw = WordAmount(v[i], 0.0, 1.0, word, amount);
+				if (mw != "") return "motormaybe " .. mw .. " -- motormaybe is <burst> <chance 0..1 a tic>, ...";
+				lk.motorMaybe.Push(word);
+				lk.motorMaybeChance.Push(amount);
+			}
+			return "";
+		}
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe or onset", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE
@@ -1133,6 +1154,42 @@ class RSB_Parser
 			if (v.Size() != 1) return "sizecvar is one cvar name (the gun's size slider), or none";
 			f.sizeCvar = (v[0] ~== "none") ? "" : v[0];
 			return "";
+		}
+		if (key == "chargebursts")
+		{
+			f.chargeBursts.Clear();
+			f.chargeRates.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 70.0, word, amount);
+				if (why != "") return "chargebursts " .. why .. " -- chargebursts is <burst> <times a second at full charge>, ...";
+				f.chargeBursts.Push(word);
+				f.chargeRates.Push(amount);
+			}
+			return "";
+		}
+		if (key == "chargelight")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.chargeLightRadius = v[0].ToDouble();
+			f.chargeLightIntensity = v[1].ToDouble();
+			return (f.chargeLightRadius >= 0 && f.chargeLightIntensity >= 0) ? "" : "chargelight is radius, intensity -- both 0 or more";
+		}
+		if (key == "chargelightcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			f.chargeLightColor = c;
+			return "";
+		}
+		if (key == "chargeshimmer")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.chargeShimmerRadius = v[0].ToDouble();
+			f.chargeShimmerStrength = v[1].ToDouble();
+			return (f.chargeShimmerRadius >= 0 && f.chargeShimmerStrength >= 0) ? "" : "chargeshimmer is radius, strength -- both 0 or more";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
