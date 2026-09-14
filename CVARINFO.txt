@@ -62,6 +62,11 @@ user float  rsb_flame_light        = 1.0;
 user float  rsb_flame_volume       = 1.0;
 user bool   rsb_flame_tube         = true;      // the drawn-line core of a flame profile with `tube`
 
+// ---- recoil (recoil.zs). THE ONE GAMEPLAY CVAR: a server setting, the same rule for every
+// player in a netgame (the owner: "gameplay recoil but as a toggle ... for purists").
+server bool sv_rsb_recoil          = true;      // a gun's kick turns where its rounds go
+user float  rsb_recoil_view        = 1.0;       // the per-shot jolt the arm and the prop show (looks only)
+
 // ---- preview and diagnostics
 user string rsb_preview_flame      = "incinerator";
 user string rsb_preview_impact     = "bullet";

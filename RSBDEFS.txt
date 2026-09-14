@@ -3621,6 +3621,124 @@ flash chainsaw_heavy       # THE HEAVY CHAINSAW'S ENGINE: a bigger two-stroke, l
   exhaustshimmer = 4, 0.45
 end
 
+
+# ---------------------------------------------------------------- RECOIL (GAMEPLAY)
+# A gun's kick turns where its rounds go (recoil.zs; _staged/RECOIL_PLAN.md, approved). The
+# weapon sheet names one: `recoilprofile`, `altrecoilprofile`. GAMEPLAY: base names only, no
+# variants. The server cvar sv_rsb_recoil turns it off for everyone. First guesses, tune in the headset.
+#   climb   degrees up a shot
+#   drift   degrees, period in shots -- a fixed left-right walk by shot number, no RNG (period 2 never drifts)
+#   recover degrees a second, delay tics after the last shot
+#   max     pitch degrees, yaw degrees -- the kick's cap
+#   bloom   extra spread degrees per degree of kick
+#   brace   crouched multiplier, standing-still multiplier
+#   view    back units, rise degrees, roll degrees, tics -- the per-shot jolt the arm and prop show (render only)
+# Plasma, BFG and chainsaws have none (the owner).
+
+recoil pistol_9mm          # the Pistolet: snappy; aimed fire is dead on, only a mag dump climbs
+  climb   = 1.2
+  drift   = 0.3, 4
+  recover = 12, 6
+  max     = 5, 2
+  bloom   = 0.05
+  brace   = 0.7, 0.85
+  view    = 1.2, 6, 1.5, 7
+end
+
+recoil pistol_45           # the M4A3: a bigger push; fast follow-ups walk up
+  climb   = 1.8
+  drift   = 0.4, 4
+  recover = 12, 6
+  max     = 6, 2.5
+  bloom   = 0.06
+  brace   = 0.7, 0.85
+  view    = 1.6, 9, 2, 9
+end
+
+recoil shotgun_m37         # fired as fast as it pumps it climbs; paced, never
+  climb   = 4
+  drift   = 0.8, 3
+  recover = 6, 4
+  max     = 8, 3
+  bloom   = 0.1
+  brace   = 0.75, 0.9
+  view    = 3.5, 14, 3, 14
+end
+
+recoil shotgun_doom        # heavier than the M37
+  climb   = 4.5
+  drift   = 1.0, 3
+  recover = 6, 4
+  max     = 9, 3
+  bloom   = 0.1
+  brace   = 0.75, 0.9
+  view    = 3.8, 15, 4, 15
+end
+
+recoil shotgun_ssg         # the train wreck: a huge kick, recovered by the time it is reloaded
+  climb   = 7
+  drift   = 1.2, 3
+  recover = 8, 6
+  max     = 10, 4
+  bloom   = 0.12
+  brace   = 0.7, 0.9
+  view    = 5.5, 22, 5, 18
+end
+
+recoil shotgun_bullpup     # magazine-fed and fast: it climbs if rushed
+  climb   = 5
+  drift   = 1.0, 3
+  recover = 8, 4
+  max     = 10, 3.5
+  bloom   = 0.1
+  brace   = 0.75, 0.9
+  view    = 3, 11, 2, 12
+end
+
+recoil chaingun_556        # caps in about 13 shots (1.5 s); held, it sits there -- pull down to stay on
+  climb   = 0.35
+  drift   = 0.25, 6
+  recover = 4, 6
+  max     = 4.5, 1.5
+  bloom   = 0.15
+  brace   = 0.65, 0.85
+  view    = 0.6, 1.5, 0.8, 4
+end
+
+recoil machinegun_762      # a heavier walk than the chaingun; bracing matters more
+  climb   = 0.55
+  drift   = 0.4, 5
+  recover = 4, 6
+  max     = 6, 2
+  bloom   = 0.2
+  brace   = 0.6, 0.85
+  view    = 1.0, 2.5, 1.2, 5
+end
+
+recoil launcher_40mm       # the machine gun's grenade: a thump, recovered before the next
+  climb   = 3
+  recover = 8, 6
+  max     = 5, 0
+  brace   = 0.8, 0.9
+  view    = 2.5, 8, 1, 12
+end
+
+recoil rocket_launcher     # mostly the look: its rate recovers every shot
+  climb   = 3
+  drift   = 0.3, 3
+  recover = 8, 4
+  max     = 5, 1
+  brace   = 0.8, 0.9
+  view    = 3, 7, 1, 16
+end
+
+recoil rocket_rpg          # recoilless: the backblast cancels the kick
+  climb   = 1
+  recover = 8, 4
+  max     = 3, 0
+  view    = 1.5, 3, 0.5, 12
+end
+
 flash rifle
   light      = 220, 3.2, 2
   lightcolor = 255, 220, 170

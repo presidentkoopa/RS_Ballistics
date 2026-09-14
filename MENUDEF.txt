@@ -95,7 +95,7 @@ OptionMenu "RSB_Options"
 {
 	Title "BALLISTICS & EFFECTS"
 	StaticText "Every round, flash, casing, impact, flame and effect our mods make.", "DarkGray"
-	StaticText "Looks only: nothing here changes damage, speed or netplay.", "DarkGray"
+	StaticText "Looks only -- except Recoil under GAMEPLAY, one rule the server sets for everyone.", "DarkGray"
 	StaticText ""
 	Command "All effects on (recommended)", "rsb_all_effects_on"
 	StaticText "Sets every effect on these pages, and the engine's, to its recommended value.", "DarkGray"
@@ -117,12 +117,26 @@ OptionMenu "RSB_Options"
 	Submenu "Debris", "RSB_DebrisMenu"
 	Submenu "Wall damage", "RSB_DamageMenu"
 	StaticText ""
+	StaticText "GAMEPLAY", "Gold"
+	Submenu "Recoil", "RSB_RecoilMenu"
+	StaticText ""
 	StaticText "PERFORMANCE AND QUALITY", "Gold"
 	Submenu "Quality and performance", "RSB_QualityMenu"
 	StaticText ""
 	StaticText "TRY IT", "Gold"
 	Submenu "Preview -- see it without firing", "RSB_PreviewMenu"
 	Submenu "Diagnostics", "RSB_DiagnosticsMenu"
+}
+
+OptionMenu "RSB_RecoilMenu"
+{
+	Title "RECOIL"
+	StaticText "A VR hand cannot be pushed, so a gun's kick turns where its rounds go:", "DarkGray"
+	StaticText "holding the trigger walks them up and sideways, the first shot is dead on,", "DarkGray"
+	StaticText "and crouching or standing still steadies it. Plasma and BFG never kick.", "DarkGray"
+	StaticText ""
+	StaticText "Gameplay recoil is one rule the server sets for every player; the kick you", "DarkGray"
+	StaticText "see is your own. Both rows arrive when the guns read their recoil profiles.", "Gold"
 }
 
 OptionMenu "RSB_ParticleMenu"
@@ -264,25 +278,31 @@ OptionMenu "RSB_SmokeMenu"
 	StaticText "is lit by flashes and lights, and shows lasers passing through it.", "DarkGray"
 	StaticText ""
 	StaticText "Room smoke: guns, blasts, flames and cuts fill it; blasts shove it; rounds tear it.", "Gold"
-	StaticText "It is simulated now and drawn once the engine's smoke drawing lands.", "DarkGray"
+	StaticText "Lit by one light value a frame for now; each light's own glow comes with the light grid.", "DarkGray"
 	Option "Smoke volume", "r_smoke", "OnOff"
 	Slider "Smoke quality (1 = 59 MB, 2 = 157 MB, 3 = 328 MB, 4 = 472 MB)", "r_smoke_quality", 1, 4, 1, 0
+	Slider "Smoke detail (48 recommended)", "r_smoke_steps", 16, 128, 8, 0
 	Slider "Smoke thickness", "r_smoke_density_scale", 0.0, 3.0, 0.05, 2
 	Slider "Smoke lingering", "r_smoke_dissipation_scale", 0.25, 3.0, 0.05, 2
 	StaticText ""
-	StaticText "Today: muzzle, flame and impact smoke are GPU particles.", "DarkGray"
+	StaticText "Puffs at the muzzle, flame and impact are GPU particles, on top of the room smoke.", "DarkGray"
 	Slider "Muzzle smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
 }
 
 OptionMenu "RSB_DebrisMenu"
 {
 	Title "DEBRIS"
-	StaticText "Real 3D chunks per material, sparks that bounce off the level, debris", "DarkGray"
+	StaticText "Real 3D chunks per material, sparks and chips that stop at the level, debris", "DarkGray"
 	StaticText "that stays for the fight.", "DarkGray"
 	StaticText ""
 	Option "Mesh particles (3D chunks)", "r_meshparticles", "OnOff"
 	StaticText "On: chips, splinters, clods and shards are real models that tumble and land.", "DarkGray"
-	StaticText "Off: flat chips, as before. Bouncing off walls and staying come later.", "DarkGray"
+	StaticText "Off: flat chips, as before.", "DarkGray"
+	StaticText ""
+	Option "Particles collide with the level", "r_particlecollision", "OnOff"
+	Slider "Collision quality (2 recommended, about 35 MB)", "r_particlecollision_quality", 1, 3, 1, 0
+	StaticText "On: sparks, embers, chips and chunks stop at walls and floors anywhere in the level", "DarkGray"
+	StaticText "and fade instead of passing through. Bouncing and staying come with the debris pool.", "DarkGray"
 	StaticText ""
 	Option "Casings", "rsb_casings", "OnOff"
 	Slider "Casing time on the floor", "rsb_casing_life", 0.0, 1.0, 0.05, 2

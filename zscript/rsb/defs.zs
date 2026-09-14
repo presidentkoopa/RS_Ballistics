@@ -450,6 +450,26 @@ class RSB_HotspotDef : RSB_Def
 	double smokeVolHeat;
 }
 
+// RECOIL (GAMEPLAY, recoil.zs): how a gun's kick turns where its rounds go, and how the kick
+// looks. Base names only -- no ~style, .material or @tier variants, which follow local settings.
+class RSB_RecoilDef : RSB_Def
+{
+	double climb;          // degrees up each shot adds
+	double drift;          // degrees of sideways walk ...
+	double driftPeriod;    // ... over this many shots: a sine by shot number (0 = none)
+	double recoverRate;    // degrees a second back toward dead on ...
+	int    recoverDelay;   // ... starting this many tics after the last shot
+	double maxPitch;       // the kick's cap, up
+	double maxYaw;         // and sideways
+	double bloom;          // extra spread degrees per degree of kick
+	double braceCrouch;    // the kick crouched, times
+	double braceStill;     // the kick standing still, times
+	double viewBack;       // THE LOOK (render only): map units back ...
+	double viewRise;       // ... degrees up ...
+	double viewRoll;       // ... degrees of roll ...
+	int    viewTics;       // ... over this many tics
+}
+
 // A STYLE: a named look the player picks in the menu. Multipliers over every
 // profile, plus any `~style` variants written for it.
 class RSB_StyleDef : RSB_Def
@@ -569,6 +589,7 @@ class RSB_DefSet
 		kinds.Push("ejecta");
 		kinds.Push("trail");
 		kinds.Push("hotspot");
+		kinds.Push("recoil");
 
 		String s = "";
 		for (int k = 0; k < kinds.Size(); k++)

@@ -82,16 +82,16 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame, trail, hotspot or ejecta");
+					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame, trail, hotspot, recoil or ejecta");
 					refusals++;
 					refused = true;
 					continue;
 				}
-				// NETPLAY: ballistics are what the game knows, the same on every
-				// machine, so they have no variants a local setting could pick.
-				if (head == "ballistics" && (words[1].IndexOf("~") >= 0 || words[1].IndexOf("@") >= 0 || words[1].IndexOf(".") >= 0))
+				// NETPLAY: ballistics and recoil are what the game knows, the same on
+				// every machine, so they have no variants a local setting could pick.
+				if ((head == "ballistics" || head == "recoil") && (words[1].IndexOf("~") >= 0 || words[1].IndexOf("@") >= 0 || words[1].IndexOf(".") >= 0))
 				{
-					Refuse(source, ln + 1, head, words[1], "ballistics have no ~style, .material or @tier variants -- they are the same on every machine");
+					Refuse(source, ln + 1, head, words[1], head .. " has no ~style, .material or @tier variants -- it is the same on every machine");
 					refusals++;
 					cur = null;
 					refused = true;
@@ -360,6 +360,25 @@ class RSB_Parser
 			d.loopVolume = 1;
 			return d;
 		}
+		if (kind == "recoil")
+		{
+			let d = new("RSB_RecoilDef");
+			d.climb = 0;
+			d.drift = 0;
+			d.driftPeriod = 0;
+			d.recoverRate = 8;
+			d.recoverDelay = 6;
+			d.maxPitch = 6;
+			d.maxYaw = 2;
+			d.bloom = 0;
+			d.braceCrouch = 1;
+			d.braceStill = 1;
+			d.viewBack = 0;
+			d.viewRise = 0;
+			d.viewRoll = 0;
+			d.viewTics = 0;
+			return d;
+		}
 		if (kind == "trail")
 		{
 			let d = new("RSB_TrailDef");
@@ -470,6 +489,8 @@ class RSB_Parser
 		if (tr) return ApplyTrail(tr, key, v);
 		let hs = RSB_HotspotDef(d);
 		if (hs) return ApplyHotspot(hs, key, v);
+		let rc = RSB_RecoilDef(d);
+		if (rc) return ApplyRecoil(rc, key, v);
 		return "internal: a profile of no known kind";
 	}
 
@@ -1806,6 +1827,63 @@ class RSB_Parser
 		return String.Format("unknown hotspot key \"%s\"", key);
 	}
 
+
+	// ---------------------------------------------------------------- RECOIL
+	// GAMEPLAY (recoil.zs): a gun's kick. The same on every machine -- no variants.
+	private static String ApplyRecoil(RSB_RecoilDef rc, String key, out Array<String> v)
+	{
+		String why;
+		if (key == "climb")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			rc.climb = v[0].ToDouble();
+			return (rc.climb >= 0 && rc.climb <= 45) ? "" : "climb is degrees a shot, 0 to 45";
+		}
+		if (key == "drift")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			rc.drift = v[0].ToDouble();
+			rc.driftPeriod = v[1].ToDouble();
+			return (rc.drift >= 0 && rc.drift <= 45 && rc.driftPeriod >= 0) ? "" : "drift is degrees (0 to 45), period in shots (0 or more)";
+		}
+		if (key == "recover")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			rc.recoverRate = v[0].ToDouble();
+			rc.recoverDelay = v[1].ToInt();
+			return (rc.recoverRate > 0 && rc.recoverDelay >= 0) ? "" : "recover is degrees a second (above 0), delay tics (0 or more)";
+		}
+		if (key == "max")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			rc.maxPitch = v[0].ToDouble();
+			rc.maxYaw = v[1].ToDouble();
+			return (rc.maxPitch >= 0 && rc.maxPitch <= 45 && rc.maxYaw >= 0 && rc.maxYaw <= 45) ? "" : "max is pitch degrees, yaw degrees -- each 0 to 45";
+		}
+		if (key == "bloom")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			rc.bloom = v[0].ToDouble();
+			return (rc.bloom >= 0 && rc.bloom <= 2) ? "" : "bloom is extra spread degrees per degree of kick, 0 to 2";
+		}
+		if (key == "brace")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			rc.braceCrouch = v[0].ToDouble();
+			rc.braceStill = v[1].ToDouble();
+			return (rc.braceCrouch >= 0 && rc.braceCrouch <= 1 && rc.braceStill >= 0 && rc.braceStill <= 1) ? "" : "brace is the crouched multiplier, the standing-still multiplier -- each 0 to 1";
+		}
+		if (key == "view")
+		{
+			why = Nums(v, 4); if (why != "") return why;
+			rc.viewBack = v[0].ToDouble();
+			rc.viewRise = v[1].ToDouble();
+			rc.viewRoll = v[2].ToDouble();
+			rc.viewTics = v[3].ToInt();
+			return (rc.viewBack >= 0 && rc.viewTics >= 0) ? "" : "view is back units, rise degrees, roll degrees, tics";
+		}
+		return String.Format("unknown recoil key \"%s\"", key);
+	}
 
 	private static String ApplyStyle(RSB_StyleDef st, String key, out Array<String> v)
 	{
