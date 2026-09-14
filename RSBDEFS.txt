@@ -17,7 +17,7 @@
 # KINDS
 #   style     a look the player picks in the menu: multipliers over everything
 #   burst     one GPU particle emission -- the building block
-#   material  which textures are metal, wood, glass, liquid, dirt...
+#   (what textures are made of is the engine's: SURFACES.txt, not a kind here)
 #   impact    what a landing round does, by surface
 #   round      what a gun names: a pairing of ballistics and roundlook
 #   ballistics how a round flies and hits (speed, radius, damage) -- the same on
@@ -295,35 +295,11 @@ end
 
 
 # ---------------------------------------------------------------- MATERIALS
-#   walls = pattern, pattern...   flats = pattern, pattern...
-#   * matches any run, ? one character. A texture no material claims is the
-#   default surface (concrete-like). Starter lists for the Doom 2 set -- tune
-#   them, or add a map pack's own in its RSBDEFS.
-
-material metal
-  walls = METAL*, SUPPORT*, SW1MET*, SW2MET*, DOOR*, BIGDOOR1, BIGDOOR2, BIGDOOR3, BIGDOOR4
-  walls = EXITDOOR, PLAT1, SILVER*, SHAWN*, TEK*, COMP*, SPACEW*, PIPE*, *GRATE*
-  flats = FLAT23, STEP1, STEP2, *GRATE*
-end
-
-material wood
-  walls = WOOD*, BIGDOOR5, BIGDOOR6, BIGDOOR7, PANEL*, CRATE*, CRATINY, CRATELIT, CRATWIDE
-  flats = FLAT5_1, FLAT5_2, CRATOP*
-end
-
-material glass
-  walls = *GLASS*, LITE*
-end
-
-material liquid
-  walls = SFALL*, BFALL*
-  flats = FWATER*, NUKAGE*, BLOOD*, SLIME*, LAVA*
-end
-
-material dirt
-  walls = ASHWALL*, ROCK*, SP_ROCK*
-  flats = GRASS*, RROCK*, FLAT10
-end
+# What textures are made of is the ENGINE's now (surface materials, #16):
+# RS_Ballistics' SURFACES.txt tags them and TexMan.GetSurface answers. The
+# impact variants below (.metal, .wood, .glass, .liquid, .dirt) use those
+# names; a surface another mod's SURFACES adds gets variants the same way.
+# A `material` block here is refused.
 
 
 # ---------------------------------------------------------------- IMPACTS

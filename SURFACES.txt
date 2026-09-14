@@ -1,0 +1,46 @@
+// ============================================================================
+// SURFACES -- what textures are made of, read by the engine (#16, engine
+// 463098530b). TexMan.GetSurface(tex) answers; RSB_Materials asks it on every
+// landing, and the answer picks impact variants (bullet.metal, rocket.wood...).
+//
+// Converted from RS_Ballistics' old RSBDEFS `material` blocks, pattern for
+// pattern (0 mismatches over Doom 2's 575 textures).
+//   - In a pattern, * matches any run and ? one character. Quote patterns.
+//   - walls = wall textures, flats = flats, any = every texture type. The engine
+//     keys on the texture's own type, so a flat on a UDMF wall answers its flat
+//     rule.
+//   - A later rule or lump wins, so a map pack's SURFACES can reclassify;
+//     `surface none` un-tags.
+//   - A new surface name needs no code: give it `.name` impact variants in
+//     RSBDEFS.
+// ============================================================================
+
+surface metal
+{
+	walls = "METAL*", "SUPPORT*", "SW1MET*", "SW2MET*", "DOOR*", "BIGDOOR1", "BIGDOOR2", "BIGDOOR3", "BIGDOOR4"
+	walls = "EXITDOOR", "PLAT1", "SILVER*", "SHAWN*", "TEK*", "COMP*", "SPACEW*", "PIPE*", "*GRATE*"
+	flats = "FLAT23", "STEP1", "STEP2", "*GRATE*"
+}
+
+surface wood
+{
+	walls = "WOOD*", "BIGDOOR5", "BIGDOOR6", "BIGDOOR7", "PANEL*", "CRATE*", "CRATINY", "CRATELIT", "CRATWIDE"
+	flats = "FLAT5_1", "FLAT5_2", "CRATOP*"
+}
+
+surface glass
+{
+	walls = "*GLASS*", "LITE*"
+}
+
+surface liquid
+{
+	walls = "SFALL*", "BFALL*"
+	flats = "FWATER*", "NUKAGE*", "BLOOD*", "SLIME*", "LAVA*"
+}
+
+surface dirt
+{
+	walls = "ASHWALL*", "ROCK*", "SP_ROCK*"
+	flats = "GRASS*", "RROCK*", "FLAT10"
+}

@@ -82,7 +82,7 @@ class RSB_Parser
 				cur = NewDef(head);
 				if (!cur)
 				{
-					Refuse(source, ln + 1, head, words[1], "unknown kind -- style, burst, material, impact, round, ballistics, roundlook, wake, flash, flame or ejecta");
+					Refuse(source, ln + 1, head, words[1], (head ~== "material") ? "material blocks are gone: textures get their surface from SURFACES lumps now (RS_Ballistics' SURFACES.txt)" : "unknown kind -- style, burst, impact, round, ballistics, roundlook, wake, flash, flame or ejecta");
 					refusals++;
 					refused = true;
 					continue;
@@ -275,10 +275,6 @@ class RSB_Parser
 			d.lifeTics = 700;
 			return d;
 		}
-		if (kind == "material")
-		{
-			return new("RSB_MaterialDef");
-		}
 		if (kind == "flame")
 		{
 			let d = new("RSB_FlameDef");
@@ -343,8 +339,6 @@ class RSB_Parser
 		if (f) return ApplyFlash(f, key, v);
 		let e = RSB_EjectaDef(d);
 		if (e) return ApplyEjecta(e, key, v);
-		let m = RSB_MaterialDef(d);
-		if (m) return ApplyMaterial(m, key, v);
 		let st = RSB_StyleDef(d);
 		if (st) return ApplyStyle(st, key, v);
 		let fm = RSB_FlameDef(d);
@@ -817,25 +811,6 @@ class RSB_Parser
 			return (e.lifeTics >= 1) ? "" : "life must be 1 or more tics";
 		}
 		return String.Format("unknown ejecta key \"%s\"", key);
-	}
-
-	// ------------------------------------------------------------- MATERIAL
-	// `walls` and `flats` add to what earlier lines gave, so a long list can span
-	// several lines.
-	private static String ApplyMaterial(RSB_MaterialDef m, String key, out Array<String> v)
-	{
-		if (key == "walls" || key == "flats")
-		{
-			if (v.Size() == 0) return String.Format("%s needs one or more texture patterns", key);
-			for (int i = 0; i < v.Size(); i++)
-			{
-				String p = v[i].MakeUpper();
-				if (key == "walls") m.walls.Push(p);
-				else m.flats.Push(p);
-			}
-			return "";
-		}
-		return String.Format("unknown material key \"%s\"", key);
 	}
 
 	// ---------------------------------------------------------------- FLAME

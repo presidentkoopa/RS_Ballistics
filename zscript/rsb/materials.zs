@@ -2,9 +2,10 @@
 // WHAT A ROUND HIT. The surface under a landing round: where exactly, which way
 // it faces, and what it is made of.
 //
-// The prototype of the engine's surface-material query (ENGINE_SUPPORT_LIST.md
-// #16). Doom has no materials; RSBDEFS `material` profiles map texture-name
-// patterns to names, and anything unclaimed is the default surface.
+// WHAT IT IS MADE OF is the engine's answer (surface materials, #16):
+// TexMan.GetSurface reads the tags RS_Ballistics' SURFACES.txt (and any later
+// SURFACES lump, GLDEFS `surface` tag or TERRAIN) put on the texture. Untagged
+// is the default surface (concrete-like).
 //
 // HOW. A short trace along the round's last direction of flight, from a little
 // behind where it stopped: the trace reports the texture, the wall line or the
@@ -12,12 +13,13 @@
 // floors, which the projectile's own Blocking* fields do not. If the trace
 // finds nothing (a round stopped on an edge), those fields are the fallback.
 //
-// NETPLAY. A trace and a lookup; no RNG, the same on every machine.
+// NETPLAY. A trace and a lookup of load-time texture data; no RNG, the same on
+// every machine.
 // ============================================================================
 
 class RSB_Surface
 {
-	String  material;   // "" = the default surface
+	String  material;   // "" = the default surface; otherwise lower-case (metal, wood...)
 	String  texName;    // for the diagnostics
 	Vector3 at;
 	Vector3 normal;     // unit, facing back toward the round
@@ -148,11 +150,17 @@ class RSB_Materials play
 		return s;
 	}
 
+	// THE ENGINE'S ANSWER, lower-cased: a Name's text comes back in whichever
+	// spelling the engine made first ("Metal" or "metal"), and impact variant ids
+	// are strings. 'None' is untagged: the default surface.
 	private static void Classify(RSB_Surface s, TextureID tex)
 	{
 		if (!tex.IsValid()) return;
 		s.texName = TexMan.GetName(tex);
-		let reg = RSB_Registry.Get();
-		if (reg) s.material = reg.MaterialFor(tex, s.flat);
+		Name surfaceName = TexMan.GetSurface(tex);
+		if (surfaceName == 'None') return;
+		String m = surfaceName;
+		s.material = m.MakeLower();
+		RSB_Log.Trace(String.Format("material: %s %s -> %s", s.flat ? "flat" : "wall", s.texName, s.material));
 	}
 }

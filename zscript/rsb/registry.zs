@@ -4,7 +4,7 @@
 //
 // A STATIC event handler (registered in MAPINFO), so it exists from startup and
 // across every map: profiles are read once, not per level. It also owns the
-// once-per-map log memory and the texture-to-material cache.
+// once-per-map log memory. What a texture is made of is the engine's (TexMan.GetSurface).
 //
 // Load order is override order: RSBDEFS lumps are read in the order their
 // packages load, and a later profile with the same kind and name replaces an
@@ -17,7 +17,6 @@ class RSB_Registry : StaticEventHandler
 	int        lumpsRead;
 	int        refusals;
 	private Array<String> said;                  // once-per-map log keys
-	private Map<String, String> materialCache;   // "W:NAME" / "F:NAME" -> material ("" = default)
 
 	clearscope static RSB_Registry Get()
 	{
@@ -85,39 +84,12 @@ class RSB_Registry : StaticEventHandler
 		return defs ? RSB_RoundLookDef(defs.Resolve("roundlook", base, "", tierName, RSB_Settings.StyleName())) : null;
 	}
 
-	// THE MATERIAL OF A TEXTURE, "" for the default surface. Later material
-	// profiles win, so they are tried last-loaded first. Cached per texture name:
-	// an impact is a map lookup after the first.
-	String MaterialFor(TextureID tex, bool flat)
-	{
-		if (!defs || !tex.IsValid()) return "";
-		String texName = TexMan.GetName(tex);
-		texName = texName.MakeUpper();
-		String key = (flat ? "F:" : "W:") .. texName;
-		if (materialCache.CheckKey(key)) return materialCache.Get(key);
-
-		String found = "";
-		for (int i = defs.defs.Size() - 1; i >= 0; i--)
-		{
-			let m = RSB_MaterialDef(defs.defs[i]);
-			if (m && m.Matches(texName, flat))
-			{
-				found = m.id;
-				break;
-			}
-		}
-		materialCache.Insert(key, found);
-		RSB_Log.Trace(String.Format("material: %s %s -> %s", flat ? "flat" : "wall", texName, found.Length() > 0 ? found : "default"));
-		return found;
-	}
-
 	// ---- reading ---------------------------------------------------------------
 	private void Load()
 	{
 		defs = new("RSB_DefSet");
 		lumpsRead = 0;
 		refusals = 0;
-		materialCache.Clear();
 
 		int lump = Wads.FindLump("RSBDEFS", 0);
 		while (lump != -1)

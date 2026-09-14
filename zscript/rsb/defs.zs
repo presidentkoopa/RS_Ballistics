@@ -29,7 +29,7 @@
 
 class RSB_Def abstract
 {
-	String kind;     // round, wake, burst, impact, flash, ejecta, material
+	String kind;     // round, ballistics, roundlook, wake, burst, impact, flash, flame, ejecta, style
 	String id;       // as written, variant suffixes included; matched case-insensitively
 	String source;   // the lump it came from
 	int    lineNo;   // its header line
@@ -180,67 +180,6 @@ class RSB_EjectaDef : RSB_Def
 	String soundName;
 	int    hotTics;        // fullbright out of the port
 	int    lifeTics;       // on the floor before it fades
-}
-
-// A MATERIAL: which textures are what. Patterns, case-insensitive, with * and ?.
-// A texture no material claims is the default surface (concrete-like). Later
-// lumps take priority, so a map pack can reclassify textures.
-class RSB_MaterialDef : RSB_Def
-{
-	Array<String> walls;
-	Array<String> flats;
-
-	bool Matches(String texName, bool flat)
-	{
-		if (flat)
-		{
-			for (int i = 0; i < flats.Size(); i++)
-				if (Glob(flats[i], texName)) return true;
-		}
-		else
-		{
-			for (int i = 0; i < walls.Size(); i++)
-				if (Glob(walls[i], texName)) return true;
-		}
-		return false;
-	}
-
-	// Both already upper-case. * matches any run, ? any one character.
-	static bool Glob(String pat, String s)
-	{
-		int pn = pat.Length();
-		int sn = s.Length();
-		int pi = 0;
-		int si = 0;
-		int star = -1;
-		int mark = 0;
-		while (si < sn)
-		{
-			if (pi < pn && (pat.ByteAt(pi) == 63 || pat.ByteAt(pi) == s.ByteAt(si)))
-			{
-				pi++;
-				si++;
-			}
-			else if (pi < pn && pat.ByteAt(pi) == 42)
-			{
-				star = pi;
-				pi++;
-				mark = si;
-			}
-			else if (star >= 0)
-			{
-				pi = star + 1;
-				mark++;
-				si = mark;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		while (pi < pn && pat.ByteAt(pi) == 42) pi++;
-		return pi == pn;
-	}
 }
 
 // A FLAME: a flamethrower's stream, where it lands, its light and sounds.
@@ -395,7 +334,6 @@ class RSB_DefSet
 		kinds.Push("flash");
 		kinds.Push("flame");
 		kinds.Push("ejecta");
-		kinds.Push("material");
 
 		String s = "";
 		for (int k = 0; k < kinds.Size(); k++)
