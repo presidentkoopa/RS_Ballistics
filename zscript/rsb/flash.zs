@@ -110,6 +110,10 @@ class RSB_Flash : Actor
 					RSB_Hash.Seed(level.maptime, i + 1, posSeed));
 		}
 
+		// HEAT SHIMMER out of the muzzle (RSB_Heat): a column of hot air along the shot.
+		if (fd.heatStrength > 0)
+			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength, fd.heatTics);
+
 		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() + 0.5);
 		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
 		// definition: puffs drifting out of the bore, rising and hanging. The handle

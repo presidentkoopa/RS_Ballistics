@@ -285,6 +285,8 @@ class RSB_Parser
 			d.tubeHalo = 0.5;
 			d.tubeLickScale = 0.05;
 			d.tubeLickSpeed = 1.5;
+			d.heatNoise = 0.08;
+			d.heatRise = 20;
 			d.reach = 400;
 			d.fuelSpeed = 800;
 			d.spread = 2;
@@ -690,6 +692,15 @@ class RSB_Parser
 			im.glanceBurst = v[2];
 			return (im.glanceDeg >= 0 && im.glanceDeg < 90) ? "" : "glance degrees must be from 0 to below 90";
 		}
+		if (key == "heat")
+		{
+			String hw = Nums(v, 3);
+			if (hw != "") return hw;
+			im.heatRadius = v[0].ToDouble();
+			im.heatStrength = v[1].ToDouble();
+			im.heatTics = v[2].ToInt();
+			return (im.heatRadius >= 0 && im.heatStrength >= 0 && im.heatTics >= 0) ? "" : "heat is radius, strength, tics -- all 0 or more";
+		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
 
@@ -755,6 +766,16 @@ class RSB_Parser
 			f.smokeParticle = (v[0] ~== "none") ? "" : v[0];
 			f.smokeHandle = 0;
 			return "";
+		}
+		if (key == "heat")
+		{
+			String hw = Nums(v, 4);
+			if (hw != "") return hw;
+			f.heatRadius = v[0].ToDouble();
+			f.heatLength = v[1].ToDouble();
+			f.heatStrength = v[2].ToDouble();
+			f.heatTics = v[3].ToInt();
+			return (f.heatRadius >= 0 && f.heatLength >= 0 && f.heatStrength >= 0 && f.heatTics >= 0) ? "" : "heat is radius, length, strength, tics -- all 0 or more";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
@@ -995,6 +1016,24 @@ class RSB_Parser
 			fm.tubeLickSpeed = v[2].ToDouble();
 			return (fm.tubeLickStrength >= 0 && fm.tubeLickStrength <= 2 && fm.tubeLickScale >= 0 && fm.tubeLickScale <= 1) ? ""
 				: "tubelicks is strength (0-2), scale (0-1 noise cells per map unit), speed";
+		}
+		if (key == "heat")
+		{
+			why = Nums(v, 5); if (why != "") return why;
+			fm.heatRadiusStart = v[0].ToDouble();
+			fm.heatRadiusEnd = v[1].ToDouble();
+			fm.heatStrength = v[2].ToDouble();
+			fm.heatNoise = v[3].ToDouble();
+			fm.heatRise = v[4].ToDouble();
+			return (fm.heatRadiusStart >= 0 && fm.heatRadiusEnd >= 0 && fm.heatStrength >= 0 && fm.heatNoise > 0 && fm.heatNoise <= 1) ? ""
+				: "heat is radius at the nozzle, radius at the far end, strength, noise scale (above 0, up to 1), rise";
+		}
+		if (key == "heatland")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			fm.heatLandRadius = v[0].ToDouble();
+			fm.heatLandStrength = v[1].ToDouble();
+			return (fm.heatLandRadius >= 0 && fm.heatLandStrength >= 0) ? "" : "heatland is radius, strength -- both 0 or more";
 		}
 		return String.Format("unknown flame key \"%s\"", key);
 	}

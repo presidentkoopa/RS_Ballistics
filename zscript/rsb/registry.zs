@@ -16,6 +16,7 @@ class RSB_Registry : StaticEventHandler
 	RSB_DefSet defs;
 	int        lumpsRead;
 	int        refusals;
+	int        heatBlastNext;   // RSB_Heat: the next blast slot, in turn (drawing only)
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()

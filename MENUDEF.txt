@@ -198,7 +198,7 @@ OptionMenu "RSB_FlameMenu"
 {
 	Title "FLAMETHROWERS"
 	StaticText "The stream of fire, the fire where it lands, its light and its roar.", "DarkGray"
-	StaticText "Black smoke rises where it lands. Heat shimmer is the engine's next item.", "DarkGray"
+	StaticText "Black smoke rises where it lands. Heat shimmer: Developer options, Heat shimmer.", "DarkGray"
 	StaticText ""
 	Option "Flame effects", "rsb_flame", "OnOff"
 	Option "Flame core (drawn lines)", "rsb_flame_tube", "OnOff"

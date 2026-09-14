@@ -142,6 +142,9 @@ class RSB_ImpactDef : RSB_Def
 	double glanceDeg;      // a round arriving within this many degrees of the surface glances; 0 = never
 	String glanceSound;
 	String glanceBurst;
+	double heatRadius;     // heat shimmer where it lands: a ball fading over heatTics; 0 = none
+	double heatStrength;
+	int    heatTics;
 }
 
 // A FLASH: the muzzle's light, its lit-air cone, its bursts, flame and smoke.
@@ -162,6 +165,10 @@ class RSB_FlashDef : RSB_Def
 	// The handle is a hash of the name, cached and never tested (netplay rule).
 	String smokeParticle;
 	int    smokeHandle;
+	double heatRadius;     // heat shimmer out of the muzzle: a column heatLength long; 0 = none
+	double heatLength;
+	double heatStrength;
+	int    heatTics;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the
@@ -227,6 +234,15 @@ class RSB_FlameDef : RSB_Def
 	double tubeLickStrength; // 0 = no licks
 	double tubeLickScale;    // noise cells per map unit
 	double tubeLickSpeed;    // rising, cells a second
+	// HEAT SHIMMER (RSB_Heat): the plume from the nozzle to where it lands, riding
+	// the owner's hand, and a ball of heat there. Strength 0 = none.
+	double heatRadiusStart;
+	double heatRadiusEnd;
+	double heatStrength;
+	double heatNoise;        // noise cells per map unit
+	double heatRise;         // how fast the shimmer rises
+	double heatLandRadius;
+	double heatLandStrength;
 }
 
 // A STYLE: a named look the player picks in the menu. Multipliers over every

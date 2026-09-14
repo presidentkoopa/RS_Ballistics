@@ -311,6 +311,8 @@ end
 #   sound       SNDINFO name | none
 #   light       radius, intensity, tics      lightcolor  r, g, b
 #   glance      degrees from the surface, sound, burst -- a ricochet
+#   heat        radius, strength, tics -- heat shimmer where it lands, fading (the
+#               engine's; the player turns it on in Developer options)
 
 impact bullet
   bursts    = spark_hot, chips_concrete, dust_concrete
@@ -471,6 +473,7 @@ burst rail_splash
 end
 
 impact plasma
+  heat       = 20, 0.8, 18
   bursts     = plasma_splash, plasma_motes
   mark       = ring, 8, 70
   markcolor  = 120, 180, 255
@@ -479,6 +482,7 @@ impact plasma
 end
 
 impact rocket
+  heat       = 72, 1.6, 32
   bursts     = rocket_fire, rocket_embers, chips_concrete, rocket_smoke
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
@@ -487,6 +491,7 @@ impact rocket
 end
 
 impact bfg
+  heat       = 110, 1.8, 35
   bursts     = bfg_splash, bfg_motes
   mark       = hexring, 36, 175
   markcolor  = 140, 255, 150
@@ -514,12 +519,14 @@ end
 # concrete chips off wood or sparks off dirt. Plasma and the BFG throw no debris,
 # so only their liquid landing differs.
 impact plasma.liquid
+  heat       = 20, 0.8, 18
   bursts     = plasma_splash, plasma_motes, splash_liquid
   light      = 140, 2.5, 5
   lightcolor = 120, 180, 255
 end
 
 impact rocket.metal
+  heat       = 72, 1.6, 32
   bursts     = rocket_fire, rocket_embers, spark_metal, rocket_smoke
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
@@ -528,6 +535,7 @@ impact rocket.metal
 end
 
 impact rocket.wood
+  heat       = 72, 1.6, 32
   bursts     = rocket_fire, rocket_embers, splinter_wood, dust_wood, rocket_smoke
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
@@ -536,6 +544,7 @@ impact rocket.wood
 end
 
 impact rocket.dirt
+  heat       = 72, 1.6, 32
   bursts     = rocket_fire, rocket_embers, clods_dirt, dust_concrete, rocket_smoke
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
@@ -544,6 +553,7 @@ impact rocket.dirt
 end
 
 impact rocket.glass
+  heat       = 72, 1.6, 32
   bursts     = rocket_fire, rocket_embers, glint_glass, rocket_smoke
   mark       = sunburst, 40, 140
   markcolor  = 255, 120, 40
@@ -552,12 +562,14 @@ impact rocket.glass
 end
 
 impact rocket.liquid
+  heat       = 72, 1.6, 32
   bursts     = rocket_fire, splash_liquid, rocket_smoke
   light      = 400, 4.0, 10
   lightcolor = 255, 170, 90
 end
 
 impact bfg.liquid
+  heat       = 110, 1.8, 35
   bursts     = bfg_splash, bfg_motes, splash_liquid
   light      = 500, 4.5, 14
   lightcolor = 140, 255, 150
@@ -852,6 +864,7 @@ end
 #   smoke       count, scale, alpha
 #   smokeparticle  <PARTICLEDEFS definition> | none -- GPU smoke (count x 2 puffs)
 #                  instead of sprite puffs; scale and alpha then unused
+#   heat        radius, length, strength, tics -- heat shimmer out of the muzzle
 #
 # Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
 # bfg and rail have their own light and sparks, and `none` is no flash at all.
@@ -969,6 +982,7 @@ burst energy_sparks_rail
 end
 
 flash plasma             # a blue flicker, no powder: no flame, no smoke
+  heat       = 6, 24, 0.8, 12
   light      = 150, 2.4, 2
   lightcolor = 120, 180, 255
   cone       = 16, 45, 70, 4
@@ -977,6 +991,7 @@ flash plasma             # a blue flicker, no powder: no flame, no smoke
 end
 
 flash rocket             # the motor lighting: big warm light, sparks, smoke
+  heat       = 10, 40, 1.2, 18
   light      = 300, 3.8, 4
   lightcolor = 255, 190, 120
   cone       = 34, 80, 130, 8
@@ -988,6 +1003,7 @@ flash rocket             # the motor lighting: big warm light, sparks, smoke
 end
 
 flash bfg                # a green bloom
+  heat       = 16, 48, 1.4, 24
   light      = 360, 4.0, 5
   lightcolor = 120, 255, 140
   cone       = 30, 70, 120, 6
@@ -1026,6 +1042,9 @@ end
 #   tubecolors   r, g, b stops, 2 to 8, the nozzle's first, spread evenly along it;
 #                put the fade in the colours (a line's intensity is not blended)
 #   tubelicks    strength (0-2), scale (noise cells per map unit), speed (rising)
+#   heat         radius at the nozzle, radius at the far end, strength, noise scale,
+#                rise: heat shimmer along the stream, riding the owner's hand
+#   heatland     radius, strength: a ball of heat where it lands
 #   landing      bursts where it lands (ordinary bursts), every landingtics
 #   scorch       shape, radius, life (tics)   scorchcolor r, g, b   scorchtics
 #   light        radius, intensity, flicker 0..1 (at the nozzle)   lightcolor
@@ -1182,6 +1201,8 @@ flame incinerator        # a tight, fast jet
   tubelook    = 1.6, 3.0, 0.5
   tubecolors  = 255, 250, 235, 255, 215, 120, 255, 140, 40, 200, 60, 12, 110, 25, 6
   tubelicks   = 0.6, 0.06, 2.0
+  heat        = 4, 18, 1.2, 0.08, 30
+  heatland    = 28, 1.4
   landingtics = 2
   scorch      = pool, 10, 105
   scorchcolor = 255, 100, 25
@@ -1206,6 +1227,8 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   tubelook    = 1.4, 3.5, 0.55
   tubecolors  = 255, 240, 210, 255, 190, 90, 255, 120, 30, 180, 45, 10, 90, 20, 5
   tubelicks   = 0.8, 0.07, 2.5
+  heat        = 6, 26, 1.4, 0.07, 26
+  heatland    = 40, 1.6
   landingtics = 1
   scorch      = sunburst, 16, 140
   scorchcolor = 255, 90, 20

@@ -240,6 +240,10 @@ class RSB_Impact play
 				if (l) l.Start(im.lightRadius, strength, im.lightTics, im.lightColor);
 			}
 		}
+
+		// HEAT SHIMMER where it lands (RSB_Heat): a ball of hot air that fades on its own.
+		if (im.heatStrength > 0)
+			RSB_Heat.Blast(surf.at + surf.normal * (im.heatRadius * 0.4), im.heatRadius, im.heatStrength, im.heatTics);
 	}
 }
 

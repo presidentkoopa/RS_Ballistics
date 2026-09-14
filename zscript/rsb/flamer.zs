@@ -27,8 +27,8 @@
 // segments from the nozzle to where the stream lands (the engine's drawn-line
 // looks: a colour gradient, a halo widening as it travels, world-space licks),
 // so the core reads as one jet. Puffs slide along what they hit (collide =
-// plane) and black smoke rises where it lands. Heat shimmer is the engine's
-// next item.
+// plane), black smoke rises where it lands, and the air shimmers along the
+// stream and where it lands (RSB_Heat, the engine's heat sources).
 //
 // NETPLAY. Every actor here is +NOINTERACTION, uses no playsim RNG (the flicker
 // and the stream's wander are hashes) and changes nothing a netgame compares.
@@ -129,6 +129,7 @@ class RSB_FlameEmitter : Actor
 	}
 
 	const FADE_TICS = 8;
+	const HEAT_FADE_TICS = 12;   // heat shimmer dying out after the flame
 
 	String flameId;
 	Actor  flameOwner;
@@ -150,6 +151,11 @@ class RSB_FlameEmitter : Actor
 	private int     tubeLaid;     // tube segments drawn at the last lay
 	private Vector3 tubeStart;
 	private Vector3 tubeEnd;
+	int     heatBlock;            // this emitter's pair of heat slots (RSB_Heat); -1 none
+	private bool    heatLive;     // the plume was set at the last lay, and is not fading
+	private bool    heatBallLive; // ...and a ball of heat where it landed
+	private Vector3 heatStart;
+	private Vector3 heatEnd;
 	transient RSB_FlameDef flameDef;
 
 	States
@@ -171,6 +177,7 @@ class RSB_FlameEmitter : Actor
 		fuelLeft = 1.0;
 		lastFed = level.maptime;
 		tubeBlock = -1;
+		heatBlock = -1;
 
 		double vol = RSB_Settings.FlameVolume();
 		if (vol > 0)
@@ -206,6 +213,7 @@ class RSB_FlameEmitter : Actor
 		if (fd && vol > 0 && !(fd.stopSound ~== "none")) A_StartSound(fd.stopSound, CHAN_AUTO, CHANF_OVERLAP, vol);
 		if (fuelLeft > 0.02) FlameOut(1.0);   // an empty canister has nothing left to throw
 		DropLandLight();
+		FadeHeat();
 	}
 
 	override void Tick()
@@ -384,6 +392,83 @@ class RSB_FlameEmitter : Actor
 		return Color(255, cr, cg, cb);
 	}
 
+	// ---- HEAT SHIMMER ---------------------------------------------------------
+	// THE PLUME: a capsule from the nozzle to where the stream lands, riding the
+	// owner's hand (the gun's hand 0 main, 1 off; the engine's anchor 1, 2), so a
+	// nozzle ahead of the hand stays ahead of it between tics. THE BALL: where it
+	// lands, in the world. Set every tic while burning; FadeHeat hands both a life
+	// so they die out on their own. Slots: RSB_Heat's flame slots, two per emitter.
+
+	private int ClaimHeatBlock()
+	{
+		for (int blk = 0; blk < RSB_Heat.FLAME_BLOCKS; blk++)
+		{
+			bool taken = false;
+			let it = ThinkerIterator.Create("RSB_FlameEmitter");
+			RSB_FlameEmitter other;
+			while (other = RSB_FlameEmitter(it.Next()))
+			{
+				if (other != self && other.heatBlock == blk)
+				{
+					taken = true;
+					break;
+				}
+			}
+			if (!taken) return blk;
+		}
+		return -1;
+	}
+
+	private void LayHeat(Vector3 startAt, Vector3 endAt, bool withBall)
+	{
+		let fd = flameDef;
+		if (!fd || fd.heatStrength <= 0)
+		{
+			FadeHeat();
+			return;
+		}
+		if (heatBlock < 0) heatBlock = ClaimHeatBlock();
+		if (heatBlock < 0) return;   // eight flames already shimmer: this one goes without
+		int plume = RSB_Heat.FLAME_FIRST + heatBlock * 2;
+		bool ball = withBall && fd.heatLandRadius > 0 && fd.heatLandStrength > 0;
+		if (!ball && heatBallLive) SetBall(plume + 1, HEAT_FADE_TICS);   // no longer landing: let it die out
+		heatStart = startAt;
+		heatEnd = endAt;
+		SetPlume(plume, 0);
+		if (ball) SetBall(plume + 1, 0);
+		heatLive = true;
+		heatBallLive = ball;
+	}
+
+	private void FadeHeat()
+	{
+		if (!heatLive || heatBlock < 0) return;
+		int plume = RSB_Heat.FLAME_FIRST + heatBlock * 2;
+		SetPlume(plume, HEAT_FADE_TICS);
+		if (heatBallLive) SetBall(plume + 1, HEAT_FADE_TICS);
+		heatLive = false;
+		heatBallLive = false;
+	}
+
+	// As last laid; life 0 holds it, above 0 fades it out over that many tics.
+	private void SetPlume(int slot, int life)
+	{
+		let fd = flameDef;
+		if (!fd) return;
+		level.SetHeatSource(slot, heatStart, heatEnd, fd.heatRadiusStart, fd.heatRadiusEnd,
+			fd.heatStrength * strength, fd.heatNoise, fd.heatRise, life);
+		if (flameOwner && flameOwner.player && (hand == 0 || hand == 1))
+			level.SetHeatSourceAnchor(slot, hand + 1, flameOwner);
+	}
+
+	private void SetBall(int slot, int life)
+	{
+		let fd = flameDef;
+		if (!fd) return;
+		level.SetHeatSource(slot, heatEnd, heatEnd + (0, 0, fd.heatLandRadius), fd.heatLandRadius * 0.8,
+			fd.heatLandRadius, fd.heatLandStrength * strength, fd.heatNoise, fd.heatRise, life);
+	}
+
 	private void Burn()
 	{
 		let fd = flameDef;
@@ -442,6 +527,7 @@ class RSB_FlameEmitter : Actor
 		{
 			DropLandLight();
 			ClearTube();
+			FadeHeat();
 			return;
 		}
 		if (wasOut) FlameOut(0.5);
@@ -501,6 +587,7 @@ class RSB_FlameEmitter : Actor
 		tubeStart = nozzle;
 		tubeEnd = nozzle + dir * landDist;
 		LayTube(tubeStart, tubeEnd, 1.0);
+		LayHeat(nozzle, nozzle + dir * landDist, landed);
 
 		if (!landed)
 		{
