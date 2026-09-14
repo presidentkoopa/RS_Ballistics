@@ -1646,9 +1646,10 @@ end
 
 
 # ---------------------------------------------------------------- EJECTA
-#   look     sprite, <4-letter sprite>: five tumble frames A to E, lying on C.
+#   look     sprite, <4-letter sprite>: five tumble frames A to E, lying on C; or
+#            model, <casing class>: a 3D mesh (casings.zs, MODELDEF) that tumbles and lies flat
 #            Some actor's states must use the sprite, or it is not loaded.
-#   scale    sprite scale
+#   scale    sprite scale, or a model's size over its real size (1 = real)
 #   speed    multiplier on the caller's throw speed, +/- jitter
 #   bounce   floor factor, wall factor, bounces
 #   gravity
@@ -1657,8 +1658,8 @@ end
 #   life     tics on the floor before it fades
 
 ejecta brass_45
-  look    = sprite, RSCS
-  scale   = 0.06
+  look    = model, RSB_Casing45
+  scale   = 1
   speed   = 1.0, 0.2
   bounce  = 0.45, 0.3, 4
   gravity = 0.6
@@ -1668,8 +1669,8 @@ ejecta brass_45
 end
 
 ejecta brass_556
-  look    = sprite, RSCS
-  scale   = 0.05
+  look    = model, RSB_CasingRifle556
+  scale   = 1
   speed   = 1.2, 0.25
   bounce  = 0.5, 0.35, 5
   gravity = 0.6
@@ -1679,8 +1680,8 @@ ejecta brass_556
 end
 
 ejecta hull_12ga
-  look    = sprite, RSCS
-  scale   = 0.09
+  look    = model, RSB_Shell12ga
+  scale   = 1
   speed   = 0.8, 0.2
   bounce  = 0.3, 0.25, 3
   gravity = 0.7
@@ -1690,8 +1691,8 @@ ejecta hull_12ga
 end
 
 ejecta brass_9mm
-  look    = sprite, RSCS
-  scale   = 0.05
+  look    = model, RSB_Casing9mm
+  scale   = 1
   speed   = 1.1, 0.2
   bounce  = 0.5, 0.35, 5
   gravity = 0.6
@@ -1701,8 +1702,8 @@ ejecta brass_9mm
 end
 
 ejecta brass_762
-  look    = sprite, RSCS
-  scale   = 0.07
+  look    = model, RSB_CasingRifle762
+  scale   = 1
   speed   = 1.2, 0.25
   bounce  = 0.45, 0.3, 4
   gravity = 0.6
@@ -1712,8 +1713,8 @@ ejecta brass_762
 end
 
 ejecta brass_357          # dumped from a cylinder, not thrown by a port: slow, no glow
-  look    = sprite, RSCS
-  scale   = 0.06
+  look    = model, RSB_Casing357
+  scale   = 1
   speed   = 0.6, 0.3
   bounce  = 0.4, 0.3, 4
   gravity = 0.6

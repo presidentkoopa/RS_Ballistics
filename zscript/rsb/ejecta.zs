@@ -35,7 +35,9 @@
 //   off, drawn size, hot glow, and how soon it fades (never later than the
 //   profile's lifetime, which is when every machine removes it).
 //
-// THE LOOK is the profile's sprite, five tumble frames A to E, lying on C.
+// THE LOOK is the profile's sprite, five tumble frames A to E, lying on C -- or, for
+// `look = model, <class>`, that casing class's 3D mesh (casings.zs, MODELDEF), which
+// tumbles by pitch and roll and lies on its side at the mesh's own height.
 // ============================================================================
 
 class RSB_Ejecta : Actor
@@ -126,6 +128,7 @@ class RSB_Ejecta : Actor
 	// actor's states use it; one that does not is reported once.
 	static int SpriteOf(RSB_EjectaDef ed)
 	{
+		if (ed.lookKind ~== "model") return -1;   // a model casing draws its mesh, not a sprite
 		if (ed.lookName ~== "RSCS") return -1;
 		int s = GetSpriteIndex(ed.lookName);
 		if (s < 0)
@@ -205,6 +208,12 @@ class RSB_LocalEjecta : Actor
 	private int     tumbleSeq;
 	private bool    resting;
 	private bool    fading;
+	private double  pitchSpin;       // a 3D casing's tumble, degrees a tic (a sprite ignores pitch and roll)
+	private double  rollSpin;
+
+	// How high the casing's centre sits above the floor when it lies still: 0 for a
+	// sprite (its art sits on its origin); a model casing gives its mesh's lying radius.
+	virtual double RestHeight() { return 0.0; }
 
 	States
 	{
@@ -218,7 +227,17 @@ class RSB_LocalEjecta : Actor
 		if (!RSB_Settings.Casings()) return null;
 		let ed = reg.ResolveEjecta(whichEjecta, RSB_Tier.Name(RSB_Tier.Current()));
 		if (!ed) return null;
-		let c = RSB_LocalEjecta(Actor.Spawn("RSB_LocalEjecta", at, ALLOW_REPLACE));
+		// A MODEL casing is its own class (MODELDEF is per class); a sprite casing is this one.
+		class<RSB_LocalEjecta> spawnClass = "RSB_LocalEjecta";
+		if (ed.lookKind ~== "model")
+		{
+			Name modelName = ed.lookName;
+			class<RSB_LocalEjecta> mc = (class<RSB_LocalEjecta>)(modelName);
+			if (mc) spawnClass = mc;
+			else RSB_Log.Once(RSB_Log.LV_WARN, "ejecta:model:" .. ed.lookName, String.Format(
+				"ejecta %s: %s is not a casing model class (an RSB_LocalEjecta) -- thrown as a sprite", ed.id, ed.lookName));
+		}
+		let c = RSB_LocalEjecta(Actor.Spawn(spawnClass, at, ALLOW_REPLACE));
 		if (!c) return null;
 
 		c.ejectaId = whichEjecta;
@@ -234,6 +253,11 @@ class RSB_LocalEjecta : Actor
 		c.bBRIGHT = c.hotTics > 0;
 		c.fadeFrom = int(max(1, ed.lifeTics) * clamp(RSB_Settings.CasingLife(), 0.0, 1.0));
 		c.tumbleSeq = seed;
+		// THE TUMBLE, hashed: end over end at 18-42 degrees a tic either way, a slower roll.
+		int tumbleHash = RSB_Hash.OfPos(at);
+		c.pitchSpin = RSB_Hash.Between(18.0, 42.0, seed, 3, tumbleHash) * ((RSB_Hash.Frac(seed, 5, tumbleHash) < 0.5) ? -1.0 : 1.0);
+		c.rollSpin = RSB_Hash.Between(-35.0, 35.0, seed, 7, tumbleHash);
+		c.pitch = RSB_Hash.Between(-60.0, 60.0, seed, 9, tumbleHash);
 
 		double mul = RSB_Hash.Between(ed.speedMul - ed.speedJitter, ed.speedMul + ed.speedJitter,
 			seed, level.maptime, RSB_Hash.OfPos(at));
@@ -275,6 +299,8 @@ class RSB_LocalEjecta : Actor
 	{
 		flight.z -= GetGravity();
 		frame = (age / 2) % 5;
+		pitch += pitchSpin;
+		roll += rollSpin;
 		double spd = flight.Length();
 		if (spd < 0.0001) return;
 		Vector3 dir = flight / spd;
@@ -336,7 +362,8 @@ class RSB_LocalEjecta : Actor
 			resting = true;
 			flight = (0, 0, 0);
 			frame = 2;   // C: lying on its side
-			SetOrigin((pos.x, pos.y, fz), true);
+			pitch = 0;   // a model casing lies along the floor
+			SetOrigin((pos.x, pos.y, fz + RestHeight() * Scale.X), true);
 		}
 		else
 		{
@@ -348,6 +375,8 @@ class RSB_LocalEjecta : Actor
 	private void Bounced(double spdBefore)
 	{
 		tumbleSeq++;
+		pitchSpin *= -0.65;   // a hit turns the tumble over and takes some of it
+		rollSpin *= 0.75;
 		angle += RSB_Hash.Between(-60.0, 60.0, level.maptime, tumbleSeq, RSB_Hash.OfPos(pos));
 		if (spdBefore > QUIET_SPEED && !(bounceSnd ~== "none"))
 			A_StartSound(bounceSnd, CHAN_AUTO, CHANF_OVERLAP, clamp(spdBefore / 6.0, 0.25, 1.0));
@@ -358,7 +387,8 @@ class RSB_LocalEjecta : Actor
 	{
 		if ((age % FLOOR_CHECK_TICS) != 0) return;
 		double fz = GetZAt(flags: GZF_3DRESTRICT);
-		if (fz > pos.z + 0.01) SetOrigin((pos.x, pos.y, fz), true);
-		else if (fz < pos.z - 1.0) resting = false;
+		double restZ = fz + RestHeight() * Scale.X;
+		if (restZ > pos.z + 0.01) SetOrigin((pos.x, pos.y, restZ), true);
+		else if (restZ < pos.z - 1.0) resting = false;
 	}
 }

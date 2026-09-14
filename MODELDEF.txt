@@ -1,4 +1,111 @@
-// RS_Ballistics models. None yet: the tracer model arrives with round looks.
+// ============================================================================
+// RS_Ballistics models.
 //
-// The lump exists now because tools/menu_lint.py reads MODELDEF.txt from every
-// package it checks.
+// 3D CASINGS (zscript/rsb/casings.zs; meshes from tools/gen_casings.py). Built in
+// millimetres at real size, scaled here by 1/30.5 (a 56-unit marine is 1.71 m); the
+// 7.62 is the rifle mesh scaled to a 51 mm case. Solid colours, one skin per surface
+// in the mesh's surface order. The actor's pitch and roll tumble the mesh; every
+// RSCS tumble frame shows the one model frame.
+// ============================================================================
+
+Model RSB_Casing9mm
+{
+	Path "models/casings"
+	Model 0 "casing_9mm.md3"
+	SurfaceSkin 0 0 "casing_brass.png"
+	SurfaceSkin 0 1 "casing_inner.png"
+	SurfaceSkin 0 2 "casing_primer.png"
+	Scale 0.03279 0.03279 0.03279
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSCS A 0 0
+	FrameIndex RSCS B 0 0
+	FrameIndex RSCS C 0 0
+	FrameIndex RSCS D 0 0
+	FrameIndex RSCS E 0 0
+}
+
+Model RSB_Casing45
+{
+	Path "models/casings"
+	Model 0 "casing_45.md3"
+	SurfaceSkin 0 0 "casing_brass.png"
+	SurfaceSkin 0 1 "casing_inner.png"
+	SurfaceSkin 0 2 "casing_primer.png"
+	Scale 0.03279 0.03279 0.03279
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSCS A 0 0
+	FrameIndex RSCS B 0 0
+	FrameIndex RSCS C 0 0
+	FrameIndex RSCS D 0 0
+	FrameIndex RSCS E 0 0
+}
+
+Model RSB_Casing357
+{
+	Path "models/casings"
+	Model 0 "casing_357.md3"
+	SurfaceSkin 0 0 "casing_brass.png"
+	SurfaceSkin 0 1 "casing_inner.png"
+	SurfaceSkin 0 2 "casing_primer.png"
+	Scale 0.03279 0.03279 0.03279
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSCS A 0 0
+	FrameIndex RSCS B 0 0
+	FrameIndex RSCS C 0 0
+	FrameIndex RSCS D 0 0
+	FrameIndex RSCS E 0 0
+}
+
+Model RSB_CasingRifle556
+{
+	Path "models/casings"
+	Model 0 "casing_rifle.md3"
+	SurfaceSkin 0 0 "casing_brass.png"
+	SurfaceSkin 0 1 "casing_inner.png"
+	Scale 0.03279 0.03279 0.03279
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSCS A 0 0
+	FrameIndex RSCS B 0 0
+	FrameIndex RSCS C 0 0
+	FrameIndex RSCS D 0 0
+	FrameIndex RSCS E 0 0
+}
+
+Model RSB_CasingRifle762
+{
+	Path "models/casings"
+	Model 0 "casing_rifle.md3"
+	SurfaceSkin 0 0 "casing_brass.png"
+	SurfaceSkin 0 1 "casing_inner.png"
+	Scale 0.03741 0.03741 0.03741
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSCS A 0 0
+	FrameIndex RSCS B 0 0
+	FrameIndex RSCS C 0 0
+	FrameIndex RSCS D 0 0
+	FrameIndex RSCS E 0 0
+}
+
+Model RSB_Shell12ga
+{
+	Path "models/casings"
+	Model 0 "shell_12ga.md3"
+	SurfaceSkin 0 0 "casing_brass.png"
+	SurfaceSkin 0 1 "shell_hull.png"
+	SurfaceSkin 0 2 "shell_inner.png"
+	SurfaceSkin 0 3 "casing_primer.png"
+	Scale 0.03279 0.03279 0.03279
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSCS A 0 0
+	FrameIndex RSCS B 0 0
+	FrameIndex RSCS C 0 0
+	FrameIndex RSCS D 0 0
+	FrameIndex RSCS E 0 0
+}
+

@@ -827,8 +827,14 @@ class RSB_Parser
 		String why;
 		if (key == "look")
 		{
-			if (v.Size() != 2) return "look is `sprite, <name>`";
-			if (!(v[0] ~== "sprite")) return "ejecta look kind must be sprite";
+			if (v.Size() != 2) return "look is `sprite, <name>` or `model, <casing class>`";
+			if (v[0] ~== "model")
+			{
+				e.lookKind = "model";
+				e.lookName = v[1];
+				return "";
+			}
+			if (!(v[0] ~== "sprite")) return "ejecta look kind must be sprite or model";
 			if (v[1].Length() != 4) return String.Format("sprite \"%s\" is not four letters", v[1]);
 			e.lookKind = "sprite";
 			e.lookName = v[1];
