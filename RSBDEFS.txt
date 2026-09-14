@@ -886,6 +886,95 @@ impact saw.liquid
 end
 
 
+# ---- LASER BURN: where a laser beam burns into a surface. First user: the Unmaker
+# (WM_Unmaker), Doom 64's demon laser. Saturated red belongs to its hot and energy
+# parts only (like plasma and the BFG); its smoke is lit and never glows. The beam
+# itself is the weapon's; this is what it leaves behind.
+burst laser_sparks         # hot red-white spatter thrown off the burn
+  count   = 22
+  cone    = 60
+  speed   = 260, 0.5
+  life    = 0.35, 0.4
+  color   = 255, 110, 80
+  glow    = 3.5
+  size    = 0.8, 0.2
+  gravity = 380
+  drag    = 2.2
+  orient  = streak
+  stretch = 0.025
+  aim     = reflect
+end
+
+burst laser_spray          # a spray of streaks, red-hot (rsb_spark_spray, tinted)
+  count    = 1
+  cone     = 8
+  speed    = 0, 0
+  life     = 0.22, 0.2
+  color    = 255, 120, 90
+  aim      = reflect
+  offset   = 1
+  particle = rsb_spark_spray
+end
+
+burst laser_droplets       # molten droplets that fall and cool
+  count   = 10
+  cone    = 70
+  speed   = 110, 0.5
+  life    = 0.8, 0.4
+  color   = 255, 70, 35
+  glow    = 2.8
+  size    = 1.2, 0.3
+  gravity = 450
+  drag    = 1.0
+end
+
+burst laser_smoke          # smoke curling off the burn (rsb_soot_puff: lit, never glowing)
+  count    = 3
+  cone     = 30
+  speed    = 30, 0.5
+  life     = 1.8, 0.3
+  aim      = up
+  offset   = 4
+  particle = rsb_soot_puff
+end
+
+impact laser_burn
+  bursts     = laser_sparks, laser_spray, laser_droplets, laser_smoke
+  mark       = pool, 7, 70
+  markcolor  = 255, 40, 20
+  sound      = rsb/sparks
+  light      = 110, 2.4, 5
+  lightcolor = 255, 50, 30
+  heat       = 20, 1.1, 16
+end
+
+impact laser_burn.metal
+  bursts     = laser_sparks, laser_spray, spark_metal, laser_droplets, laser_smoke
+  mark       = pool, 6, 110
+  markcolor  = 255, 60, 25
+  sound      = rsb/sparks
+  light      = 120, 2.6, 5
+  lightcolor = 255, 55, 30
+  heat       = 20, 1.2, 18
+end
+
+impact laser_burn.liquid
+  bursts     = splash_liquid, laser_smoke
+  sound      = rsb/flame/hiss
+  light      = 90, 1.8, 4
+  lightcolor = 255, 50, 30
+  heat       = 24, 1.3, 20
+end
+
+impact laser_burn.glass
+  bursts     = glint_glass, laser_sparks, laser_spray
+  sound      = rsb/glass
+  light      = 110, 2.4, 5
+  lightcolor = 255, 50, 30
+  heat       = 18, 1.0, 14
+end
+
+
 # ---------------------------------------------------------------- ROUNDS
 # A ROUND PAIRS TWO PROFILES, so how it flies and hits stays apart from how it
 # looks -- which is what lets looks be customised per player safely.

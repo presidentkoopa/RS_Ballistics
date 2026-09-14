@@ -145,3 +145,11 @@ class RSB_SawPuff : RSB_HitPuff
 {
 	override String ImpactProfile() { return "saw"; }
 }
+
+// A LASER BURNING A SURFACE: pass it as a laser attack's puff (A_RailAttack or
+// LineAttack). Plays the `laser_burn` impact where the beam hit. First user: the
+// Unmaker (WM_Unmaker).
+class RSB_LaserPuff : RSB_HitPuff
+{
+	override String ImpactProfile() { return "laser_burn"; }
+}
