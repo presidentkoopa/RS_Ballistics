@@ -1380,6 +1380,7 @@ end
 
 impact bullet@plain
   bursts    = spark_hot
+  scale     = 2.5, 1       # the plain level scales counts by 0.4: 2.5 keeps the ten sparks it always threw
   sound     = rsb/impact/concrete
 end
 
@@ -3738,6 +3739,167 @@ recoil rocket_rpg          # recoilless: the backblast cancels the kick
   max     = 3, 0
   view    = 1.5, 3, 0.5, 12
 end
+
+
+# ---------------------------------------------------------------- THE PISTOLET AT EXTREME
+# Things the showpiece does ONLY at the top effects level, on top of the level's own ladder
+# (which already makes everything more, brighter and bigger): `<profile>@extreme`. Every
+# material a hit can take has its own, because a material variant outranks a tier one.
+# Looks only: the round's ballistics and the brass's flight are untouched.
+
+burst x9_starburst         # a white-hot starburst hanging on the muzzle for a blink, turning every shot (rsb_spark_sparkler)
+  count    = 1
+  cone     = 0
+  speed    = 20, 0.5
+  life     = 0.09, 0.3
+  aim      = along
+  offset   = 1
+  particle = rsb_spark_sparkler
+end
+
+burst x9_crown             # a second, wider crown of fire tongues outside the first: a double star
+  count   = 7
+  cone    = 88
+  speed   = 210, 0.3
+  life    = 0.05, 0.3
+  color   = 255, 226, 170
+  glow    = 5.5
+  size    = 1.4, 0.35
+  orient  = streak
+  stretch = 0.028
+  aim     = along
+  offset  = 1
+end
+
+burst x9_stars_ring        # the brightest grains flashing in a ring around the muzzle crown (rsb_spark_star)
+  count    = 5
+  shape    = disc
+  cone     = 10
+  speed    = 160, 0.5
+  life     = 0.14, 0.4
+  aim      = along
+  offset   = 1
+  particle = rsb_spark_star
+end
+
+burst x9_embers_drift      # embers drifting down off the muzzle as the smoke rolls, cooling to red (rsb_spark_ember)
+  count    = 4
+  cone     = 60
+  speed    = 45, 0.6
+  life     = 1.3, 0.4
+  aim      = along
+  offset   = 2
+  particle = rsb_spark_ember
+end
+
+burst x9_hit_frags         # hot bullet-jacket fragments thrown off the hit, glowing for a moment (rsb_ember_metal)
+  count    = 3
+  cone     = 60
+  speed    = 150, 0.5
+  life     = 0.5, 0.4
+  aim      = reflect
+  particle = rsb_ember_metal
+end
+
+burst x9_hit_star          # a starburst where the round strikes metal (rsb_spark_sparkler)
+  count    = 1
+  cone     = 20
+  speed    = 30, 0.5
+  life     = 0.12, 0.3
+  aim      = reflect
+  offset   = 1
+  particle = rsb_spark_sparkler
+end
+
+flash pistol_9mm@extreme   # THE SHOWPIECE AT EXTREME: a double crown of fire, a white-hot starburst every shot, stars ringing the muzzle, embers drifting down, a barrel that glows after a hard string, a shove clearing the haze
+  light      = 230, 3.9, 3
+  lightcolor = 255, 222, 170
+  cone       = 20, 56, 95, 6
+  conetics   = 4
+  bursts     = flash_core_9mm, flash_petals, x9_crown, x9_starburst, spk_streaks_fine, x9_stars_ring
+  maybe      = spk_stars 0.8, spk_specks 0.7, spk_embers 0.6, x9_embers_drift 0.6
+  flame      = 0.065
+  smoke      = 3, 0.022, 0.32
+  smokeparticle = rsb_smoke_gun
+  heat       = 4, 22, 0.8, 12
+  vary       = light 0.3, flame 0.35, cone 0.25, sparks 0.5, smoke 0.5
+  surge      = 0.35, 1.6
+  barrelheat = 0.2, 0.22, 0.3
+  barrelsmoke = rsb_smoke_barrel, 2.2
+  barrelshimmer = 3, 0.45
+  barrelglow = 1.3, 18, 0.9
+  barrelglowcolor = 255, 120, 50
+  smokevolume = 16, 1.4, 0.5, 100, 6
+  push       = 36, 140
+end
+
+impact pistol_9mm@extreme  # stone: chips that always spark, glowing jacket fragments, a dust jet most hits, a blink of light
+  bursts     = chips_concrete, dust_concrete, spark_hot
+  maybe      = dust_jet_concrete 0.75, x9_hit_frags 0.6
+  vary       = count 0.45, size 0.25, light 0.4
+  scale      = 1.1, 1.05
+  sound      = rsb/impact/concrete
+  light      = 34, 0.9, 2
+  lightcolor = 255, 200, 140
+  glance     = 20, rsb/ricochet, spark_hot
+  smokevolume = 16, 0.95, 0
+end
+
+impact pistol_9mm.metal@extreme  # metal: a starburst where it strikes, the ricochet spray, glowing fragments, a hotter pool that lasts
+  bursts     = spark_metal, spark_spray, x9_hit_star, ember_metal
+  maybe      = x9_hit_frags 0.7, spark_hot 0.5
+  vary       = count 0.45, size 0.2, light 0.35
+  scale      = 1.1, 1.0
+  mark       = pool, 4, 45
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 70, 1.8, 4
+  lightcolor = 255, 190, 120
+  glance     = 28, rsb/ricochet, spark_metal
+end
+
+impact pistol_9mm.wood@extreme   # wood: splinters, a dust jet every hit, a thicker cloud
+  bursts    = splinter_wood, dust_wood, dust_jet_wood
+  vary      = count 0.45, size 0.25
+  scale     = 1.1, 1.05
+  sound     = rsb/impact/wood
+  smokevolume = 14, 0.65, 0
+end
+
+impact pistol_9mm.dirt@extreme   # dirt: clods, a dust jet every hit, a rolling cloud
+  bursts    = clods_dirt, dust_dirt, dust_jet_dirt
+  vary      = count 0.45, size 0.25
+  scale     = 1.1, 1.05
+  sound     = rsb/impact/concrete
+  smokevolume = 18, 1.1, 0
+end
+
+impact pistol_9mm.glass@extreme  # glass: a bigger glittering spray
+  bursts    = glint_glass
+  vary      = count 0.4, size 0.2
+  scale     = 1.3, 1.0
+  sound     = rsb/glass
+end
+
+wake x9_vapour             # the Pistolet's round at extreme: a vapour line that hangs longer (lit, never glowing)
+  spacing  = 4
+  life     = 1.5
+  drift    = 3
+  particle = rsb_bullet_vapour
+end
+
+roundlook pistol_9mm@extreme   # the Pistolet's round at extreme: the longer vapour line, stronger bent air, a wider tunnel through smoke
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = x9_vapour
+  impact = pistol_9mm
+  whiz   = 64, rsb/whiz
+  heat   = 5, 0.6, 12
+  carve  = 7, 0.9
+end
+
+# (No brass_9mm@extreme: the Tec9 -- Vanilla+ -- throws brass_9mm too. Extreme brass for the
+# Pistolet alone waits for a Pistolet-only ejecta profile named on its sheet.)
 
 flash rifle
   light      = 220, 3.2, 2

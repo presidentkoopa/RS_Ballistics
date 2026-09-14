@@ -249,9 +249,9 @@ class RSB_Impact play
 
 		if (tier <= RSB_Tier.T_OFF || !RSB_Settings.Impacts()) return;
 
-		// A profile written for this tier is used as written; otherwise the tier
-		// scales the counts. The player's sliders and style scale on top.
-		double countScale = (im.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
+		// The level scales the counts -- a profile written for a level too (what it adds is on
+		// top of the level's own ladder). The player's sliders and style scale on top.
+		double countScale = RSB_Tier.CountScale(tier);
 		countScale *= RSB_Settings.ImpactParticles();
 		countScale *= im.countScale;   // the profile's `scale`: how hard this class of round bites
 		double glowScale = RSB_Settings.ImpactGlow();

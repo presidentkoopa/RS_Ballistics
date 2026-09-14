@@ -67,10 +67,10 @@ class RSB_Hash
 //   3 heavy    the recommended level: what every profile is tuned at
 //   4 extreme  EVERYTHING turned way up (the owner: "EXTREMEEEEEE")
 //
-// A profile written for a tier -- `impact bullet@heavy` -- is used as written
-// at that tier. Otherwise the untiered profile is used, and the level scales far
-// more than its particle counts: lights, sizes, room smoke, shoves, heat shimmer,
-// how long marks stay, glow and how often tracers fly (the ladder below).
+// A profile written for a tier -- `flash pistol_9mm@extreme` -- replaces the untiered one at
+// that tier: it can do things the others never do. Either way the level scales far more
+// than particle counts: lights, sizes, room smoke, shoves, heat shimmer, how long marks
+// stay, glow and how often tracers fly (the ladder below).
 class RSB_Tier
 {
 	const T_OFF     = 0;

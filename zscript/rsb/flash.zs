@@ -141,7 +141,7 @@ class RSB_Flash : Actor
 		double sizeMul = 1.0;
 		if (fd.sizeCvar.Length() > 0) sizeMul = max(0.05, RSB_Settings.Cvf(fd.sizeCvar, 1.0));
 
-		double countScale = (fd.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
+		double countScale = RSB_Tier.CountScale(tier);   // a profile written for a level is scaled by it too
 		if (reg)
 		{
 			double sparkScale = countScale * RSB_Settings.FlashSparks() * vSparks;
