@@ -3,7 +3,8 @@
 // engine 1dc83016fe: LevelLocals.SetHeatSource). RS_Ballistics sets the sources
 // its effects make: a flame's plume and the ball of heat where it lands
 // (flamer.zs), a blast where a rocket, BFG ball or plasma bolt lands (an impact's
-// `heat`), and the blast out of a muzzle (a flash's `heat`).
+// `heat`), the blast out of a muzzle (a flash's `heat`) and the air a round tears
+// through (a round look's `heat`).
 //
 // SLOTS 16-47 ARE RS_BALLISTICS' (assigned by the build lane; other mods own the
 // rest of the 64):
@@ -40,6 +41,23 @@ class RSB_Heat play
 		if (radius <= 0 || strength <= 0 || tics <= 0 || length <= 0) return;
 		level.SetHeatSource(NextBlastSlot(), from, from + dir * length, radius * 0.5, radius,
 			strength, 0.1, 20.0, tics);
+	}
+
+	// A BLAST SLOT OF ITS OWN for something that re-lays its heat each tic -- a round's
+	// air shimmer -- taken in turn with the blasts, so the oldest is the one given up.
+	static int ClaimBlast()
+	{
+		return NextBlastSlot();
+	}
+
+	// THE AIR A ROUND TEARS THROUGH: a narrow line from `from` (behind it, where the air
+	// has spread wider) to `to` (the round), laid again each tic in the round's own slot
+	// and fading over `tics` once it stops being laid.
+	static void AirWake(int slot, Vector3 from, Vector3 to, double radius, double strength, int tics)
+	{
+		if (slot < BLAST_FIRST || slot >= BLAST_FIRST + BLAST_SLOTS) return;
+		if (radius <= 0 || strength <= 0 || tics <= 0) return;
+		level.SetHeatSource(slot, from, to, radius, radius * 0.35, strength, 0.12, 4.0, tics);
 	}
 
 	// Blasts take their slots in turn, so the one overwritten is the oldest,

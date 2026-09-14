@@ -139,10 +139,13 @@ class RSB_Wake play
 		let reg = RSB_Registry.Get();
 		if (!reg) return;
 		let w = reg.ResolveWake(wakeId, RSB_Tier.Name(tier));
-		if (!w || w.perStep <= 0) return;
+		if (!w || (w.perStep <= 0 && w.spacing <= 0)) return;
 
-		int n = clamp(int(w.perStep * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() + 0.5), 0, 32);
 		Vector3 seg = after - before;
+		// `spacing` lays by distance, as dense at any speed -- and in slow motion, where a
+		// round moves only a little each tic; `perstep` lays a count each tic.
+		double laid = (w.spacing > 0) ? seg.Length() / w.spacing : double(w.perStep);
+		int n = clamp(int(laid * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() + 0.5), 0, (w.spacing > 0) ? 96 : 32);
 		Vector3 back = (travel != (0, 0, 0)) ? -travel : (0, 0, 1);
 		int posSeed = RSB_Hash.OfPos(after);
 		// The handle is a hash of the name, the same everywhere: cached, never tested.
@@ -221,12 +224,24 @@ class RSB_Impact play
 		double glowScale = RSB_Settings.ImpactGlow();
 		int posSeed = RSB_Hash.OfPos(surf.at);
 
+		// EVERY HIT ITS OWN (the profile's `vary` and `maybe`), hashed from the tic and the spot.
+		int hitTic = level.maptime;
+		countScale *= RSB_Hash.Wobble(im.varyCount, hitTic, 501, posSeed);
+		double sizeScale = im.sizeScale * RSB_Hash.Wobble(im.varySize, hitTic, 503, posSeed);
+		double lightWobble = RSB_Hash.Wobble(im.varyLight, hitTic, 505, posSeed);
+
 		for (int i = 0; i < im.bursts.Size(); i++)
 			RSB_Burst.Fire(reg.FindBurst(im.bursts[i]), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(level.maptime, i + 1, posSeed), surf, im.sizeScale);
+				RSB_Hash.Seed(hitTic, i + 1, posSeed), surf, sizeScale);
+		for (int i = 0; i < im.maybeBursts.Size(); i++)
+		{
+			if (RSB_Hash.Frac(hitTic, 511 + i * 2, posSeed) >= im.maybeChance[i]) continue;
+			RSB_Burst.Fire(reg.FindBurst(im.maybeBursts[i]), surf.at, surf.normal, travel, countScale, glowScale,
+				RSB_Hash.Seed(hitTic, 41 + i, posSeed), surf, sizeScale);
+		}
 		if (glancing && !(im.glanceBurst ~== "none"))
 			RSB_Burst.Fire(reg.FindBurst(im.glanceBurst), surf.at, surf.normal, travel, countScale, glowScale,
-				RSB_Hash.Seed(level.maptime, 97, posSeed), surf, im.sizeScale);
+				RSB_Hash.Seed(hitTic, 97, posSeed), surf, sizeScale);
 
 		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks())
 		{
@@ -237,11 +252,11 @@ class RSB_Impact play
 
 		if (im.lightRadius > 0 && RSB_Settings.ImpactLights())
 		{
-			double strength = im.lightIntensity * RSB_Settings.ImpactLight();
+			double strength = im.lightIntensity * RSB_Settings.ImpactLight() * lightWobble;
 			if (strength > 0)
 			{
 				let l = RSB_ImpactLight(Actor.Spawn("RSB_ImpactLight", surf.at + surf.normal * 4.0, ALLOW_REPLACE));
-				if (l) l.Start(im.lightRadius, strength, im.lightTics, im.lightColor);
+				if (l) l.Start(im.lightRadius * (0.8 + 0.2 * lightWobble), strength, im.lightTics, im.lightColor);
 			}
 		}
 

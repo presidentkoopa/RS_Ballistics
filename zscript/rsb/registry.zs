@@ -133,12 +133,14 @@ class RSB_Registry : StaticEventHandler
 			if (im)
 			{
 				why = MissingBurst(im.bursts);
+				if (why == "") why = MissingBurst(im.maybeBursts);
 				if (why == "" && !(im.glanceBurst ~== "none") && !FindBurst(im.glanceBurst))
 					why = String.Format("its glance burst \"%s\" is not defined in any RSBDEFS", im.glanceBurst);
 			}
 			else if (fl)
 			{
 				why = MissingBurst(fl.bursts);
+				if (why == "") why = MissingBurst(fl.maybeBursts);
 			}
 			else
 			{

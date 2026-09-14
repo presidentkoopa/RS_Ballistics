@@ -16,6 +16,11 @@
 // Spawned by the firing hand's rig through RSB_Flash.Fire, which gives the beam
 // slot (one per hand) and the carrier's velocity for the smoke.
 //
+// EVERY SHOT ITS OWN. A profile's `vary` wobbles the light, flame, cone, sparks and
+// smoke; `maybe` bursts fire on some shots; `surge` now and then makes a whole shot
+// bigger; the flame sprite turns to a new angle each shot. All hashed from the tic and
+// the muzzle's position.
+//
 // NETPLAY. A flash is presentation for the machine that draws it: no RNG, no
 // interaction, nothing a netgame compares.
 // ============================================================================
@@ -45,6 +50,7 @@ class RSB_Flash : Actor
 	private double punchMul;
 	private double rangeMul;
 	private double densityMul;
+	private double coneMul;
 	transient RSB_FlashDef flashDef;
 
 	States
@@ -85,15 +91,38 @@ class RSB_Flash : Actor
 		life = max(3, fd.coneTics);
 		life = max(life, fd.lightTics);
 
-		double flameSize = fd.flameScale * RSB_Settings.FlashFlameSize();
+		// EVERY SHOT ITS OWN: hashed from the tic and where the muzzle is, so no two
+		// shots match and nothing touches the playsim RNG.
+		int shotTic = level.maptime;
+		int posSeed = RSB_Hash.OfPos(pos);
+		double surge = (fd.surgeChance > 0 && RSB_Hash.Frac(shotTic, 401, posSeed) < fd.surgeChance) ? fd.surgeScale : 1.0;
+		double vLight  = RSB_Hash.Wobble(fd.varyLight, shotTic, 403, posSeed) * surge;
+		double vFlame  = RSB_Hash.Wobble(fd.varyFlame, shotTic, 405, posSeed) * surge;
+		double vCone   = RSB_Hash.Wobble(fd.varyCone, shotTic, 407, posSeed) * surge;
+		double vSparks = RSB_Hash.Wobble(fd.varySparks, shotTic, 409, posSeed) * surge;
+		double vSmoke  = RSB_Hash.Wobble(fd.varySmoke, shotTic, 411, posSeed) * surge;
+
+		double flameSize = fd.flameScale * RSB_Settings.FlashFlameSize() * vFlame;
 		if (tier <= RSB_Tier.T_OFF || flameSize <= 0 || !RSB_Settings.FlashFlame()) bINVISIBLE = true;
-		else A_SetScale(flameSize);
+		else
+		{
+			// Not a stamp: the star stretches a little and turns to a new angle each shot.
+			double stretch = fd.varyFlame * 0.5;
+			A_SetScale(flameSize * RSB_Hash.Wobble(stretch, shotTic, 413, posSeed),
+				flameSize * RSB_Hash.Wobble(stretch, shotTic, 415, posSeed));
+			if (fd.flameRoll)
+			{
+				bROLLSPRITE = true;
+				roll = RSB_Hash.Between(0.0, 360.0, shotTic, 417, posSeed);
+			}
+		}
 
 		if (tier <= RSB_Tier.T_OFF) return;
 
-		punchMul = RSB_Settings.FlashLight();
-		rangeMul = RSB_Settings.FlashSize();
-		densityMul = RSB_Settings.FlashConeDensity();
+		punchMul = RSB_Settings.FlashLight() * vLight;
+		rangeMul = RSB_Settings.FlashSize() * (0.75 + 0.25 * vLight);
+		densityMul = RSB_Settings.FlashConeDensity() * vCone;
+		coneMul = 0.85 + 0.15 * vCone;
 
 		if (fd.lightRadius > 0 && fd.lightTics > 0 && punchMul > 0 && rangeMul > 0) StrobeLight(1.0);
 		coneOn = fd.coneLength > 0 && fd.coneTics > 0 && RSB_Settings.FlashCone() && densityMul > 0;
@@ -101,20 +130,26 @@ class RSB_Flash : Actor
 
 		let reg = RSB_Registry.Get();
 		double countScale = (fd.id.IndexOf("@") >= 0) ? 1.0 : RSB_Tier.CountScale(tier);
-		int posSeed = RSB_Hash.OfPos(pos);
 		if (reg)
 		{
-			double sparkScale = countScale * RSB_Settings.FlashSparks();
+			double sparkScale = countScale * RSB_Settings.FlashSparks() * vSparks;
 			for (int i = 0; i < fd.bursts.Size(); i++)
 				RSB_Burst.Fire(reg.FindBurst(fd.bursts[i]), pos, dir, dir, sparkScale, 1.0,
-					RSB_Hash.Seed(level.maptime, i + 1, posSeed));
+					RSB_Hash.Seed(shotTic, i + 1, posSeed));
+			// Bursts only some shots throw: powder specks, a wider spray.
+			for (int i = 0; i < fd.maybeBursts.Size(); i++)
+			{
+				if (RSB_Hash.Frac(shotTic, 421 + i * 2, posSeed) >= fd.maybeChance[i]) continue;
+				RSB_Burst.Fire(reg.FindBurst(fd.maybeBursts[i]), pos, dir, dir, sparkScale, 1.0,
+					RSB_Hash.Seed(shotTic, 61 + i, posSeed));
+			}
 		}
 
 		// HEAT SHIMMER out of the muzzle (RSB_Heat): a column of hot air along the shot.
 		if (fd.heatStrength > 0)
-			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength, fd.heatTics);
+			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength * surge, fd.heatTics);
 
-		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() + 0.5);
+		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() * vSmoke + 0.5);
 		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
 		// definition: puffs drifting out of the bore, rising and hanging. The handle
 		// is a hash of the name, the same everywhere, so it is cached, never tested.
@@ -124,7 +159,7 @@ class RSB_Flash : Actor
 			{
 				if (fd.smokeHandle == 0) fd.smokeHandle = level.ParticleDefinition(fd.smokeParticle);
 				level.SpawnParticles(fd.smokeHandle, pos + dir * 1.0, dir, puffs * 2, 30.0, 14.0, 0.6,
-					1.8, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(level.maptime, 77, posSeed));
+					1.8, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(shotTic, 77, posSeed));
 			}
 			puffs = 0;   // no sprite puffs as well
 		}
@@ -134,8 +169,8 @@ class RSB_Flash : Actor
 			if (!s) continue;
 			s.A_SetScale(fd.smokeScale);
 			s.Alpha = fd.smokeAlpha;
-			Vector3 drift = (RSB_Hash.Between(-0.15, 0.15, level.maptime, i, posSeed),
-				RSB_Hash.Between(-0.15, 0.15, level.maptime, i + 31, posSeed), 0.15);
+			Vector3 drift = (RSB_Hash.Between(-0.15, 0.15, shotTic, i, posSeed),
+				RSB_Hash.Between(-0.15, 0.15, shotTic, i + 31, posSeed), 0.15);
 			s.Vel = dir * 0.5 + drift + carrierVel * 0.5;
 		}
 
@@ -144,6 +179,7 @@ class RSB_Flash : Actor
 			fd.id, int(fd.lightRadius), rangeMul, fd.lightPunch, punchMul, fd.lightTics,
 			coneOn ? "on" : "off", fd.bursts.Size(), puffs));
 	}
+
 
 	private void StrobeLight(double k)
 	{
@@ -160,7 +196,7 @@ class RSB_Flash : Actor
 		Color c = fd.lightColor;
 		Level.SetVolumetricBeam(pos, dir,
 			Color(255, int(c.r * f), int(c.g * f), int(c.b * f)),
-			fd.coneInner, fd.coneOuter, fd.coneLength * f, fd.coneDensity * densityMul * f,
+			fd.coneInner, fd.coneOuter, fd.coneLength * f * coneMul, fd.coneDensity * densityMul * f,
 			3.0, 0.5, 0.05, 0.6, slot);
 	}
 

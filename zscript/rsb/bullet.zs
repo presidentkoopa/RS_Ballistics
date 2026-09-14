@@ -16,6 +16,8 @@
 //            jump a whole tic of travel per frame. Restoring Prev after the move
 //            lets the renderer draw it between tics.
 //   wake     particles laid along each tic's travel.
+//   heat     the air it tears through shimmers behind it (RSB_Heat.AirWake), in
+//            one blast slot re-laid each tic, fading once it lands.
 //   whiz     a round passing close to the listener's head, fired by someone
 //            else, whizzes or cracks.
 //   impact   RSB_Impact, by material, style and tier.
@@ -52,7 +54,10 @@ class RSB_Bullet : FastProjectile
 
 	private Vector3 travel; // last direction of flight; Vel is zeroed before Death
 	private bool    announced;
+	private Vector3 launchedAt;  // where it first flew from: where its air shimmer can begin
+	private bool    launchKnown;
 	transient bool  whizzed;   // local presentation: set on one machine only, never saved
+	transient int   heatSlot;  // this machine's blast slot for its air shimmer; 0 = none yet
 
 	// The profiles, re-read after a savegame load.
 	transient RSB_RoundDef      roundDef;
@@ -165,6 +170,11 @@ class RSB_Bullet : FastProjectile
 		// and by then Vel is already zero.
 		if (Vel != (0, 0, 0)) travel = Vel.Unit();
 		Vector3 before = pos;
+		if (!launchKnown)
+		{
+			launchKnown = true;
+			launchedAt = pos;
+		}
 
 		if (!announced)
 		{
@@ -187,6 +197,7 @@ class RSB_Bullet : FastProjectile
 			if (moved > 0 && moved <= Speed * 1.5 + 1.0) Prev = before;
 		}
 		LayWake(before);
+		LayAirHeat();
 		Whiz(before);
 	}
 
@@ -211,14 +222,31 @@ class RSB_Bullet : FastProjectile
 
 	private void Landed()
 	{
-		if (BlockingMobj != null) return;   // an actor bleeds; its own mod decides how
 		ResolveLooks();
+		LayAirHeat();   // the air it tore through shimmers, whatever it hit
+		if (BlockingMobj != null) return;   // an actor bleeds; its own mod decides how
 		if (lookDef) RSB_Impact.Land(self, lookDef.impact, travel);
 	}
 
 	private void LayWake(Vector3 before)
 	{
 		if (flightDef) RSB_Wake.Lay(flightDef.wake, before, pos, travel);
+	}
+
+	// THE AIR IT TEARS THROUGH (its flight look's `heat`): bent air over the last heatReach
+	// units behind it, in one blast slot of its own, laid again each tic and fading once
+	// it stops. Looks only: a slot, nothing read back.
+	private void LayAirHeat()
+	{
+		if (!flightDef || flightDef.heatStrength <= 0 || flightDef.heatRadius <= 0 || !launchKnown) return;
+		if (RSB_Tier.Current() <= RSB_Tier.T_OFF) return;
+		Vector3 path = pos - launchedAt;
+		double len = path.Length();
+		if (len < 1.0) return;
+		Vector3 dir = path / len;
+		if (heatSlot == 0) heatSlot = RSB_Heat.ClaimBlast();
+		RSB_Heat.AirWake(heatSlot, pos - dir * min(len, flightDef.heatReach), pos,
+			flightDef.heatRadius, flightDef.heatStrength, flightDef.heatTics);
 	}
 
 	// THE CLOSEST THIS TIC'S TRAVEL CAME TO THE LISTENER'S HEAD. Once per round,

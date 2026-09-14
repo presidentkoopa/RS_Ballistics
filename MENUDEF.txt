@@ -52,6 +52,8 @@ OptionString "RSBPreviewImpacts"
 OptionString "RSBPreviewFlashes"
 {
 	"pistol",    "Pistol"
+	"pistol_9mm", "9mm Handgun"
+	"pistol_45",  "M4A3 (.45)"
 	"shotgun",   "Shotgun"
 	"rifle",     "Rifle"
 	"smg",       "SMG"

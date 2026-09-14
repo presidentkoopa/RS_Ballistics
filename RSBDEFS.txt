@@ -314,6 +314,50 @@ burst flash_sparks_wide
   offset  = 0
 end
 
+burst flash_core_9mm       # the 9mm's snap: a short, white-hot core
+  count   = 10
+  cone    = 20
+  speed   = 190, 0.35
+  life    = 0.045, 0.25
+  color   = 255, 244, 214
+  glow    = 7.0
+  size    = 1.2, 0.25
+  orient  = streak
+  stretch = 0.014
+  aim     = along
+  offset  = 0
+end
+
+burst flash_petals         # tongues thrown sideways off the muzzle crown: a star, new every shot
+  count   = 5
+  cone    = 75
+  speed   = 140, 0.3
+  life    = 0.04, 0.3
+  color   = 255, 214, 150
+  glow    = 4.5
+  size    = 1.6, 0.4
+  orient  = streak
+  stretch = 0.03
+  aim     = along
+  offset  = 0
+end
+
+burst flash_powder         # unburnt powder: hot specks thrown out ahead, dropping as they cool
+  count   = 10
+  cone    = 12
+  speed   = 260, 0.6
+  life    = 0.5, 0.5
+  color   = 255, 170, 70
+  glow    = 2.2
+  size    = 0.45, 0.1
+  gravity = 320
+  drag    = 2.5
+  orient  = streak
+  stretch = 0.015
+  aim     = along
+  offset  = 0
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -347,6 +391,9 @@ end
 #   sound       SNDINFO name | none
 #   light       radius, intensity, tics      lightcolor  r, g, b
 #   glance      degrees from the surface, sound, burst -- a ricochet
+#   vary        count <0..0.9>, size <..>, light <..> -- each hit that part comes out up
+#               to this much bigger or smaller (hashed per hit)
+#   maybe       <burst> <chance 0..1>, ... -- bursts only some hits throw
 #   heat        radius, strength, tics -- heat shimmer where it lands, fading (the
 #               engine's; turned on in Ballistics & Effects, Heat shimmer)
 #   scale       count, size -- every burst's particle count and size times these:
@@ -451,6 +498,114 @@ impact pistol.dirt
 end
 
 # magnum -- the .357: a bigger bite, dust shot back out
+# THE PISTOLS ARE THE SHOWPIECE (owner, 2026-09-14): the 9mm handgun above all. Every
+# hit is a little different -- more or fewer chips, a bigger or smaller cloud, and only
+# some hits spark off stone or jet dust back out. Firearm colours only.
+impact pistol_9mm
+  bursts    = chips_concrete, dust_concrete
+  maybe     = spark_hot 0.4, dust_jet_concrete 0.45
+  vary      = count 0.45, size 0.25
+  scale     = 0.9, 0.95
+  sound     = rsb/impact/concrete
+  glance    = 18, rsb/ricochet, spark_hot
+end
+
+impact pistol_9mm.metal
+  bursts     = spark_metal, spark_spray
+  maybe      = ember_metal 0.6, spark_hot 0.35
+  vary       = count 0.45, size 0.2, light 0.35
+  scale      = 0.9, 0.9
+  mark       = pool, 3, 30
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 55, 1.4, 3
+  lightcolor = 255, 190, 120
+  glance     = 25, rsb/ricochet, spark_metal
+end
+
+impact pistol_9mm.wood
+  bursts    = splinter_wood, dust_wood
+  maybe     = dust_jet_wood 0.4
+  vary      = count 0.45, size 0.25
+  scale     = 0.9, 0.95
+  sound     = rsb/impact/wood
+end
+
+impact pistol_9mm.glass
+  bursts    = glint_glass
+  vary      = count 0.4, size 0.2
+  scale     = 0.9, 0.9
+  sound     = rsb/glass
+end
+
+impact pistol_9mm.liquid
+  bursts    = splash_liquid
+  vary      = count 0.4, size 0.2
+  scale     = 0.9, 0.9
+  sound     = none
+end
+
+impact pistol_9mm.dirt
+  bursts    = clods_dirt, dust_dirt
+  maybe     = dust_jet_dirt 0.45
+  vary      = count 0.45, size 0.25
+  scale     = 0.9, 0.95
+  sound     = rsb/impact/concrete
+end
+
+# The .45: heavier and slower -- more dust, a jet more often, fewer sparks.
+impact pistol_45
+  bursts    = chips_concrete, dust_concrete
+  maybe     = dust_jet_concrete 0.6, spark_hot 0.3
+  vary      = count 0.4, size 0.25
+  scale     = 1.05, 1.1
+  sound     = rsb/impact/concrete
+  glance    = 16, rsb/ricochet, spark_hot
+end
+
+impact pistol_45.metal
+  bursts     = spark_metal, spark_spray
+  maybe      = ember_metal 0.7, spark_hot 0.3
+  vary       = count 0.4, size 0.2, light 0.3
+  scale      = 1.0, 1.0
+  mark       = pool, 4, 34
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 60, 1.5, 3
+  lightcolor = 255, 190, 120
+  glance     = 22, rsb/ricochet, spark_metal
+end
+
+impact pistol_45.wood
+  bursts    = splinter_wood, dust_wood
+  maybe     = dust_jet_wood 0.55
+  vary      = count 0.4, size 0.25
+  scale     = 1.05, 1.1
+  sound     = rsb/impact/wood
+end
+
+impact pistol_45.glass
+  bursts    = glint_glass
+  vary      = count 0.4, size 0.2
+  scale     = 1.0, 1.0
+  sound     = rsb/glass
+end
+
+impact pistol_45.liquid
+  bursts    = splash_liquid
+  vary      = count 0.4, size 0.2
+  scale     = 1.0, 1.05
+  sound     = none
+end
+
+impact pistol_45.dirt
+  bursts    = clods_dirt, dust_dirt
+  maybe     = dust_jet_dirt 0.6
+  vary      = count 0.4, size 0.25
+  scale     = 1.05, 1.1
+  sound     = rsb/impact/concrete
+end
+
 impact magnum
   bursts    = spark_hot, chips_concrete, dust_concrete, dust_jet_concrete
   scale     = 1.3, 1.15
@@ -1055,12 +1210,16 @@ ballistics revolver_357
 end
 
 # ---- round looks
+# A round look may add `heat = radius, strength, tics[, reach]`: the air the round tears
+# through shimmers behind it over its last `reach` units (1024 when not given) and fades
+# once it lands. It follows the round, so in slow motion the air opens up behind it.
 roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
-  wake   = none
-  impact = pistol
+  wake   = pistol_vapour
+  impact = pistol_45
   whiz   = 72, rsb/whiz
+  heat   = 5, 0.45, 10
 end
 
 roundlook buckshot
@@ -1082,9 +1241,10 @@ end
 roundlook pistol_9mm
   look   = sprite, RSBT
   glide  = yes
-  wake   = none
-  impact = pistol
+  wake   = pistol_vapour
+  impact = pistol_9mm
   whiz   = 64, rsb/whiz
+  heat   = 4, 0.4, 8
 end
 
 roundlook rifle_762
@@ -1101,6 +1261,22 @@ roundlook revolver_357
   wake   = none
   impact = magnum
   whiz   = 80, rsb/crack/med
+end
+
+roundlook smg_9mm          # the 9mm out of an SMG: the plain look, so full auto stays disciplined
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = pistol
+  whiz   = 64, rsb/whiz
+end
+
+roundlook smg_45           # the .45 out of an SMG: the plain look
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = pistol
+  whiz   = 72, rsb/whiz
 end
 
 # The menu's Round look choices. Only look, glide and wake are used from these.
@@ -1179,13 +1355,31 @@ round revolver_357
   roundlook  = revolver_357
 end
 
+round smg_9mm              # the same 9mm as the handgun's (same ballistics), in the SMG's plainer look
+  ballistics = pistol_9mm
+  roundlook  = smg_9mm
+end
+
+round smg_45               # the same .45 as the M4A3's, in the SMG's plainer look
+  ballistics = pistol_45
+  roundlook  = smg_45
+end
+
 
 # ---------------------------------------------------------------- WAKES
 #   perstep  particles along each tic's travel
+#   spacing  map units between motes, instead of perstep: as dense at any speed or in slow motion
 #   size     start, end     life  seconds     drift  map units/s
 #   drag     1/s            gravity           color  r, g, b     glow
 #   particle <PARTICLEDEFS definition> | none -- each mote drawn with a definition
 #            (then size, gravity and drag are the definition's; color tints it)
+
+wake pistol_vapour         # the air a pistol round tears through: a thin lit wisp that hangs (it draws the path in slow motion)
+  spacing  = 6
+  life     = 0.9
+  drift    = 3
+  particle = rsb_bullet_vapour
+end
 
 wake rifle_trail
   perstep = 4
@@ -1235,6 +1429,11 @@ end
 #   smokeparticle  <PARTICLEDEFS definition> | none -- GPU smoke (count x 2 puffs)
 #                  instead of sprite puffs; scale and alpha then unused
 #   heat        radius, length, strength, tics -- heat shimmer out of the muzzle
+#   vary        light <0..0.9>, flame <..>, cone <..>, sparks <..>, smoke <..> -- each shot
+#               that part comes out up to this much bigger or smaller (hashed per shot)
+#   maybe       <burst> <chance 0..1>, ... -- bursts only some shots throw
+#   surge       chance, scale -- now and then a bigger shot: all of it x scale
+#   flameroll   yes | no -- the flame sprite turns to a new angle each shot (yes)
 #
 # Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
 # bfg and rail have their own light and sparks, and `none` is no flash at all.
@@ -1248,6 +1447,36 @@ flash pistol
   flame      = 0.05
   smoke      = 1, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
+end
+
+flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turns every shot, powder some shots
+  light      = 210, 3.6, 2
+  lightcolor = 255, 222, 170
+  cone       = 18, 50, 95, 6
+  conetics   = 3
+  bursts     = flash_core_9mm, flash_petals, flash_sparks
+  maybe      = flash_powder 0.45, flash_sparks_wide 0.2
+  flame      = 0.055
+  smoke      = 2, 0.02, 0.3
+  smokeparticle = rsb_smoke_gun
+  heat       = 3, 18, 0.6, 10
+  vary       = light 0.3, flame 0.35, cone 0.25, sparks 0.5, smoke 0.5
+  surge      = 0.18, 1.45
+end
+
+flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic longer, more smoke
+  light      = 230, 3.3, 3
+  lightcolor = 255, 204, 136
+  cone       = 24, 62, 85, 6
+  conetics   = 4
+  bursts     = flash_core, flash_petals, flash_sparks
+  maybe      = flash_powder 0.6
+  flame      = 0.07
+  smoke      = 3, 0.025, 0.32
+  smokeparticle = rsb_smoke_gun
+  heat       = 4, 16, 0.7, 12
+  vary       = light 0.25, flame 0.3, cone 0.2, sparks 0.45, smoke 0.4
+  surge      = 0.15, 1.35
 end
 
 flash shotgun

@@ -25,6 +25,14 @@ class RSB_Hash
 		return lo + (hi - lo) * Frac(a, b, c);
 	}
 
+	// A PER-SHOT WOBBLE: 1 plus or minus up to `amount` (0 = always 1), so each shot or
+	// hit comes out a little bigger or smaller than the one before.
+	static double Wobble(double amount, int a, int b, int c)
+	{
+		if (amount <= 0) return 1.0;
+		return 1.0 + Between(-amount, amount, a, b, c);
+	}
+
 	// A particle seed. Never 0: SpawnGpuParticles reads 0 as "pick your own".
 	static int Seed(int a, int b, int c)
 	{

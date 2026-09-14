@@ -66,12 +66,20 @@ class RSB_RoundLookDef : RSB_Def
 	String impact;       // an impact profile's base name, or "none"
 	double whizRadius;   // a round passing this close to the listener's head whizzes; 0 = never
 	String whizSound;
+	// AIR SHIMMER along its flight (`heat`): a narrow line of bent air over the last
+	// heatReach units behind the round, re-laid each tic, fading once it lands. It
+	// follows the round, so in slow motion the air tears open behind it. 0 = none.
+	double heatRadius;
+	double heatStrength;
+	int    heatTics;
+	double heatReach;
 }
 
 // A WAKE: what a round sheds as it flies.
 class RSB_WakeDef : RSB_Def
 {
 	int    perStep;      // particles laid along each tic's travel
+	double spacing;      // map units between motes instead, when above 0: as dense at any speed or time scale
 	double sizeStart;
 	double sizeEnd;
 	double life;         // seconds
@@ -147,6 +155,13 @@ class RSB_ImpactDef : RSB_Def
 	int    heatTics;
 	double countScale;     // `scale`: every burst's particle count x this (how hard a weapon class bites); 1 = as written
 	double sizeScale;      // `scale`: every burst's particle size x this
+	// EVERY HIT ITS OWN, hashed per hit: `vary` wobbles counts, sizes and the light;
+	// `maybe` bursts fire on only some hits, each at its own chance.
+	double varyCount;
+	double varySize;
+	double varyLight;
+	Array<String> maybeBursts;
+	Array<double> maybeChance;
 }
 
 // A FLASH: the muzzle's light, its lit-air cone, its bursts, flame and smoke.
@@ -171,6 +186,15 @@ class RSB_FlashDef : RSB_Def
 	double heatLength;
 	double heatStrength;
 	int    heatTics;
+	// EVERY SHOT ITS OWN, hashed per shot: `vary` wobbles each part; `maybe` bursts fire
+	// on some shots; `surge` now and then makes a whole shot bigger; `flameroll` turns
+	// the flame sprite to a new angle each shot.
+	double varyLight, varyFlame, varyCone, varySparks, varySmoke;
+	Array<String> maybeBursts;
+	Array<double> maybeChance;
+	double surgeChance;
+	double surgeScale;
+	bool   flameRoll;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the

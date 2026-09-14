@@ -180,12 +180,17 @@ class RSB_Parser
 			d.impact = "none";
 			d.whizRadius = 0;
 			d.whizSound = "none";
+			d.heatRadius = 0;
+			d.heatStrength = 0;
+			d.heatTics = 0;
+			d.heatReach = 1024;
 			return d;
 		}
 		if (kind == "wake")
 		{
 			let d = new("RSB_WakeDef");
 			d.perStep = 0;
+			d.spacing = 0;
 			d.sizeStart = 0;
 			d.sizeEnd = 0;
 			d.life = 0;
@@ -258,6 +263,9 @@ class RSB_Parser
 			d.smokeAlpha = 0.3;
 			d.smokeParticle = "";
 			d.smokeHandle = 0;
+			d.surgeChance = 0;
+			d.surgeScale = 1;
+			d.flameRoll = true;
 			return d;
 		}
 		if (kind == "ejecta")
@@ -485,7 +493,19 @@ class RSB_Parser
 			lk.whizSound = v[1];
 			return (lk.whizRadius >= 0) ? "" : "whiz radius must be 0 or more";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact or whiz", key);
+		if (key == "heat")
+		{
+			if (v.Size() < 3 || v.Size() > 4) return "heat is radius, strength, tics[, reach] -- the air shimmering along its flight";
+			for (int i = 0; i < v.Size(); i++)
+				if (!IsNum(v[i])) return "heat values must be numbers";
+			lk.heatRadius = v[0].ToDouble();
+			lk.heatStrength = v[1].ToDouble();
+			lk.heatTics = v[2].ToInt();
+			if (v.Size() == 4) lk.heatReach = v[3].ToDouble();
+			return (lk.heatRadius >= 0 && lk.heatStrength >= 0 && lk.heatTics >= 0 && lk.heatReach > 0 && lk.heatReach <= 4096) ? ""
+				: "heat radius, strength and tics must be 0 or more; reach above 0, up to 4096";
+		}
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz or heat", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE
@@ -548,6 +568,12 @@ class RSB_Parser
 			w.particle = (v[0] ~== "none") ? "" : v[0];
 			w.particleHandle = 0;
 			return "";
+		}
+		if (key == "spacing")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			w.spacing = v[0].ToDouble();
+			return (w.spacing >= 0) ? "" : "spacing must be 0 or more (0 = perstep lays them)";
 		}
 		return String.Format("unknown wake key \"%s\"", key);
 	}
@@ -742,6 +768,42 @@ class RSB_Parser
 			return (im.countScale > 0 && im.countScale <= 4 && im.sizeScale > 0 && im.sizeScale <= 4) ? ""
 				: "scale is count, size -- each above 0, up to 4";
 		}
+		if (key == "vary")
+		{
+			im.varyCount = 0;
+			im.varySize = 0;
+			im.varyLight = 0;
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 0.9, word, amount);
+				if (why != "") return "vary " .. why;
+				word = word.MakeLower();
+				if (word == "count") im.varyCount = amount;
+				else if (word == "size") im.varySize = amount;
+				else if (word == "light") im.varyLight = amount;
+				else return String.Format("vary \"%s\" is not count, size or light", word);
+			}
+			return "";
+		}
+		if (key == "maybe")
+		{
+			im.maybeBursts.Clear();
+			im.maybeChance.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 1.0, word, amount);
+				if (why != "") return "maybe " .. why .. " -- maybe is <burst> <chance 0..1>, ...";
+				im.maybeBursts.Push(word);
+				im.maybeChance.Push(amount);
+			}
+			return (im.maybeBursts.Size() > 0) ? "" : "maybe is <burst> <chance 0..1>, ... or none";
+		}
 		return String.Format("unknown impact key \"%s\"", key);
 	}
 
@@ -817,6 +879,62 @@ class RSB_Parser
 			f.heatStrength = v[2].ToDouble();
 			f.heatTics = v[3].ToInt();
 			return (f.heatRadius >= 0 && f.heatLength >= 0 && f.heatStrength >= 0 && f.heatTics >= 0) ? "" : "heat is radius, length, strength, tics -- all 0 or more";
+		}
+		if (key == "vary")
+		{
+			f.varyLight = 0;
+			f.varyFlame = 0;
+			f.varyCone = 0;
+			f.varySparks = 0;
+			f.varySmoke = 0;
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 0.9, word, amount);
+				if (why != "") return "vary " .. why;
+				word = word.MakeLower();
+				if (word == "light") f.varyLight = amount;
+				else if (word == "flame") f.varyFlame = amount;
+				else if (word == "cone") f.varyCone = amount;
+				else if (word == "sparks") f.varySparks = amount;
+				else if (word == "smoke") f.varySmoke = amount;
+				else return String.Format("vary \"%s\" is not light, flame, cone, sparks or smoke", word);
+			}
+			return "";
+		}
+		if (key == "maybe")
+		{
+			f.maybeBursts.Clear();
+			f.maybeChance.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 1.0, word, amount);
+				if (why != "") return "maybe " .. why .. " -- maybe is <burst> <chance 0..1>, ...";
+				f.maybeBursts.Push(word);
+				f.maybeChance.Push(amount);
+			}
+			return (f.maybeBursts.Size() > 0) ? "" : "maybe is <burst> <chance 0..1>, ... or none";
+		}
+		if (key == "surge")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.surgeChance = v[0].ToDouble();
+			f.surgeScale = v[1].ToDouble();
+			return (f.surgeChance >= 0 && f.surgeChance <= 1 && f.surgeScale > 0 && f.surgeScale <= 3) ? ""
+				: "surge is chance (0..1), scale (above 0, up to 3)";
+		}
+		if (key == "flameroll")
+		{
+			if (v.Size() != 1) return "flameroll is yes or no";
+			int yn = YesNo(v[0]);
+			if (yn < 0) return String.Format("flameroll \"%s\" is not yes or no", v[0]);
+			f.flameRoll = (yn == 1);
+			return "";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
@@ -1216,6 +1334,19 @@ class RSB_Parser
 	// ---------------------------------------------------------------- VALUES
 
 	// Exactly `need` values, every one a number.
+	// "<name> <number>" -- one item of a `vary` or `maybe` list -- split into its word and
+	// its amount, the amount from lo to hi.
+	private static String WordAmount(String item, double lo, double hi, out String word, out double amount)
+	{
+		Array<String> w;
+		item.Split(w, " ", TOK_SKIPEMPTY);
+		if (w.Size() != 2 || !IsNum(w[1])) return String.Format("\"%s\" is not a name and a number", item);
+		word = w[0];
+		amount = w[1].ToDouble();
+		if (amount < lo || amount > hi) return String.Format("\"%s\": the number must be from %.2f to %.2f", item, lo, hi);
+		return "";
+	}
+
 	private static String Nums(out Array<String> v, int need)
 	{
 		if (v.Size() != need)
