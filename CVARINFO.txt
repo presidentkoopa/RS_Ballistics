@@ -53,6 +53,7 @@ user bool   rsb_casings            = true;
 user float  rsb_casing_size        = 1.0;
 user bool   rsb_casing_hot         = true;
 user float  rsb_casing_life        = 1.0;     // 0..1 of the profile's lifetime: fades sooner, never lingers longer (netplay)
+user int    rsb_casing_max         = 300;     // most casings in the world at once; past it the oldest fade (looks only)
 
 // ---- flamethrowers
 user bool   rsb_flame              = true;

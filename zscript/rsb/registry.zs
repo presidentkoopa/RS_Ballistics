@@ -19,6 +19,8 @@ class RSB_Registry : StaticEventHandler
 	int        heatBlastNext;   // RSB_Heat: the next blast slot, in turn (drawing only)
 	int        trailNext;       // RSB_Trail: the next drawn-line slot for a trail, in turn (drawing only)
 	Array<RSB_BarrelHeat> barrels;   // RSB_Barrel: heat per gun (drawing only; cleared each map)
+	Array<int>             roundCounts;   // RSB_Bullet: rounds each player's hand has fired, for tracers (drawing only)
+	Array<RSB_LocalEjecta> casings;       // local casings in the world, oldest first: the casing cap (cleared each map)
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()
@@ -36,12 +38,43 @@ class RSB_Registry : StaticEventHandler
 	{
 		said.Clear();
 		barrels.Clear();
+		casings.Clear();
 		if (!defs) Load();
 		String style = RSB_Settings.StyleName();
 		RSB_Log.Info(String.Format("RS_Ballistics: %d profile(s) from %d RSBDEFS lump(s), %d refused, effects %s, style %s -- %s",
 			defs.defs.Size(), lumpsRead, refusals, RSB_Tier.Name(RSB_Tier.Current()),
 			(style.Length() > 0) ? style : "default", defs.Describe()));
 		if (RSB_Log.Level() >= RSB_Log.LV_TRACE) Dump();
+	}
+
+	// THE NEXT ROUND'S NUMBER for a player's hand (1, 2, 3 ...), for tracers (a round look's
+	// `tracer`); 0 for a round no player fired. Counted in the fire action, which runs on
+	// every machine, so every machine numbers the rounds alike.
+	int NextRoundIndex(int playerNum, int hand)
+	{
+		if (playerNum < 0 || playerNum >= MAXPLAYERS) return 0;
+		int k = playerNum * 2 + clamp(hand, 0, 1);
+		while (roundCounts.Size() <= k) roundCounts.Push(0);
+		roundCounts[k]++;
+		return roundCounts[k];
+	}
+
+	// THE CASING CAP (Casings: "Casings in the world, most"): a new local casing joins the
+	// list; past the cap the oldest start fading. Looks only, on this machine.
+	void KeepCasing(RSB_LocalEjecta c)
+	{
+		if (!c) return;
+		casings.Push(c);
+		int cap = RSB_Settings.CasingMax();
+		if (casings.Size() <= cap) return;
+		for (int i = casings.Size() - 1; i >= 0; i--)
+			if (!casings[i]) casings.Delete(i);
+		while (casings.Size() > cap)
+		{
+			let oldest = casings[0];
+			casings.Delete(0);
+			if (oldest) oldest.FadeOut();
+		}
 	}
 
 	bool AlreadySaid(String key)
@@ -187,6 +220,8 @@ class RSB_Registry : StaticEventHandler
 					why = String.Format("its impact \"%s\" has no base profile in any RSBDEFS", lk.impact);
 				else if (!(lk.wake ~== "none") && !defs.Find("wake", lk.wake))
 					why = String.Format("its wake \"%s\" is not defined in any RSBDEFS", lk.wake);
+				else if (lk.tracerEvery > 0 && !defs.Find("roundlook", lk.tracerLook))
+					why = String.Format("its tracer look \"%s\" has no base profile in any RSBDEFS", lk.tracerLook);
 			}
 			if (why == "") continue;
 			let d = defs.defs[i];

@@ -16,6 +16,8 @@
 //            jump a whole tic of travel per frame. Restoring Prev after the move
 //            lets the renderer draw it between tics.
 //   wake     particles laid along each tic's travel.
+//   tracer   every Nth round of a hand (RSB_Registry.NextRoundIndex) flies in a tracer look,
+//            which may carry a light that lights what it passes.
 //   heat     the air it tears through shimmers behind it (RSB_Heat.AirWake), in
 //            one blast slot re-laid each tic, fading once it lands.
 //   whiz     a round passing close to the listener's head, fired by someone
@@ -51,6 +53,7 @@ class RSB_Bullet : FastProjectile
 	int    hand;            // 0 main, 1 off -- for the log
 	int    shooterNum;      // player number of the shooter, -1 if none
 	int    damageMin, damageMax;
+	int    roundIndex;      // this hand's round number (1, 2, 3 ...), for tracers; 0 = not counted
 
 	private Vector3 travel; // last direction of flight; Vel is zeroed before Death
 	private bool    announced;
@@ -91,6 +94,8 @@ class RSB_Bullet : FastProjectile
 		b.hand = whichHand;
 		b.shooterNum = -1;
 		if (shooter && shooter.mo) b.shooterNum = shooter.mo.PlayerNumber();
+		let numbering = RSB_Registry.Get();
+		b.roundIndex = numbering ? numbering.NextRoundIndex(b.shooterNum, whichHand) : 0;
 
 		let bl = b.Ballistics();
 		if (!bl)
@@ -142,6 +147,12 @@ class RSB_Bullet : FastProjectile
 		String tierName = RSB_Tier.Name(RSB_Tier.Current());
 		lookDef = reg.ResolveRoundLook(r.roundLook, tierName);
 		flightDef = lookDef;
+		// A TRACER: every Nth round of a hand (the look's `tracer`) flies in the tracer's look.
+		if (lookDef && lookDef.tracerEvery > 0 && roundIndex > 0 && (roundIndex % lookDef.tracerEvery) == 0)
+		{
+			let tracerDef = reg.ResolveRoundLook(lookDef.tracerLook, tierName);
+			if (tracerDef) flightDef = tracerDef;
+		}
 		String pick = RSB_Settings.RoundLook();
 		if (pick.Length() > 0)
 		{
@@ -160,6 +171,11 @@ class RSB_Bullet : FastProjectile
 				RSB_Log.Once(RSB_Log.LV_WARN, "roundlook:sprite:" .. flightDef.lookName, String.Format(
 					"round look %s: sprite %s is not loaded (no actor's states use it) -- drawn as RSBT", flightDef.id, flightDef.lookName));
 		}
+
+		// A LIGHT IN FLIGHT (the look's `light`): a burning tracer lights what it passes.
+		if (flightDef.lightRadius > 0 && flightDef.lightIntensity > 0 && RSB_Tier.Current() > RSB_Tier.T_OFF)
+			A_AttachLight("rsb_flight", DynamicLight.PointLight, flightDef.lightColor, int(flightDef.lightRadius), 0,
+				DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0, flightDef.lightIntensity);
 	}
 
 	override void Tick()

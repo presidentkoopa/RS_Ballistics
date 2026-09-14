@@ -24,6 +24,7 @@ class RSB_BarrelHeat
 {
 	Actor        gun;
 	RSB_FlashDef fd;
+	RSB_BarrelGlow glowLight;  // the dull light of a barrel run hot, while it glows
 	double       heat;        // 0 cold; smoking from fd.barrelSmokeFrom, hardest at 1
 	int          heatTic;     // the map tic `heat` is current to
 	double       carry;       // part of a puff owed from the last tic
@@ -60,6 +61,9 @@ class RSB_Barrel play
 		Cool(b);
 		let fd = b.fd;
 
+		int tier = RSB_Tier.Current();
+		LayGlow(b, at, tier);
+
 		double from = fd.barrelSmokeFrom;
 		double amount = (from < 1.0) ? clamp((b.heat - from) / (1.0 - from), 0.0, 1.0) : ((b.heat >= from) ? 1.0 : 0.0);
 		if (amount <= 0)
@@ -67,7 +71,6 @@ class RSB_Barrel play
 			b.carry = 0;
 			return;
 		}
-		int tier = RSB_Tier.Current();
 		if (tier <= RSB_Tier.T_OFF) return;
 		double smokeMul = RSB_Settings.FlashSmoke();
 		if (smokeMul <= 0) return;
@@ -98,6 +101,25 @@ class RSB_Barrel play
 				fd.barrelShimmerStrength * amount, SHIMMER_EVERY + 4);
 	}
 
+	// THE GLOW OF A BARREL RUN HOT (`barrelglow`): past glowFrom heat, a dull light at the
+	// muzzle, brighter and wider as the heat climbs to the cap; out as it cools.
+	private static void LayGlow(RSB_BarrelHeat b, Vector3 at, int tier)
+	{
+		let fd = b.fd;
+		double hot = 0;
+		if (fd.barrelGlowRadius > 0 && fd.barrelGlowIntensity > 0 && tier > RSB_Tier.T_OFF && fd.barrelGlowFrom < HEAT_CAP)
+			hot = clamp((b.heat - fd.barrelGlowFrom) / (HEAT_CAP - fd.barrelGlowFrom), 0.0, 1.0);
+		if (hot <= 0)
+		{
+			if (b.glowLight) b.glowLight.Destroy();
+			b.glowLight = null;
+			return;
+		}
+		if (!b.glowLight) b.glowLight = RSB_BarrelGlow(Actor.Spawn("RSB_BarrelGlow", at, NO_REPLACE));
+		if (b.glowLight)
+			b.glowLight.Hold(at, fd.barrelGlowColor, fd.barrelGlowRadius * (0.6 + 0.4 * hot), fd.barrelGlowIntensity * hot);
+	}
+
 	// Heat lost since it was last brought up to date, by the map clock.
 	private static void Cool(RSB_BarrelHeat b)
 	{
@@ -126,5 +148,51 @@ class RSB_Barrel play
 		nb.gun = gun;
 		reg.barrels.Push(nb);
 		return nb;
+	}
+}
+
+// THE DULL GLOW OF A HOT BARREL: a light at the muzzle, moved there each tic the gun is out
+// (RSB_Barrel.Muzzle); it goes out on its own once nothing holds it (the gun put away).
+// Looks only: +NOINTERACTION, no RNG.
+class RSB_BarrelGlow : Actor
+{
+	Default
+	{
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOINTERACTION
+		+NOTELEPORT
+		+DONTSPLASH
+		RenderStyle "None";
+		Radius 1;
+		Height 1;
+	}
+
+	private int heldTic;
+
+	States
+	{
+	Spawn:
+		TNT1 A -1;
+		Stop;
+	}
+
+	void Hold(Vector3 at, Color tint, double radius, double intensity)
+	{
+		SetOrigin(at, true);
+		A_AttachLight("rsb_barrelglow", DynamicLight.PointLight, tint, int(radius), 0,
+			DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0, intensity);
+		heldTic = level.maptime;
+	}
+
+	override void Tick()
+	{
+		if (level.maptime - heldTic > 2)
+		{
+			A_RemoveLight("rsb_barrelglow");
+			Destroy();
+			return;
+		}
+		Super.Tick();
 	}
 }

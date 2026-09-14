@@ -73,6 +73,15 @@ class RSB_RoundLookDef : RSB_Def
 	double heatStrength;
 	int    heatTics;
 	double heatReach;
+	// A TRACER (`tracer`): every tracerEvery-th round of a hand flies in the tracerLook
+	// round look instead; its impact and near-miss sound stay this look's.
+	int    tracerEvery;
+	String tracerLook;
+	// A LIGHT THE ROUND CARRIES in flight (`light`, `lightcolor`): a tracer lighting what
+	// it passes. 0 = none.
+	double lightRadius;
+	double lightIntensity;
+	Color  lightColor;
 }
 
 // A WAKE: what a round sheds as it flies.
@@ -205,6 +214,11 @@ class RSB_FlashDef : RSB_Def
 	double barrelSmokePerTic;
 	double barrelShimmerRadius;
 	double barrelShimmerStrength;
+	// A BARREL RUN HOT glows (`barrelglow`): a dull light at the muzzle from glowFrom heat.
+	double barrelGlowFrom;
+	double barrelGlowRadius;
+	double barrelGlowIntensity;
+	Color  barrelGlowColor;
 	// THE GROUND KICK (`groundkick`): an impact profile the blast throws off the floor
 	// under the muzzle, by the floor's surface, when the floor is within kickReach below.
 	String kickImpact;

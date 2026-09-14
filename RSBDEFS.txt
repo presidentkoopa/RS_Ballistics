@@ -506,6 +506,16 @@ burst flash_brake_smoke    # the brake's smoke: a ring rolling out around the mu
   particle = rsb_smoke_gun
 end
 
+burst flash_launcher_puff  # a grenade launcher's thump: a big soft puff of smoke rolling out of the tube (rsb_smoke_gun)
+  count    = 6
+  cone     = 20
+  speed    = 110, 0.5
+  life     = 2.2, 0.35
+  aim      = along
+  offset   = 3
+  particle = rsb_smoke_gun
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -751,6 +761,113 @@ impact pistol_45.dirt
   maybe     = dust_jet_dirt 0.6
   vary      = count 0.4, size 0.25
   scale     = 1.05, 1.1
+  sound     = rsb/impact/concrete
+end
+
+# THE CHAINGUNS' ROUNDS: nine a second, so each hit is lighter and the stream does the work --
+# held on one spot, the dust builds to a haze and chips keep flying (the Matrix lobby's
+# pillars). 5.56: fine and dusty. 7.62: heavier chips, dust jetting back out more often.
+impact chaingun_556
+  bursts    = chips_concrete, dust_concrete
+  maybe     = dust_jet_concrete 0.3, spark_hot 0.2
+  vary      = count 0.5, size 0.35
+  scale     = 0.8, 1.0
+  sound     = rsb/impact/concrete
+  glance    = 14, rsb/ricochet, spark_hot
+end
+
+impact chaingun_556.metal
+  bursts     = spark_metal
+  maybe      = spark_spray 0.25, ember_metal 0.3
+  vary       = count 0.5, size 0.25, light 0.4
+  scale      = 0.8, 0.9
+  mark       = pool, 3, 20
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 40, 1.0, 2
+  lightcolor = 255, 190, 120
+  glance     = 20, rsb/ricochet, spark_metal
+end
+
+impact chaingun_556.wood
+  bursts    = splinter_wood, dust_wood
+  maybe     = dust_jet_wood 0.3
+  vary      = count 0.5, size 0.35
+  scale     = 0.8, 1.0
+  sound     = rsb/impact/wood
+end
+
+impact chaingun_556.glass
+  bursts    = glint_glass
+  vary      = count 0.4, size 0.2
+  scale     = 0.8, 0.9
+  sound     = rsb/glass
+end
+
+impact chaingun_556.liquid
+  bursts    = splash_liquid
+  vary      = count 0.4, size 0.2
+  scale     = 0.8, 0.9
+  sound     = none
+end
+
+impact chaingun_556.dirt
+  bursts    = clods_dirt, dust_dirt
+  maybe     = dust_jet_dirt 0.3
+  vary      = count 0.5, size 0.35
+  scale     = 0.8, 1.0
+  sound     = rsb/impact/concrete
+end
+
+impact machinegun_762
+  bursts    = chips_concrete, dust_concrete
+  maybe     = dust_jet_concrete 0.55, spark_hot 0.25
+  vary      = count 0.45, size 0.3
+  scale     = 1.25, 1.2
+  sound     = rsb/impact/concrete
+  glance    = 14, rsb/ricochet, spark_hot
+end
+
+impact machinegun_762.metal
+  bursts     = spark_metal, spark_spray
+  maybe      = ember_metal 0.5
+  vary       = count 0.45, size 0.25, light 0.35
+  scale      = 1.1, 1.0
+  mark       = pool, 4, 28
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/metal
+  light      = 60, 1.4, 3
+  lightcolor = 255, 190, 120
+  glance     = 20, rsb/ricochet, spark_metal
+end
+
+impact machinegun_762.wood
+  bursts    = splinter_wood, dust_wood
+  maybe     = dust_jet_wood 0.5
+  vary      = count 0.45, size 0.3
+  scale     = 1.25, 1.2
+  sound     = rsb/impact/wood
+end
+
+impact machinegun_762.glass
+  bursts    = glint_glass
+  vary      = count 0.4, size 0.2
+  scale     = 1.1, 1.0
+  sound     = rsb/glass
+end
+
+impact machinegun_762.liquid
+  bursts    = splash_liquid
+  vary      = count 0.4, size 0.2
+  scale     = 1.1, 1.05
+  sound     = none
+end
+
+impact machinegun_762.dirt
+  bursts    = clods_dirt, dust_dirt
+  maybe     = dust_jet_dirt 0.5
+  vary      = count 0.45, size 0.3
+  scale     = 1.25, 1.2
   sound     = rsb/impact/concrete
 end
 
@@ -1467,6 +1584,10 @@ end
 # A round look may add `heat = radius, strength, tics[, reach]`: the air the round tears
 # through shimmers behind it over its last `reach` units (1024 when not given) and fades
 # once it lands. It follows the round, so in slow motion the air opens up behind it.
+# `tracer = every, <roundlook>`: every Nth round of a hand flies in that look instead (a
+# burning tracer); its impacts and near-miss sound stay this look's. `light = radius,
+# intensity` and `lightcolor`: a light the round carries in flight (a tracer lighting what
+# it passes).
 roundlook pistol_45
   look   = sprite, RSBT
   glide  = yes
@@ -1547,6 +1668,44 @@ roundlook default          # the plain look for a gun that names no round -- nev
   wake   = none
   impact = bullet
   whiz   = 72, rsb/whiz
+end
+
+roundlook chaingun_556     # the chaingun's rounds: a thin vapour line; every 4th a burning tracer
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = chaingun_556
+  whiz   = 96, rsb/crack/near
+  tracer = 4, tracer_556
+end
+
+roundlook tracer_556       # a 5.56 tracer: a hot orange-white streak with a short burning tail, lighting what it passes
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = tracer_hot
+  impact = chaingun_556
+  whiz   = 96, rsb/crack/near
+  light  = 44, 1.1
+  lightcolor = 255, 176, 96
+end
+
+roundlook machinegun_762   # the machine gun's rounds: a vapour line; every 5th a heavier tracer
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = machinegun_762
+  whiz   = 110, rsb/crack/near
+  tracer = 5, tracer_762
+end
+
+roundlook tracer_762       # a 7.62 tracer: brighter, with a longer burning tail than the 5.56's
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = tracer_hot_heavy
+  impact = machinegun_762
+  whiz   = 110, rsb/crack/near
+  light  = 60, 1.4
+  lightcolor = 255, 170, 90
 end
 
 # The menu's Round look choices. Only look, glide and wake are used from these.
@@ -1645,6 +1804,16 @@ round default              # what a gun that names no round fires (WM_Gun's fall
   roundlook  = default
 end
 
+round chaingun_556         # the chaingun's 5.56: rifle_556's ballistics (no gameplay change), tracers every 4th
+  ballistics = rifle_556
+  roundlook  = chaingun_556
+end
+
+round machinegun_762       # the machine gun's 7.62: rifle_762's ballistics (no gameplay change), tracers every 5th
+  ballistics = rifle_762
+  roundlook  = machinegun_762
+end
+
 
 # ---------------------------------------------------------------- WAKES
 #   perstep  particles along each tic's travel
@@ -1666,6 +1835,33 @@ wake pellet_vapour         # buckshot: a fan of thin wisps, lighter than a pisto
   life     = 0.6
   drift    = 2
   particle = rsb_bullet_vapour
+end
+
+wake rifle_vapour          # a rifle round's thin vapour line (lit, never glowing)
+  spacing  = 14
+  life     = 0.5
+  drift    = 2
+  particle = rsb_bullet_vapour
+end
+
+wake tracer_hot            # a tracer's burning tail: short, hot, orange-white
+  spacing = 5
+  size    = 1.2, 0.2
+  life    = 0.12
+  drift   = 2
+  drag    = 4
+  color   = 255, 190, 110
+  glow    = 2.6
+end
+
+wake tracer_hot_heavy      # a heavier tracer's tail: thicker and longer
+  spacing = 4
+  size    = 1.6, 0.25
+  life    = 0.18
+  drift   = 2
+  drag    = 4
+  color   = 255, 184, 100
+  glow    = 3.0
 end
 
 wake rifle_trail
@@ -1728,6 +1924,8 @@ end
 #   barrelshimmer  radius, strength -- the hot air bending over the barrel
 #   groundkick  <impact profile>, reach -- a big gun's blast raises the floor under the muzzle:
 #               that impact, by the floor's surface, when the floor is within reach below
+#   barrelglow  from heat, radius, intensity -- a barrel run hot glows: a dull light at the
+#               muzzle past that heat (full auto, long bursts); barrelglowcolor r, g, b
 #
 # Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
 # bfg and rail have their own light and sparks, and `none` is no flash at all.
@@ -1892,6 +2090,56 @@ flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanill
   barrelheat = 0.55, 0.24, 0.35
   barrelsmoke = rsb_smoke_barrel, 3.0
   barrelshimmer = 3.5, 0.55
+end
+
+flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow flashes that stutter, some bright, some dim; a room that flickers; a held burst builds smoke, then shimmer, then a dull glow
+  light      = 190, 3.2, 1
+  lightcolor = 255, 226, 180
+  cone       = 14, 40, 90, 5
+  conetics   = 2
+  bursts     = flash_core
+  maybe      = flash_petals 0.5, flash_sparks 0.45, flash_powder 0.15
+  flame      = 0.045
+  smoke      = 1, 0.018, 0.22
+  smokeparticle = rsb_smoke_gun
+  vary       = light 0.45, flame 0.5, cone 0.35, sparks 0.6, smoke 0.6
+  surge      = 0.1, 1.35
+  barrelheat = 0.045, 0.15, 0.5
+  barrelsmoke = rsb_smoke_barrel, 2.2
+  barrelshimmer = 3, 0.5
+  barrelglow = 1.4, 26, 1.2
+  barrelglowcolor = 255, 110, 40
+end
+
+flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange star each round, thick smoke building a column, a heavier strobe; the barrel runs hot fast -- a strong heat haze, heavy smoke, a dull glow
+  light      = 240, 3.8, 2
+  lightcolor = 255, 206, 140
+  cone       = 22, 56, 110, 7
+  conetics   = 3
+  bursts     = flash_core, flash_petals
+  maybe      = flash_sparks_wide 0.35, flash_powder 0.3
+  flame      = 0.06
+  smoke      = 2, 0.025, 0.3
+  smokeparticle = rsb_smoke_gun
+  vary       = light 0.25, flame 0.3, cone 0.2, sparks 0.4, smoke 0.4
+  surge      = 0.12, 1.3
+  barrelheat = 0.06, 0.14, 0.45
+  barrelsmoke = rsb_smoke_barrel, 3.0
+  barrelshimmer = 4.5, 0.7
+  barrelglow = 1.3, 30, 1.4
+  barrelglowcolor = 255, 104, 36
+end
+
+flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure thump -- a dull flash, a big puff of smoke, little fire
+  light      = 120, 1.8, 2
+  lightcolor = 255, 190, 120
+  bursts     = flash_launcher_puff
+  maybe      = flash_powder 0.3
+  flame      = 0.03
+  smoke      = 5, 0.04, 0.4
+  smokeparticle = rsb_smoke_gun
+  heat       = 5, 12, 0.5, 10
+  vary       = light 0.2, smoke 0.3
 end
 
 flash rifle
@@ -2293,6 +2541,8 @@ ejecta brass_556
   sound   = rsb/casing/small
   hot     = 10
   life    = 2100
+  portsmoke = rsb_smoke_port, 1
+  wisp    = rsb_casing_wisp, 8
 end
 
 ejecta hull_12ga
@@ -2356,6 +2606,8 @@ ejecta brass_762
   sound   = rsb/casing/medium
   hot     = 14
   life    = 2100
+  portsmoke = rsb_smoke_port, 1
+  wisp    = rsb_casing_wisp, 10
 end
 
 ejecta brass_357          # dumped from a cylinder, not thrown by a port: slow, no glow

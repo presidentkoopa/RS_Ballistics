@@ -229,6 +229,7 @@ class RSB_LocalEjecta : Actor
 	private double  rollSpin;
 	private int     wispTics;        // the hot case trails a thin wisp this many tics (the profile's `wisp`)
 	private int     wispHandle;
+	private bool    forceFade;       // over the casing cap: fade now (RSB_Registry.KeepCasing)
 
 	// How high the casing's centre sits above the floor when it lies still: 0 for a
 	// sprite (its art sits on its origin); a model casing gives its mesh's lying radius.
@@ -288,6 +289,7 @@ class RSB_LocalEjecta : Actor
 		double mul = RSB_Hash.Between(ed.speedMul - ed.speedJitter, ed.speedMul + ed.speedJitter,
 			seed, level.maptime, RSB_Hash.OfPos(at));
 		c.flight = d * (throwSpeed * max(0.0, mul)) + carrierVel;
+		reg.KeepCasing(c);
 		c.angle = VectorAngle(d.x, d.y);
 		return c;
 	}
@@ -299,7 +301,7 @@ class RSB_LocalEjecta : Actor
 		if (bBRIGHT && age > hotTics) bBRIGHT = false;
 		if (resting) restAge++;
 
-		if (restAge > fadeFrom || age > MAX_FLIGHT_TICS + fadeFrom)
+		if (forceFade || restAge > fadeFrom || age > MAX_FLIGHT_TICS + fadeFrom)
 		{
 			if (!fading)
 			{
@@ -319,6 +321,12 @@ class RSB_LocalEjecta : Actor
 		if (bDestroyed) return;
 		if (age <= wispTics && !resting) Wisp();
 		Super.Tick();
+	}
+
+	// OVER THE CASING CAP (RSB_Registry.KeepCasing): start fading now, flying or lying.
+	void FadeOut()
+	{
+		forceFade = true;
 	}
 
 	// THE HOT CASE'S WISP: one thin, lit mote a tic where it is, thinning as it cools.

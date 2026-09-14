@@ -184,6 +184,11 @@ class RSB_Parser
 			d.heatStrength = 0;
 			d.heatTics = 0;
 			d.heatReach = 1024;
+			d.tracerEvery = 0;
+			d.tracerLook = "";
+			d.lightRadius = 0;
+			d.lightIntensity = 0;
+			d.lightColor = Color(255, 255, 190, 120);
 			return d;
 		}
 		if (kind == "wake")
@@ -274,6 +279,10 @@ class RSB_Parser
 			d.barrelSmokePerTic = 0;
 			d.barrelShimmerRadius = 0;
 			d.barrelShimmerStrength = 0;
+			d.barrelGlowFrom = 1.4;
+			d.barrelGlowRadius = 0;
+			d.barrelGlowIntensity = 0;
+			d.barrelGlowColor = Color(255, 255, 110, 40);
 			d.kickImpact = "";
 			d.kickReach = 0;
 			return d;
@@ -521,7 +530,36 @@ class RSB_Parser
 			return (lk.heatRadius >= 0 && lk.heatStrength >= 0 && lk.heatTics >= 0 && lk.heatReach > 0 && lk.heatReach <= 4096) ? ""
 				: "heat radius, strength and tics must be 0 or more; reach above 0, up to 4096";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz or heat", key);
+		if (key == "tracer")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				lk.tracerEvery = 0;
+				lk.tracerLook = "";
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[0])) return "tracer is every (rounds), <roundlook> -- or none";
+			lk.tracerEvery = v[0].ToInt();
+			lk.tracerLook = v[1];
+			return (lk.tracerEvery >= 1 && lk.tracerEvery <= 100) ? "" : "tracer every must be from 1 to 100";
+		}
+		if (key == "light")
+		{
+			String lw = Nums(v, 2);
+			if (lw != "") return lw;
+			lk.lightRadius = v[0].ToDouble();
+			lk.lightIntensity = v[1].ToDouble();
+			return (lk.lightRadius >= 0 && lk.lightIntensity >= 0) ? "" : "light is radius, intensity -- both 0 or more";
+		}
+		if (key == "lightcolor")
+		{
+			Color lc;
+			String cw = ReadColor(v, lc);
+			if (cw != "") return cw;
+			lk.lightColor = lc;
+			return "";
+		}
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light or lightcolor", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE
@@ -994,6 +1032,21 @@ class RSB_Parser
 			f.kickImpact = v[0];
 			f.kickReach = v[1].ToDouble();
 			return (f.kickReach > 0 && f.kickReach <= 512) ? "" : "groundkick reach must be above 0, up to 512";
+		}
+		if (key == "barrelglow")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			f.barrelGlowFrom = v[0].ToDouble();
+			f.barrelGlowRadius = v[1].ToDouble();
+			f.barrelGlowIntensity = v[2].ToDouble();
+			return (f.barrelGlowFrom >= 0 && f.barrelGlowFrom < 2 && f.barrelGlowRadius >= 0 && f.barrelGlowIntensity >= 0) ? ""
+				: "barrelglow is from heat (0 to below 2), radius, intensity";
+		}
+		if (key == "barrelglowcolor")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			f.barrelGlowColor = c;
+			return "";
 		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}

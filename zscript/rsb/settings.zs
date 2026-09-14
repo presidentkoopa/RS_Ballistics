@@ -158,6 +158,8 @@ class RSB_Settings play
 	static bool CasingHot() { return Cvb("rsb_casing_hot", true); }
 
 	static double CasingLife() { return max(0.0, Cvf("rsb_casing_life", 1.0)); }
+	// The most local casings in the world at once; past it the oldest fade (RSB_Registry.KeepCasing).
+	static int CasingMax() { return clamp(int(Cvf("rsb_casing_max", 300.0)), 10, 4000); }
 
 	// ---- flamethrowers ---------------------------------------------------------
 	static bool Flame() { return Cvb("rsb_flame", true); }
