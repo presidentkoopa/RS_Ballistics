@@ -358,6 +358,54 @@ burst flash_powder         # unburnt powder: hot specks thrown out ahead, droppi
   offset  = 0
 end
 
+burst flash_tongue         # a long barrel's fire: streaks straight out along the bore
+  count   = 9
+  cone    = 5
+  speed   = 320, 0.35
+  life    = 0.06, 0.25
+  color   = 255, 226, 170
+  glow    = 5.5
+  size    = 2.0, 0.5
+  orient  = streak
+  stretch = 0.05
+  aim     = along
+  offset  = 0
+end
+
+burst flash_petals_wide    # a short, wide crown of fire: a big star, new every shot
+  count   = 8
+  cone    = 82
+  speed   = 190, 0.3
+  life    = 0.05, 0.3
+  color   = 255, 204, 128
+  glow    = 4.8
+  size    = 2.0, 0.5
+  orient  = streak
+  stretch = 0.035
+  aim     = along
+  offset  = 0
+end
+
+burst flash_plume_long     # a long barrel's blast: a gout of burning gas thrown ~3 m straight out (rsb_muzzle_plume)
+  count    = 9
+  cone     = 5
+  speed    = 700, 0.45
+  life     = 0.14, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume
+end
+
+burst flash_plume_wide     # a shorter barrel's blast: a fatter ball of fire, ~2 m (rsb_muzzle_plume)
+  count    = 11
+  cone     = 14
+  speed    = 480, 0.5
+  life     = 0.13, 0.3
+  aim      = along
+  offset   = 2
+  particle = rsb_muzzle_plume
+end
+
 burst trail_hot
   count   = 1
   cone    = 180
@@ -692,15 +740,21 @@ impact rifle.dirt
 end
 
 # buckshot -- one pellet of buckshot: small, so a blast peppers a wall
+# Buckshot: seven pellets a shot, each its own -- only some spark or jet dust back out,
+# so the wall takes one ragged blast, not seven identical stamps.
 impact buckshot
-  bursts    = spark_hot, chips_concrete, dust_concrete
-  scale     = 0.35, 0.8
+  bursts    = chips_concrete, dust_concrete
+  maybe     = spark_hot 0.25, dust_jet_concrete 0.35
+  vary      = count 0.5, size 0.3
+  scale     = 0.45, 0.9
   sound     = rsb/impact/concrete
 end
 
 impact buckshot.metal
-  bursts     = spark_metal, ember_metal, spark_spray
-  scale      = 0.35, 0.8
+  bursts    = spark_metal
+  maybe     = ember_metal 0.45, spark_spray 0.3
+  vary      = count 0.5, size 0.25
+  scale     = 0.45, 0.85
   mark       = pool, 3, 25
   markcolor  = 255, 170, 80
   sound      = rsb/impact/metal
@@ -708,25 +762,31 @@ end
 
 impact buckshot.wood
   bursts    = splinter_wood, dust_wood
-  scale     = 0.35, 0.8
+  maybe     = dust_jet_wood 0.25
+  vary      = count 0.5, size 0.3
+  scale     = 0.45, 0.9
   sound     = rsb/impact/wood
 end
 
 impact buckshot.glass
   bursts    = glint_glass
-  scale     = 0.35, 0.8
+  vary      = count 0.4, size 0.2
+  scale     = 0.4, 0.85
   sound     = rsb/glass
 end
 
 impact buckshot.liquid
   bursts    = splash_liquid
-  scale     = 0.35, 0.8
+  vary      = count 0.4, size 0.2
+  scale     = 0.4, 0.85
   sound     = none
 end
 
 impact buckshot.dirt
   bursts    = clods_dirt, dust_dirt
-  scale     = 0.35, 0.8
+  maybe     = dust_jet_dirt 0.25
+  vary      = count 0.5, size 0.3
+  scale     = 0.45, 0.9
   sound     = rsb/impact/concrete
 end
 
@@ -1231,7 +1291,7 @@ end
 roundlook buckshot
   look   = sprite, RSBT
   glide  = yes
-  wake   = none
+  wake   = pellet_vapour
   impact = buckshot
   whiz   = 48, rsb/whiz
 end
@@ -1400,6 +1460,13 @@ wake pistol_vapour         # the air a pistol round tears through: a thin lit wi
   particle = rsb_bullet_vapour
 end
 
+wake pellet_vapour         # buckshot: a fan of thin wisps, lighter than a pistol round's (no air shimmer: seven pellets would take every heat slot)
+  spacing  = 12
+  life     = 0.6
+  drift    = 2
+  particle = rsb_bullet_vapour
+end
+
 wake rifle_trail
   perstep = 4
   size    = 0.6, 0.1
@@ -1529,6 +1596,42 @@ flash shotgun
   flame      = 0.08
   smoke      = 3, 0.03, 0.35
   smokeparticle = rsb_smoke_gun
+end
+
+flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire (~3 m), a hard white strobe gone fast; steady, precise
+  light      = 500, 5.6, 2
+  lightcolor = 255, 226, 176
+  cone       = 16, 48, 190, 11
+  conetics   = 3
+  bursts     = flash_core, flash_tongue, flash_plume_long, flash_sparks
+  maybe      = flash_powder 0.5
+  flame      = 0.075
+  smoke      = 3, 0.03, 0.34
+  smokeparticle = rsb_smoke_gun
+  heat       = 6, 90, 0.9, 16
+  vary       = light 0.15, flame 0.2, cone 0.15, sparks 0.35, smoke 0.3
+  surge      = 0.08, 1.25
+  barrelheat = 0.26, 0.22, 0.45
+  barrelsmoke = rsb_smoke_barrel, 2.0
+  barrelshimmer = 2.5, 0.4
+end
+
+flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide star, powder everywhere, a warm strobe that lingers; wild
+  light      = 560, 5.0, 4
+  lightcolor = 255, 194, 118
+  cone       = 34, 84, 120, 12
+  conetics   = 5
+  bursts     = flash_core, flash_petals_wide, flash_plume_wide, flash_sparks_wide
+  maybe      = flash_powder 0.9, flash_sparks_wide 0.35
+  flame      = 0.1
+  smoke      = 6, 0.034, 0.38
+  smokeparticle = rsb_smoke_gun
+  heat       = 7, 40, 0.9, 16
+  vary       = light 0.3, flame 0.35, cone 0.3, sparks 0.5, smoke 0.45
+  surge      = 0.2, 1.4
+  barrelheat = 0.34, 0.18, 0.35
+  barrelsmoke = rsb_smoke_barrel, 3.0
+  barrelshimmer = 3.5, 0.5
 end
 
 flash rifle
@@ -1941,6 +2044,8 @@ ejecta hull_12ga
   sound   = rsb/casing/shell
   hot     = 0
   life    = 2100
+  portsmoke = rsb_smoke_port, 4
+  wisp      = rsb_casing_wisp, 20
 end
 
 ejecta brass_9mm

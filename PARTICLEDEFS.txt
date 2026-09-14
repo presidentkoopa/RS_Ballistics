@@ -214,6 +214,31 @@ particle rsb_smoke_gun
 	spin     = -30, 30
 }
 
+// ---------------------------------------------------------------- MUZZLE PLUME
+// A big gun's blast: a ball of burning powder gas thrown out ahead of the muzzle,
+// swelling and gone in a tenth of a second (the owner's reference: The Untouchables'
+// shotgun). Generated fire: white-hot inside, orange at the edge (heat 1 to 0.45).
+// Additive. No spin: the tongues follow the quad's up axis.
+particle rsb_muzzle_plume
+{
+	look      = fire
+	heat      = 1.0, 0.45
+	rise      = 30
+	roughness = 0.55
+	churn     = 3
+	detail    = 3
+	size      = 6 @0, 30 @0.35, 46 @1
+	color     = 255 250 240 @0, 255 250 240 @1
+	alpha     = 0 @0, 0 @1
+	emissive  = 6.5 @0, 3.5 @0.4, 0 @1
+	lit       = 0
+	gravity   = -20
+	drag      = 7
+	maxsize   = 64
+	soft      = 6
+	orient    = billboard
+}
+
 // ---------------------------------------------------------------- GUN SMOKE: PORT, CASE, BARREL
 // Lit, never glowing: a puff out of the ejection port as the case leaves, a thin wisp
 // off the hot case, and the ribbon a hot barrel curls up after a string of shots.
