@@ -3425,7 +3425,7 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   cone       = 24, 62, 85, 6
   conetics   = 4
   bursts     = flash_core, flash_petals, spk_heavy_streaks
-  maybe      = spk_embers 0.6, spk_specks 0.35, spk_stars 0.2
+  maybe      = spk_embers 0.6, spk_specks 0.35, spk_stars 0.2, x45_bloom 0.5
   flame      = 0.07
   smoke      = 3, 0.025, 0.32
   smokeparticle = rsb_smoke_gun
@@ -3580,6 +3580,7 @@ flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange st
   bursts     = flash_core, flash_petals
   maybe      = spk_heavy_streaks 0.45, spk_embers 0.3
   flame      = 0.06
+  heat       = 4, 20, 0.5, 8
   smoke      = 2, 0.025, 0.3
   smokeparticle = rsb_smoke_gun
   vary       = light 0.25, flame 0.3, cone 0.2, sparks 0.4, smoke 0.4
@@ -5013,6 +5014,7 @@ flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and e
   bursts          = flash_core, flash_petals, spk_heavy_streaks
   maybe           = spk_embers 0.6, spk_sparkler 0.15, spk_stars 0.3
   flame           = 0.06
+  heat            = 5, 24, 0.7, 10
   smoke           = 2, 0.025, 0.3
   smokeparticle   = rsb_smoke_gun
   vary            = light 0.25, flame 0.3, cone 0.2, sparks 0.4, smoke 0.4
@@ -5023,7 +5025,6 @@ flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and e
   barrelglow      = 1.0, 36, 1.8
   barrelglowcolor = 255, 104, 36
   smokevolume     = 30, 0.55, 0.5, 70, 12
-  heat            = 5, 24, 0.7, 10
 end
 
 flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling out of the tube, embers, a heavier thump of light
