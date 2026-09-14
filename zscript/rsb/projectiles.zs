@@ -57,6 +57,13 @@ class RSB_ProjectileLook play
 
 class RSB_PlasmaBall : PlasmaBall
 {
+	// NO LAUNCH SOUND of its own: the gun's card plays the fire sound (the owner's
+	// Sound Selection pick), and Doom's SeeSound (weapons/plasmaf) on spawn doubled it.
+	Default
+	{
+		SeeSound "";
+	}
+
 	private Vector3 travel;
 	private bool    landed;      // follows the playsim's own death: the same everywhere
 	transient bool             looked;
@@ -75,6 +82,13 @@ class RSB_PlasmaBall : PlasmaBall
 
 class RSB_Rocket : Rocket
 {
+	// NO LAUNCH SOUND of its own: the gun's card plays the fire sound (the owner's
+	// Sound Selection pick), and Doom's SeeSound (weapons/rocklf) on spawn doubled it.
+	Default
+	{
+		SeeSound "";
+	}
+
 	private Vector3 travel;
 	private bool    landed;
 	transient bool             looked;
@@ -91,6 +105,8 @@ class RSB_Rocket : Rocket
 	}
 }
 
+// Doom's BFGBall has no SeeSound (the BFG9000's A_BFGSound is the weapon's), so the gun's
+// card fire sound is already the only one: nothing to silence here.
 class RSB_BFGBall : BFGBall
 {
 	private Vector3 travel;
