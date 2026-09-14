@@ -544,6 +544,41 @@ particle rsb_casing_wisp
 	orient   = billboard
 }
 
+// A two-stroke engine's exhaust (RSB_Exhaust): a pale puff, the faintest cool grey of the burnt
+// oil in it. Lit, never glowing.
+particle rsb_smoke_exhaust
+{
+	size     = 1.2 @0, 5 @0.35, 10 @1
+	color    = 182 184 190 @0, 164 166 172 @1
+	alpha    = 0 @0, 0.26 @0.08, 0.12 @0.5, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -12
+	drag     = 3
+	maxsize  = 14
+	soft     = 3
+	texture  = "RSSKA0", 6, 8, once
+	orient   = billboard
+	spin     = -40, 40
+}
+
+// Blipping a two-stroke's throttle: a darker gout of unburnt fuel and oil. Lit, never glowing.
+particle rsb_smoke_exhaust_blip
+{
+	size     = 1.5 @0, 7 @0.35, 15 @1
+	color    = 118 116 114 @0, 96 94 92 @1
+	alpha    = 0 @0, 0.38 @0.06, 0.18 @0.5, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -10
+	drag     = 2.8
+	maxsize  = 20
+	soft     = 4
+	texture  = "RSSKA0", 6, 6, once
+	orient   = billboard
+	spin     = -50, 50
+}
+
 particle rsb_smoke_barrel
 {
 	size     = 0.7 @0, 3 @0.4, 6 @1

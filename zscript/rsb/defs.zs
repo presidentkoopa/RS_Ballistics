@@ -265,6 +265,21 @@ class RSB_FlashDef : RSB_Def
 	Color  chargeLightColor;
 	double chargeShimmerRadius;
 	double chargeShimmerStrength;
+	// AN ENGINE'S EXHAUST (RSB_Exhaust.Run, every tic a motor runs, with its throttle): bursts
+	// out of the port, each this many times a second at full throttle and `exhaustIdle` of that
+	// at idle; a dark blip when the throttle snaps open or the engine catches; smoke into the
+	// room; hot air at the port.
+	Array<String> exhaustBursts;
+	Array<double> exhaustRates;
+	double exhaustIdle;
+	String exhaustBlip;
+	double exhaustBlipRise;
+	double exhaustSmokeRadius;
+	double exhaustSmokeAmount;
+	double exhaustSmokeHeat;
+	double exhaustSmokeSpeed;
+	double exhaustShimmerRadius;
+	double exhaustShimmerStrength;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a
 	// weapon firing every tic reads as one pulsing glow, not a strobe.
 	int    throbTics;

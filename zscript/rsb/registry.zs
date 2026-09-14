@@ -193,6 +193,9 @@ class RSB_Registry : StaticEventHandler
 				why = MissingBurst(fl.bursts);
 				if (why == "") why = MissingBurst(fl.maybeBursts);
 				if (why == "") why = MissingBurst(fl.chargeBursts);
+				if (why == "") why = MissingBurst(fl.exhaustBursts);
+				if (why == "" && fl.exhaustBlip.Length() > 0 && !FindBurst(fl.exhaustBlip))
+					why = String.Format("its exhaust blip burst \"%s\" is not defined in any RSBDEFS", fl.exhaustBlip);
 				if (why == "" && fl.kickImpact.Length() > 0 && !defs.Find("impact", fl.kickImpact))
 					why = String.Format("its groundkick impact \"%s\" has no base profile in any RSBDEFS", fl.kickImpact);
 			}

@@ -1052,6 +1052,36 @@ burst saw_dust_wood        # fine wood dust hanging off the cut (rsb_dust_wood: 
   particle = rsb_dust_wood
 end
 
+# THE CHAINSAWS' ENGINES (flash chainsaw, chainsaw_heavy; RSB_Exhaust.Run from the gun mod every
+# tic the motor runs): puffs out of the exhaust port, a dark blip when the throttle snaps open.
+
+burst exhaust_puff         # a two-stroke's exhaust: a small pale puff out of the port (rsb_smoke_exhaust)
+  count    = 1
+  cone     = 25
+  speed    = 60, 0.5
+  life     = 0.9, 0.3
+  aim      = normal
+  particle = rsb_smoke_exhaust
+end
+
+burst exhaust_puff_heavy   # the Heavy Chainsaw's bigger engine: fatter puffs, thrown harder (rsb_smoke_exhaust)
+  count    = 2
+  cone     = 30
+  speed    = 80, 0.5
+  life     = 1.2, 0.3
+  aim      = normal
+  particle = rsb_smoke_exhaust
+end
+
+burst exhaust_blip         # the throttle snapping open, or the engine catching: a dark gout of unburnt two-stroke smoke (rsb_smoke_exhaust_blip)
+  count    = 3
+  cone     = 30
+  speed    = 110, 0.5
+  life     = 1.1, 0.3
+  aim      = normal
+  particle = rsb_smoke_exhaust_blip
+end
+
 burst sawdust_spray        # sawdust thrown out of a cut in wood (lit flakes, never glowing)
   count    = 6
   cone     = 35
@@ -3334,6 +3364,12 @@ end
 #               tic the gun charges (RSB_Barrel.Charge from the gun mod, with how far along)
 #   chargelight radius, intensity      chargelightcolor r, g, b -- swelling as it charges
 #   chargeshimmer radius, strength -- the air bending at the muzzle as it charges
+#   exhaust     <burst> <times a second at full throttle>, ... -- out of an engine's exhaust port
+#               every tic the motor runs (RSB_Exhaust.Run from the gun mod, with the throttle)
+#   exhaustidle the share of those rates at idle, 0-1 (0.35 when not given)
+#   exhaustblip <burst>, rise -- once when the throttle snaps open by `rise`, or the engine catches
+#   exhaustsmoke radius, amount, heat, speed -- smoke into the room from the port, by throttle
+#   exhaustshimmer radius, strength -- hot air at the port, by throttle
 #   barrelglow  from heat, radius, intensity -- a barrel run hot glows: a dull light at the
 #               muzzle past that heat (full auto, long bursts); barrelglowcolor r, g, b
 #   throb       period (tics), depth (0..1) -- light and cone swell and ease on a beat: a gun
@@ -3567,6 +3603,22 @@ flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure 
   heat       = 5, 12, 0.5, 10
   vary       = light 0.2, smoke 0.3
   smokevolume = 20, 1.2, 0.4, 50, 6
+end
+
+flash chainsaw             # THE CHAINSAW'S ENGINE (no shot; RSB_Exhaust.Run): a lazy pale puff at idle, a steady stream revved, a dark blip each time the throttle snaps open or it catches, hot air at the port
+  exhaust        = exhaust_puff 14
+  exhaustidle    = 0.3
+  exhaustblip    = exhaust_blip, 0.5
+  exhaustsmoke   = 8, 0.35, 0.8, 40
+  exhaustshimmer = 3, 0.35
+end
+
+flash chainsaw_heavy       # THE HEAVY CHAINSAW'S ENGINE: a bigger two-stroke, lumpier at idle, a thicker stream, heavier blips
+  exhaust        = exhaust_puff_heavy 16, exhaust_puff 6
+  exhaustidle    = 0.4
+  exhaustblip    = exhaust_blip, 0.4
+  exhaustsmoke   = 10, 0.5, 0.9, 50
+  exhaustshimmer = 4, 0.45
 end
 
 flash rifle

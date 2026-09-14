@@ -300,6 +300,15 @@ class RSB_Parser
 			d.chargeLightColor = Color(255, 255, 255, 255);
 			d.chargeShimmerRadius = 0;
 			d.chargeShimmerStrength = 0;
+			d.exhaustIdle = 0.35;
+			d.exhaustBlip = "";
+			d.exhaustBlipRise = 0.5;
+			d.exhaustSmokeRadius = 0;
+			d.exhaustSmokeAmount = 0;
+			d.exhaustSmokeHeat = 0;
+			d.exhaustSmokeSpeed = 0;
+			d.exhaustShimmerRadius = 0;
+			d.exhaustShimmerStrength = 0;
 			d.throbTics = 0;
 			d.throbDepth = 0;
 			return d;
@@ -1213,6 +1222,56 @@ class RSB_Parser
 			f.chargeShimmerRadius = v[0].ToDouble();
 			f.chargeShimmerStrength = v[1].ToDouble();
 			return (f.chargeShimmerRadius >= 0 && f.chargeShimmerStrength >= 0) ? "" : "chargeshimmer is radius, strength -- both 0 or more";
+		}
+		if (key == "exhaust")
+		{
+			f.exhaustBursts.Clear();
+			f.exhaustRates.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				String word;
+				double amount;
+				why = WordAmount(v[i], 0.0, 70.0, word, amount);
+				if (why != "") return "exhaust " .. why .. " -- exhaust is <burst> <times a second at full throttle>, ...";
+				f.exhaustBursts.Push(word);
+				f.exhaustRates.Push(amount);
+			}
+			return "";
+		}
+		if (key == "exhaustidle")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			f.exhaustIdle = v[0].ToDouble();
+			return (f.exhaustIdle >= 0 && f.exhaustIdle <= 1) ? "" : "exhaustidle is the share of the full-throttle rates at idle, 0 to 1";
+		}
+		if (key == "exhaustblip")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.exhaustBlip = "";
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[1])) return "exhaustblip is <burst>, rise -- the throttle snapping open by at least rise";
+			f.exhaustBlip = v[0];
+			f.exhaustBlipRise = v[1].ToDouble();
+			return (f.exhaustBlipRise > 0 && f.exhaustBlipRise <= 1) ? "" : "exhaustblip rise must be above 0 and at most 1";
+		}
+		if (key == "exhaustsmoke")
+		{
+			why = Nums(v, 4); if (why != "") return why;
+			f.exhaustSmokeRadius = v[0].ToDouble();
+			f.exhaustSmokeAmount = v[1].ToDouble();
+			f.exhaustSmokeHeat = v[2].ToDouble();
+			f.exhaustSmokeSpeed = v[3].ToDouble();
+			return (f.exhaustSmokeRadius > 0 && f.exhaustSmokeAmount >= 0) ? "" : "exhaustsmoke is radius (above 0), amount, heat, speed";
+		}
+		if (key == "exhaustshimmer")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.exhaustShimmerRadius = v[0].ToDouble();
+			f.exhaustShimmerStrength = v[1].ToDouble();
+			return (f.exhaustShimmerRadius >= 0 && f.exhaustShimmerStrength >= 0) ? "" : "exhaustshimmer is radius, strength -- both 0 or more";
 		}
 		if (key == "smokevolume")
 		{
