@@ -1047,3 +1047,492 @@ particle rsb_chunk_dirt_clod3
 	texture  = "RSCLA0", 4, 8, loop
 	orient   = flake
 }
+
+// ---------------------------------------------------------------- MORE 3D CHUNKS
+// More shapes a material for debris that stays (engine #9), and new kinds: fist-size rubble a
+// blast throws, flat wood chips, a hex nut and a torn strip, glass slivers, pebbles. As the first
+// chunks: near-white colour (a burst's colour gives the material), size 1.2, lit, never glowing.
+particle rsb_chunk_concrete_chip5
+{
+	mesh     = "models/debris/concrete/chip5.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 248 246 240 @0, 248 246 240 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 600
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_chip6
+{
+	mesh     = "models/debris/concrete/chip6.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 240 238 232 @0, 240 238 232 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 600
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_chip7
+{
+	mesh     = "models/debris/concrete/chip7.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 252 246 @0, 255 252 246 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 600
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_chip8
+{
+	mesh     = "models/debris/concrete/chip8.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 234 232 228 @0, 234 232 228 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 600
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_slab3
+{
+	mesh     = "models/debris/concrete/slab3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 244 240 234 @0, 244 240 234 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 700
+	drag     = 0.4
+	spin     = -360, 360
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 10, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_rubble1
+{
+	mesh     = "models/debris/concrete/rubble1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 246 242 236 @0, 246 242 236 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 750
+	drag     = 0.35
+	spin     = -300, 300
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_rubble2
+{
+	mesh     = "models/debris/concrete/rubble2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 236 234 230 @0, 236 234 230 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 750
+	drag     = 0.35
+	spin     = -300, 300
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_concrete_rubble3
+{
+	mesh     = "models/debris/concrete/rubble3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 252 248 242 @0, 252 248 242 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 750
+	drag     = 0.35
+	spin     = -300, 300
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_wood_splinter4
+{
+	mesh     = "models/debris/wood/splinter4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 248 240 230 @0, 248 240 230 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 450
+	drag     = 1
+	spin     = -720, 720
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSSLA0", 4, 10, loop
+	orient   = flake
+}
+
+particle rsb_chunk_wood_splinter5
+{
+	mesh     = "models/debris/wood/splinter5.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 240 232 220 @0, 240 232 220 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 450
+	drag     = 1
+	spin     = -720, 720
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSSLA0", 4, 10, loop
+	orient   = flake
+}
+
+particle rsb_chunk_wood_plank2
+{
+	mesh     = "models/debris/wood/plank2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 246 238 228 @0, 246 238 228 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 550
+	drag     = 0.6
+	spin     = -420, 420
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSSLA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_wood_woodchip1
+{
+	mesh     = "models/debris/wood/woodchip1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 252 244 232 @0, 252 244 232 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 420
+	drag     = 1.4
+	spin     = -900, 900
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSSLA0", 4, 12, loop
+	orient   = flake
+}
+
+particle rsb_chunk_wood_woodchip2
+{
+	mesh     = "models/debris/wood/woodchip2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 240 230 216 @0, 240 230 216 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 420
+	drag     = 1.4
+	spin     = -900, 900
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSSLA0", 4, 12, loop
+	orient   = flake
+}
+
+particle rsb_chunk_wood_woodchip3
+{
+	mesh     = "models/debris/wood/woodchip3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 248 238 226 @0, 248 238 226 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 420
+	drag     = 1.4
+	spin     = -900, 900
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSSLA0", 4, 12, loop
+	orient   = flake
+}
+
+particle rsb_chunk_metal_shard4
+{
+	mesh     = "models/debris/metal/shard4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 250 252 255 @0, 250 252 255 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 650
+	drag     = 0.5
+	spin     = -600, 600
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_metal_shard5
+{
+	mesh     = "models/debris/metal/shard5.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 238 240 246 @0, 238 240 246 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 650
+	drag     = 0.5
+	spin     = -600, 600
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_metal_nut1
+{
+	mesh     = "models/debris/metal/nut1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 232 234 238 @0, 232 234 238 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 700
+	drag     = 0.4
+	spin     = -720, 720
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_metal_strip1
+{
+	mesh     = "models/debris/metal/strip1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 244 246 250 @0, 244 246 250 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 600
+	drag     = 0.6
+	spin     = -480, 480
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+}
+
+particle rsb_chunk_glass_shard4
+{
+	mesh     = "models/debris/glass/shard4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 250 252 255 @0, 250 252 255 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 550
+	drag     = 0.8
+	spin     = -900, 900
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+}
+
+particle rsb_chunk_glass_shard5
+{
+	mesh     = "models/debris/glass/shard5.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 242 248 250 @0, 242 248 250 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 550
+	drag     = 0.8
+	spin     = -900, 900
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+}
+
+particle rsb_chunk_glass_sliver1
+{
+	mesh     = "models/debris/glass/sliver1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 520
+	drag     = 0.9
+	spin     = -1080, 1080
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+}
+
+particle rsb_chunk_glass_sliver2
+{
+	mesh     = "models/debris/glass/sliver2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 246 250 252 @0, 246 250 252 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 520
+	drag     = 0.9
+	spin     = -1080, 1080
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+}
+
+particle rsb_chunk_dirt_clod4
+{
+	mesh     = "models/debris/dirt/clod4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 246 240 232 @0, 246 240 232 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 650
+	drag     = 0.7
+	spin     = -480, 480
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCLA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_dirt_clod5
+{
+	mesh     = "models/debris/dirt/clod5.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 236 228 220 @0, 236 228 220 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 650
+	drag     = 0.7
+	spin     = -480, 480
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCLA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_dirt_pebble1
+{
+	mesh     = "models/debris/dirt/pebble1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 232 230 226 @0, 232 230 226 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 700
+	drag     = 0.5
+	spin     = -600, 600
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCLA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_dirt_pebble2
+{
+	mesh     = "models/debris/dirt/pebble2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 244 240 236 @0, 244 240 236 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 700
+	drag     = 0.5
+	spin     = -600, 600
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCLA0", 4, 8, loop
+	orient   = flake
+}
+
+particle rsb_chunk_dirt_pebble3
+{
+	mesh     = "models/debris/dirt/pebble3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 224 222 218 @0, 224 222 218 @1
+	size     = 1.2 @0, 1.2 @0.85, 0 @1
+	gravity  = 700
+	drag     = 0.5
+	spin     = -600, 600
+	collide  = plane
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCLA0", 4, 8, loop
+	orient   = flake
+}
+
+// ---------------------------------------------------------------- IMPACT SPARKS
+// Sparks off a hit, from the textured spark library (tools/import_sparks.py). Heavier than bore
+// sparks -- struck grit and metal, not burning powder -- so they arc and fall, cooling white,
+// yellow, orange, red. Additive.
+particle rsb_spark_impact
+{
+	size     = 1.2 @0, 0.9 @0.6, 0.4 @1
+	color    = 255 245 220 @0, 255 190 100 @0.35, 255 110 40 @0.75, 180 40 15 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 4.0 @0, 2.4 @0.4, 0 @1
+	lit      = 0
+	gravity  = 320
+	drag     = 2.5
+	maxsize  = 5
+	soft     = 1
+	texture  = "RSKSA0", 1, 1, loop
+	orient   = streak
+	stretch  = 0.025
+}
+
+// A ricochet off metal: long photoreal streaks, a hot head and a tail.
+particle rsb_spark_ricochet
+{
+	size     = 1.8 @0, 1.2 @0.6, 0.6 @1
+	color    = 255 252 235 @0, 255 214 130 @0.3, 255 130 50 @0.7, 190 50 20 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 4.5 @0, 2.8 @0.4, 0 @1
+	lit      = 0
+	gravity  = 380
+	drag     = 1.5
+	maxsize  = 7
+	soft     = 1
+	texture  = "RSKRA0", 1, 1, loop
+	orient   = streak
+	stretch  = 0.035
+}
+
+// Hot metal torn off by a hit: glowing beads that fall and cool.
+particle rsb_ember_metal
+{
+	size     = 1.0 @0, 0.8 @0.6, 0.35 @1
+	color    = 255 200 110 @0, 255 120 35 @0.5, 170 45 12 @1
+	alpha    = 0 @0, 0 @1
+	emissive = 3.2 @0, 1.8 @0.5, 0 @1
+	lit      = 0
+	gravity  = 280
+	drag     = 1.0
+	maxsize  = 3
+	soft     = 1
+	texture  = "RSKEA0", 1, 1, loop
+	orient   = billboard
+}

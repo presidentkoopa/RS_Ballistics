@@ -272,6 +272,113 @@ def clod(seed):
     return m
 
 
+def rubble(seed):
+    """Concrete: a fist-size lump of rubble a blast throws, 8-10 cm."""
+    rng = random.Random(seed)
+    (P,) = centred_on_grid([blob(rng, 14, rng.uniform(1.2, 1.6), rng.uniform(1.0, 1.4), rng.uniform(0.8, 1.1), 0.35)])
+    m = Mesh()
+    m.flat(P, hull(P))
+    return m
+
+
+def woodchip(seed):
+    """Wood: a flat chip knocked out of a board, 2-3 cm."""
+    rng = random.Random(seed)
+    (P,) = centred_on_grid([blob(rng, 10, rng.uniform(0.5, 0.7), rng.uniform(0.35, 0.5), rng.uniform(0.06, 0.1), 0.3)])
+    m = Mesh()
+    m.flat(P, hull(P))
+    return m
+
+
+def nut(seed):
+    """Metal: a hex nut shaken loose, 2.5 cm across -- a hexagonal prism with a round-ish hole."""
+    outer, inner, half = 0.45, 0.22, 0.15
+    ring_out = [(outer * math.cos(math.tau * k / 6), outer * math.sin(math.tau * k / 6)) for k in range(6)]
+    ring_in = [(inner * math.cos(math.tau * k / 6), inner * math.sin(math.tau * k / 6)) for k in range(6)]
+    snap = lambda p: tuple(round(c * GRID) / GRID for c in p)
+    m = Mesh()
+
+    def tri(a, b, c, want):
+        a, b, c = snap(a), snap(b), snap(c)
+        n = cross(sub(b, a), sub(c, a))
+        if length(n) < 1e-9:
+            return
+        if dot(n, want) < 0:
+            b, c = c, b
+            n = (-n[0], -n[1], -n[2])
+        n = unit(n)
+        base = len(m.verts)
+        m.verts += [a, b, c]
+        m.normals += [n, n, n]
+        m.tris.append((base, base + 1, base + 2))
+
+    for k in range(6):
+        j = (k + 1) % 6
+        o0, o1, i0, i1 = ring_out[k], ring_out[j], ring_in[k], ring_in[j]
+        mid = ((o0[0] + o1[0]) / 2, (o0[1] + o1[1]) / 2, 0.0)
+        # outer side, facing away from the axis
+        tri((o0[0], o0[1], -half), (o1[0], o1[1], -half), (o1[0], o1[1], half), mid)
+        tri((o0[0], o0[1], -half), (o1[0], o1[1], half), (o0[0], o0[1], half), mid)
+        # inner side, facing the axis
+        inward = (-mid[0], -mid[1], 0.0)
+        tri((i0[0], i0[1], -half), (i1[0], i1[1], half), (i1[0], i1[1], -half), inward)
+        tri((i0[0], i0[1], -half), (i0[0], i0[1], half), (i1[0], i1[1], half), inward)
+        # the two faces, up and down
+        for z, want in ((half, (0, 0, 1)), (-half, (0, 0, -1))):
+            tri((o0[0], o0[1], z), (o1[0], o1[1], z), (i1[0], i1[1], z), want)
+            tri((o0[0], o0[1], z), (i1[0], i1[1], z), (i0[0], i0[1], z), want)
+    return m
+
+
+def strip(seed):
+    """Metal: a long torn strip bent at a crease, 6 cm."""
+    rng = random.Random(seed)
+    t = 0.03
+    angle = math.radians(rng.uniform(20.0, 50.0))
+
+    def plate(x0, x1):
+        pts = []
+        for _ in range(5):
+            x, y = rng.uniform(x0, x1), rng.uniform(-0.12, 0.12)
+            pts += [(x, y, -t), (x, y, t)]
+        for y in (-0.1, 0.1):
+            pts += [(0.0, y, -t), (0.0, y, t)]
+        return pts
+
+    a = plate(-1.0, 0.0)
+    b = [(x * math.cos(angle) - z * math.sin(angle), y, x * math.sin(angle) + z * math.cos(angle))
+         for x, y, z in plate(0.0, 0.9)]
+    A, B = centred_on_grid([a, b])
+    m = Mesh()
+    m.flat(A, hull(A))
+    m.flat(B, hull(B))
+    return m
+
+
+def sliver(seed):
+    """Glass: a long thin sliver, 4 cm."""
+    rng = random.Random(seed)
+    t = 0.02
+    pts = []
+    for _ in range(5):
+        x, y = rng.uniform(-0.7, 0.7), rng.uniform(-0.08, 0.08) * (1.0 - abs(rng.uniform(-0.7, 0.7)) / 0.9)
+        pts += [(x, y, -t), (x, y, t)]
+    pts += [(-0.72, 0.0, -t), (-0.72, 0.0, t), (0.72, 0.01, -t), (0.72, 0.01, t)]
+    (P,) = centred_on_grid([pts])
+    m = Mesh()
+    m.flat(P, hull(P))
+    return m
+
+
+def pebble(seed):
+    """Dirt and rock: a small smooth pebble, 1-2 cm."""
+    rng = random.Random(seed)
+    (P,) = centred_on_grid([blob(rng, 12, rng.uniform(0.25, 0.35), rng.uniform(0.2, 0.3), rng.uniform(0.18, 0.25), 0.15)])
+    m = Mesh()
+    m.smooth(P, hull(P))
+    return m
+
+
 SHAPES = [
     ("concrete/chip1", chip, 101), ("concrete/chip2", chip, 102), ("concrete/chip3", chip, 103), ("concrete/chip4", chip, 104),
     ("concrete/slab1", slab, 111), ("concrete/slab2", slab, 112),
@@ -280,6 +387,16 @@ SHAPES = [
     ("metal/shard1", bent, 301), ("metal/shard2", bent, 302), ("metal/shard3", bent, 303),
     ("glass/shard1", pane, 401), ("glass/shard2", pane, 402), ("glass/shard3", pane, 403),
     ("dirt/clod1", clod, 501), ("dirt/clod2", clod, 502), ("dirt/clod3", clod, 503),
+    # MORE VARIETY for debris that stays (engine #9): more shapes a material, and new kinds.
+    ("concrete/chip5", chip, 105), ("concrete/chip6", chip, 106), ("concrete/chip7", chip, 107), ("concrete/chip8", chip, 108),
+    ("concrete/slab3", slab, 113),
+    ("concrete/rubble1", rubble, 121), ("concrete/rubble2", rubble, 122), ("concrete/rubble3", rubble, 123),
+    ("wood/splinter4", splinter, 204), ("wood/splinter5", splinter, 205), ("wood/plank2", plank, 212),
+    ("wood/woodchip1", woodchip, 221), ("wood/woodchip2", woodchip, 222), ("wood/woodchip3", woodchip, 223),
+    ("metal/shard4", bent, 304), ("metal/shard5", bent, 305), ("metal/nut1", nut, 311), ("metal/strip1", strip, 321),
+    ("glass/shard4", pane, 404), ("glass/shard5", pane, 405), ("glass/sliver1", sliver, 411), ("glass/sliver2", sliver, 412),
+    ("dirt/clod4", clod, 504), ("dirt/clod5", clod, 505),
+    ("dirt/pebble1", pebble, 521), ("dirt/pebble2", pebble, 522), ("dirt/pebble3", pebble, 523),
 ]
 
 
