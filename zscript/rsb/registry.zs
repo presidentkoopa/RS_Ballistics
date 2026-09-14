@@ -18,6 +18,7 @@ class RSB_Registry : StaticEventHandler
 	int        refusals;
 	int        heatBlastNext;   // RSB_Heat: the next blast slot, in turn (drawing only)
 	int        trailNext;       // RSB_Trail: the next drawn-line slot for a trail, in turn (drawing only)
+	Array<RSB_BarrelHeat> barrels;   // RSB_Barrel: heat per gun (drawing only; cleared each map)
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()
@@ -34,6 +35,7 @@ class RSB_Registry : StaticEventHandler
 	override void WorldLoaded(WorldEvent e)
 	{
 		said.Clear();
+		barrels.Clear();
 		if (!defs) Load();
 		String style = RSB_Settings.StyleName();
 		RSB_Log.Info(String.Format("RS_Ballistics: %d profile(s) from %d RSBDEFS lump(s), %d refused, effects %s, style %s -- %s",

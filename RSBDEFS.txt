@@ -1209,6 +1209,12 @@ ballistics revolver_357
   damage = 5, 3
 end
 
+ballistics default         # a gun that names no round: vanilla's pistol bullet
+  speed  = 245
+  radius = 2
+  damage = 5, 3
+end
+
 # ---- round looks
 # A round look may add `heat = radius, strength, tics[, reach]`: the air the round tears
 # through shimmers behind it over its last `reach` units (1024 when not given) and fades
@@ -1276,6 +1282,14 @@ roundlook smg_45           # the .45 out of an SMG: the plain look
   glide  = yes
   wake   = none
   impact = pistol
+  whiz   = 72, rsb/whiz
+end
+
+roundlook default          # the plain look for a gun that names no round -- never a showpiece
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = none
+  impact = bullet
   whiz   = 72, rsb/whiz
 end
 
@@ -1365,6 +1379,11 @@ round smg_45               # the same .45 as the M4A3's, in the SMG's plainer lo
   roundlook  = smg_45
 end
 
+round default              # what a gun that names no round fires (WM_Gun's fallback)
+  ballistics = default
+  roundlook  = default
+end
+
 
 # ---------------------------------------------------------------- WAKES
 #   perstep  particles along each tic's travel
@@ -1434,11 +1453,27 @@ end
 #   maybe       <burst> <chance 0..1>, ... -- bursts only some shots throw
 #   surge       chance, scale -- now and then a bigger shot: all of it x scale
 #   flameroll   yes | no -- the flame sprite turns to a new angle each shot (yes)
+#   barrelheat  heat a shot, heat lost a second, smokes from -- THE SMOKING BARREL: after a
+#               quick string of shots the barrel smokes, hardest at heat 1, until it cools.
+#               Needs the gun mod's RSB_Barrel.Shot and RSB_Barrel.Muzzle calls (barrel.zs).
+#   barrelsmoke <PARTICLEDEFS definition>, puffs a tic at full heat -- the ribbon off the muzzle
+#   barrelshimmer  radius, strength -- the hot air bending over the barrel
 #
 # Every gun the rig flashes gets a flash profile, bullets or not: plasma, rocket,
 # bfg and rail have their own light and sparks, and `none` is no flash at all.
 
 flash pistol
+  light      = 180, 3.0, 2
+  lightcolor = 255, 214, 150
+  cone       = 20, 55, 80, 5
+  conetics   = 3
+  bursts     = flash_core, flash_sparks
+  flame      = 0.05
+  smoke      = 1, 0.02, 0.3
+  smokeparticle = rsb_smoke_gun
+end
+
+flash default              # the plain flash for a gun that names none (WM_Gun's fallback)
   light      = 180, 3.0, 2
   lightcolor = 255, 214, 150
   cone       = 20, 55, 80, 5
@@ -1462,6 +1497,9 @@ flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turn
   heat       = 3, 18, 0.6, 10
   vary       = light 0.3, flame 0.35, cone 0.25, sparks 0.5, smoke 0.5
   surge      = 0.18, 1.45
+  barrelheat = 0.16, 0.24, 0.35
+  barrelsmoke = rsb_smoke_barrel, 1.6
+  barrelshimmer = 2, 0.35
 end
 
 flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic longer, more smoke
@@ -1477,6 +1515,9 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   heat       = 4, 16, 0.7, 12
   vary       = light 0.25, flame 0.3, cone 0.2, sparks 0.45, smoke 0.4
   surge      = 0.15, 1.35
+  barrelheat = 0.2, 0.22, 0.35
+  barrelsmoke = rsb_smoke_barrel, 2
+  barrelshimmer = 2.5, 0.4
 end
 
 flash shotgun
@@ -1864,6 +1905,8 @@ end
 #   sound    SNDINFO name | none
 #   hot      tics fullbright out of the port
 #   life     tics on the floor before it fades
+#   portsmoke <PARTICLEDEFS definition>, puffs -- gun smoke out of the port as the case leaves
+#   wisp     <PARTICLEDEFS definition>, tics -- the thin wisp a hot case trails as it flies
 
 ejecta brass_45
   look    = model, RSB_Casing45
@@ -1874,6 +1917,8 @@ ejecta brass_45
   sound   = rsb/casing/medium
   hot     = 12
   life    = 2100        # 60 s on the floor; the menu can only shorten it
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 16
 end
 
 ejecta brass_556
@@ -1907,6 +1952,8 @@ ejecta brass_9mm
   sound   = rsb/casing/small
   hot     = 10
   life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 14
 end
 
 ejecta brass_762
@@ -1928,5 +1975,16 @@ ejecta brass_357          # dumped from a cylinder, not thrown by a port: slow, 
   gravity = 0.6
   sound   = rsb/casing/medium
   hot     = 0
+  life    = 2100
+end
+
+ejecta default             # a plain case for a gun that names no casing (WM_Gun's fallback): no port smoke
+  look    = model, RSB_Casing45
+  scale   = 1
+  speed   = 1.0, 0.2
+  bounce  = 0.45, 0.3, 4
+  gravity = 0.6
+  sound   = rsb/casing/medium
+  hot     = 12
   life    = 2100
 end

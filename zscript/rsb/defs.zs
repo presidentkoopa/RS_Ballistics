@@ -195,6 +195,16 @@ class RSB_FlashDef : RSB_Def
 	double surgeChance;
 	double surgeScale;
 	bool   flameRoll;
+	// THE SMOKING BARREL (RSB_Barrel): heat a shot adds, heat lost a second, the heat it
+	// starts smoking at; the ribbon and its puffs a tic at full heat; the hot air over it.
+	double barrelPerShot;
+	double barrelCool;
+	double barrelSmokeFrom;
+	String barrelSmokeParticle;
+	int    barrelSmokeHandle;
+	double barrelSmokePerTic;
+	double barrelShimmerRadius;
+	double barrelShimmerStrength;
 }
 
 // EJECTA: a spent casing or hull thrown from a port. Live rounds are the
@@ -213,6 +223,14 @@ class RSB_EjectaDef : RSB_Def
 	String soundName;
 	int    hotTics;        // fullbright out of the port
 	int    lifeTics;       // on the floor before it fades
+	// GUN SMOKE out of the port: a puff as the case leaves (`portsmoke`), and a thin wisp
+	// the hot case trails for its first tics (`wisp`). PARTICLEDEFS names, hash handles.
+	String portSmokeParticle;
+	int    portSmokeHandle;
+	int    portSmokeCount;
+	String wispParticle;
+	int    wispHandle;
+	int    wispTics;
 }
 
 // A TRAIL: what a beam leaves in the air from muzzle to hit -- a fading core line, a

@@ -266,6 +266,14 @@ class RSB_Parser
 			d.surgeChance = 0;
 			d.surgeScale = 1;
 			d.flameRoll = true;
+			d.barrelPerShot = 0;
+			d.barrelCool = 0.3;
+			d.barrelSmokeFrom = 0.5;
+			d.barrelSmokeParticle = "";
+			d.barrelSmokeHandle = 0;
+			d.barrelSmokePerTic = 0;
+			d.barrelShimmerRadius = 0;
+			d.barrelShimmerStrength = 0;
 			return d;
 		}
 		if (kind == "ejecta")
@@ -283,6 +291,12 @@ class RSB_Parser
 			d.soundName = "none";
 			d.hotTics = 0;
 			d.lifeTics = 700;
+			d.portSmokeParticle = "";
+			d.portSmokeHandle = 0;
+			d.portSmokeCount = 0;
+			d.wispParticle = "";
+			d.wispHandle = 0;
+			d.wispTics = 0;
 			return d;
 		}
 		if (kind == "trail")
@@ -936,6 +950,36 @@ class RSB_Parser
 			f.flameRoll = (yn == 1);
 			return "";
 		}
+		if (key == "barrelheat")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			f.barrelPerShot = v[0].ToDouble();
+			f.barrelCool = v[1].ToDouble();
+			f.barrelSmokeFrom = v[2].ToDouble();
+			return (f.barrelPerShot >= 0 && f.barrelCool > 0 && f.barrelSmokeFrom >= 0 && f.barrelSmokeFrom <= 2) ? ""
+				: "barrelheat is heat a shot (0 or more), heat lost a second (above 0), smokes from (0..2)";
+		}
+		if (key == "barrelsmoke")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.barrelSmokeParticle = "";
+				f.barrelSmokePerTic = 0;
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[1])) return "barrelsmoke is <PARTICLEDEFS definition>, puffs a tic at full heat -- or none";
+			f.barrelSmokeParticle = v[0];
+			f.barrelSmokeHandle = 0;
+			f.barrelSmokePerTic = v[1].ToDouble();
+			return (f.barrelSmokePerTic >= 0 && f.barrelSmokePerTic <= 8) ? "" : "barrelsmoke puffs a tic must be from 0 to 8";
+		}
+		if (key == "barrelshimmer")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.barrelShimmerRadius = v[0].ToDouble();
+			f.barrelShimmerStrength = v[1].ToDouble();
+			return (f.barrelShimmerRadius >= 0 && f.barrelShimmerStrength >= 0) ? "" : "barrelshimmer is radius, strength -- both 0 or more";
+		}
 		return String.Format("unknown flash key \"%s\"", key);
 	}
 
@@ -1002,6 +1046,34 @@ class RSB_Parser
 			why = Nums(v, 1); if (why != "") return why;
 			e.lifeTics = v[0].ToInt();
 			return (e.lifeTics >= 1) ? "" : "life must be 1 or more tics";
+		}
+		if (key == "portsmoke")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				e.portSmokeParticle = "";
+				e.portSmokeCount = 0;
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[1])) return "portsmoke is <PARTICLEDEFS definition>, puffs -- or none";
+			e.portSmokeParticle = v[0];
+			e.portSmokeHandle = 0;
+			e.portSmokeCount = v[1].ToInt();
+			return (e.portSmokeCount >= 0 && e.portSmokeCount <= 16) ? "" : "portsmoke puffs must be from 0 to 16";
+		}
+		if (key == "wisp")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				e.wispParticle = "";
+				e.wispTics = 0;
+				return "";
+			}
+			if (v.Size() != 2 || !IsNum(v[1])) return "wisp is <PARTICLEDEFS definition>, tics -- or none";
+			e.wispParticle = v[0];
+			e.wispHandle = 0;
+			e.wispTics = v[1].ToInt();
+			return (e.wispTics >= 0 && e.wispTics <= 70) ? "" : "wisp tics must be from 0 to 70";
 		}
 		return String.Format("unknown ejecta key \"%s\"", key);
 	}

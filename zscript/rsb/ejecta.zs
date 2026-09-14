@@ -98,6 +98,7 @@ class RSB_Ejecta : Actor
 			return null;
 		}
 		Vector3 d = (aim.Length() > 0.000001) ? aim.Unit() : (0, 0, 1);
+		PortSmoke(ed, at, d, seed);
 		if (!shared) return RSB_LocalEjecta.Toss(reg, whichEjecta, at, d, carrierVel, throwSpeed, seed, casingSound);
 
 		let c = RSB_Ejecta(Actor.Spawn("RSB_Ejecta", at, ALLOW_REPLACE));
@@ -122,6 +123,22 @@ class RSB_Ejecta : Actor
 		c.Vel = d * (throwSpeed * max(0.0, mul)) + carrierVel;
 		c.angle = VectorAngle(d.x, d.y);
 		return c;
+	}
+
+	// GUN SMOKE OUT OF THE PORT as the case leaves (the profile's `portsmoke`): lit, never
+	// glowing, scaled by the effects level and the Muzzle smoke setting. With the case,
+	// whether or not casings are drawn -- it is smoke, not brass.
+	static void PortSmoke(RSB_EjectaDef ed, Vector3 at, Vector3 d, int seed)
+	{
+		if (!ed || ed.portSmokeCount <= 0 || ed.portSmokeParticle.Length() == 0) return;
+		int tier = RSB_Tier.Current();
+		if (tier <= RSB_Tier.T_OFF) return;
+		int n = int(ed.portSmokeCount * RSB_Tier.CountScale(tier) * RSB_Settings.FlashSmoke() + 0.5);
+		if (n <= 0) return;
+		// The handle is a hash of the name, the same everywhere: cached, never tested.
+		if (ed.portSmokeHandle == 0) ed.portSmokeHandle = level.ParticleDefinition(ed.portSmokeParticle);
+		level.SpawnParticles(ed.portSmokeHandle, at + d * 0.5, d, min(n, 16), 40.0, 10.0, 0.6,
+			1.0, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(seed, level.maptime, RSB_Hash.OfPos(at)));
 	}
 
 	// The profile's sprite, or -1 to keep RSCS. A sprite only exists once some
@@ -210,6 +227,8 @@ class RSB_LocalEjecta : Actor
 	private bool    fading;
 	private double  pitchSpin;       // a 3D casing's tumble, degrees a tic (a sprite ignores pitch and roll)
 	private double  rollSpin;
+	private int     wispTics;        // the hot case trails a thin wisp this many tics (the profile's `wisp`)
+	private int     wispHandle;
 
 	// How high the casing's centre sits above the floor when it lies still: 0 for a
 	// sprite (its art sits on its origin); a model casing gives its mesh's lying radius.
@@ -253,6 +272,13 @@ class RSB_LocalEjecta : Actor
 		c.bBRIGHT = c.hotTics > 0;
 		c.fadeFrom = int(max(1, ed.lifeTics) * clamp(RSB_Settings.CasingLife(), 0.0, 1.0));
 		c.tumbleSeq = seed;
+		if (ed.wispTics > 0 && ed.wispParticle.Length() > 0 && RSB_Settings.FlashSmoke() > 0)
+		{
+			// The handle is a hash of the name, the same everywhere: cached, never tested.
+			if (ed.wispHandle == 0) ed.wispHandle = level.ParticleDefinition(ed.wispParticle);
+			c.wispHandle = ed.wispHandle;
+			c.wispTics = ed.wispTics;
+		}
 		// THE TUMBLE, hashed: end over end at 18-42 degrees a tic either way, a slower roll.
 		int tumbleHash = RSB_Hash.OfPos(at);
 		c.pitchSpin = RSB_Hash.Between(18.0, 42.0, seed, 3, tumbleHash) * ((RSB_Hash.Frac(seed, 5, tumbleHash) < 0.5) ? -1.0 : 1.0);
@@ -291,7 +317,16 @@ class RSB_LocalEjecta : Actor
 		if (resting) Lie();
 		else Fly();
 		if (bDestroyed) return;
+		if (age <= wispTics && !resting) Wisp();
 		Super.Tick();
+	}
+
+	// THE HOT CASE'S WISP: one thin, lit mote a tic where it is, thinning as it cools.
+	private void Wisp()
+	{
+		double cooling = 1.0 - 0.5 * double(age) / double(max(1, wispTics));
+		level.SpawnParticles(wispHandle, pos, (0, 0, 1), 1, 180.0, 1.5, 0.5, 0.8, 0.3,
+			Color(255, 255, 255, 255), 1.0, cooling, RSB_Hash.Seed(tumbleSeq, age, 173));
 	}
 
 	// ONE TIC OF FLIGHT: fall, then trace the move and bounce off what it meets.

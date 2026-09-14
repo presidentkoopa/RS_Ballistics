@@ -214,6 +214,55 @@ particle rsb_smoke_gun
 	spin     = -30, 30
 }
 
+// ---------------------------------------------------------------- GUN SMOKE: PORT, CASE, BARREL
+// Lit, never glowing: a puff out of the ejection port as the case leaves, a thin wisp
+// off the hot case, and the ribbon a hot barrel curls up after a string of shots.
+particle rsb_smoke_port
+{
+	size     = 1.5 @0, 6 @0.35, 11 @1
+	color    = 190 188 184 @0, 170 170 168 @1
+	alpha    = 0 @0, 0.3 @0.08, 0.14 @0.5, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -10
+	drag     = 3.5
+	maxsize  = 14
+	soft     = 3
+	texture  = "RSSKA0", 6, 8, once
+	orient   = billboard
+	spin     = -40, 40
+}
+
+particle rsb_casing_wisp
+{
+	size     = 0.4 @0, 1.6 @0.5, 2.6 @1
+	color    = 206 204 200 @0, 190 190 188 @1
+	alpha    = 0 @0, 0.2 @0.1, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -6
+	drag     = 4
+	maxsize  = 4
+	soft     = 1
+	orient   = billboard
+}
+
+particle rsb_smoke_barrel
+{
+	size     = 0.7 @0, 3 @0.4, 6 @1
+	color    = 204 202 198 @0, 184 184 182 @1
+	alpha    = 0 @0, 0.22 @0.1, 0.1 @0.55, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -22
+	drag     = 1.6
+	maxsize  = 8
+	soft     = 2
+	texture  = "RSSKA0", 6, 5, once
+	orient   = billboard
+	spin     = -50, 50
+}
+
 // ---------------------------------------------------------------- BULLET VAPOUR
 // The air a round tears through: a thin, pale wisp laid along its flight that spreads
 // and thins. Lit by the room, never glowing. Faint at full speed; in slow motion it
