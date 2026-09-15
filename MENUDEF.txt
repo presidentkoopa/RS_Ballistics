@@ -262,7 +262,7 @@ OptionMenu "RSB_HeatMenu"
 OptionMenu "RSB_LightMenu"
 {
 	Title "LIGHTS"
-	StaticText "Every light an effect makes: muzzle strobes, impact flashes, fire.", "DarkGray"
+	StaticText "Every light an effect makes: muzzle strobes, impact flashes, fire, sparks and tracers.", "DarkGray"
 	StaticText ""
 	Slider "Muzzle flash light", "rsb_flash_light", 0.0, 3.0, 0.1, 1
 	Slider "Muzzle flash reach", "rsb_flash_size", 0.25, 3.0, 0.05, 2
@@ -273,6 +273,20 @@ OptionMenu "RSB_LightMenu"
 	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
 	StaticText ""
 	Slider "Lights on smoke and dust (32 recommended)", "r_gpuparticles_lights", 0, 32, 1, 0
+	StaticText ""
+	StaticText "MUZZLE FLASH SHADOWS", "Gold"
+	StaticText "A flash throws the shadows of doorframes and pillars. Off by default.", "DarkGray"
+	Option "Muzzle flash shadows", "gl_light_castshadows", "LightCastShadows"
+	Option "Flash shadows reach", "gl_light_shadowmap_lights", "LightCastShadowReach"
+	Option "Light shadows (lamps)", "gl_light_shadowmap", "OnOff"
+	Option "Shadow sharpness", "gl_shadowmap_quality", "ShadowMapQuality"
+	Option "Shadow softness", "gl_shadowmap_filter", "ShadowMapFilter"
+	StaticText "Shadow maps: walls cast. Budget 0.15 ms a frame + 0.3 ms an eye.", "DarkGray"
+	StaticText "Ray traced: from the next start; floors and ledges cast too. Costs the most.", "DarkGray"
+	StaticText ""
+	StaticText "TESTS (not saved)", "Gold"
+	Slider "Effect light test (0 = off)", "r_effectlights_test", 0, 1024, 50, 0
+	Option "Particle light test (glowing particles light)", "r_particlelights_test", "OnOff"
 }
 
 OptionMenu "RSB_SmokeMenu"

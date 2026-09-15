@@ -641,6 +641,17 @@ class RSB_Parser
 			lk.lightColor = lc;
 			return "";
 		}
+		if (key == "lightlook")
+		{
+			if (v.Size() != 1) return "lightlook is attached, streak, comet or head";
+			String ll = v[0].MakeLower();
+			if (ll == "attached") lk.lightLook = RSB_RoundLookDef.LIGHTLOOK_ATTACHED;
+			else if (ll == "streak") lk.lightLook = RSB_RoundLookDef.LIGHTLOOK_STREAK;
+			else if (ll == "comet") lk.lightLook = RSB_RoundLookDef.LIGHTLOOK_COMET;
+			else if (ll == "head") lk.lightLook = RSB_RoundLookDef.LIGHTLOOK_HEAD;
+			else return String.Format("lightlook \"%s\" is not attached, streak, comet or head", v[0]);
+			return "";
+		}
 		if (key == "motor")
 		{
 			if (v.Size() != 1) return "motor is one burst profile name, or none";
@@ -694,7 +705,7 @@ class RSB_Parser
 			return (lk.smokeRadius >= 1 && lk.smokeRadius <= 256 && lk.smokeAmount >= 0 && lk.smokeSoot >= 0 && lk.smokeSoot <= 1) ? ""
 				: "smoke is radius (1..256), amount, heat[, soot 0..1] -- smoke into the room along its flight -- or none";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset, carve or smoke", key);
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset, carve, smoke or lightlook", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE

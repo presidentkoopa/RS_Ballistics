@@ -82,6 +82,13 @@ class RSB_RoundLookDef : RSB_Def
 	double lightRadius;
 	double lightIntensity;
 	Color  lightColor;
+	// HOW THAT LIGHT FLIES (`lightlook`, engine effect lights): attached (a point light riding the round),
+	// streak (a short fading streak), comet (a long comet tail) or head (a glow at the head).
+	int    lightLook;
+	const LIGHTLOOK_ATTACHED = 0;
+	const LIGHTLOOK_STREAK   = 1;
+	const LIGHTLOOK_COMET    = 2;
+	const LIGHTLOOK_HEAD     = 3;
 	// A PROJECTILE'S MOTOR (`motor`): a burst out of its tail each tic it flies. And a look
 	// taking over MID-FLIGHT plays its `onset` flash there (an RPG's sustainer lighting).
 	String motorBurst;

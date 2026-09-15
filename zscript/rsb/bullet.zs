@@ -182,10 +182,42 @@ class RSB_Bullet : FastProjectile
 					"round look %s: sprite %s is not loaded (no actor's states use it) -- drawn as RSBT", flightDef.id, flightDef.lookName));
 		}
 
-		// A LIGHT IN FLIGHT (the look's `light`): a burning tracer lights what it passes.
+		// A LIGHT IN FLIGHT (the look's `light`): a burning tracer lights what it passes -- an engine effect
+		// light flying with the round (`lightlook` streak, comet or head), or a point light riding it (attached).
 		if (flightDef.lightRadius > 0 && flightDef.lightIntensity > 0 && RSB_Tier.Current() > RSB_Tier.T_OFF)
-			A_AttachLight("rsb_flight", DynamicLight.PointLight, flightDef.lightColor, int(flightDef.lightRadius), 0,
-				DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0, flightDef.lightIntensity);
+		{
+			if (flightDef.lightLook != RSB_RoundLookDef.LIGHTLOOK_ATTACHED)
+				FlightEffectLight(flightDef);
+			else
+				A_AttachLight("rsb_flight", DynamicLight.PointLight, flightDef.lightColor, int(flightDef.lightRadius), 0,
+					DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0, flightDef.lightIntensity);
+		}
+	}
+
+	// THE TRACER'S EFFECT LIGHT (the look's `lightlook`): spawned once, flying at the round's speed and parked
+	// where a straight trace says the round lands (rounds fly straight). Presentation only: the trace reads
+	// the level and changes nothing.
+	const TRACER_LIGHT_REACH = 8192.0;
+	private void FlightEffectLight(RSB_RoundLookDef lk)
+	{
+		double perSecond = Vel.Length() * TICRATE;
+		if (perSecond <= 0) return;
+		Vector3 dir = Vel.Unit();
+		double dist = TRACER_LIGHT_REACH;
+		FLineTraceData d;
+		if (LineTrace(VectorAngle(dir.x, dir.y), TRACER_LIGHT_REACH, -asin(clamp(dir.z, -1.0, 1.0)),
+			TRF_ABSPOSITION | TRF_THRUSPECIES, pos.z, pos.x, pos.y, d))
+			dist = d.Distance;
+		double land = dist / perSecond;
+		if (lk.lightLook == RSB_RoundLookDef.LIGHTLOOK_STREAK)          // a short fading streak
+			level.SpawnEffectLight(pos, lk.lightColor, lk.lightRadius, lk.lightIntensity, land + 0.1, dir * perSecond,
+				pos - dir * min(96.0, dist), 0.0, EFL_IMPORTANT, 0.0, 0.0, land, 0.05, 0.0, 0.0);
+		else if (lk.lightLook == RSB_RoundLookDef.LIGHTLOOK_COMET)      // a long comet tail
+			level.SpawnEffectLight(pos, lk.lightColor, lk.lightRadius, lk.lightIntensity, land + 1.0, dir * perSecond,
+				(0, 0, 0), 0.0, EFL_IMPORTANT, 0.0, 0.0, land, 0.3, 0.7, 0.2);
+		else                                                              // a glow at the head
+			level.SpawnEffectLight(pos, lk.lightColor, lk.lightRadius, lk.lightIntensity, land + 1.0, dir * perSecond,
+				(0, 0, 0), 0.0, EFL_IMPORTANT, 0.0, 0.0, land, 0.05);
 	}
 
 	override void Tick()

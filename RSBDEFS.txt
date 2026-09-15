@@ -3133,6 +3133,7 @@ roundlook tracer_556       # a 5.56 tracer: a hot orange-white streak with a sho
   whiz   = 96, rsb/crack/near
   light  = 44, 1.1
   lightcolor = 255, 176, 96
+  lightlook  = streak
   carve  = 6, 0.7
 end
 
@@ -3154,6 +3155,7 @@ roundlook tracer_762       # a 7.62 tracer: brighter, with a longer burning tail
   whiz   = 110, rsb/crack/near
   light  = 60, 1.4
   lightcolor = 255, 170, 90
+  lightlook  = comet
   carve  = 7, 0.75
 end
 
@@ -5347,6 +5349,7 @@ roundlook tracer_556@extreme   # a 5.56 tracer at extreme: a longer burning tail
   whiz       = 96, rsb/crack/near
   light      = 60, 1.5
   lightcolor = 255, 176, 96
+  lightlook  = streak
   carve      = 6, 0.7
 end
 
@@ -5368,6 +5371,7 @@ roundlook tracer_762@extreme   # a 7.62 tracer at extreme: a brighter light
   whiz       = 110, rsb/crack/near
   light      = 80, 1.8
   lightcolor = 255, 170, 90
+  lightlook  = comet
   carve      = 7, 0.75
 end
 

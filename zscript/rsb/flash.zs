@@ -249,8 +249,9 @@ class RSB_Flash : Actor
 	{
 		let fd = flashDef;
 		int range = int(fd.lightRadius * rangeMul * (0.6 + 0.4 * k));
+		// It ASKS to cast shadows (LF_CASTSHADOW, lights #20): the player's "Muzzle flash shadows" decides, Off by default.
 		A_AttachLight("rsb_muzzle", DynamicLight.PointLight, fd.lightColor,
-			range, 0, DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0, fd.lightPunch * punchMul * k * k);
+			range, 0, DynamicLight.LF_ATTENUATE | DynamicLight.LF_CASTSHADOW, (0, 0, 0), 0, 10, 25, 0, fd.lightPunch * punchMul * k * k);
 		strobeLit = true;
 	}
 
