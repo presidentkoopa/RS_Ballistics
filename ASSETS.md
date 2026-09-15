@@ -39,6 +39,12 @@ Written by `tools/import_fx.py`. Not packed (build.ps1 packs an allowlist).
 - `sprites/RSFBG0.png` from `RS_Main/sprites/combatfx/fire/RSI4G0.png` (sha1 938e690fdb5331f76b5b1ba7ecfad25954ea6f70)
 - `sprites/RSFBH0.png` from `RS_Main/sprites/combatfx/fire/RSI4H0.png` (sha1 bd1f4a39bc6d6ea0aeffe0eef79b1d7a0000f4f4)
 
+## RBVF: volumetric fireball cooling to smoke (generated: tools/gen_flipbooks.py, seed 3200)
+
+- `textures/RBVF0001.dds` .. `textures/RBVF0064.dds` generated: a 3D density field raymarched per frame, BC7 (the
+  script's own mode-6 encoder), premultiplied, full mip chain, 512 px. Owned outright. For the engine's compressed
+  particle atlas (cf3dba0d6f); the rocket and RPG blasts' `rsb_fireball` draws it.
+
 ## RSFL: flame tongues
 
 - `sprites/RSFLA0.png` from `RS_Main/sprites/combatfx/fire/RSI3a0.png` (sha1 3bc326c5ee9df9f16522557bca1b91ec6bfd8d69)

@@ -111,6 +111,16 @@ default every spark), plus the script-profiling row.
 7. **Slow-mo.** Refresh `SLOWMO_PLAN.md` for everything added since 09-12; this lane then builds the RS_SlowMo mod
    (owner: after the major ballistics work).
 
+**Progress, resumed 2026-09-15 afternoon** (the owner: "pickup ... Ballistics"; engine build 4 is 1ab616c0f4, exe 13:57):
+- **Item 4:** DONE locally, 59b9a11.
+  - `exposure` / `hearing` keys on 37 flash and 56 impact profiles, calls in RSB_Flash and LandOn.
+  - A new "Flash blindness and ringing ears" page; All effects on turns both on.
+- **Item 2:** in progress.
+  - RBVF is regenerated into `textures/` and `rsb_fireball` draws it (64 frames at 80 a second).
+  - build.ps1 packs `textures/` stored, not deflated.
+  - The RBVS smoke book is held back: its early frames read as a hard grey ball. Soften it before it goes anywhere.
+- **Item 5:** no change. The owner said the muzzle effects look good; tune only on a report.
+
 **Parked by the owner:**
 - Extreme variants for the remaining profiles ("no more extremes for now")
 - shot-out lights (a glow lanes meetup)

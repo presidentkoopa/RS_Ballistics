@@ -16,8 +16,9 @@ indices), principal-axis endpoints refined by least squares. Endpoints are clamp
 every decoded texel premultiplied (mode 6 interpolates rgb and a with the same weights). Every level of every
 file is re-opened with Pillow -- an independent BC7 decoder -- and checked against the spec.
 
-OUTPUT GOES WHERE --out SAYS. Not into the package until the engine's compressed atlas step is done (the build
-lane's word): the files need that step to draw.
+OUTPUT GOES WHERE --out SAYS. The engine's compressed atlas step is built (cf3dba0d6f): `--out .` from the package
+root writes the shipped books into textures/ (whole books at 512 only); previews (--frames, other sizes) go to a
+scratch folder. Shipped today: RBVF (rsb_fireball). RBVS waits: its early frames read as a hard ball.
 
     python tools/gen_flipbooks.py --out <folder> [--books RBVS,RBVF] [--size 512] [--frames N]
                                   [--render PX] [--jobs N] [--sheet preview.png]
@@ -342,7 +343,7 @@ def make_frame(task):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", required=True, help="folder to write textures/ into (not the package until the engine step is done)")
+    ap.add_argument("--out", required=True, help="folder to write textures/ into (the package root ships them; a scratch folder previews)")
     ap.add_argument("--books", default=",".join(BOOKS))
     ap.add_argument("--size", type=int, default=512, choices=(256, 512, 1024))
     ap.add_argument("--frames", type=int, default=0, help="override every book's frame count (previews)")
@@ -351,8 +352,11 @@ def main():
     ap.add_argument("--sheet", default="", help="a preview PNG over grey (every few frames of each book)")
     args = ap.parse_args()
     out = os.path.abspath(os.path.join(args.out, "textures"))
-    if os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) in out:
-        sys.exit("--out is inside RS_Ballistics: flipbook data waits for the engine's compressed atlas step")
+    # THE PACKAGE takes only whole books at the shipping size (the engine's compressed atlas, cf3dba0d6f, wants every
+    # frame of a book at one side): a preview (--frames) or another size goes to a scratch folder.
+    package = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    if out.startswith(package) and (args.frames or args.size != 512):
+        sys.exit("--frames or a size other than 512 is a preview: write it to a scratch folder, not the package")
     os.makedirs(out, exist_ok=True)
     render = args.render or args.size
     books = [b.strip().upper() for b in args.books.split(",") if b.strip()]

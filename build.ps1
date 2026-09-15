@@ -39,7 +39,7 @@ foreach ($l in $rootLumps) {
     $files += Get-Item $p
 }
 $files += Get-ChildItem -Path (Join-Path $root 'zscript') -Recurse -File -Filter *.zs
-foreach ($d in @('models', 'sprites', 'sounds', 'licenses', 'damage')) {
+foreach ($d in @('models', 'sprites', 'sounds', 'licenses', 'damage', 'textures')) {
     $p = Join-Path $root $d
     if (Test-Path $p) { $files += Get-ChildItem -Path $p -Recurse -File }
 }
@@ -49,7 +49,9 @@ $fs  = [System.IO.File]::Open($out, [System.IO.FileMode]::CreateNew)
 $zip = New-Object System.IO.Compression.ZipArchive($fs, [System.IO.Compression.ZipArchiveMode]::Create)
 foreach ($f in $files) {
     $rel = ($f.FullName.Substring($root.Length + 1)) -replace ([regex]::Escape([char]92)), '/'
-    $e = $zip.CreateEntry($rel, [System.IO.Compression.CompressionLevel]::Optimal)
+    # BC7 flipbook frames are already compressed: stored, not deflated (Engine docs/PARTICLE_ATLAS_COMPRESSED_IMPL_NOTES.md 7).
+    $level = if ($rel -like '*.dds') { [System.IO.Compression.CompressionLevel]::NoCompression } else { [System.IO.Compression.CompressionLevel]::Optimal }
+    $e = $zip.CreateEntry($rel, $level)
     $st = $e.Open(); $b = [System.IO.File]::ReadAllBytes($f.FullName)
     $st.Write($b, 0, $b.Length); $st.Dispose()
 }
@@ -64,7 +66,7 @@ $must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO
           'zscript/rsb/registry.zs', 'zscript/rsb/settings.zs', 'zscript/rsb/materials.zs',
           'zscript/rsb/impact.zs', 'zscript/rsb/bullet.zs', 'zscript/rsb/flash.zs',
           'zscript/rsb/ejecta.zs', 'zscript/rsb/preview.zs', 'zscript/rsb/service.zs', 'zscript/rsb/flamer.zs', 'zscript/rsb/bench.zs', 'zscript/rsb/projectiles.zs', 'zscript/rsb/heat.zs', 'zscript/rsb/trail.zs', 'zscript/rsb/casings.zs', 'zscript/rsb/barrel.zs', 'zscript/rsb/hotspot.zs',
-          'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png', 'models/rocket/rocket.kvx', 'models/rocket/rocket_pal.png', 'models/debris/chunk.png',
+          'sprites/RSBTA1.png', 'sprites/RSCSA0.png', 'sprites/RSSKA0.png', 'sprites/RSMFB0.png', 'models/rocket/rocket.kvx', 'models/rocket/rocket_pal.png', 'models/debris/chunk.png', 'textures/RBVF0001.dds', 'textures/RBVF0064.dds',
           'sounds/rsb/impact_concrete/bulletimpact1.ogg', 'sounds/rsb/whiz/whizby1.wav', 'sounds/rsb/flame/flamer_loop.ogg')
 foreach ($m in $must) {
     if ($names -notcontains $m) { throw "verification failed: $m missing" }

@@ -131,7 +131,9 @@ particle rsb_smoke_flame
 
 // ---------------------------------------------------------------- EXPLOSIONS
 // A rocket's fireball: white-hot, rolling out, burning down to a smoky shell that
-// the room's light takes over.
+// the room's light takes over. THE VOLUMETRIC BOOK (RBVF, tools/gen_flipbooks.py): 64 BC7 frames at 512, a
+// raymarched fireball cooling through orange to rolling smoke, drawn from the engine's compressed atlas
+// (cf3dba0d6f); 80 a second over the burst's 0.7 s life. The 8-frame RSFB sprite it replaces stays in sprites/.
 particle rsb_fireball
 {
 	size     = 40 @0, 60 @0.5, 70 @1
@@ -143,7 +145,7 @@ particle rsb_fireball
 	drag     = 1.5
 	maxsize  = 64
 	soft     = 16
-	texture  = "RSFBA0", 8, 12, once
+	texture  = "RBVF0001", 64, 80, once
 	orient   = billboard
 	spin     = -20, 20
 }
