@@ -2356,6 +2356,7 @@ hotspot saw_cut_stone         # a chain held on stone: grit sparks fanned along 
   lightcolor = 255, 190, 120
   sound      = none
   smokevolume = 14, 0.6
+  damage     = cut, 3, 6, 0.8, 0.03, 0, travel
 end
 
 hotspot saw_cut_metal         # a chain held on metal: a rooster tail raked along the face, white-hot steel flecks, a gouge that glows hot, burnt-oil smoke, the air bending over it
@@ -2369,6 +2370,7 @@ hotspot saw_cut_metal         # a chain held on metal: a rooster tail raked alon
   shimmer    = 8, 0.6
   sound      = none
   smokevolume = 10, 0.35, 0.25
+  damage     = cut, 2.5, 5, 0.7, 0.03, 0.15, travel
 end
 
 hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, a fine dust cloud, splinters, friction smoke; no light
@@ -2377,6 +2379,7 @@ hotspot saw_cut_wood         # a chain held on wood: sawdust spraying, a fine du
   bursts     = sawdust_spray 16, saw_dust_wood 8, splinter_wood 3, saw_smoke_wood 3
   sound      = none
   smokevolume = 12, 0.45, 0.45
+  damage     = cut, 3, 6.5, 0.9, 0.08, 0, travel
 end
 
 hotspot saw_cut_dirt         # a chain held in dirt and rock: clods, a rolling dust cloud, specks off the stones in it
@@ -2385,6 +2388,7 @@ hotspot saw_cut_dirt         # a chain held in dirt and rock: clods, a rolling d
   bursts     = clods_dirt 3, dust_dirt 8, saw_grit 4
   sound      = none
   smokevolume = 16, 0.7
+  damage     = cut, 3.5, 7, 0.6, 0.02, 0, travel
 end
 
 hotspot saw_cut_glass         # a chain held on glass: shards, fine glass dust, a few specks
@@ -2393,6 +2397,7 @@ hotspot saw_cut_glass         # a chain held on glass: shards, fine glass dust, 
   bursts     = glint_glass 4, saw_dust 4, saw_grit 2
   sound      = none
   smokevolume = 10, 0.3
+  damage     = crack, 4, 9, 0.4, 0, 0
 end
 
 hotspot saw_cut_liquid         # a chain in water: spray
@@ -2410,6 +2415,7 @@ hotspot saw_cut_stone_heavy         # the Heavy Chainsaw on stone: longer streak
   lightcolor = 255, 190, 120
   sound      = none
   smokevolume = 18, 0.8
+  damage     = cut, 4, 8, 0.9, 0.04, 0, travel
 end
 
 hotspot saw_cut_metal_heavy         # the Heavy Chainsaw on metal: a violent rooster tail, flashing stars, white-hot steel flecks, a glowing gouge, burnt-oil smoke
@@ -2423,6 +2429,7 @@ hotspot saw_cut_metal_heavy         # the Heavy Chainsaw on metal: a violent roo
   shimmer    = 8, 0.6
   sound      = none
   smokevolume = 12, 0.45, 0.25
+  damage     = cut, 3.2, 6.5, 0.8, 0.04, 0.18, travel
 end
 
 hotspot saw_cut_wood_heavy         # the Heavy Chainsaw on wood: sawdust spraying, a thick dust cloud, splinters, friction smoke; no light
@@ -2431,6 +2438,7 @@ hotspot saw_cut_wood_heavy         # the Heavy Chainsaw on wood: sawdust sprayin
   bursts     = sawdust_spray 24, saw_dust_wood 12, splinter_wood 4.5, saw_smoke_wood 4.5
   sound      = none
   smokevolume = 14, 0.55, 0.45
+  damage     = cut, 4, 8.5, 1, 0.1, 0, travel
 end
 
 hotspot saw_cut_dirt_heavy         # the Heavy Chainsaw in dirt and rock: clods, a rolling dust cloud, glowing beads and specks off the stones
@@ -2439,6 +2447,7 @@ hotspot saw_cut_dirt_heavy         # the Heavy Chainsaw in dirt and rock: clods,
   bursts     = clods_dirt 4.5, dust_dirt 12, hsaw_beads 3, saw_grit 5
   sound      = none
   smokevolume = 20, 0.8
+  damage     = cut, 4.5, 9, 0.7, 0.03, 0, travel
 end
 
 hotspot saw_cut_glass_heavy         # the Heavy Chainsaw on glass: shards, glass dust, a few specks
@@ -2447,6 +2456,7 @@ hotspot saw_cut_glass_heavy         # the Heavy Chainsaw on glass: shards, glass
   bursts     = glint_glass 6, saw_dust 6, saw_grit 3
   sound      = none
   smokevolume = 12, 0.35
+  damage     = crack, 5, 12, 0.5, 0, 0
 end
 
 hotspot saw_cut_liquid_heavy         # a chain in water: spray -- the Heavy Chainsaw's, heavier
@@ -4516,6 +4526,7 @@ flame incinerator        # a tight, fast jet
   sputter     = 0.15, rsb/flame/hiss
   flameout    = flame_out_puff
   smokevolume = 16, 0.5, 1.5, 0.8
+  damage     = scorch, 12, 0, 0.05, 0
 end
 
 flame napalm             # wide and slower; it sticks and burns where it lands
@@ -4544,6 +4555,7 @@ flame napalm             # wide and slower; it sticks and burns where it lands
   sputter     = 0.15, rsb/flame/hiss
   flameout    = flame_out_puff
   smokevolume = 20, 0.25, 1.5, 0.95
+  damage     = scorch, 18, 0, 0.07, 0
 end
 
 
@@ -4890,6 +4902,7 @@ hotspot xsaw_cut_stone   # the Chainsaw's cut in stone at extreme
   lightcolor  = 255, 190, 120
   sound       = none
   smokevolume = 16, 0.7
+  damage      = cut, 3, 6, 0.8, 0.03, 0, travel
 end
 
 hotspot xsaw_cut_metal   # the Chainsaw's cut in metal at extreme
@@ -4903,6 +4916,7 @@ hotspot xsaw_cut_metal   # the Chainsaw's cut in metal at extreme
   shimmer     = 10, 0.8
   sound       = none
   smokevolume = 12, 0.45, 0.25
+  damage      = cut, 2.5, 5, 0.7, 0.03, 0.15, travel
 end
 
 hotspot xsaw_cut_wood   # the Chainsaw's cut in wood at extreme
@@ -4911,6 +4925,7 @@ hotspot xsaw_cut_wood   # the Chainsaw's cut in wood at extreme
   bursts      = sawdust_spray 22, saw_dust_wood 12, splinter_wood 4, saw_smoke_wood 4
   sound       = none
   smokevolume = 14, 0.55, 0.45
+  damage      = cut, 3, 6.5, 0.9, 0.08, 0, travel
 end
 
 hotspot xsaw_cut_dirt   # the Chainsaw's cut in dirt at extreme
@@ -4919,6 +4934,7 @@ hotspot xsaw_cut_dirt   # the Chainsaw's cut in dirt at extreme
   bursts      = clods_dirt 4, dust_dirt 12, saw_grit 6, hsaw_beads 2
   sound       = none
   smokevolume = 18, 0.8
+  damage      = cut, 3.5, 7, 0.6, 0.02, 0, travel
 end
 
 hotspot xsaw_cut_glass   # the Chainsaw's cut in glass at extreme
@@ -4927,6 +4943,7 @@ hotspot xsaw_cut_glass   # the Chainsaw's cut in glass at extreme
   bursts      = glint_glass 6, saw_dust 6, saw_grit 3
   sound       = none
   smokevolume = 12, 0.35
+  damage      = crack, 4, 9, 0.4, 0, 0
 end
 
 hotspot xsaw_cut_liquid   # the Chainsaw's cut in liquid at extreme
@@ -4944,6 +4961,7 @@ hotspot xsaw_cut_stone_heavy   # the Heavy Chainsaw's cut in stone at extreme
   lightcolor  = 255, 190, 120
   sound       = none
   smokevolume = 22, 1.0
+  damage      = cut, 4, 8, 0.9, 0.04, 0, travel
 end
 
 hotspot xsaw_cut_metal_heavy   # the Heavy Chainsaw's cut in metal at extreme
@@ -4957,6 +4975,7 @@ hotspot xsaw_cut_metal_heavy   # the Heavy Chainsaw's cut in metal at extreme
   shimmer     = 10, 0.8
   sound       = none
   smokevolume = 14, 0.55, 0.25
+  damage      = cut, 3.2, 6.5, 0.8, 0.04, 0.18, travel
 end
 
 hotspot xsaw_cut_wood_heavy   # the Heavy Chainsaw's cut in wood at extreme
@@ -4965,6 +4984,7 @@ hotspot xsaw_cut_wood_heavy   # the Heavy Chainsaw's cut in wood at extreme
   bursts      = sawdust_spray 32, saw_dust_wood 18, splinter_wood 6, saw_smoke_wood 6
   sound       = none
   smokevolume = 16, 0.7, 0.45
+  damage      = cut, 4, 8.5, 1, 0.1, 0, travel
 end
 
 hotspot xsaw_cut_dirt_heavy   # the Heavy Chainsaw's cut in dirt at extreme
@@ -4973,6 +4993,7 @@ hotspot xsaw_cut_dirt_heavy   # the Heavy Chainsaw's cut in dirt at extreme
   bursts      = clods_dirt 6, dust_dirt 18, hsaw_beads 5, saw_grit 7
   sound       = none
   smokevolume = 24, 1.0
+  damage      = cut, 4.5, 9, 0.7, 0.03, 0, travel
 end
 
 hotspot xsaw_cut_glass_heavy   # the Heavy Chainsaw's cut in glass at extreme
@@ -4981,6 +5002,7 @@ hotspot xsaw_cut_glass_heavy   # the Heavy Chainsaw's cut in glass at extreme
   bursts      = glint_glass 9, saw_dust 9, saw_grit 4
   sound       = none
   smokevolume = 14, 0.45
+  damage      = crack, 5, 12, 0.5, 0, 0
 end
 
 hotspot xsaw_cut_liquid_heavy   # the Heavy Chainsaw's cut in liquid at extreme

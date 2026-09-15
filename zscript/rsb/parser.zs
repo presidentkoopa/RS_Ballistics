@@ -1705,6 +1705,16 @@ class RSB_Parser
 			fm.smokeVolSoot = (v.Size() == 4) ? v[3].ToDouble() : 0.0;
 			return (fm.smokeVolRadius > 0 && fm.smokeVolAmount >= 0 && fm.smokeVolSoot >= 0 && fm.smokeVolSoot <= 1) ? "" : "smokevolume is radius (above 0), amount, heat[, soot 0..1]";
 		}
+		if (key == "damage")
+		{
+			String db;
+			double dr, dd, ds, dh, dw;
+			int da;
+			why = ReadDamage(v, db, dr, dd, ds, dh, dw, da); if (why != "") return why;
+			fm.damageBrush = db; fm.damageRadius = dr; fm.damageDepth = dd;
+			fm.damageSoot = ds; fm.damageHeat = dh; fm.damageWet = dw; fm.damageAlong = da;
+			return "";
+		}
 		return String.Format("unknown flame key \"%s\"", key);
 	}
 
@@ -1915,6 +1925,28 @@ class RSB_Parser
 			hs.smokeVolAmount = v[1].ToDouble();
 			hs.smokeVolSoot = (v.Size() == 3) ? v[2].ToDouble() : 0.0;
 			return (hs.smokeVolRadius > 0 && hs.smokeVolAmount >= 0 && hs.smokeVolSoot >= 0 && hs.smokeVolSoot <= 1) ? "" : "smokevolume is radius (above 0), amount[, soot 0..1]";
+		}
+		if (key == "damage")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				hs.damageRadiusCold = 0;
+				return "";
+			}
+			if (v.Size() < 6 || !IsNum(v[2]))
+				return "damage is brush, radius cold, radius hot, depth, soot, heat[, wet][, none|travel|up] -- or none";
+			double hotRadius = v[2].ToDouble();
+			Array<String> w;
+			w.Copy(v);
+			w.Delete(2);
+			String db;
+			double dr, dd, ds, dh, dw;
+			int da;
+			why = ReadDamage(w, db, dr, dd, ds, dh, dw, da); if (why != "") return why;
+			if (hotRadius < 0.5 || hotRadius > 64) return "damage radius hot must be 0.5 to 64 map units";
+			hs.damageBrush = db; hs.damageRadiusCold = dr; hs.damageRadiusHot = hotRadius; hs.damageDepth = dd;
+			hs.damageSoot = ds; hs.damageHeat = dh; hs.damageWet = dw; hs.damageAlong = da;
+			return "";
 		}
 		return String.Format("unknown hotspot key \"%s\"", key);
 	}

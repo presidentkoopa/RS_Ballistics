@@ -459,6 +459,14 @@ class RSB_FlameDef : RSB_Def
 	double smokeVolAmount;
 	double smokeVolHeat;
 	double smokeVolSoot;     // its share of soot, 0..1 (engine 13e): black smoke that sends back no light
+	// LASTING SCORCH (engine #17, `damage`): painted where it lands on the scorch beat (`scorchtics`).
+	String damageBrush;
+	double damageRadius;       // 0 = none
+	double damageDepth;
+	double damageSoot;
+	double damageHeat;
+	double damageWet;
+	int    damageAlong;        // RSB_Impact.DAMAGE_ALONG_*; travel = along the stream
 }
 
 // A HOTSPOT: a spot a sustained beam or stream heats up (an impact's `hotspot`). Many hits
@@ -492,6 +500,16 @@ class RSB_HotspotDef : RSB_Def
 	double smokeVolAmount;
 	double smokeVolHeat;
 	double smokeVolSoot;     // its share of soot, 0..1 (engine 13e): black smoke that sends back no light
+	// LASTING DAMAGE while it burns (engine #17, `damage`): painted every RSB_Hotspot.DAMAGE_EVERY tics, the
+	// radius growing from cold to hot and depth, soot and heat by its heat (a chainsaw's cut deepening).
+	String damageBrush;
+	double damageRadiusCold;   // 0 = none
+	double damageRadiusHot;
+	double damageDepth;
+	double damageSoot;         // each paint, at full heat (soot adds up)
+	double damageHeat;
+	double damageWet;
+	int    damageAlong;        // RSB_Impact.DAMAGE_ALONG_*; travel = along the way the spot is swept
 }
 
 // RECOIL (GAMEPLAY, recoil.zs): how a gun's kick turns where its rounds go, and how the kick

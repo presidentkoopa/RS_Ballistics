@@ -252,11 +252,20 @@ class RSB_Impact play
 	static void PaintDamage(RSB_Surface surf, Vector3 travel, String brush, double radius, double depth,
 		double soot, double heat, double wet, int along)
 	{
-		if (!surf || surf.air || surf.sky || radius <= 0 || brush.Length() == 0) return;
+		if (!surf || surf.air || surf.sky) return;
 		Vector3 axis = (0, 0, 0);
 		if (along == DAMAGE_ALONG_TRAVEL) axis = travel;
 		else if (along == DAMAGE_ALONG_UP) axis = (0, 0, 1);
-		level.PaintSurfaceDamage(surf.at, surf.normal, Name(brush), radius, depth, soot, heat, wet, axis);
+		PaintDamageAt(surf.at, surf.normal, axis, brush, radius, depth, soot, heat, wet);
+	}
+
+	// The same paint at a point on a surface and its facing (a hotspot, a flame's landing), the brush's
+	// +x along `axis` ((0,0,0) unrotated). The radius is kept inside the engine's 0.5 .. 64.
+	static void PaintDamageAt(Vector3 at, Vector3 normal, Vector3 axis, String brush, double radius, double depth,
+		double soot, double heat, double wet)
+	{
+		if (radius <= 0 || brush.Length() == 0 || normal == (0, 0, 0)) return;
+		level.PaintSurfaceDamage(at, normal, Name(brush), clamp(radius, 0.5, 64.0), depth, soot, heat, wet, axis);
 	}
 
 	static void LandOn(Actor soundAt, RSB_Surface surf, String impactBase, Vector3 travel)

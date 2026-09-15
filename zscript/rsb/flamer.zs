@@ -619,6 +619,17 @@ class RSB_FlameEmitter : Actor
 			if (markLife > 0)
 				level.SpawnSurfaceStamp(fd.markShape, at, fd.markRadius, fd.markColor, markLife, (0, 0, 0));
 		}
+		// LASTING SCORCH where it keeps landing (engine #17, `damage`): a little soot on each scorch beat, so
+		// it builds where the fire is held. Presentation only.
+		int damageEvery = (fd.markTics > 0) ? fd.markTics : 6;
+		if (surf && !surf.air && !surf.sky && fd.damageRadius > 0 && (burnSeq % damageEvery) == 0 && RSB_Tier.Current() > RSB_Tier.T_OFF)
+		{
+			Vector3 axis = (0, 0, 0);
+			if (fd.damageAlong == RSB_Impact.DAMAGE_ALONG_TRAVEL) axis = dir;
+			else if (fd.damageAlong == RSB_Impact.DAMAGE_ALONG_UP) axis = (0, 0, 1);
+			RSB_Impact.PaintDamageAt(at, n, axis, fd.damageBrush, fd.damageRadius, fd.damageDepth, fd.damageSoot,
+				fd.damageHeat, fd.damageWet);
+		}
 
 		double lightMul = RSB_Settings.FlameLight();
 		if (fd.landLightRadius > 0 && lightMul > 0)

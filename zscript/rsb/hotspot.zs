@@ -30,10 +30,12 @@ class RSB_Hotspot : Actor
 	const MAX_SPOTS = 16;
 	const SHIMMER_EVERY = 6;
 	const MAX_BURSTS_A_TIC = 4;
+	const DAMAGE_EVERY = 6;      // tics between lasting damage paints while it burns
 
 	String  spotId;
 	Vector3 surfNormal;
 	private double heat;
+	private Vector3 sweep;       // which way it has been dragged (a unit-ish average; its sign kept steady)
 	private int    heatTic;
 	private bool   soundOn;
 	private Array<double> carry;
@@ -88,8 +90,18 @@ class RSB_Hotspot : Actor
 		}
 		else
 		{
-			// A sweeping beam drags its spot after it.
+			// A sweeping beam drags its spot after it -- and which way it goes lays a cut along it. Sawing
+			// back and forth keeps one line: a move against the sweep counts as along it.
+			Vector3 was = spot.pos;
 			spot.SetOrigin(spot.pos * 0.8 + (surf.at + surf.normal) * 0.2, true);
+			Vector3 moved = spot.pos - was;
+			double movedLen = moved.Length();
+			if (movedLen > 0.05)
+			{
+				Vector3 u = moved / movedLen;
+				if ((u dot spot.sweep) < 0) u = -u;
+				spot.sweep = spot.sweep * 0.75 + u * 0.25;
+			}
 		}
 		spot.spotDef = hs;
 		spot.Cool();
@@ -154,6 +166,21 @@ class RSB_Hotspot : Actor
 
 			if (hs.shimmerRadius > 0 && hs.shimmerStrength > 0 && (now % SHIMMER_EVERY) == 0)
 				RSB_Heat.Blast(pos + surfNormal * (hs.shimmerRadius * 0.4), hs.shimmerRadius, hs.shimmerStrength * hot, SHIMMER_EVERY + 6);
+			// LASTING DAMAGE while it burns (engine #17, `damage`): a cut that grows and deepens with its heat,
+			// laid along the way the spot has been swept -- up the wall while it is held still.
+			if (hs.damageRadiusCold > 0 && (now % DAMAGE_EVERY) == 0)
+			{
+				Vector3 axis = (0, 0, 0);
+				if (hs.damageAlong == RSB_Impact.DAMAGE_ALONG_TRAVEL)
+				{
+					axis = (0, 0, 1);
+					if (sweep.Length() > 0.3) axis = sweep;
+				}
+				else if (hs.damageAlong == RSB_Impact.DAMAGE_ALONG_UP) axis = (0, 0, 1);
+				RSB_Impact.PaintDamageAt(pos - surfNormal, surfNormal, axis, hs.damageBrush,
+					hs.damageRadiusCold + (hs.damageRadiusHot - hs.damageRadiusCold) * hot,
+					hs.damageDepth * hot, hs.damageSoot * hot, hs.damageHeat * hot, hs.damageWet * hot);
+			}
 			// SMOKE INTO THE ROOM while it burns (engine 13b, `smokevolume`), by its heat.
 			if (hs.smokeVolAmount > 0 && (now % SHIMMER_EVERY) == 0)
 				level.EmitSmoke(pos + surfNormal * (hs.smokeVolRadius * 0.5), hs.smokeVolRadius, hs.smokeVolAmount * hot * RSB_Tier.SmokeScale(tier), 0.5 * hot, (0, 0, 20), (0, 0, 0), hs.smokeVolSoot);
