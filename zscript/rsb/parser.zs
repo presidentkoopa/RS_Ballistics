@@ -1366,6 +1366,49 @@ class RSB_Parser
 			f.exhaustBlipRise = v[1].ToDouble();
 			return (f.exhaustBlipRise > 0 && f.exhaustBlipRise <= 1) ? "" : "exhaustblip rise must be above 0 and at most 1";
 		}
+		if (key == "powderburn")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			f.powderReach = v[0].ToDouble();
+			f.powderRadius = v[1].ToDouble();
+			f.powderSoot = v[2].ToDouble();
+			return (f.powderReach >= 0 && f.powderRadius >= 0.5 && f.powderRadius <= 64 && f.powderSoot >= 0 && f.powderSoot <= 1) ? ""
+				: "powderburn is reach, radius (0.5..64), soot (0..1)";
+		}
+		if (key == "blastkick")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.blastImpact = "";
+				return "";
+			}
+			if (v.Size() != 3 || !IsNum(v[1]) || !IsNum(v[2])) return "blastkick is <impact>, reach, shove -- or none";
+			f.blastImpact = v[0];
+			f.blastReach = v[1].ToDouble();
+			f.blastShove = v[2].ToDouble();
+			return (f.blastReach > 0 && f.blastShove >= 0) ? "" : "blastkick reach must be above 0, shove 0 or more";
+		}
+		if (key == "barrels")
+		{
+			why = Nums(v, 2); if (why != "") return why;
+			f.barrelCount = v[0].ToInt();
+			f.barrelRadius = v[1].ToDouble();
+			return (f.barrelCount >= 1 && f.barrelCount <= 16 && f.barrelRadius >= 0) ? "" : "barrels is count (1..16), radius";
+		}
+		if (key == "powdervary")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			f.powderVary = v[0].ToDouble();
+			return (f.powderVary >= 0 && f.powderVary <= 1) ? "" : "powdervary is 0..1";
+		}
+		if (key == "shockwave")
+		{
+			why = Nums(v, 3); if (why != "") return why;
+			f.shockRadius = v[0].ToDouble();
+			f.shockStrength = v[1].ToDouble();
+			f.shockTics = v[2].ToInt();
+			return (f.shockRadius > 0 && f.shockStrength >= 0 && f.shockTics >= 1 && f.shockTics <= 35) ? "" : "shockwave is radius, strength, tics (1..35)";
+		}
 		if (key == "tail")
 		{
 			if (v.Size() == 1 && v[0] ~== "none")

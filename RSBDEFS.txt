@@ -3511,6 +3511,10 @@ flash pistol
   smoke      = 1, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/pistol, 0.7
+  powderburn = 28, 4, 0.45
+  blastkick  = kick_puff, 40, 2
+  powdervary = 0.45
+  maybe      = powder_clump 0.15
 end
 
 flash default              # the plain flash for a gun that names none (WM_Gun's fallback)
@@ -3523,6 +3527,10 @@ flash default              # the plain flash for a gun that names none (WM_Gun's
   smoke      = 1, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/pistol, 0.6
+  powderburn = 26, 4, 0.4
+  blastkick  = kick_puff, 40, 2
+  powdervary = 0.45
+  maybe      = powder_clump 0.15
 end
 
 flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turns every shot, powder some shots
@@ -3531,7 +3539,7 @@ flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turn
   cone       = 18, 50, 95, 6
   conetics   = 3
   bursts     = flash_core_9mm, flash_petals, spk_streaks_fine
-  maybe      = spk_stars 0.5, spk_specks 0.45, spk_embers 0.25
+  maybe      = spk_stars 0.5, spk_specks 0.45, spk_embers 0.25, powder_clump 0.25
   flame      = 0.055
   smoke      = 2, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
@@ -3544,6 +3552,10 @@ flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turn
   barrelshimmer = 2, 0.35
   smokevolume = 14, 1.3, 0.5, 90, 6
   tail       = rsb/tail/pistol, 0.75
+  powderburn = 32, 5, 0.5
+  blastkick  = kick_puff, 40, 2
+  powdervary = 0.45
+  shockwave  = 14, 0.4, 3
 end
 
 flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic longer, more smoke
@@ -3552,7 +3564,7 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   cone       = 24, 62, 85, 6
   conetics   = 4
   bursts     = flash_core, flash_petals, spk_heavy_streaks
-  maybe      = spk_embers 0.6, spk_specks 0.35, spk_stars 0.2, x45_bloom 0.5
+  maybe      = spk_embers 0.6, spk_specks 0.35, spk_stars 0.2, x45_bloom 0.5, powder_clump 0.3
   flame      = 0.07
   smoke      = 3, 0.025, 0.32
   smokeparticle = rsb_smoke_gun
@@ -3565,6 +3577,10 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   barrelshimmer = 2.5, 0.4
   smokevolume = 16, 1.3, 0.5, 80, 6
   tail       = rsb/tail/pistol_mag, 0.8
+  powderburn = 34, 6, 0.55
+  blastkick  = kick_puff, 48, 3
+  powdervary = 0.45
+  shockwave  = 18, 0.55, 3
 end
 
 flash shotgun
@@ -3577,6 +3593,11 @@ flash shotgun
   smoke      = 3, 0.03, 0.35
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/shotgun, 0.85
+  powderburn = 44, 10, 0.6
+  blastkick  = kick_puff, 64, 5
+  powdervary = 0.4
+  shockwave  = 32, 0.9, 4
+  maybe      = powder_clump 0.35
 end
 
 flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire (~3 m), a hard white strobe gone fast; steady, precise
@@ -3585,7 +3606,7 @@ flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire
   cone       = 16, 48, 190, 11
   conetics   = 3
   bursts     = flash_core, flash_tongue, flash_plume_long, spk_photo_narrow
-  maybe      = spk_embers 0.5, spk_stars 0.3
+  maybe      = spk_embers 0.5, spk_stars 0.3, powder_clump 0.35
   flame      = 0.075
   smoke      = 3, 0.03, 0.34
   smokeparticle = rsb_smoke_gun
@@ -3598,6 +3619,10 @@ flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire
   smokevolume = 20, 1.0, 0.8, 160, 8
   push = 48, 180
   tail       = rsb/tail/shotgun, 0.85
+  powderburn = 44, 10, 0.6
+  blastkick  = kick_puff, 64, 5
+  powdervary = 0.4
+  shockwave  = 32, 0.9, 4
 end
 
 flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide star, powder everywhere, a warm strobe that lingers; wild
@@ -3606,7 +3631,7 @@ flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide
   cone       = 34, 84, 120, 12
   conetics   = 5
   bursts     = flash_core, flash_petals_wide, flash_plume_wide, spk_streaks_wide
-  maybe      = spk_specks_wide 0.8, spk_embers 0.4
+  maybe      = spk_specks_wide 0.8, spk_embers 0.4, powder_clump 0.35
   flame      = 0.1
   smoke      = 6, 0.034, 0.38
   smokeparticle = rsb_smoke_gun
@@ -3619,6 +3644,10 @@ flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide
   smokevolume = 22, 1.1, 0.8, 140, 8
   push = 56, 200
   tail       = rsb/tail/shotgun, 0.85
+  powderburn = 44, 10, 0.6
+  blastkick  = kick_puff, 64, 5
+  powdervary = 0.4
+  shockwave  = 32, 0.9, 4
 end
 
 flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge white-orange twin fireball, the room lit white, the floor kicked up; clean violence
@@ -3627,7 +3656,7 @@ flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge w
   cone       = 40, 90, 200, 16
   conetics   = 5
   bursts     = flash_core, flash_petals_wide, flash_plume_twin, spk_photo_wide, spk_streaks_wide
-  maybe      = spk_sparkler 0.35, spk_embers_heavy 0.6, flash_tongue 0.5
+  maybe      = spk_sparkler 0.35, spk_embers_heavy 0.6, flash_tongue 0.5, powder_clump 0.55
   flame      = 0.13
   smoke      = 8, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
@@ -3641,6 +3670,10 @@ flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge w
   smokevolume = 32, 1.5, 1.2, 200, 12
   push = 96, 320
   tail       = rsb/tail/dbshotgun, 1
+  powderburn = 56, 14, 0.7
+  blastkick  = kick_blast, 80, 8
+  powdervary = 0.4
+  shockwave  = 48, 1.4, 5
 end
 
 flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-orange fireball, black soot rolling out, embers spat and falling, a warm strobe that lingers; dirty violence
@@ -3649,7 +3682,7 @@ flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-oran
   cone       = 36, 86, 170, 15
   conetics   = 6
   bursts     = flash_core, flash_plume_dirty, spk_embers_heavy, flash_soot, spk_specks_wide
-  maybe      = spk_streaks_wide 0.6, flash_petals_wide 0.4
+  maybe      = spk_streaks_wide 0.6, flash_petals_wide 0.4, powder_clump 0.5
   flame      = 0.12
   smoke      = 5, 0.04, 0.42
   smokeparticle = rsb_smoke_soot_gun
@@ -3663,6 +3696,10 @@ flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-oran
   smokevolume = 18, 2.0, 1.0, 140
   push = 56, 240
   tail       = rsb/tail/dbshotgun, 0.95
+  powderburn = 52, 12, 0.65
+  blastkick  = kick_blast, 80, 8
+  powdervary = 0.4
+  shockwave  = 44, 1.2, 5
 end
 
 flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanilla partner: the hammer -- a muzzle brake throws a ring of fire and smoke out sideways, a hard white spike forward, a sharp bright strobe, the floor kicked hard; brutal, mechanical, nearly the same every shot
@@ -3671,7 +3708,7 @@ flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanill
   cone       = 26, 70, 180, 14
   conetics   = 3
   bursts     = flash_core, flash_tongue, flash_brake_fire, flash_brake_smoke, spk_brake_ring
-  maybe      = spk_stars 0.4
+  maybe      = spk_stars 0.4, powder_clump 0.35
   flame      = 0.09
   smoke      = 5, 0.04, 0.38
   smokeparticle = rsb_smoke_gun
@@ -3685,6 +3722,10 @@ flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanill
   smokevolume = 24, 1.2, 1.0, 130, 8
   push = 72, 260
   tail       = rsb/tail/shotgun, 0.85
+  powderburn = 40, 9, 0.6
+  blastkick  = kick_puff, 64, 5
+  powdervary = 0.4
+  shockwave  = 32, 0.9, 4
 end
 
 flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow flashes that stutter, some bright, some dim; a room that flickers; a held burst builds smoke, then shimmer, then a dull glow
@@ -3693,7 +3734,7 @@ flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow
   cone       = 14, 40, 90, 5
   conetics   = 2
   bursts     = flash_core
-  maybe      = flash_petals 0.5, spk_chaingun 0.6, spk_specks 0.2
+  maybe      = flash_petals 0.5, spk_chaingun 0.6, spk_specks 0.2, powder_clump 0.08
   flame      = 0.045
   smoke      = 1, 0.018, 0.22
   smokeparticle = rsb_smoke_gun
@@ -3707,6 +3748,10 @@ flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow
   barrelglowcolor = 255, 110, 40
   smokevolume = 24, 0.4, 0.4, 60, 12
   tail       = rsb/tail/ar, 0.6
+  powderburn = 30, 6, 0.4
+  blastkick  = kick_puff, 48, 2
+  powdervary = 0.35
+  barrels    = 6, 2.5
 end
 
 flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange star each round, thick smoke building a column, a heavier strobe; the barrel runs hot fast -- a strong heat haze, heavy smoke, a dull glow
@@ -3715,7 +3760,7 @@ flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange st
   cone       = 22, 56, 110, 7
   conetics   = 3
   bursts     = flash_core, flash_petals
-  maybe      = spk_heavy_streaks 0.45, spk_embers 0.3
+  maybe      = spk_heavy_streaks 0.45, spk_embers 0.3, powder_clump 0.12
   flame      = 0.06
   heat       = 4, 20, 0.5, 8
   smoke      = 2, 0.025, 0.3
@@ -3729,13 +3774,16 @@ flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange st
   barrelglowcolor = 255, 104, 36
   smokevolume = 26, 0.45, 0.5, 70, 12
   tail       = rsb/tail/lmg, 0.7
+  powderburn = 36, 7, 0.5
+  blastkick  = kick_puff, 56, 3
+  powdervary = 0.35
 end
 
 flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure thump -- a dull flash, a big puff of smoke, little fire
   light      = 120, 1.8, 2
   lightcolor = 255, 190, 120
   bursts     = flash_launcher_puff
-  maybe      = spk_embers 0.3
+  maybe      = spk_embers 0.3, powder_clump 0.3
   flame      = 0.03
   smoke      = 5, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
@@ -3743,6 +3791,10 @@ flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure 
   vary       = light 0.2, smoke 0.3
   smokevolume = 20, 1.2, 0.4, 50, 6
   tail       = rsb/tail/rpg, 0.5
+  powderburn = 30, 8, 0.4
+  blastkick  = kick_puff, 56, 4
+  powdervary = 0.35
+  shockwave  = 30, 0.8, 4
 end
 
 flash chainsaw             # THE CHAINSAW'S ENGINE (no shot; RSB_Exhaust.Run): a lazy pale puff at idle, a steady stream revved, a dark blip each time the throttle snaps open or it catches, hot air at the port
@@ -3956,7 +4008,7 @@ flash pistol_9mm@extreme   # THE SHOWPIECE AT EXTREME: a double crown of fire, a
   cone       = 20, 56, 95, 6
   conetics   = 4
   bursts     = flash_core_9mm, flash_petals, x9_crown, x9_starburst, spk_streaks_fine, x9_stars_ring
-  maybe      = spk_stars 0.8, spk_specks 0.7, spk_embers 0.6, x9_embers_drift 0.6
+  maybe      = spk_stars 0.8, spk_specks 0.7, spk_embers 0.6, x9_embers_drift 0.6, powder_clump 0.4
   flame      = 0.065
   smoke      = 3, 0.022, 0.32
   smokeparticle = rsb_smoke_gun
@@ -3972,6 +4024,10 @@ flash pistol_9mm@extreme   # THE SHOWPIECE AT EXTREME: a double crown of fire, a
   smokevolume = 16, 1.4, 0.5, 100, 6
   push       = 36, 140
   tail       = rsb/tail/pistol, 0.8
+  powderburn = 36, 6, 0.6
+  blastkick  = kick_puff, 44, 3
+  powdervary = 0.5
+  shockwave  = 18, 0.55, 3
 end
 
 impact pistol_9mm@extreme  # stone: chips that always spark, glowing jacket fragments, a dust jet most hits, a blink of light
@@ -4084,6 +4140,10 @@ flash rifle
   smoke      = 1, 0.025, 0.3
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/br, 0.8
+  powderburn = 34, 6, 0.5
+  blastkick  = kick_puff, 56, 3
+  powdervary = 0.35
+  maybe      = powder_clump 0.15
 end
 
 flash smg                # full auto: quicker, smaller, so a burst strobes
@@ -4096,6 +4156,10 @@ flash smg                # full auto: quicker, smaller, so a burst strobes
   smoke      = 1, 0.018, 0.22
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/smg, 0.6
+  powderburn = 28, 5, 0.4
+  blastkick  = kick_puff, 40, 2
+  powdervary = 0.35
+  maybe      = powder_clump 0.1
 end
 
 flash revolver           # a big cylinder gap blast
@@ -4108,6 +4172,11 @@ flash revolver           # a big cylinder gap blast
   smoke      = 2, 0.03, 0.32
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/pistol_mag, 0.85
+  powderburn = 36, 7, 0.6
+  blastkick  = kick_puff, 48, 3
+  powdervary = 0.45
+  shockwave  = 22, 0.7, 4
+  maybe      = powder_clump 0.35
 end
 
 flash shotgun_double     # both barrels at once
@@ -4120,6 +4189,11 @@ flash shotgun_double     # both barrels at once
   smoke      = 4, 0.035, 0.38
   smokeparticle = rsb_smoke_gun
   tail       = rsb/tail/dbshotgun, 0.95
+  powderburn = 52, 12, 0.65
+  blastkick  = kick_blast, 80, 8
+  powdervary = 0.4
+  shockwave  = 44, 1.2, 5
+  maybe      = powder_clump 0.5
 end
 
 # ---- guns that are not bullet guns still have a muzzle
@@ -4225,7 +4299,7 @@ flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -
   cone       = 30, 76, 160, 12
   conetics   = 4
   bursts     = flash_core, flash_plume_wide, rl_exhaust_back, spk_specks_wide
-  maybe      = spk_embers_heavy 0.6
+  maybe      = spk_embers_heavy 0.6, powder_clump 0.3
   flame      = 0.11
   smoke      = 6, 0.04, 0.4
   smokeparticle = rsb_smoke_rocket
@@ -4239,6 +4313,10 @@ flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -
   smokevolume = 24, 1.4, 1.2, 90, 8, 0.5
   push = 64, 260
   tail       = rsb/tail/rpg, 0.9
+  powderburn = 40, 12, 0.7
+  blastkick  = kick_blast, 96, 10
+  powdervary = 0.35
+  shockwave  = 56, 1.5, 6
 end
 
 flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning propellant blasting out of the rear of the tube, heat bending the air behind, the floor kicked up behind; a smaller flash at the front
@@ -4262,6 +4340,10 @@ flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning p
   smokevolume = 36, 1.6, 1.6, 220, -51.5, 0.6
   push = 112, 450, -51.5
   tail       = rsb/tail/rpg, 1
+  powderburn = 40, 12, 0.6
+  blastkick  = kick_blast, 96, 12
+  powdervary = 0.35
+  shockwave  = 64, 1.8, 6
 end
 
 flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a flash, a burst of flame, a puff of smoke (no cone: it is not a gun's)
@@ -4801,6 +4883,44 @@ wake mg_vapour             # the machine gun's 7.62: a thicker vapour line than 
   particle = rsb_bullet_vapour
 end
 
+# ---------------------------------------------------------------- MUZZLE SPICE (owner 2026-09-15)
+# A gun fired close to things: a clump of unburnt powder that lands burning, and the dust its blast knocks off a wall
+# beside it or a ceiling above (a flash's `blastkick`). Point-blank powder burns paint the `scorch` and `stipple` brushes.
+
+burst powder_clump         # a clump of unburnt powder spat out burning: it drops, lands and glows a moment where it lies
+  count    = 2
+  cone     = 16
+  speed    = 150, 0.5
+  life     = 1.8, 0.4
+  aim      = along
+  offset   = 0
+  particle = rsb_spark_ember
+end
+
+impact kick_puff           # a gun fired close beside a wall or under a ceiling: the blast knocks a little dust off it
+  bursts = dust_concrete
+  scale  = 0.6, 0.9
+  sound  = none
+end
+
+impact kick_puff.wood
+  bursts = dust_wood
+  scale  = 0.6, 0.9
+  sound  = none
+end
+
+impact kick_puff.dirt
+  bursts = dust_dirt
+  scale  = 0.6, 0.9
+  sound  = none
+end
+
+impact kick_puff.liquid
+  bursts = splash_liquid
+  scale  = 0.3, 0.6
+  sound  = none
+end
+
 # ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
 # Every Vanilla gun at the top effects level: each keeps its own character and does MORE of it,
 # on top of the level's ladder. Material variants each get their own (a material outranks a tier).
@@ -5046,7 +5166,7 @@ flash pistol_45@extreme   # the .45 at extreme: a fat orange ball of fire and a 
   cone            = 24, 62, 85, 6
   conetics        = 4
   bursts          = flash_core, flash_petals, spk_heavy_streaks, x45_bloom, x45_smoke_ring
-  maybe           = spk_embers 0.9, spk_specks 0.6, spk_stars 0.35, spk_embers_heavy 0.4
+  maybe           = spk_embers 0.9, spk_specks 0.6, spk_stars 0.35, powder_clump 0.3, spk_embers_heavy 0.4
   flame           = 0.07
   smoke           = 3, 0.025, 0.32
   smokeparticle   = rsb_smoke_gun
@@ -5059,6 +5179,10 @@ flash pistol_45@extreme   # the .45 at extreme: a fat orange ball of fire and a 
   barrelshimmer   = 2.5, 0.4
   smokevolume     = 18, 1.5, 0.5, 90, 6
   tail            = rsb/tail/pistol_mag, 0.8
+  powderburn      = 34, 6, 0.55
+  blastkick       = kick_puff, 48, 3
+  powdervary      = 0.45
+  shockwave       = 18, 0.55, 3
   barrelglow      = 1.4, 20, 1.0
   barrelglowcolor = 255, 110, 45
   push            = 40, 160
@@ -5070,7 +5194,7 @@ flash shotgun_m37@extreme   # the M37 at extreme: the gout reaches ~5 m, photore
   cone            = 16, 48, 190, 11
   conetics        = 3
   bursts          = flash_core, flash_tongue, flash_plume_long, spk_photo_narrow, xm37_gout, spk_photo_wide
-  maybe           = spk_embers 0.5, spk_stars 0.3, spk_sparkler 0.4, spk_embers_heavy 0.5, flash_powder 0.7
+  maybe           = spk_embers 0.5, spk_stars 0.3, powder_clump 0.35, spk_sparkler 0.4, spk_embers_heavy 0.5, flash_powder 0.7
   flame           = 0.075
   smoke           = 3, 0.03, 0.34
   smokeparticle   = rsb_smoke_gun
@@ -5083,6 +5207,10 @@ flash shotgun_m37@extreme   # the M37 at extreme: the gout reaches ~5 m, photore
   smokevolume     = 22, 1.1, 0.8, 180, 8
   push            = 64, 220
   tail            = rsb/tail/shotgun, 0.85
+  powderburn      = 44, 10, 0.6
+  blastkick       = kick_puff, 64, 5
+  powdervary      = 0.4
+  shockwave       = 32, 0.9, 4
   barrelglow      = 1.2, 22, 0.9
   barrelglowcolor = 255, 110, 45
 end
@@ -5093,7 +5221,7 @@ flash shotgun_doom@extreme   # Doom's pump at extreme: a fatter rolling fireball
   cone            = 34, 84, 120, 12
   conetics        = 6
   bursts          = flash_core, flash_petals_wide, flash_plume_wide, spk_streaks_wide, xdoom_fireball, flash_powder
-  maybe           = spk_specks_wide 1, spk_embers 0.8, flash_embers 0.6, spk_sparkler 0.3
+  maybe           = spk_specks_wide 1, spk_embers 0.8, powder_clump 0.35, flash_embers 0.6, spk_sparkler 0.3
   flame           = 0.1
   smoke           = 6, 0.034, 0.38
   smokeparticle   = rsb_smoke_gun
@@ -5106,6 +5234,10 @@ flash shotgun_doom@extreme   # Doom's pump at extreme: a fatter rolling fireball
   smokevolume     = 26, 1.3, 0.8, 150, 8
   push            = 64, 230
   tail            = rsb/tail/shotgun, 0.85
+  powderburn      = 44, 10, 0.6
+  blastkick       = kick_puff, 64, 5
+  powdervary      = 0.4
+  shockwave       = 32, 0.9, 4
   barrelglow      = 1.2, 24, 1.0
   barrelglowcolor = 255, 105, 40
 end
@@ -5116,7 +5248,7 @@ flash shotgun_ssg@extreme   # the Super Shotgun at extreme: a second bigger twin
   cone            = 40, 90, 200, 16
   conetics        = 5
   bursts          = flash_core, flash_petals_wide, flash_plume_twin, spk_photo_wide, spk_streaks_wide, xssg_twin, xssg_shock, spk_sparkler
-  maybe           = spk_embers_heavy 1, flash_tongue 0.8, flash_embers 0.5
+  maybe           = spk_embers_heavy 1, flash_tongue 0.8, powder_clump 0.55, flash_embers 0.5
   flame           = 0.13
   smoke           = 8, 0.04, 0.4
   smokeparticle   = rsb_smoke_gun
@@ -5130,6 +5262,10 @@ flash shotgun_ssg@extreme   # the Super Shotgun at extreme: a second bigger twin
   smokevolume     = 36, 1.8, 1.2, 240, 12
   push            = 128, 420
   tail            = rsb/tail/dbshotgun, 1
+  powderburn      = 56, 14, 0.7
+  blastkick       = kick_blast, 80, 8
+  powdervary      = 0.4
+  shockwave       = 48, 1.4, 5
   barrelglow      = 1.0, 28, 1.2
   barrelglowcolor = 255, 100, 40
 end
@@ -5140,7 +5276,7 @@ flash shotgun_bullpup@extreme   # the bullpup at extreme: a second, wider ring o
   cone            = 26, 70, 180, 14
   conetics        = 3
   bursts          = flash_core, flash_tongue, flash_brake_fire, flash_brake_smoke, spk_brake_ring, xbp_brake_ring, xbp_spike
-  maybe           = spk_stars 0.8, spk_sparkler 0.3
+  maybe           = spk_stars 0.8, powder_clump 0.35, spk_sparkler 0.3
   flame           = 0.09
   smoke           = 5, 0.04, 0.38
   smokeparticle   = rsb_smoke_gun
@@ -5154,6 +5290,10 @@ flash shotgun_bullpup@extreme   # the bullpup at extreme: a second, wider ring o
   smokevolume     = 28, 1.4, 1.0, 150, 8
   push            = 96, 300
   tail            = rsb/tail/shotgun, 0.85
+  powderburn      = 40, 9, 0.6
+  blastkick       = kick_puff, 64, 5
+  powdervary      = 0.4
+  shockwave       = 32, 0.9, 4
   barrelglow      = 1.1, 26, 1.1
   barrelglowcolor = 255, 105, 40
 end
@@ -5164,7 +5304,7 @@ flash chaingun_556@extreme   # the chaingun at extreme: a crown and bore sparks 
   cone            = 14, 40, 90, 5
   conetics        = 2
   bursts          = flash_core, flash_petals, spk_chaingun
-  maybe           = spk_specks 0.5, spk_stars 0.3, spk_embers 0.3
+  maybe           = spk_specks 0.5, powder_clump 0.08, spk_stars 0.3, spk_embers 0.3
   flame           = 0.045
   smoke           = 1, 0.018, 0.22
   smokeparticle   = rsb_smoke_gun
@@ -5178,6 +5318,10 @@ flash chaingun_556@extreme   # the chaingun at extreme: a crown and bore sparks 
   barrelglowcolor = 255, 110, 40
   smokevolume     = 26, 0.45, 0.4, 60, 12
   tail            = rsb/tail/ar, 0.6
+  powderburn      = 30, 6, 0.4
+  blastkick       = kick_puff, 48, 2
+  powdervary      = 0.35
+  barrels         = 6, 2.5
 end
 
 flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and embers, a heat line off the muzzle, a barrel that glows sooner, brighter and wider
@@ -5186,7 +5330,7 @@ flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and e
   cone            = 22, 56, 110, 7
   conetics        = 3
   bursts          = flash_core, flash_petals, spk_heavy_streaks
-  maybe           = spk_embers 0.6, spk_sparkler 0.15, spk_stars 0.3
+  maybe           = spk_embers 0.6, powder_clump 0.12, spk_sparkler 0.15, spk_stars 0.3
   flame           = 0.06
   heat            = 5, 24, 0.7, 10
   smoke           = 2, 0.025, 0.3
@@ -5200,13 +5344,16 @@ flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and e
   barrelglowcolor = 255, 104, 36
   smokevolume     = 30, 0.55, 0.5, 70, 12
   tail            = rsb/tail/lmg, 0.7
+  powderburn      = 36, 7, 0.5
+  blastkick       = kick_puff, 56, 3
+  powdervary      = 0.35
 end
 
 flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling out of the tube, embers, a heavier thump of light
   light         = 150, 2.2, 3
   lightcolor    = 255, 190, 120
   bursts        = flash_launcher_puff, xgl_ring
-  maybe         = spk_embers 0.6
+  maybe         = spk_embers 0.6, powder_clump 0.3
   flame         = 0.03
   smoke         = 5, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
@@ -5214,6 +5361,10 @@ flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling ou
   vary          = light 0.2, smoke 0.3
   smokevolume   = 24, 1.4, 0.4, 60, 6
   tail          = rsb/tail/rpg, 0.5
+  powderburn    = 30, 8, 0.4
+  blastkick     = kick_puff, 56, 4
+  powdervary    = 0.35
+  shockwave     = 30, 0.8, 4
 end
 
 flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned out, embers and a starburst, the floor kicked harder, the room lit longer, the tube glowing after a volley
@@ -5222,7 +5373,7 @@ flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned 
   cone            = 30, 76, 160, 12
   conetics        = 4
   bursts          = flash_core, flash_plume_wide, rl_exhaust_back, spk_specks_wide, spk_photo_wide
-  maybe           = spk_embers_heavy 1, flash_embers 0.6, spk_sparkler 0.4
+  maybe           = spk_embers_heavy 1, powder_clump 0.3, flash_embers 0.6, spk_sparkler 0.4
   flame           = 0.11
   smoke           = 6, 0.04, 0.4
   smokeparticle   = rsb_smoke_rocket
@@ -5236,6 +5387,10 @@ flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned 
   smokevolume     = 30, 1.8, 1.2, 100, 8, 0.5
   push            = 96, 360
   tail            = rsb/tail/rpg, 0.9
+  powderburn      = 40, 12, 0.7
+  blastkick       = kick_blast, 96, 10
+  powdervary      = 0.35
+  shockwave       = 56, 1.5, 6
   barrelglow      = 1.2, 30, 1.0
   barrelglowcolor = 255, 120, 50
 end
@@ -5261,6 +5416,10 @@ flash rocket_rpg@extreme   # the RPG at extreme: a bigger, hotter backblast that
   smokevolume   = 44, 2.0, 1.6, 260, -51.5, 0.6
   push          = 140, 540, -51.5
   tail          = rsb/tail/rpg, 1
+  powderburn    = 40, 12, 0.6
+  blastkick     = kick_blast, 96, 12
+  powdervary    = 0.35
+  shockwave     = 64, 1.8, 6
 end
 
 flash plasma_rifle@extreme   # the plasma rifle at extreme: a crackle of arcs every shot, a ring of vented streaks, brighter blue air, an emitter that glows sooner

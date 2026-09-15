@@ -254,6 +254,19 @@ def melt(rng):
     return soot, depth, heat, np.zeros_like(R)
 
 
+def stipple(rng):
+    """Powder stipple: specks of burnt powder peppered round a shot fired close, thickest in the middle."""
+    soot = smooth(0.9, 0.0, R) * 0.2 * (0.6 + 0.4 * value_noise(rng, 8))
+    depth = np.zeros_like(R)
+    for _ in range(40 + int(rng.random() * 25)):
+        rad = abs(rng.random() - rng.random()) * 0.85
+        a = rng.random() * 2 * math.pi
+        speck = blob(rad * math.cos(a), rad * math.sin(a), 0.035 + rng.random() * 0.035, 1.0)
+        soot = np.maximum(soot, speck * (0.6 + 0.4 * rng.random()))
+        depth = np.maximum(depth, speck * 0.35)
+    return soot, depth, np.zeros_like(R), np.zeros_like(R)
+
+
 # name, function, seed base, turn, flip
 BRUSHES = [
     ("hole_chip",     hole_chip,     1100, "hashed", "hashed"),
@@ -267,6 +280,7 @@ BRUSHES = [
     ("cut",           cut,           1900, "none",   "none"),
     ("crack",         crack_glass,   2000, "hashed", "hashed"),
     ("melt",          melt,          2100, "hashed", "hashed"),
+    ("stipple",       stipple,       2200, "hashed", "hashed"),
 ]
 
 

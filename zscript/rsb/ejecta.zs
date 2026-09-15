@@ -341,6 +341,22 @@ class RSB_LocalEjecta : Actor
 		}
 	}
 
+	// A BLAST NEARBY (a flash's `blastkick`): a casing within `reach` of `from` is thrown off it, harder the
+	// closer, lying or flying. A sleeping casing wakes.
+	void Shove(Vector3 from, double reach, double strength)
+	{
+		if (fading || reach <= 0 || strength <= 0) return;
+		Vector3 away = pos - from;
+		double dist = away.Length();
+		if (dist >= reach || dist < 0.001) return;
+		double k = 1.0 - dist / reach;
+		away /= dist;
+		flight += (away + (0, 0, 0.6)).Unit() * (strength * k);
+		resting = false;
+		bouncesLeft = max(bouncesLeft, 1);
+		Wake();
+	}
+
 	// OVER THE CASING CAP (RSB_Registry.KeepCasing): start fading now, flying or lying.
 	void FadeOut()
 	{

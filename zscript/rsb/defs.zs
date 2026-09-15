@@ -323,6 +323,25 @@ class RSB_FlashDef : RSB_Def
 	// each) and its volume. "" = none (RSB_Tail, flash.zs).
 	String tailSound;
 	double tailVolume;
+	// POINT-BLANK POWDER BURNS (`powderburn`): a surface straight ahead within `reach` takes a soot ring and powder
+	// stipple (engine #17), stronger the closer the muzzle is.
+	double powderReach;
+	double powderRadius;
+	double powderSoot;
+	// THE BLAST HITTING WHAT IS NEAR (`blastkick`): walls beside and a ceiling above within `reach` shed an impact
+	// (dust), and casings within reach are thrown off the muzzle (`shove`, map units a tic at the muzzle).
+	String blastImpact;
+	double blastReach;
+	double blastShove;
+	// BARRELS (`barrels`): each shot flashes from the next of `count` barrels, `radius` out from the bore.
+	int    barrelCount;
+	double barrelRadius;
+	// POWDER VARIETY (`powdervary`): how far a shot's light swings redder or whiter, 0..1.
+	double powderVary;
+	// A SHOCKWAVE (`shockwave`): a bubble of bent air growing to `radius` over `tics`, fading as it grows.
+	double shockRadius;
+	double shockStrength;
+	int    shockTics;
 	double exhaustShimmerRadius;
 	double exhaustShimmerStrength;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a

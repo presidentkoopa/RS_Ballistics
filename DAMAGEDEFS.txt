@@ -90,3 +90,11 @@ brush melt
 	turn = hashed
 	flip = hashed
 }
+
+brush stipple
+{
+	masks = "damage/rsb/stipple_a.png", "damage/rsb/stipple_b.png", "damage/rsb/stipple_c.png", "damage/rsb/stipple_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}

@@ -52,6 +52,9 @@ class RSB_Flash : Actor
 	private double rangeMul;
 	private double densityMul;
 	private double coneMul;
+	private Color  shotColor;      // this shot's light colour (`powdervary`)
+	private int    shockSlot;      // the shockwave's heat slot, 0 = none
+	private int    shockAge;
 	transient RSB_FlashDef flashDef;
 
 	States
@@ -76,14 +79,31 @@ class RSB_Flash : Actor
 				"flash \"%s\" is not defined in any RSBDEFS", whichFlash));
 			return null;
 		}
-		let f = RSB_Flash(Actor.Spawn("RSB_Flash", at, ALLOW_REPLACE));
+		// BARRELS (`barrels`): each shot of this slot flashes from the next barrel round the bore.
+		Vector3 muzzle = at;
+		if (fd.barrelCount > 1 && fd.barrelRadius > 0)
+		{
+			let shot = RSB_Tail.SlotOf(beamSlot);
+			if (shot)
+			{
+				Vector3 bore = (aim.Length() > 0.000001) ? aim.Unit() : (1, 0, 0);
+				Vector3 side = bore cross (0, 0, 1);
+				if (side.Length() < 0.001) side = (1, 0, 0);
+				side = side.Unit();
+				Vector3 lift = side cross bore;
+				double turn = 360.0 * (shot.shots % fd.barrelCount) / fd.barrelCount;
+				shot.shots++;
+				muzzle = at + (side * cos(turn) + lift * sin(turn)) * fd.barrelRadius;
+			}
+		}
+		let f = RSB_Flash(Actor.Spawn("RSB_Flash", muzzle, ALLOW_REPLACE));
 		if (!f) return null;
 		f.flashId = whichFlash;
 		f.flashDef = fd;
 		f.dir = (aim.Length() > 0.000001) ? aim.Unit() : (1, 0, 0);
 		f.slot = beamSlot;
 		f.Ignite(tier, carrierVel);
-		RSB_Tail.Start(fd, at, beamSlot);
+		RSB_Tail.Start(fd, muzzle, beamSlot);
 		return f;
 	}
 
@@ -103,6 +123,14 @@ class RSB_Flash : Actor
 		double vCone   = RSB_Hash.Wobble(fd.varyCone, shotTic, 407, posSeed) * surge;
 		double vSparks = RSB_Hash.Wobble(fd.varySparks, shotTic, 409, posSeed) * surge;
 		double vSmoke  = RSB_Hash.Wobble(fd.varySmoke, shotTic, 411, posSeed) * surge;
+		// POWDER VARIETY (`powdervary`): this shot's powder burns a little redder or whiter -- its light's colour.
+		shotColor = fd.lightColor;
+		if (fd.powderVary > 0)
+		{
+			double warm = RSB_Hash.Between(-fd.powderVary, fd.powderVary, shotTic, 461, posSeed);
+			Color lc = fd.lightColor;
+			shotColor = Color(255, lc.r, clamp(int(lc.g * (1.0 - 0.25 * warm)), 0, 255), clamp(int(lc.b * (1.0 - 0.55 * warm)), 0, 255));
+		}
 		// A THROB (`throb`): light and cone swell and ease on a beat by the map clock.
 		if (fd.throbTics > 0)
 		{
@@ -192,6 +220,32 @@ class RSB_Flash : Actor
 			if (ground) RSB_Impact.LandOn(self, ground, fd.kickImpact, groundDir);
 		}
 
+		// POINT-BLANK POWDER BURNS (`powderburn`): a surface straight ahead within reach takes a soot ring and
+		// powder stipple, stronger the closer the muzzle was (engine #17).
+		if (fd.powderReach > 0 && RSB_Settings.FlashPowderBurns())
+		{
+			let ahead = NearSurface(dir, fd.powderReach);
+			if (ahead)
+			{
+				double closeness = 1.0 - clamp((ahead.at - pos).Length() / fd.powderReach, 0.0, 1.0);
+				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "scorch", fd.powderRadius * (0.6 + 0.4 * closeness),
+					0.0, fd.powderSoot * closeness * closeness, 0.0, 0.0);
+				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "stipple", fd.powderRadius * 1.6,
+					0.1 * closeness, fd.powderSoot * closeness, 0.0, 0.0);
+			}
+		}
+		// THE BLAST HITTING WHAT IS NEAR (`blastkick`): walls beside and a ceiling above shed dust; casings are thrown.
+		if (fd.blastImpact.Length() > 0 && fd.blastReach > 0 && RSB_Settings.FlashBlastKick())
+			BlastKick(fd, sizeMul);
+		// A SHOCKWAVE (`shockwave`): a bubble of bent air growing off the muzzle, laid again each tic in Tick.
+		if (fd.shockRadius > 0 && fd.shockStrength > 0 && fd.shockTics > 0 && RSB_Settings.FlashShockwave())
+		{
+			shockSlot = RSB_Heat.ClaimBlast();
+			shockAge = 0;
+			life = max(life, fd.shockTics + 1);
+			Shockwave(fd);
+		}
+
 		// SMOKE INTO THE ROOM (engine 13b, `smokevolume`) and A SHOVE (`push`): muzzle haze that
 		// builds over a string of shots, out of the muzzle or a tube's rear; a blast pushing it.
 		if (fd.smokeVolAmount > 0 && RSB_Settings.FlashSmoke() > 0)
@@ -246,12 +300,70 @@ class RSB_Flash : Actor
 			sSpread, sSpeed, sLife, fd.sparkLean, leanSeed);
 	}
 
+	// The surface along `d` within `reach` of the muzzle, or null (sky, nothing, too far).
+	private RSB_Surface NearSurface(Vector3 d, double reach)
+	{
+		FLineTraceData t;
+		if (!LineTrace(VectorAngle(d.x, d.y), reach, -asin(clamp(d.z, -1.0, 1.0)), TRF_ABSPOSITION | TRF_THRUACTORS,
+			pos.z, pos.x, pos.y, t))
+			return null;
+		if (t.HitType != FLineTraceData.TRACE_HitWall && t.HitType != FLineTraceData.TRACE_HitFloor
+			&& t.HitType != FLineTraceData.TRACE_HitCeiling)
+			return null;
+		let s = RSB_Materials.FromTrace(t, d);
+		return (s && !s.sky && !s.air) ? s : null;
+	}
+
+	// THE BLAST HITTING WHAT IS NEAR (`blastkick`): traces to both sides and up; a surface within reach sheds the
+	// profile's impact -- always close by, now and then further out -- and casings within reach are thrown.
+	private void BlastKick(RSB_FlashDef fd, double sizeMul)
+	{
+		Vector3 side = dir cross (0, 0, 1);
+		if (side.Length() < 0.001) side = (1, 0, 0);
+		side = side.Unit();
+		double reach = fd.blastReach * sizeMul;
+		int posSeed = RSB_Hash.OfPos(pos);
+		for (int i = 0; i < 3; i++)
+		{
+			Vector3 d = (0, 0, 1);
+			if (i == 0) d = side;
+			else if (i == 1) d = -side;
+			let s = NearSurface(d, reach);
+			if (!s) continue;
+			double closeness = 1.0 - clamp((s.at - pos).Length() / reach, 0.0, 1.0);
+			if (RSB_Hash.Frac(level.maptime, 471 + i, posSeed) > closeness * 1.5) continue;
+			RSB_Impact.LandOn(self, s, fd.blastImpact, d);
+		}
+		if (fd.blastShove <= 0) return;
+		let reg = RSB_Registry.Get();
+		if (reg)
+		{
+			for (int i = 0; i < reg.casings.Size(); i++)
+			{
+				let c = RSB_LocalEjecta(reg.casings[i]);
+				if (c) c.Shove(pos, reach, fd.blastShove);
+			}
+		}
+		if (fd.pushStrength <= 0)
+			level.PushEffectImpulse(pos, reach, fd.blastShove * 40.0 * RSB_Tier.PushScale(RSB_Tier.Current()));
+	}
+
+	// ONE TIC OF THE SHOCKWAVE: the bubble grows fast off the muzzle and fades as it grows.
+	private void Shockwave(RSB_FlashDef fd)
+	{
+		double k = double(shockAge + 1) / double(fd.shockTics);
+		double r = fd.shockRadius * (0.25 + 0.75 * k);
+		double strength = fd.shockStrength * (1.0 - 0.85 * k) * RSB_Tier.HeatScale(RSB_Tier.Current());
+		Vector3 middle = pos + dir * (r * 0.35);
+		level.SetHeatSource(shockSlot, middle, middle, r * 0.9, r, strength, 0.14, 0.0, 3);
+	}
+
 	private void StrobeLight(double k)
 	{
 		let fd = flashDef;
 		int range = int(fd.lightRadius * rangeMul * (0.6 + 0.4 * k));
 		// It ASKS to cast shadows (LF_CASTSHADOW, lights #20): the player's "Muzzle flash shadows" decides, Off by default.
-		A_AttachLight("rsb_muzzle", DynamicLight.PointLight, fd.lightColor,
+		A_AttachLight("rsb_muzzle", DynamicLight.PointLight, shotColor,
 			range, 0, DynamicLight.LF_ATTENUATE | DynamicLight.LF_CASTSHADOW, (0, 0, 0), 0, 10, 25, 0, fd.lightPunch * punchMul * k * k);
 		strobeLit = true;
 	}
@@ -259,7 +371,7 @@ class RSB_Flash : Actor
 	private void Beam(double f)
 	{
 		let fd = flashDef;
-		Color c = fd.lightColor;
+		Color c = shotColor;
 		Level.SetVolumetricBeam(pos, dir,
 			Color(255, int(c.r * f), int(c.g * f), int(c.b * f)),
 			fd.coneInner, fd.coneOuter, fd.coneLength * f * coneMul, fd.coneDensity * densityMul * f,
@@ -306,6 +418,11 @@ class RSB_Flash : Actor
 			{
 				Beam(f * f * f);
 			}
+		}
+		if (shockSlot > 0 && shockAge + 1 < fd.shockTics)
+		{
+			shockAge++;
+			Shockwave(fd);
 		}
 		Super.Tick();
 	}
@@ -368,22 +485,31 @@ class RSB_Smoke : Actor
 // Played at every effects level: the dial turns the visuals down, not the fight.
 // NETPLAY. Sound is this machine's presentation: nothing reads a handle back, and no gameplay follows it.
 // ============================================================================
-class RSB_TailSlot
+class RSB_ShotSlot
 {
-	SoundHandle tail;
+	SoundHandle tail;   // its gunshot tail, stopped by the next shot
+	int shots;          // shots fired from this slot: which barrel flashes next (`barrels`)
 }
 
 class RSB_Tail play
 {
 	const SLOTS = 32;   // the beam slots (Level.SetVolumetricBeam's 0..31)
 
+	// A beam slot's record (its tail and shot count), made on first use; null outside 0..31.
+	static RSB_ShotSlot SlotOf(int slot)
+	{
+		if (slot < 0 || slot >= SLOTS) return null;
+		let reg = RSB_Registry.Get();
+		if (!reg) return null;
+		while (reg.shotSlots.Size() <= slot) reg.shotSlots.Push(new("RSB_ShotSlot"));
+		return reg.shotSlots[slot];
+	}
+
 	static void Start(RSB_FlashDef fd, Vector3 at, int slot)
 	{
-		if (!fd || fd.tailSound.Length() == 0 || slot < 0 || slot >= SLOTS) return;
-		let reg = RSB_Registry.Get();
-		if (!reg) return;
-		while (reg.tailSlots.Size() <= slot) reg.tailSlots.Push(new("RSB_TailSlot"));
-		let s = reg.tailSlots[slot];
+		if (!fd || fd.tailSound.Length() == 0) return;
+		let s = SlotOf(slot);
+		if (!s) return;
 		s.tail.StopSound();
 		double vol = fd.tailVolume * RSB_Settings.TailVolume();
 		if (vol <= 0) return;

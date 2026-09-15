@@ -131,6 +131,10 @@ class RSB_Settings play
 
 	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
 	static double TailVolume() { return max(0.0, Cvf("rsb_tail_volume", 1.0)); }
+	// Muzzle spice: powder burns on close walls, the blast kicking what is near, the shockwave.
+	static bool FlashPowderBurns() { return Cvb("rsb_flash_powderburns", true); }
+	static bool FlashBlastKick() { return Cvb("rsb_flash_blastkick", true); }
+	static bool FlashShockwave() { return Cvb("rsb_flash_shockwave", true); }
 
 	// ---- rounds in flight ------------------------------------------------------
 	static bool Glide() { return Cvb("rsb_glide", true); }

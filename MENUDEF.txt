@@ -207,6 +207,10 @@ OptionMenu "RSB_FlashMenu"
 	Slider "Gunshot tails", "rsb_tail_volume", 0.0, 1.5, 0.05, 2
 	StaticText "The room answering each shot: a short boom indoors, a long rolling echo", "DarkGray"
 	StaticText "under open sky. The next shot cuts the last one off.", "DarkGray"
+	StaticText ""
+	Option "Powder burns on close walls", "rsb_flash_powderburns", "OnOff"
+	Option "Blast kicks dust off nearby walls", "rsb_flash_blastkick", "OnOff"
+	Option "Shockwave of bent air (big guns)", "rsb_flash_shockwave", "OnOff"
 }
 
 OptionMenu "RSB_FlightMenu"

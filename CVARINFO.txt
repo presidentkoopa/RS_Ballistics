@@ -39,6 +39,9 @@ user float  rsb_flash_flame_size   = 1.0;
 user float  rsb_flash_sparks       = 1.0;
 user float  rsb_flash_smoke        = 1.0;
 user float  rsb_tail_volume        = 1.0;      // gunshot tails: the room answering each shot
+user bool   rsb_flash_powderburns  = true;     // a close wall takes a soot ring and powder stipple
+user bool   rsb_flash_blastkick    = true;     // the blast knocks dust off walls beside and a ceiling above, throws casings
+user bool   rsb_flash_shockwave    = true;     // big guns throw a bubble of bent air (needs Heat shimmer)
 
 // ---- rounds in flight
 user bool   rsb_glide              = true;

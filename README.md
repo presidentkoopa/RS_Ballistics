@@ -3,7 +3,9 @@
 **The combat-effects generator for the UZDXREMA (DoomXR) mod family.** Data in
 lumps turns into:
 - real rounds in flight, with tracers, vapour trails, heat shimmer and near-miss whiz and crack
-- muzzle flashes (every shot its own: sparks lean, spread and burn differently), gunsmoke and a smoking, glowing barrel
+- muzzle flashes (every shot its own: sparks lean, spread and burn differently, powder burns redder or whiter), gunsmoke
+  and a smoking, glowing barrel; point-blank powder burns, dust kicked off nearby walls, a shockwave of bent air, and
+  gunshot tails
 - spent casings and hulls, and chainsaw engine exhaust
 - impacts by surface material: sparks, 3D chunks, dust, splinters, glints, splashes,
   marks and ricochets -- each round type with its own hit character
