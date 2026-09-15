@@ -55,6 +55,7 @@ class RSB_Bullet : FastProjectile
 	{
 		Super.BeginPlay();
 		RSB_Decals.Apply(self);
+		spawnedAt = pos;
 	}
 
 	String roundId;
@@ -70,6 +71,10 @@ class RSB_Bullet : FastProjectile
 	private bool    launchKnown;
 	transient bool  whizzed;   // local presentation: set on one machine only, never saved
 	transient int   heatSlot;  // this machine's blast slot for its air shimmer; 0 = none yet
+	transient Vector3 spawnedAt;     // where it came into the world (the firing hand)
+	transient Vector3 tickFrom;      // where this tic's move began: the last wake starts here when it lands
+	transient bool    tickFromKnown;
+	transient int     ticksFlown;    // tics it survived: 0 when it lands inside its first move
 
 	// The profiles, re-read after a savegame load.
 	transient RSB_RoundDef      roundDef;
@@ -257,6 +262,8 @@ class RSB_Bullet : FastProjectile
 		// and by then Vel is already zero.
 		if (Vel != (0, 0, 0)) travel = Vel.Unit();
 		Vector3 before = pos;
+		tickFrom = before;
+		tickFromKnown = true;
 		if (!launchKnown)
 		{
 			launchKnown = true;
@@ -286,6 +293,7 @@ class RSB_Bullet : FastProjectile
 		LayWake(before);
 		LayAirHeat();
 		Whiz(before);
+		ticksFlown++;
 	}
 
 	// DAMAGE: the shooter's damageMin-damageMax when set; otherwise the ballistics
@@ -313,6 +321,12 @@ class RSB_Bullet : FastProjectile
 	{
 		ResolveLooks();
 		LayAirHeat();   // the air it tore through shimmers, whatever it hit
+		// THE LAST STRETCH (owner: trails missing at a close wall). A round that lands dies inside its tic's move, so Tick
+		// never lays the wake of the tic it hit in -- and one that hits within its FIRST tic (a wall closer than one tic's
+		// travel, about 7 m) was never drawn in flight at all. Lay that last wake here, and draw a first-tic hit's flight.
+		Vector3 lastFrom = tickFromKnown ? tickFrom : spawnedAt;
+		LayWake(lastFrom);
+		if (ticksFlown == 0) FlightStreak(lastFrom);
 		if (BlockingMobj != null) return;   // an actor bleeds; its own mod decides how
 		if (lookBand >= 2) return;           // a far fight: no impact looks
 		if (lookDef) RSB_Impact.Land(self, lookDef.impact, travel);
@@ -326,6 +340,21 @@ class RSB_Bullet : FastProjectile
 		if (flightDef && flightDef.carveAmount > 0 && flightDef.carveRadius > 0)
 			level.CarveSmoke(before, pos, flightDef.carveRadius, flightDef.carveAmount);
 		if (flightDef) RSB_ProjectileLook.FlightSmoke(flightDef, before, pos);
+	}
+
+	// A FIRST-TIC HIT'S FLIGHT, DRAWN: one bright streak racing from where the round left to where it struck in a couple of
+	// frames -- what its own sprite would have shown had it lived to be drawn. Not for an invisible look, a far enemy band
+	// or effects off. Looks only: a hashed seed, nothing read back.
+	private void FlightStreak(Vector3 from)
+	{
+		if (!flightDef || flightDef.lookKind == "none" || lookBand >= 1 || RSB_Tier.Current() <= RSB_Tier.T_OFF) return;
+		Vector3 path = pos - from;
+		double len = path.Length();
+		if (len < 8.0) return;
+		Vector3 dir = path / len;
+		double streakLife = 0.05;   // seconds from the muzzle to the wall: about four headset frames
+		level.SpawnGpuParticles(from, dir, 1, 0.0, len / streakLife, 0.0, Color(255, 255, 214, 150), 2.0, streakLife, 0.0,
+			1.2, 0.8, 0.0, 0.0, 1, 0.02, RSB_Hash.Seed(level.maptime, roundIndex + 7, RSB_Hash.OfPos(pos)));
 	}
 
 	// THE AIR IT TEARS THROUGH (its flight look's `heat`): bent air over the last heatReach
