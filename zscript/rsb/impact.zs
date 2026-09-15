@@ -35,6 +35,7 @@ class RSB_Burst play
 		double spreadScale = 1.0, double speedScale = 1.0, double lifeScale = 1.0, double leanDeg = 0.0, int leanSeed = 0)
 	{
 		if (!b) return;
+		if (IsSmoke(b)) countScale *= RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel());   // the Smoke dial
 		int n = int(b.count * countScale + 0.5);
 		if (n <= 0) return;
 
@@ -111,6 +112,13 @@ class RSB_Burst play
 			|| id.IndexOf("flash_sparks") == 0 || id.IndexOf("flash_powder") == 0 || id.IndexOf("flash_embers") == 0;
 	}
 
+	// A SMOKE BURST (lit puffs, soot, steam, wisps): its count follows the Smoke dial (Ballistics & Effects -> Smoke).
+	static bool IsSmoke(RSB_BurstDef b)
+	{
+		if (!b) return false;
+		return b.particle.IndexOf("rsb_smoke_") == 0 || b.particle.IndexOf("rsb_soot_") == 0 || b.particle.IndexOf("rsb_casing_wisp") == 0;
+	}
+
 	// A BURST WHOSE PIECES STAY (3D chunks and debris that rest, collide and patter): kept whatever this machine sees
 	// (M1), so turning round shows the rubble, and its landing sounds play.
 	static bool Stays(RSB_BurstDef b)
@@ -127,6 +135,7 @@ class RSB_Burst play
 		Vector3 planeAt = (0, 0, 0), Vector3 planeNormal = (0, 0, 0), double floorAt = -32768)
 	{
 		if (!b || lifeValue <= 0) return;
+		if (IsSmoke(b)) countScale *= RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel());   // the Smoke dial
 		int n = int(b.count * countScale + 0.5);
 		if (n <= 0) return;
 		if (b.particle.Length() > 0)
@@ -243,7 +252,8 @@ class RSB_Wake play
 		// `spacing` lays by distance, as dense at any speed -- and in slow motion, where a
 		// round moves only a little each tic; `perstep` lays a count each tic.
 		double laid = (w.spacing > 0) ? seg.Length() / w.spacing : double(w.perStep);
-		int n = clamp(int(laid * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() + 0.5), 0, (w.spacing > 0) ? 96 : 32);
+		double smokeMul = (w.particle.IndexOf("rsb_smoke_") == 0) ? RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel()) : 1.0;   // a smoke trail follows the Smoke dial
+		int n = clamp(int(laid * RSB_Tier.CountScale(tier) * RSB_Settings.Wake() * smokeMul + 0.5), 0, (w.spacing > 0) ? 96 : 32);
 		Vector3 back = (travel != (0, 0, 0)) ? -travel : (0, 0, 1);
 		int posSeed = RSB_Hash.OfPos(after);
 		// The handle is a hash of the name, the same everywhere: cached, never tested.
@@ -462,7 +472,7 @@ class RSB_Impact play
 		// SMOKE INTO THE ROOM and A BLAST'S SHOVE (engine 13b, `smokevolume`, `push`).
 		// Both follow the effects level (RSB_Tier: heavy x1, extreme up).
 		if (im.smokeVolAmount > 0)
-			level.EmitSmoke(surf.at + surf.normal * (im.smokeVolRadius * 0.5), im.smokeVolRadius, im.smokeVolAmount * RSB_Tier.SmokeScale(tier), im.smokeVolHeat, surf.normal * 20.0, (0, 0, 0), im.smokeVolSoot);
+			level.EmitSmoke(surf.at + surf.normal * (im.smokeVolRadius * 0.5), im.smokeVolRadius, im.smokeVolAmount * RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel()), im.smokeVolHeat, surf.normal * 20.0, (0, 0, 0), im.smokeVolSoot);
 		// FLASH BLINDNESS (engine build 4, `exposure`): the blast's light, weighed by each machine against its own camera
 		// (distance, facing, walls, darkness). Not thinned by the view band: the engine does its own facing.
 		if (im.exposureStrength > 0)

@@ -612,7 +612,7 @@ class RSB_FlameEmitter : Actor
 					RSB_Hash.Seed(level.maptime, 200 + i, landSeed), surf);
 			// SMOKE INTO THE ROOM where it burns (engine 13b, `smokevolume`).
 			if (fd.smokeVolAmount > 0)
-				level.EmitSmoke(at + n * (fd.smokeVolRadius * 0.5), fd.smokeVolRadius, fd.smokeVolAmount * RSB_Tier.SmokeScale(RSB_Tier.Current()), fd.smokeVolHeat, (0, 0, 30), (0, 0, 0), fd.smokeVolSoot);
+				level.EmitSmoke(at + n * (fd.smokeVolRadius * 0.5), fd.smokeVolRadius, fd.smokeVolAmount * RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel()), fd.smokeVolHeat, (0, 0, 30), (0, 0, 0), fd.smokeVolSoot);
 		}
 		if (surf && fd.markShape >= 0 && fd.markTics > 0 && (burnSeq % fd.markTics) == 0 && RSB_Settings.Marks())
 		{

@@ -184,7 +184,7 @@ class RSB_Hotspot : Actor
 			}
 			// SMOKE INTO THE ROOM while it burns (engine 13b, `smokevolume`), by its heat.
 			if (hs.smokeVolAmount > 0 && (now % SHIMMER_EVERY) == 0)
-				level.EmitSmoke(pos + surfNormal * (hs.smokeVolRadius * 0.5), hs.smokeVolRadius, hs.smokeVolAmount * hot * RSB_Tier.SmokeScale(tier), 0.5 * hot, (0, 0, 20), (0, 0, 0), hs.smokeVolSoot);
+				level.EmitSmoke(pos + surfNormal * (hs.smokeVolRadius * 0.5), hs.smokeVolRadius, hs.smokeVolAmount * hot * RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel()), 0.5 * hot, (0, 0, 20), (0, 0, 0), hs.smokeVolSoot);
 		}
 
 		// THE SOUND at every effects level: the dial turns the visuals down, not the fight.

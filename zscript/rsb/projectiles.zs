@@ -68,7 +68,7 @@ class RSB_ProjectileLook play
 		if (tier <= RSB_Tier.T_OFF) return;
 		Vector3 step = now - before;
 		if (step == (0, 0, 0)) return;
-		level.EmitSmoke(before - step, lk.smokeRadius, lk.smokeAmount * RSB_Tier.SmokeScale(tier), lk.smokeHeat, (0, 0, 0), before, lk.smokeSoot);
+		level.EmitSmoke(before - step, lk.smokeRadius, lk.smokeAmount * RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel()), lk.smokeHeat, (0, 0, 0), before, lk.smokeSoot);
 	}
 
 	// THE MOTOR (a look's `motor`): a burst out of its tail each tic it flies.

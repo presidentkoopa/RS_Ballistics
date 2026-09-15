@@ -23,6 +23,15 @@ OptionValue "RSBTiers"
 	4, "EXTREME -- everything turned way up"
 }
 
+OptionValue "RSBSmokeTiers"
+{
+	0, "Off -- no smoke"
+	1, "Plain -- a light haze, cheapest"
+	2, "Normal"
+	3, "Heavy (recommended)"
+	4, "EXTREME -- thick, costly"
+}
+
 OptionValue "RSBAtlasSizes"
 {
 	128, "128 px"
@@ -108,6 +117,7 @@ OptionMenu "RSB_Options"
 	StaticText ""
 	StaticText "THE DIAL", "Gold"
 	Option "Effects level", "rsb_tier", "RSBTiers"
+	Option "Smoke", "rsb_smoke_tier", "RSBSmokeTiers"
 	Option "Style", "rsb_style", "RSBStyles"
 	StaticText ""
 	StaticText "EFFECTS", "Gold"
@@ -343,6 +353,10 @@ OptionMenu "RSB_LightMenu"
 OptionMenu "RSB_SmokeMenu"
 {
 	Title "SMOKE"
+	Option "Smoke", "rsb_smoke_tier", "RSBSmokeTiers"
+	StaticText "The Smoke dial sets every smoke our guns make, and how the engine draws it (it sets", "DarkGray"
+	StaticText "the smoke rows below each map and whenever it moves). Lower is faster.", "DarkGray"
+	StaticText ""
 	StaticText "Room-filling gunsmoke that drifts through doorways, is stopped by walls,", "DarkGray"
 	StaticText "is lit by flashes and lights, and shows lasers passing through it.", "DarkGray"
 	StaticText ""
@@ -448,6 +462,7 @@ OptionMenu "RSB_QualityMenu"
 	StaticText "each effect; the benchmarks give it a load that repeats.", "DarkGray"
 	StaticText ""
 	Option "Effects level", "rsb_tier", "RSBTiers"
+	Option "Smoke", "rsb_smoke_tier", "RSBSmokeTiers"
 	Option "Particle atlas size", "r_gpuparticles_atlas_size", "RSBAtlasSizes"
 	StaticText ""
 	Slider "Performance log (seconds, 0 = off)", "r_perflog", 0, 30, 1, 0

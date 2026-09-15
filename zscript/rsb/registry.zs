@@ -24,6 +24,7 @@ class RSB_Registry : StaticEventHandler
 	Array<RSB_ShotSlot>    shotSlots;     // each beam slot's gunshot tail and shot count (flash.zs RSB_Tail)
 	Array<RSB_Hotspot>     hotspots;      // live hotspots, oldest first (hotspot.zs; cleared each map)
 	private Array<String> said;                  // once-per-map log keys
+	private int smokeDialApplied;                // the Smoke dial value last pushed to the engine's smoke drawing (-1 none yet)
 
 	clearscope static RSB_Registry Get()
 	{
@@ -32,13 +33,45 @@ class RSB_Registry : StaticEventHandler
 
 	override void OnRegister()
 	{
+		smokeDialApplied = -1;
 		Load();
+	}
+
+	// THE SMOKE DIAL follows the player while playing (a menu pauses the game: it applies as the menu closes).
+	override void WorldTick()
+	{
+		ApplySmokeDial(false);
+	}
+
+	// THE SMOKE DIAL, ITS ENGINE SIDE (Ballistics & Effects -> Smoke, rsb_smoke_tier; the owner, 2026-09-15): the dial also
+	// sets how the engine draws smoke -- off, or cheaper to richer -- so one dial trades smoke for frame rate:
+	//   off: no smoke volume; plain: small grid, 16 steps, coarse light; normal: small grid, 24 steps, coarse light;
+	//   heavy: full grid, 32 steps, default light; extreme: full grid, 48 steps, fine light.
+	// At every map start (an engine cvar a script sets is not saved) and whenever the dial moves. This machine's drawing
+	// only: nothing in the playsim reads these, and every machine sets its own.
+	private void ApplySmokeDial(bool force)
+	{
+		int dial = RSB_Settings.SmokeLevel();
+		if (!force && dial == smokeDialApplied) return;
+		smokeDialApplied = dial;
+		SetEngineInt("r_smoke", (dial > 0) ? 1 : 0);
+		if (dial <= 0) return;
+		SetEngineInt("r_smoke_quality", (dial >= 3) ? 2 : 1);
+		SetEngineInt("r_smoke_steps", (dial == 1) ? 16 : ((dial == 2) ? 24 : ((dial == 3) ? 32 : 48)));
+		SetEngineInt("r_smoke_light_quality", (dial <= 2) ? 1 : ((dial == 3) ? 2 : 3));
+	}
+
+	private static void SetEngineInt(Name cvarName, int value)
+	{
+		let c = CVar.FindCVar(cvarName);
+		if (c && c.GetInt() != value) c.SetInt(value);
 	}
 
 	// Each map: forget what was said, and say what is loaded.
 	override void WorldLoaded(WorldEvent e)
 	{
 		said.Clear();
+		ApplySmokeDial(true);   // the Smoke dial's engine side, every map
 		barrels.Clear();
 		casings.Clear();
 		hotspots.Clear();

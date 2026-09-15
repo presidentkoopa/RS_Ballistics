@@ -123,10 +123,15 @@ class RSB_Settings play
 		return max(0.0, Cvf("rsb_flash_sparks", 1.0) * (st ? st.particlesMul : 1.0));
 	}
 
+	// THE SMOKE DIAL (Ballistics & Effects -> Smoke; the owner, 2026-09-15): 0 off .. 4 extreme, beside the effects
+	// level. Every smoke amount and smoke burst follows it (RSB_Tier.SmokeScale), and RSB_Registry sets the engine's
+	// smoke drawing from it. Looks only, each player's own.
+	static int SmokeLevel() { return clamp(int(Cvf("rsb_smoke_tier", 3.0)), RSB_Tier.T_OFF, RSB_Tier.T_EXTREME); }
+
 	static double FlashSmoke()
 	{
 		let st = Style();
-		return max(0.0, Cvf("rsb_flash_smoke", 1.0) * (st ? st.smokeMul : 1.0) * RSB_Tier.SmokeScale(RSB_Tier.Current()));
+		return max(0.0, Cvf("rsb_flash_smoke", 1.0) * (st ? st.smokeMul : 1.0) * RSB_Tier.SmokeScale(RSB_Settings.SmokeLevel()));
 	}
 
 	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
