@@ -373,7 +373,7 @@ class RSB_Impact play
 			double strength = im.lightIntensity * RSB_Settings.ImpactLight() * lightWobble;
 			if (strength > 0)
 			{
-				let l = RSB_ImpactLight(Actor.Spawn("RSB_ImpactLight", surf.at + surf.normal * 4.0, ALLOW_REPLACE));
+				let l = RSB_ImpactLight(Actor.SpawnClientSide("RSB_ImpactLight", surf.at + surf.normal * 4.0, ALLOW_REPLACE));
 				if (l) l.Start(im.lightRadius * (0.8 + 0.2 * lightWobble), strength, im.lightTics, im.lightColor);
 			}
 		}
@@ -397,6 +397,7 @@ class RSB_ImpactLight : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -457,6 +458,7 @@ class RSB_SoundSpot : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION

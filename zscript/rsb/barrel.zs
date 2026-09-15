@@ -141,7 +141,7 @@ class RSB_Barrel play
 			RSB_Heat.Blast(at, fd.chargeShimmerRadius * (0.4 + 0.6 * f), fd.chargeShimmerStrength * f, SHIMMER_EVERY + 4);
 		if (fd.chargeLightRadius > 0 && fd.chargeLightIntensity > 0 && RSB_Settings.FlashLight() > 0)
 		{
-			if (!b.chargeLight) b.chargeLight = RSB_BarrelGlow(Actor.Spawn("RSB_BarrelGlow", at, NO_REPLACE));
+			if (!b.chargeLight) b.chargeLight = RSB_BarrelGlow(Actor.SpawnClientSide("RSB_BarrelGlow", at, NO_REPLACE));
 			if (b.chargeLight)
 				b.chargeLight.Hold(at, fd.chargeLightColor, fd.chargeLightRadius * (0.3 + 0.7 * f),
 					fd.chargeLightIntensity * f * f * RSB_Settings.FlashLight());
@@ -162,7 +162,7 @@ class RSB_Barrel play
 			b.glowLight = null;
 			return;
 		}
-		if (!b.glowLight) b.glowLight = RSB_BarrelGlow(Actor.Spawn("RSB_BarrelGlow", at, NO_REPLACE));
+		if (!b.glowLight) b.glowLight = RSB_BarrelGlow(Actor.SpawnClientSide("RSB_BarrelGlow", at, NO_REPLACE));
 		if (b.glowLight)
 			b.glowLight.Hold(at, fd.barrelGlowColor, fd.barrelGlowRadius * (0.6 + 0.4 * hot), fd.barrelGlowIntensity * hot);
 	}
@@ -281,6 +281,7 @@ class RSB_BarrelGlow : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION

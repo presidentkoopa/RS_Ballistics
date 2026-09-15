@@ -84,7 +84,7 @@ class RSB_EnemyFire : EventHandler
 			let surf = RSB_Materials.FromTrace(d, dir);
 			if (surf && !surf.sky)
 			{
-				let spot = Actor.Spawn("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
+				let spot = Actor.SpawnClientSide("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
 				if (spot) RSB_Impact.LandOn(spot, surf, lk.impact, dir);
 			}
 		}
@@ -106,7 +106,7 @@ class RSB_EnemyFire : EventHandler
 		double t = (len2 > 0) ? clamp(((ear - from) dot seg) / len2, 0.0, 1.0) : 0.0;
 		Vector3 closest = from + seg * t;
 		if ((ear - closest).Length() > range) return;
-		let spot = Actor.Spawn("RSB_SoundSpot", closest, ALLOW_REPLACE);
+		let spot = Actor.SpawnClientSide("RSB_SoundSpot", closest, ALLOW_REPLACE);
 		if (spot) spot.A_StartSound(lk.whizSound, CHAN_AUTO, CHANF_OVERLAP, vol);
 	}
 }

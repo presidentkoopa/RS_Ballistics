@@ -176,7 +176,7 @@ class RSB_Bench : Actor
 				continue;
 			let surf = RSB_Materials.FromTrace(d, dir);
 			if (!surf || surf.sky) continue;
-			let spot = Actor.Spawn("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
+			let spot = Actor.SpawnClientSide("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
 			if (spot) RSB_Impact.LandOn(spot, surf, "bullet", dir);
 		}
 	}
@@ -217,7 +217,7 @@ class RSB_Bench : Actor
 				continue;
 			let surf = RSB_Materials.FromTrace(d, dir);
 			if (!surf || surf.sky) continue;
-			let spot = Actor.Spawn("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
+			let spot = Actor.SpawnClientSide("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
 			if (!spot) continue;
 			if (i < 0)
 			{
@@ -251,7 +251,7 @@ class RSB_Bench : Actor
 			for (int j = 0; j < 2; j++)
 			{
 				Vector3 lp = ahead + right * ((j == 0) ? -48.0 : 48.0);
-				let l = RSB_ImpactLight(Actor.Spawn("RSB_ImpactLight", lp, ALLOW_REPLACE));
+				let l = RSB_ImpactLight(Actor.SpawnClientSide("RSB_ImpactLight", lp, ALLOW_REPLACE));
 				if (l) l.Start(200.0, 2.0, 4, Color(255, 255, 170, 90));
 			}
 		}

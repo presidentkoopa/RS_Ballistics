@@ -48,7 +48,7 @@ class RSB_Trail play
 		// THE CORE LINE, faded by its own non-interacting actor.
 		if (td.lineIntensity > 0)
 		{
-			let line = RSB_TrailLine(Actor.Spawn("RSB_TrailLine", from, ALLOW_REPLACE));
+			let line = RSB_TrailLine(Actor.SpawnClientSide("RSB_TrailLine", from, ALLOW_REPLACE));
 			if (line) line.Start(td, reg.NextTrailSlot(), from, to);
 		}
 
@@ -80,7 +80,7 @@ class RSB_Trail play
 			for (int i = 0; i < td.lightCount; i++)
 			{
 				Vector3 at = from + u * (len * (i + 0.5) / td.lightCount);
-				let l = RSB_ImpactLight(Actor.Spawn("RSB_ImpactLight", at, ALLOW_REPLACE));
+				let l = RSB_ImpactLight(Actor.SpawnClientSide("RSB_ImpactLight", at, ALLOW_REPLACE));
 				if (l) l.Start(td.lightRadius, td.lightIntensity * RSB_Settings.ImpactLight(), td.lightTics, td.lightColor);
 			}
 		}
@@ -97,6 +97,7 @@ class RSB_TrailLine : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -124,7 +125,7 @@ class RSB_TrailLine : Actor
 	void Start(RSB_TrailDef td, int useSlot, Vector3 a, Vector3 b)
 	{
 		// The oldest trail still holding this slot lets go of it first.
-		let it = ThinkerIterator.Create("RSB_TrailLine");
+		let it = ThinkerIterator.Create("RSB_TrailLine", Thinker.MAX_STATNUM + 1, true);
 		RSB_TrailLine other;
 		while (other = RSB_TrailLine(it.Next()))
 		{

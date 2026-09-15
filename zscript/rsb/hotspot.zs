@@ -17,6 +17,7 @@ class RSB_Hotspot : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -81,7 +82,7 @@ class RSB_Hotspot : Actor
 				reg.hotspots.Delete(0);
 				if (oldest) oldest.GoOut();
 			}
-			spot = RSB_Hotspot(Actor.Spawn("RSB_Hotspot", surf.at + surf.normal, NO_REPLACE));
+			spot = RSB_Hotspot(Actor.SpawnClientSide("RSB_Hotspot", surf.at + surf.normal, NO_REPLACE));
 			if (!spot) return;
 			spot.spotId = whichSpot;
 			spot.surfNormal = surf.normal;

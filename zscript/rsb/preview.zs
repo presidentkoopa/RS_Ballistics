@@ -60,7 +60,7 @@ class RSB_Preview : EventHandler
 				let surf = RSB_Materials.FromTrace(d, fwd);
 				if (surf && !surf.sky)
 				{
-					let spot = Actor.Spawn("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
+					let spot = Actor.SpawnClientSide("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
 					if (spot) RSB_Impact.LandOn(spot, surf, RSB_Settings.PreviewImpact(), fwd);
 				}
 				else

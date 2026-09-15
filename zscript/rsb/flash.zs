@@ -29,6 +29,7 @@ class RSB_Flash : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		+NOBLOCKMAP
 		+NOGRAVITY
@@ -96,7 +97,7 @@ class RSB_Flash : Actor
 				muzzle = at + (side * cos(turn) + lift * sin(turn)) * fd.barrelRadius;
 			}
 		}
-		let f = RSB_Flash(Actor.Spawn("RSB_Flash", muzzle, ALLOW_REPLACE));
+		let f = RSB_Flash(Actor.SpawnClientSide("RSB_Flash", muzzle, ALLOW_REPLACE));
 		if (!f) return null;
 		f.flashId = whichFlash;
 		f.flashDef = fd;
@@ -269,7 +270,7 @@ class RSB_Flash : Actor
 		}
 		for (int i = 0; i < puffs; i++)
 		{
-			let s = Actor.Spawn("RSB_Smoke", pos + dir * 0.5, ALLOW_REPLACE);
+			let s = Actor.SpawnClientSide("RSB_Smoke", pos + dir * 0.5, ALLOW_REPLACE);
 			if (!s) continue;
 			s.A_SetScale(fd.smokeScale);
 			s.Alpha = fd.smokeAlpha;
@@ -443,6 +444,7 @@ class RSB_Smoke : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION

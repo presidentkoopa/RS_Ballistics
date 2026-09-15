@@ -69,7 +69,7 @@ class RSB_Flame play
 					"flame \"%s\" is not defined in any RSBDEFS", whichFlame));
 				return null;
 			}
-			e = RSB_FlameEmitter(Actor.Spawn("RSB_FlameEmitter", nozzle, ALLOW_REPLACE));
+			e = RSB_FlameEmitter(Actor.SpawnClientSide("RSB_FlameEmitter", nozzle, ALLOW_REPLACE));
 			if (!e) return null;
 			e.Begin(whichFlame, fd, who, hand);
 		}
@@ -102,7 +102,7 @@ class RSB_Flame play
 	static RSB_FlameEmitter Find(Actor who, int hand)
 	{
 		if (!who) return null;
-		let it = ThinkerIterator.Create("RSB_FlameEmitter");
+		let it = ThinkerIterator.Create("RSB_FlameEmitter", Thinker.MAX_STATNUM + 1, true);
 		RSB_FlameEmitter e;
 		while (e = RSB_FlameEmitter(it.Next()))
 		{
@@ -118,6 +118,7 @@ class RSB_FlameEmitter : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -320,7 +321,7 @@ class RSB_FlameEmitter : Actor
 		for (int blk = 0; blk < RSB_Flame.TUBE_BLOCKS; blk++)
 		{
 			bool taken = false;
-			let it = ThinkerIterator.Create("RSB_FlameEmitter");
+			let it = ThinkerIterator.Create("RSB_FlameEmitter", Thinker.MAX_STATNUM + 1, true);
 			RSB_FlameEmitter other;
 			while (other = RSB_FlameEmitter(it.Next()))
 			{
@@ -404,7 +405,7 @@ class RSB_FlameEmitter : Actor
 		for (int blk = 0; blk < RSB_Heat.FLAME_BLOCKS; blk++)
 		{
 			bool taken = false;
-			let it = ThinkerIterator.Create("RSB_FlameEmitter");
+			let it = ThinkerIterator.Create("RSB_FlameEmitter", Thinker.MAX_STATNUM + 1, true);
 			RSB_FlameEmitter other;
 			while (other = RSB_FlameEmitter(it.Next()))
 			{
@@ -635,7 +636,7 @@ class RSB_FlameEmitter : Actor
 		if (fd.landLightRadius > 0 && lightMul > 0)
 		{
 			Vector3 lp = at + n * 8.0;
-			if (!landLight) landLight = RSB_FlameLight(Actor.Spawn("RSB_FlameLight", lp, ALLOW_REPLACE));
+			if (!landLight) landLight = RSB_FlameLight(Actor.SpawnClientSide("RSB_FlameLight", lp, ALLOW_REPLACE));
 			if (landLight)
 			{
 				double k = Flicker(fd.flicker, 21);
@@ -654,6 +655,7 @@ class RSB_FlameLight : Actor
 {
 	Default
 	{
+		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
