@@ -72,11 +72,21 @@ PARTICLEDEFS definitions as the metal shard's (collide level, restitution, restl
 
 ## 5. The queue when the owner resumes
 
-1. **#15 emissive volumes** (build lane done pending): Engine docs/EMISSIVE_VOLUMES_15_IMPL_NOTES.md "Hand-off" -- a
-   VOLUMEDEFS lump (`emissive <name>`, class gun / biggun / blast told honestly), `volume = <def>` and `vary volume` on
-   flash and impact profiles, cached handles, `EmissiveVolumeEnabled` per shot with today's cone and flame as the
-   fallback, the menu mirror (All effects on: 3 / 0 / 0 / 1 / 1 / 32 / 2), a `rsb_bench_flashvolumes` bench. Owner: size
-   for the look; the VR optimize pass comes later.
+1. **#15 emissive volumes -- DONE, installed df0c301 (2026-09-15).**
+   - VOLUMEDEFS holds 28 looks (8 gun, 14 biggun, 6 blast) on every Vanilla and Vanilla+ flash and on rocket, RPG,
+     plasma and BFG hits. Extreme variants inherit them.
+   - Menu mirror, All effects on, `rsb_bench_flashvolumes`.
+   - Left over: the reload lane passing `pmo.PlayerNumber()` and the hand to `RSB_Flash.Fire`, so the volume rides the
+     hand; handoff sent to uzdxrema-63. The owner's headset look, then tune sizes. The VR optimize pass comes later.
+   - Paused here by the owner (via the build lane) for testing. Next on resume: Extreme variants for the profiles still
+     missing one (item 6), then this surface pass.
+6. **Extreme variants still missing** (Vanilla+ allowed now):
+   - flash: pistol, default, shotgun, shotgun_doublebarrel, rifle, smg, revolver, shotgun_double, plasma, rocket,
+     unmaker, bfg
+   - roundlook: rifle_556, rifle_762, revolver_357, smg_9mm, smg_45, default
+   - ejecta: hull_12ga_fouled, brass_9mm, brass_357, default
+   - impact: pistol, magnum, rifle, bfg_spray_heavy, laser_burn, unmaker*
+   - Add them to the scratch extreme_roster_apply.py, review the diff, lint.
 2. **The compressed particle atlas** (after #15): pack the generated books (tools/gen_flipbooks.py: RBVS smoke puff,
    RBVF fireball, 64 frames at 512, in the scratchpad) and name them in PARTICLEDEFS.
 3. **Sensory impulses** (flash blindness, ringing ears; after the atlas): call `ExposureImpulse` / `HearingImpulse`
