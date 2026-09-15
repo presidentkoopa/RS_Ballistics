@@ -420,6 +420,10 @@ OptionMenu "RSB_QualityMenu"
 	Command "Bench: flashes (8 muzzle flashes a second)", "netevent rsb_bench_flashes"
 	Command "Bench: BFG lights (a Heavy BFG spray every 2 seconds)", "netevent rsb_bench_bfg"
 	Command "Bench: volumetric flashes (two chainguns and a BFG blast)", "netevent rsb_bench_flashvolumes"
+	StaticText ""
+	StaticText "The performance log times the drawing, not the scripts. In a big fight, this", "DarkGray"
+	StaticText "times every script class for one tic and writes it to the log (doomxr-log.txt).", "DarkGray"
+	Command "Profile scripts for one tic (in a fight)", "profilethinkers -t 25"
 }
 
 OptionMenu "RSB_PreviewMenu"
