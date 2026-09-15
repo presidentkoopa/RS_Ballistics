@@ -9,7 +9,19 @@ or something else". Picked: **tech, electrical and pipes; lights and screens; br
 glow lanes; never touch their mods), gore and flesh (maybe never: existing gore mods, or our own later), liquids (a
 later pass). Lights and screens get the **pop and sparks only**.
 
-Paused 2026-09-15 by the owner's pause (relayed by the build lane) before any file changed. Resume from here.
+**Status, 2026-09-15:** the DATA is built, committed locally and not installed. It was done as desk work while the
+owner tests; the check and install come in the build lane's batch.
+- **Generators (run again to rebuild):**
+  - `tools/gen_surface_pass.py`: SURFACES, PARTICLEDEFS pieces, and RSBDEFS bursts plus 70 `<family>.<surface>` hits
+  - `tools/gen_chunks.py`: 20 new piece models
+  - `tools/import_surface_sounds.py`: electric, pipe (a metal hit with a hiss mixed under it, about 1 s), tile, marble
+- **Differences from the plan below:**
+  - The pipe's steam is a burst (a jet, then steam hanging), not a hotspot. A hotspot takes a hit INSTEAD of landing.
+  - No Extreme variants (owner: no more Extremes). At Extreme a new surface uses its plain hit.
+- **Check in the headset:**
+  - the tile floors
+  - the electric sounds' length (1.2-1.4 s)
+  - how loud the pipe hiss is
 
 ## 1. Surfaces (SURFACES.txt; appended blocks -- a later rule wins, so they take their textures back from metal and glass)
 

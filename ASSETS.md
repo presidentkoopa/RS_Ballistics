@@ -270,3 +270,40 @@ Copied unchanged from the owner's ART SOURCE library (a permitted asset pool). S
 - `sounds/rsb/tail/rpg/ext/rpg_atmo_ext_med_2.ogg` from `ART SOURCE/SOUNDS/COMBAT/Atmosphere/distant/ext/rpg/rpg_atmo_ext_med_2.ogg` (sha1 a6ba3254ed2e88a061e41b2032ab7554d66f690a)
 - `sounds/rsb/tail/rpg/ext/rpg_atmo_ext_med_3.ogg` from `ART SOURCE/SOUNDS/COMBAT/Atmosphere/distant/ext/rpg/rpg_atmo_ext_med_3.ogg` (sha1 ada7f69553f0a1f4230e2f442d104d5555832ad3)
 <!-- END gunshot tails -->
+
+<!-- BEGIN surface pass sounds (tools/import_surface_sounds.py) -->
+## Surface pass sounds (sounds/rsb/impact_electric, impact_pipe, debris/tile, debris/marble)
+
+Copied unchanged from RS_Main's sound folders and E:/oldshit/ART SOURCE (the owner-cleared pools), or mixed
+from them (the pipe hits: ffmpeg, filter in tools/import_surface_sounds.py). SHA-1 is of the source.
+
+- `sounds/rsb/impact_electric/electro8.wav` from `RS_Main/sounds/ch/ELECTRO8.wav` (sha1 40244f51495e3180c4fdbad1a81b0fb5bf950dc3)
+- `sounds/rsb/impact_electric/pzaphit.ogg` from `RS_Main/sounds/ch/PZAPHIT.ogg` (sha1 fb793dfb28ecc0fdb3c1e6560b56e70c85419e08)
+- `sounds/rsb/impact_electric/dsdevzap.ogg` from `RS_Main/sounds/ch/DSDEVZAP.ogg` (sha1 a8a00acf0d050053559eae094057c1a687c62213)
+- `sounds/rsb/impact_electric/electro7.ogg` from `RS_Main/sounds/ch/ELECTRO7.ogg` (sha1 8f9f44c4a4b9c93dfeaadd68e55b5f0bec6beec4)
+- `sounds/rsb/impact_electric/sparks1.ogg` from `ART SOURCE/SOUNDS/hbgore/SPARKS1.ogg` (sha1 609e1969ebdc7cf256edc58b8fb5d6f5fb333136)
+- `sounds/rsb/debris/tile/tile2_step1.ogg` from `ART SOURCE/SOUNDS/footstep/tilea/tile2_step1.ogg` (sha1 7c464557ab6552a2fa052dea7fbf006c0a496ea2)
+- `sounds/rsb/debris/tile/tile2_step2.ogg` from `ART SOURCE/SOUNDS/footstep/tilea/tile2_step2.ogg` (sha1 d8959d0487b69400cc0b17f6d864df61853c8bd6)
+- `sounds/rsb/debris/tile/tile2_step3.ogg` from `ART SOURCE/SOUNDS/footstep/tilea/tile2_step3.ogg` (sha1 6d033061e46acfaaaa174581c4a2d2976d0f0080)
+- `sounds/rsb/debris/tile/tile2_step4.ogg` from `ART SOURCE/SOUNDS/footstep/tilea/tile2_step4.ogg` (sha1 82380f7edbe673991566bb694c15ad3f9fb9694d)
+- `sounds/rsb/debris/tile/dstile01.ogg` from `ART SOURCE/SOUNDS/Doomguy and Marines/DOOMGUY/Sounds/Footsteps sounds/DSTILE01.ogg` (sha1 ab8acdad7a823f1992f3ad5f855a09df71c20848)
+- `sounds/rsb/debris/tile/dstile02.ogg` from `ART SOURCE/SOUNDS/Doomguy and Marines/DOOMGUY/Sounds/Footsteps sounds/DSTILE02.ogg` (sha1 9a3fcee56273328bac9a940a4817b0509b0f0f68)
+- `sounds/rsb/debris/tile/dstile03.ogg` from `ART SOURCE/SOUNDS/Doomguy and Marines/DOOMGUY/Sounds/Footsteps sounds/DSTILE03.ogg` (sha1 9f1fd7f582d2c207ee4ab352a886b88e565d11ed)
+- `sounds/rsb/debris/tile/dstile04.ogg` from `ART SOURCE/SOUNDS/Doomguy and Marines/DOOMGUY/Sounds/Footsteps sounds/DSTILE04.ogg` (sha1 897bd9a0d7206c51b0243735e6b6b0593073fba6)
+- `sounds/rsb/debris/tile/dstile05.ogg` from `ART SOURCE/SOUNDS/Doomguy and Marines/DOOMGUY/Sounds/Footsteps sounds/DSTILE05.ogg` (sha1 8ed7c9b16491600a9c70fbe2fd331b2ec5008845)
+- `sounds/rsb/debris/tile/dstile06.ogg` from `ART SOURCE/SOUNDS/Doomguy and Marines/DOOMGUY/Sounds/Footsteps sounds/DSTILE06.ogg` (sha1 11bf454efd5e0b358272754d57f9ab6c72246aa5)
+- `sounds/rsb/debris/marble/marble_step1.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step1.ogg` (sha1 36bf29618c112890e46dd6a97093640086b20f3e)
+- `sounds/rsb/debris/marble/marble_step2.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step2.ogg` (sha1 c3004b2789c7248c3a7f2352cbca35250f57347f)
+- `sounds/rsb/debris/marble/marble_step3.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step3.ogg` (sha1 382e547b46db6356a5ee5942121acdf932cbf668)
+- `sounds/rsb/debris/marble/marble_step4.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step4.ogg` (sha1 bc75f708752b3f95fa04642d6d9213a29e35f634)
+- `sounds/rsb/debris/marble/marble_step5.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step5.ogg` (sha1 9b8c5b9b44951b3540a4f40a6ede17c82cbacc0e)
+- `sounds/rsb/debris/marble/marble_step6.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step6.ogg` (sha1 d1ad6ff85e0e0064855ef808d4eb8678da94780e)
+- `sounds/rsb/debris/marble/marble_step7.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step7.ogg` (sha1 94c340cac4f0bfd19b0acbe4583a9aad0aecc07b)
+- `sounds/rsb/debris/marble/marble_step8.ogg` from `ART SOURCE/SOUNDS/footstep/tileb/marble_step8.ogg` (sha1 33fcbbffb00d9dcacf9de241d07b62c3bca6495b)
+- `sounds/rsb/impact_pipe/pipe_hit1.ogg` mixed by this tool from the package's `sounds/rsb/impact_metal/blt_imp_metal_thick_near_01.ogg` and `ART SOURCE/SOUNDS/COMBAT/WEAPONS/Flamethrower/FlamerHiss2.wav` (sha1 6aa5dce544007ebb93fa91a7dbf62da722d31ef8)
+- `sounds/rsb/impact_pipe/pipe_hit2.ogg` mixed by this tool from the package's `sounds/rsb/impact_metal/blt_imp_metal_thick_near_02.ogg` and `ART SOURCE/SOUNDS/COMBAT/WEAPONS/Flamethrower/FlamerHiss1.ogg` (sha1 303883f4b2fcb79fb89b80a989edd39efe124013)
+- `sounds/rsb/impact_pipe/pipe_hit3.ogg` mixed by this tool from the package's `sounds/rsb/impact_metal/blt_imp_metal_thick_near_03.ogg` and `ART SOURCE/SOUNDS/COMBAT/WEAPONS/Flamethrower/FlamerHiss2.wav` (sha1 6aa5dce544007ebb93fa91a7dbf62da722d31ef8)
+- `sounds/rsb/impact_pipe/pipe_hit4.ogg` mixed by this tool from the package's `sounds/rsb/impact_metal/blt_imp_metal_thick_near_04.ogg` and `ART SOURCE/SOUNDS/COMBAT/WEAPONS/Flamethrower/FlamerHiss1.ogg` (sha1 303883f4b2fcb79fb89b80a989edd39efe124013)
+- `sounds/rsb/impact_pipe/pipe_hit5.ogg` mixed by this tool from the package's `sounds/rsb/impact_metal/blt_imp_metal_thick_near_05.ogg` and `ART SOURCE/SOUNDS/COMBAT/WEAPONS/Flamethrower/FlamerHiss2.wav` (sha1 6aa5dce544007ebb93fa91a7dbf62da722d31ef8)
+- `sounds/rsb/impact_pipe/pipe_hit6.ogg` mixed by this tool from the package's `sounds/rsb/impact_metal/blt_imp_metal_thick_near_06.ogg` and `ART SOURCE/SOUNDS/COMBAT/WEAPONS/Flamethrower/FlamerHiss1.ogg` (sha1 303883f4b2fcb79fb89b80a989edd39efe124013)
+<!-- END surface pass sounds -->

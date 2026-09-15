@@ -5038,6 +5038,1137 @@ round enemy_heavy
   roundlook  = enemy_heavy
 end
 
+# ---------------------------------------------------------------- SURFACE PASS (generated: tools/gen_surface_pass.py)
+# THE SURFACE PASS (owner picks 2026-09-15): tech panels short out, screens crack and arc, lights pop, pipes vent
+# steam, brick, marble and tile break into their own pieces. Every bullet family's variants, cloned from its own
+# stone, metal or glass hit: the same counts and sizes, new kinds added. SURFACES.txt names the textures.
+# Generated -- edit tools/gen_surface_pass.py and run it again, not these blocks.
+
+burst arcs_electric   # a shot panel shorting out: white-blue arcs crawling where it struck (rsb_arc)
+  count    = 3
+  cone     = 70
+  speed    = 20, 0.5
+  life     = 0.3, 0.35
+  color    = 170, 200, 255
+  offset   = 2
+  particle = rsb_arc
+end
+
+burst arc_electric_one   # a shot screen shorting: one arc across it (rsb_arc)
+  count    = 1
+  cone     = 60
+  speed    = 15, 0.5
+  life     = 0.25, 0.3
+  color    = 150, 220, 200
+  offset   = 2
+  particle = rsb_arc
+end
+
+burst wisp_electric   # burnt insulation: a thin wisp of grey smoke off a shot panel (rsb_smoke_gun: lit, never glowing)
+  count    = 1
+  cone     = 25
+  speed    = 25, 0.5
+  life     = 1.6, 0.35
+  aim      = normal
+  offset   = 1
+  color    = 150, 150, 155
+  particle = rsb_smoke_gun
+end
+
+burst bits_board   # bits of circuit board knocked off a panel (3D chunks, lit, never glowing)
+  count    = 3
+  cone     = 55
+  speed    = 150, 0.5
+  life     = 1.1, 0.4
+  color    = 46, 96, 56
+  particle = rsb_chunk_tech_board1, rsb_chunk_tech_board2, rsb_chunk_tech_board3
+end
+
+burst bits_wire   # scraps of copper wire torn out of a panel (3D chunks, lit, never glowing)
+  count    = 2
+  cone     = 60
+  speed    = 170, 0.5
+  life     = 1.1, 0.4
+  color    = 184, 112, 62
+  particle = rsb_chunk_tech_wire1, rsb_chunk_tech_wire2
+end
+
+burst bulb_glass   # a light's cover popping: curved shards of bulb glass (3D chunks)
+  count    = 14
+  cone     = 70
+  speed    = 170, 0.5
+  life     = 1.0, 0.4
+  color    = 225, 230, 235
+  particle = rsb_chunk_light_bulb1, rsb_chunk_light_bulb2, rsb_chunk_light_bulb3
+end
+
+burst steam_jet_pipe   # a shot pipe venting: a jet of white steam straight out of the hole (rsb_smoke_gun: lit, never glowing)
+  count    = 5
+  cone     = 10
+  speed    = 260, 0.4
+  life     = 1.1, 0.5
+  aim      = normal
+  offset   = 2
+  color    = 235, 238, 242
+  particle = rsb_smoke_gun
+end
+
+burst steam_hang_pipe   # the steam hanging in front of a shot pipe after the jet (rsb_smoke_gun: lit, never glowing)
+  count    = 2
+  cone     = 45
+  speed    = 35, 0.5
+  life     = 2.2, 0.3
+  aim      = normal
+  offset   = 3
+  color    = 230, 232, 235
+  particle = rsb_smoke_gun
+end
+
+burst bits_pipe   # torn flecks of pipe metal (3D chunks, lit, never glowing)
+  count    = 2
+  cone     = 50
+  speed    = 170, 0.5
+  life     = 1.1, 0.4
+  color    = 140, 140, 146
+  particle = rsb_chunk_metal_shard1, rsb_chunk_metal_strip1
+end
+
+burst chips_brick   # chips_concrete's pieces, off brick
+  count    = 9
+  cone     = 45
+  speed    = 170, 0.5
+  life     = 1.2, 0.4
+  color    = 150, 80, 62
+  particle = rsb_chunk_brick_chunk1, rsb_chunk_brick_chunk2, rsb_chunk_brick_chunk3, rsb_chunk_brick_chunk4
+end
+
+burst chips_marble   # chips_concrete's pieces, off marble
+  count    = 9
+  cone     = 45
+  speed    = 170, 0.5
+  life     = 1.2, 0.4
+  color    = 225, 222, 212
+  particle = rsb_chunk_marble_chip1, rsb_chunk_marble_chip2, rsb_chunk_marble_chip3, rsb_chunk_marble_chip4
+end
+
+burst chips_tile   # chips_concrete's pieces, off tile
+  count    = 9
+  cone     = 45
+  speed    = 170, 0.5
+  life     = 1.2, 0.4
+  color    = 205, 208, 212
+  particle = rsb_chunk_tile_shard1, rsb_chunk_tile_shard2, rsb_chunk_tile_shard3, rsb_chunk_tile_shard4
+end
+
+burst dust_brick   # dust_concrete's dust, off brick
+  count    = 5
+  cone     = 35
+  speed    = 40, 0.6
+  life     = 1.6, 0.4
+  particle = rsb_dust_concrete
+  color    = 196, 138, 112
+end
+
+burst dust_marble   # dust_concrete's dust, off marble
+  count    = 5
+  cone     = 35
+  speed    = 40, 0.6
+  life     = 1.6, 0.4
+  particle = rsb_dust_concrete
+  color    = 236, 234, 228
+end
+
+burst dust_tile   # dust_concrete's dust, off tile
+  count    = 5
+  cone     = 35
+  speed    = 40, 0.6
+  life     = 1.6, 0.4
+  particle = rsb_dust_concrete
+  color    = 222, 222, 218
+end
+
+burst chips_tight_brick   # chips_tight_concrete's pieces, off brick
+  count    = 7
+  cone     = 28
+  speed    = 230, 0.4
+  life     = 1.0, 0.4
+  color    = 150, 80, 62
+  particle = rsb_chunk_brick_chunk1, rsb_chunk_brick_chunk2, rsb_chunk_brick_chunk3, rsb_chunk_brick_chunk4
+end
+
+burst chips_tight_marble   # chips_tight_concrete's pieces, off marble
+  count    = 7
+  cone     = 28
+  speed    = 230, 0.4
+  life     = 1.0, 0.4
+  color    = 225, 222, 212
+  particle = rsb_chunk_marble_chip1, rsb_chunk_marble_chip2, rsb_chunk_marble_chip3, rsb_chunk_marble_chip4
+end
+
+burst chips_tight_tile   # chips_tight_concrete's pieces, off tile
+  count    = 7
+  cone     = 28
+  speed    = 230, 0.4
+  life     = 1.0, 0.4
+  color    = 205, 208, 212
+  particle = rsb_chunk_tile_shard1, rsb_chunk_tile_shard2, rsb_chunk_tile_shard3, rsb_chunk_tile_shard4
+end
+
+burst dust_jet_brick   # dust_jet_concrete's dust, off brick
+  count    = 4
+  cone     = 14
+  speed    = 160, 0.4
+  life     = 1.3, 0.3
+  aim      = reflect
+  offset   = 2
+  particle = rsb_dust_concrete
+  color    = 196, 138, 112
+end
+
+burst dust_jet_marble   # dust_jet_concrete's dust, off marble
+  count    = 4
+  cone     = 14
+  speed    = 160, 0.4
+  life     = 1.3, 0.3
+  aim      = reflect
+  offset   = 2
+  particle = rsb_dust_concrete
+  color    = 236, 234, 228
+end
+
+burst dust_jet_tile   # dust_jet_concrete's dust, off tile
+  count    = 4
+  cone     = 14
+  speed    = 160, 0.4
+  life     = 1.3, 0.3
+  aim      = reflect
+  offset   = 2
+  particle = rsb_dust_concrete
+  color    = 222, 222, 218
+end
+
+burst chips_lazy_brick   # chips_lazy_concrete's pieces, off brick
+  count    = 11
+  cone     = 65
+  speed    = 115, 0.5
+  life     = 1.4, 0.4
+  color    = 150, 80, 62
+  particle = rsb_chunk_brick_chunk1, rsb_chunk_brick_chunk2, rsb_chunk_brick_chunk3, rsb_chunk_brick_chunk4
+end
+
+burst chips_lazy_marble   # chips_lazy_concrete's pieces, off marble
+  count    = 11
+  cone     = 65
+  speed    = 115, 0.5
+  life     = 1.4, 0.4
+  color    = 225, 222, 212
+  particle = rsb_chunk_marble_chip1, rsb_chunk_marble_chip2, rsb_chunk_marble_chip3, rsb_chunk_marble_chip4
+end
+
+burst chips_lazy_tile   # chips_lazy_concrete's pieces, off tile
+  count    = 11
+  cone     = 65
+  speed    = 115, 0.5
+  life     = 1.4, 0.4
+  color    = 205, 208, 212
+  particle = rsb_chunk_tile_shard1, rsb_chunk_tile_shard2, rsb_chunk_tile_shard3, rsb_chunk_tile_shard4
+end
+
+burst dust_bloom_brick   # dust_bloom_concrete's dust, off brick
+  count    = 8
+  cone     = 55
+  speed    = 55, 0.6
+  life     = 2.0, 0.4
+  particle = rsb_dust_concrete
+  color    = 196, 138, 112
+end
+
+burst dust_bloom_marble   # dust_bloom_concrete's dust, off marble
+  count    = 8
+  cone     = 55
+  speed    = 55, 0.6
+  life     = 2.0, 0.4
+  particle = rsb_dust_concrete
+  color    = 236, 234, 228
+end
+
+burst dust_bloom_tile   # dust_bloom_concrete's dust, off tile
+  count    = 8
+  cone     = 55
+  speed    = 55, 0.6
+  life     = 2.0, 0.4
+  particle = rsb_dust_concrete
+  color    = 222, 222, 218
+end
+
+burst grit_brick   # grit_concrete's pieces, off brick
+  count    = 6
+  cone     = 16
+  speed    = 300, 0.4
+  life     = 0.8, 0.4
+  aim      = reflect
+  color    = 150, 80, 62
+  particle = rsb_chunk_brick_chunk1, rsb_chunk_brick_chunk2, rsb_chunk_brick_chunk3, rsb_chunk_brick_chunk4
+end
+
+burst grit_marble   # grit_concrete's pieces, off marble
+  count    = 6
+  cone     = 16
+  speed    = 300, 0.4
+  life     = 0.8, 0.4
+  aim      = reflect
+  color    = 225, 222, 212
+  particle = rsb_chunk_marble_chip1, rsb_chunk_marble_chip2, rsb_chunk_marble_chip3, rsb_chunk_marble_chip4
+end
+
+burst grit_tile   # grit_concrete's pieces, off tile
+  count    = 6
+  cone     = 16
+  speed    = 300, 0.4
+  life     = 0.8, 0.4
+  aim      = reflect
+  color    = 205, 208, 212
+  particle = rsb_chunk_tile_shard1, rsb_chunk_tile_shard2, rsb_chunk_tile_shard3, rsb_chunk_tile_shard4
+end
+
+burst slabs_brick   # slabs_concrete's pieces, off brick
+  count    = 4
+  cone     = 55
+  speed    = 220, 0.5
+  life     = 1.6, 0.4
+  color    = 150, 80, 62
+  particle = rsb_chunk_brick_chunk1, rsb_chunk_brick_chunk2, rsb_chunk_brick_chunk3, rsb_chunk_brick_chunk4
+end
+
+burst slabs_marble   # slabs_concrete's pieces, off marble
+  count    = 4
+  cone     = 55
+  speed    = 220, 0.5
+  life     = 1.6, 0.4
+  color    = 225, 222, 212
+  particle = rsb_chunk_marble_chip1, rsb_chunk_marble_chip2, rsb_chunk_marble_chip3, rsb_chunk_marble_chip4
+end
+
+burst slabs_tile   # slabs_concrete's pieces, off tile
+  count    = 4
+  cone     = 55
+  speed    = 220, 0.5
+  life     = 1.6, 0.4
+  color    = 205, 208, 212
+  particle = rsb_chunk_tile_shard1, rsb_chunk_tile_shard2, rsb_chunk_tile_shard3, rsb_chunk_tile_shard4
+end
+
+burst pepper_brick   # pepper_concrete's dust, off brick
+  count    = 3
+  cone     = 30
+  speed    = 70, 0.5
+  life     = 1.0, 0.4
+  particle = rsb_dust_concrete
+  color    = 196, 138, 112
+end
+
+burst pepper_marble   # pepper_concrete's dust, off marble
+  count    = 3
+  cone     = 30
+  speed    = 70, 0.5
+  life     = 1.0, 0.4
+  particle = rsb_dust_concrete
+  color    = 236, 234, 228
+end
+
+burst pepper_tile   # pepper_concrete's dust, off tile
+  count    = 3
+  cone     = 30
+  speed    = 70, 0.5
+  life     = 1.0, 0.4
+  particle = rsb_dust_concrete
+  color    = 222, 222, 218
+end
+
+impact bullet.brick   # brick: its own chunks and red-brown dust
+  bursts       = spark_hot, chips_brick, dust_brick
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  damage       = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
+end
+
+impact bullet.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = spark_hot, chips_marble, dust_marble
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  damage       = hole_chip, 2.2, 0.5, 0.125, 0
+  glancedamage = gouge, 3.08, 0.3, 0.125, 0, travel
+end
+
+impact bullet.tile   # tile: shards and fine dust, a small crack
+  bursts       = spark_hot, chips_tile, dust_tile
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  damage       = crack, 1.76, 0.25, 0.125, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
+end
+
+impact bullet.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, ember_metal, spark_spray, arcs_electric, bits_board, bits_wire
+  mark         = pool, 4, 35
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.3, 0.25
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.25, travel
+  maybe        = wisp_electric 0.5
+end
+
+impact bullet.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, ember_metal, spark_spray, steam_jet_pipe, bits_pipe
+  mark         = pool, 4, 35
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 60, 1.5, 3
+  lightcolor   = 255, 190, 120
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.12, 0.25
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.25, travel
+  maybe        = steam_hang_pipe 0.6
+end
+
+impact bullet.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  sound      = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact bullet.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  sound      = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact pistol.brick   # brick: its own chunks and red-brown dust
+  bursts       = spark_hot, chips_brick, dust_brick
+  scale        = 0.8, 0.9
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  damage       = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
+end
+
+impact pistol.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = spark_hot, chips_marble, dust_marble
+  scale        = 0.8, 0.9
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  damage       = hole_chip, 2.2, 0.5, 0.125, 0
+  glancedamage = gouge, 3.08, 0.3, 0.125, 0, travel
+end
+
+impact pistol.tile   # tile: shards and fine dust, a small crack
+  bursts       = spark_hot, chips_tile, dust_tile
+  scale        = 0.8, 0.9
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  damage       = crack, 1.76, 0.25, 0.125, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
+end
+
+impact pistol.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, ember_metal, spark_spray, arcs_electric, bits_board, bits_wire
+  scale        = 0.8, 0.9
+  mark         = pool, 3, 33
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.3, 0.25
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.25, travel
+  maybe        = wisp_electric 0.5
+end
+
+impact pistol.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, ember_metal, spark_spray, steam_jet_pipe, bits_pipe
+  scale        = 0.8, 0.9
+  mark         = pool, 3, 33
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 50, 1.3, 3
+  lightcolor   = 255, 190, 120
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.12, 0.25
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.25, travel
+  maybe        = steam_hang_pipe 0.6
+end
+
+impact pistol.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  scale      = 0.8, 0.9
+  sound      = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact pistol.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  scale      = 0.8, 0.9
+  sound      = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact pistol_9mm.brick   # brick: its own chunks and red-brown dust
+  bursts       = chips_tight_brick, dust_brick
+  maybe        = spark_hot 0.7, dust_jet_brick 0.3
+  vary         = count 0.45, size 0.25
+  scale        = 0.9, 0.95
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = hole_chip, 2.5, 0.55, 0.3, 0
+  glancedamage = gouge, 3.5, 0.33, 0.3, 0, travel
+end
+
+impact pistol_9mm.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = chips_tight_marble, dust_marble
+  maybe        = spark_hot 0.7, dust_jet_marble 0.3
+  vary         = count 0.45, size 0.25
+  scale        = 0.9, 0.95
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = hole_chip, 2.5, 0.55, 0.15, 0
+  glancedamage = gouge, 3.5, 0.33, 0.15, 0, travel
+end
+
+impact pistol_9mm.tile   # tile: shards and fine dust, a small crack
+  bursts       = chips_tight_tile, dust_tile
+  maybe        = spark_hot 0.7, dust_jet_tile 0.3
+  vary         = count 0.45, size 0.25
+  scale        = 0.9, 0.95
+  sound        = rsb/impact/concrete
+  glance       = 18, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = crack, 2, 0.275, 0.15, 0
+  glancedamage = gouge, 3.5, 0.33, 0.3, 0, travel
+end
+
+impact pistol_9mm.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, spark_spray, arcs_electric, bits_board, bits_wire
+  maybe        = ember_metal 0.6, spark_hot 0.35, wisp_electric 0.5
+  vary         = count 0.45, size 0.2, light 0.35
+  scale        = 0.9, 0.9
+  mark         = pool, 3, 30
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.88, 0.5, 0.3, 0.3
+  glancedamage = gouge, 3, 0.25, 0.12, 0.3, travel
+end
+
+impact pistol_9mm.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, spark_spray, steam_jet_pipe, bits_pipe
+  maybe        = ember_metal 0.6, spark_hot 0.35, steam_hang_pipe 0.6
+  vary         = count 0.45, size 0.2, light 0.35
+  scale        = 0.9, 0.9
+  mark         = pool, 3, 30
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 55, 1.4, 3
+  lightcolor   = 255, 190, 120
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.88, 0.5, 0.15, 0.3
+  glancedamage = gouge, 3, 0.25, 0.12, 0.3, travel
+end
+
+impact pistol_9mm.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  vary       = count 0.4, size 0.2
+  scale      = 0.9, 0.9
+  sound      = rsb/glass
+  damage     = crack, 5, 0.28, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact pistol_9mm.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  vary       = count 0.4, size 0.2
+  scale      = 0.9, 0.9
+  sound      = rsb/glass
+  damage     = crack, 5, 0.28, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact pistol_45.brick   # brick: its own chunks and red-brown dust
+  bursts       = chips_lazy_brick, dust_bloom_brick
+  maybe        = dust_jet_brick 0.6, spark_hot 0.1
+  vary         = count 0.4, size 0.25
+  scale        = 1.05, 1.1
+  sound        = rsb/impact/concrete
+  glance       = 16, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.92, 0
+  damage       = hole_chip, 3, 0.6, 0.3, 0
+  glancedamage = gouge, 4.2, 0.36, 0.3, 0, travel
+end
+
+impact pistol_45.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = chips_lazy_marble, dust_bloom_marble
+  maybe        = dust_jet_marble 0.6, spark_hot 0.1
+  vary         = count 0.4, size 0.25
+  scale        = 1.05, 1.1
+  sound        = rsb/impact/concrete
+  glance       = 16, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.92, 0
+  damage       = hole_chip, 3, 0.6, 0.15, 0
+  glancedamage = gouge, 4.2, 0.36, 0.15, 0, travel
+end
+
+impact pistol_45.tile   # tile: shards and fine dust, a small crack
+  bursts       = chips_lazy_tile, dust_bloom_tile
+  maybe        = dust_jet_tile 0.6, spark_hot 0.1
+  vary         = count 0.4, size 0.25
+  scale        = 1.05, 1.1
+  sound        = rsb/impact/concrete
+  glance       = 16, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.92, 0
+  damage       = crack, 2.4, 0.3, 0.15, 0
+  glancedamage = gouge, 4.2, 0.36, 0.3, 0, travel
+end
+
+impact pistol_45.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_hot, ember_metal, arcs_electric, bits_board, bits_wire
+  maybe        = spark_metal 0.4, spark_spray 0.3, wisp_electric 0.5
+  vary         = count 0.4, size 0.2, light 0.3
+  scale        = 1.0, 1.0
+  mark         = pool, 4, 34
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 22, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.54, 0.3, 0.35
+  glancedamage = gouge, 3.6, 0.27, 0.12, 0.35, travel
+end
+
+impact pistol_45.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_hot, ember_metal, steam_jet_pipe, bits_pipe
+  maybe        = spark_metal 0.4, spark_spray 0.3, steam_hang_pipe 0.6
+  vary         = count 0.4, size 0.2, light 0.3
+  scale        = 1.0, 1.0
+  mark         = pool, 4, 34
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 60, 1.5, 3
+  lightcolor   = 255, 190, 120
+  glance       = 22, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.54, 0.15, 0.35
+  glancedamage = gouge, 3.6, 0.27, 0.12, 0.35, travel
+end
+
+impact pistol_45.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  vary       = count 0.4, size 0.2
+  scale      = 1.2, 1.0
+  sound      = rsb/glass
+  damage     = crack, 6, 0.3, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact pistol_45.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  vary       = count 0.4, size 0.2
+  scale      = 1.2, 1.0
+  sound      = rsb/glass
+  damage     = crack, 6, 0.3, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact magnum.brick   # brick: its own chunks and red-brown dust
+  bursts       = spark_hot, chips_brick, dust_brick, dust_jet_brick
+  scale        = 1.3, 1.15
+  sound        = rsb/impact/concrete
+  glance       = 20, rsb/ricochet, spark_hot
+  damage       = hole_chip, 3.4, 0.7, 0.35, 0
+  glancedamage = gouge, 4.76, 0.42, 0.35, 0, travel
+end
+
+impact magnum.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = spark_hot, chips_marble, dust_marble, dust_jet_marble
+  scale        = 1.3, 1.15
+  sound        = rsb/impact/concrete
+  glance       = 20, rsb/ricochet, spark_hot
+  damage       = hole_chip, 3.4, 0.7, 0.175, 0
+  glancedamage = gouge, 4.76, 0.42, 0.175, 0, travel
+end
+
+impact magnum.tile   # tile: shards and fine dust, a small crack
+  bursts       = spark_hot, chips_tile, dust_tile, dust_jet_tile
+  scale        = 1.3, 1.15
+  sound        = rsb/impact/concrete
+  glance       = 20, rsb/ricochet, spark_hot
+  damage       = crack, 2.72, 0.35, 0.175, 0
+  glancedamage = gouge, 4.76, 0.42, 0.35, 0, travel
+end
+
+impact magnum.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, ember_metal, spark_spray, arcs_electric, bits_board, bits_wire
+  scale        = 1.3, 1.15
+  mark         = pool, 5, 41
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.55, 0.63, 0.3, 0.4
+  glancedamage = gouge, 4.08, 0.32, 0.14, 0.4, travel
+  maybe        = wisp_electric 0.5
+end
+
+impact magnum.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, ember_metal, spark_spray, steam_jet_pipe, bits_pipe
+  scale        = 1.3, 1.15
+  mark         = pool, 5, 41
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 70, 1.6, 3
+  lightcolor   = 255, 190, 120
+  glance       = 25, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.55, 0.63, 0.17, 0.4
+  glancedamage = gouge, 4.08, 0.32, 0.14, 0.4, travel
+  maybe        = steam_hang_pipe 0.6
+end
+
+impact magnum.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  scale      = 1.3, 1.15
+  sound      = rsb/glass
+  damage     = crack, 6.8, 0.35, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact magnum.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  scale      = 1.3, 1.15
+  sound      = rsb/glass
+  damage     = crack, 6.8, 0.35, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact rifle.brick   # brick: its own chunks and red-brown dust
+  bursts       = spark_hot, chips_brick, dust_brick, dust_jet_brick
+  scale        = 1.6, 1.3
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  damage       = hole_chip, 3, 0.7, 0.3, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
+end
+
+impact rifle.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = spark_hot, chips_marble, dust_marble, dust_jet_marble
+  scale        = 1.6, 1.3
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  damage       = hole_chip, 3, 0.7, 0.15, 0
+  glancedamage = gouge, 4.2, 0.42, 0.15, 0, travel
+end
+
+impact rifle.tile   # tile: shards and fine dust, a small crack
+  bursts       = spark_hot, chips_tile, dust_tile, dust_jet_tile
+  scale        = 1.6, 1.3
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  damage       = crack, 2.4, 0.35, 0.15, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
+end
+
+impact rifle.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, ember_metal, spark_spray, arcs_electric, bits_board, bits_wire
+  scale        = 1.6, 1.3
+  mark         = pool, 5, 47
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.63, 0.3, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
+  maybe        = wisp_electric 0.5
+end
+
+impact rifle.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, ember_metal, spark_spray, steam_jet_pipe, bits_pipe
+  scale        = 1.6, 1.3
+  mark         = pool, 5, 47
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 80, 1.8, 3
+  lightcolor   = 255, 190, 120
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.63, 0.15, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
+  maybe        = steam_hang_pipe 0.6
+end
+
+impact rifle.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  scale      = 1.6, 1.3
+  sound      = rsb/glass
+  damage     = crack, 6, 0.35, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact rifle.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  scale      = 1.6, 1.3
+  sound      = rsb/glass
+  damage     = crack, 6, 0.35, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact chaingun_556.brick   # brick: its own chunks and red-brown dust
+  bursts       = grit_brick, dust_jet_brick
+  maybe        = chips_brick 0.35, spark_hot 0.35, dust_brick 0.5
+  vary         = count 0.5, size 0.35
+  scale        = 0.8, 1.0
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.64, 0
+  damage       = hole_chip, 2.2, 0.5, 0.25, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
+end
+
+impact chaingun_556.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = grit_marble, dust_jet_marble
+  maybe        = chips_marble 0.35, spark_hot 0.35, dust_marble 0.5
+  vary         = count 0.5, size 0.35
+  scale        = 0.8, 1.0
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.64, 0
+  damage       = hole_chip, 2.2, 0.5, 0.125, 0
+  glancedamage = gouge, 3.08, 0.3, 0.125, 0, travel
+end
+
+impact chaingun_556.tile   # tile: shards and fine dust, a small crack
+  bursts       = grit_tile, dust_jet_tile
+  maybe        = chips_tile 0.35, spark_hot 0.35, dust_tile 0.5
+  vary         = count 0.5, size 0.35
+  scale        = 0.8, 1.0
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.64, 0
+  damage       = crack, 1.76, 0.25, 0.125, 0
+  glancedamage = gouge, 3.08, 0.3, 0.25, 0, travel
+end
+
+impact chaingun_556.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, arcs_electric, bits_board, bits_wire
+  maybe        = spark_spray 0.25, ember_metal 0.3, wisp_electric 0.5
+  vary         = count 0.5, size 0.25, light 0.4
+  scale        = 0.8, 0.9
+  mark         = pool, 3, 20
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.3, 0.3
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.3, travel
+end
+
+impact chaingun_556.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, steam_jet_pipe, bits_pipe
+  maybe        = spark_spray 0.25, ember_metal 0.3, steam_hang_pipe 0.6
+  vary         = count 0.5, size 0.25, light 0.4
+  scale        = 0.8, 0.9
+  mark         = pool, 3, 20
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 40, 1.0, 2
+  lightcolor   = 255, 190, 120
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 1.65, 0.45, 0.12, 0.3
+  glancedamage = gouge, 2.64, 0.23, 0.1, 0.3, travel
+end
+
+impact chaingun_556.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  vary       = count 0.4, size 0.2
+  scale      = 0.8, 0.9
+  sound      = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact chaingun_556.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  vary       = count 0.4, size 0.2
+  scale      = 0.8, 0.9
+  sound      = rsb/glass
+  damage     = crack, 4.4, 0.25, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact machinegun_762.brick   # brick: its own chunks and red-brown dust
+  bursts       = chips_brick, dust_brick, dust_jet_brick
+  maybe        = slabs_brick 0.25, spark_hot 0.3
+  vary         = count 0.45, size 0.3
+  scale        = 1.25, 1.2
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = hole_chip, 3, 0.7, 0.3, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
+end
+
+impact machinegun_762.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts       = chips_marble, dust_marble, dust_jet_marble
+  maybe        = slabs_marble 0.25, spark_hot 0.3
+  vary         = count 0.45, size 0.3
+  scale        = 1.25, 1.2
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = hole_chip, 3, 0.7, 0.15, 0
+  glancedamage = gouge, 4.2, 0.42, 0.15, 0, travel
+end
+
+impact machinegun_762.tile   # tile: shards and fine dust, a small crack
+  bursts       = chips_tile, dust_tile, dust_jet_tile
+  maybe        = slabs_tile 0.25, spark_hot 0.3
+  vary         = count 0.45, size 0.3
+  scale        = 1.25, 1.2
+  sound        = rsb/impact/concrete
+  glance       = 14, rsb/ricochet, spark_hot
+  smokevolume  = 14, 0.8, 0
+  damage       = crack, 2.4, 0.35, 0.15, 0
+  glancedamage = gouge, 4.2, 0.42, 0.3, 0, travel
+end
+
+impact machinegun_762.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts       = spark_metal, spark_spray, arcs_electric, bits_board, bits_wire
+  maybe        = ember_metal 0.5, shards_metal 0.2, wisp_electric 0.5
+  vary         = count 0.45, size 0.25, light 0.35
+  scale        = 1.1, 1.0
+  mark         = pool, 4, 28
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/electric
+  light        = 60, 1.6, 3
+  lightcolor   = 170, 200, 255
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.63, 0.3, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
+end
+
+impact machinegun_762.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts       = spark_metal, spark_spray, steam_jet_pipe, bits_pipe
+  maybe        = ember_metal 0.5, shards_metal 0.2, steam_hang_pipe 0.6
+  vary         = count 0.45, size 0.25, light 0.35
+  scale        = 1.1, 1.0
+  mark         = pool, 4, 28
+  markcolor    = 255, 170, 80
+  sound        = rsb/impact/pipe
+  light        = 60, 1.4, 3
+  lightcolor   = 255, 190, 120
+  glance       = 20, rsb/ricochet, spark_metal
+  damage       = hole_punch, 2.25, 0.63, 0.15, 0.4
+  glancedamage = gouge, 3.6, 0.32, 0.12, 0.4, travel
+end
+
+impact machinegun_762.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  vary       = count 0.4, size 0.2
+  scale      = 1.1, 1.0
+  sound      = rsb/glass
+  damage     = crack, 6, 0.35, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact machinegun_762.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  vary       = count 0.4, size 0.2
+  scale      = 1.1, 1.0
+  sound      = rsb/glass
+  damage     = crack, 6, 0.35, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact buckshot.brick   # brick: its own chunks and red-brown dust
+  bursts      = pepper_brick, chips_brick
+  maybe       = spark_hot 0.2, dust_jet_brick 0.15
+  vary        = count 0.5, size 0.3
+  scale       = 0.45, 0.9
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.28, 0
+  damage      = hole_chip, 1.6, 0.4, 0.2, 0
+end
+
+impact buckshot.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts      = pepper_marble, chips_marble
+  maybe       = spark_hot 0.2, dust_jet_marble 0.15
+  vary        = count 0.5, size 0.3
+  scale       = 0.45, 0.9
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.28, 0
+  damage      = hole_chip, 1.6, 0.4, 0.1, 0
+end
+
+impact buckshot.tile   # tile: shards and fine dust, a small crack
+  bursts      = pepper_tile, chips_tile
+  maybe       = spark_hot 0.2, dust_jet_tile 0.15
+  vary        = count 0.5, size 0.3
+  scale       = 0.45, 0.9
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.28, 0
+  damage      = crack, 1.28, 0.2, 0.1, 0
+end
+
+impact buckshot.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts     = spark_hot, arcs_electric, bits_board, bits_wire
+  maybe      = spark_metal 0.4, ember_metal 0.3, wisp_electric 0.5
+  vary       = count 0.5, size 0.25
+  scale      = 0.45, 0.85
+  mark       = pool, 3, 25
+  markcolor  = 255, 170, 80
+  sound      = rsb/impact/electric
+  damage     = hole_punch, 1.2, 0.36, 0.3, 0.2
+  light      = 60, 1.6, 3
+  lightcolor = 170, 200, 255
+end
+
+impact buckshot.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts    = spark_hot, steam_jet_pipe, bits_pipe
+  maybe     = spark_metal 0.4, ember_metal 0.3, steam_hang_pipe 0.6
+  vary      = count 0.5, size 0.25
+  scale     = 0.45, 0.85
+  mark      = pool, 3, 25
+  markcolor = 255, 170, 80
+  sound     = rsb/impact/pipe
+  damage    = hole_punch, 1.2, 0.36, 0.1, 0.2
+end
+
+impact buckshot.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  vary       = count 0.4, size 0.2
+  scale      = 0.4, 0.85
+  sound      = rsb/glass
+  damage     = crack, 3.2, 0.2, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact buckshot.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  vary       = count 0.4, size 0.2
+  scale      = 0.4, 0.85
+  sound      = rsb/glass
+  damage     = crack, 3.2, 0.2, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+
+impact buckshot_magnum.brick   # brick: its own chunks and red-brown dust
+  bursts      = pepper_brick, chips_brick, dust_brick
+  maybe       = spark_hot 0.3, dust_jet_brick 0.4
+  vary        = count 0.5, size 0.3
+  scale       = 0.6, 1.05
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.24, 0
+  damage      = hole_chip, 1.9, 0.45, 0.2, 0
+end
+
+impact buckshot_magnum.marble   # marble: white chips and fine white dust, a cleaner hole
+  bursts      = pepper_marble, chips_marble, dust_marble
+  maybe       = spark_hot 0.3, dust_jet_marble 0.4
+  vary        = count 0.5, size 0.3
+  scale       = 0.6, 1.05
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.24, 0
+  damage      = hole_chip, 1.9, 0.45, 0.1, 0
+end
+
+impact buckshot_magnum.tile   # tile: shards and fine dust, a small crack
+  bursts      = pepper_tile, chips_tile, dust_tile
+  maybe       = spark_hot 0.3, dust_jet_tile 0.4
+  vary        = count 0.5, size 0.3
+  scale       = 0.6, 1.05
+  sound       = rsb/impact/concrete
+  smokevolume = 14, 0.24, 0
+  damage      = crack, 1.52, 0.225, 0.1, 0
+end
+
+impact buckshot_magnum.tech   # tech: the panel's sparks, arcs shorting, board and wire bits, a blink of blue-white
+  bursts     = spark_metal, arcs_electric, bits_board, bits_wire
+  maybe      = ember_metal 0.55, spark_spray 0.4, wisp_electric 0.5
+  vary       = count 0.5, size 0.25
+  scale      = 0.6, 0.95
+  sound      = rsb/impact/electric
+  damage     = hole_punch, 1.42, 0.41, 0.3, 0.25
+  light      = 60, 1.6, 3
+  lightcolor = 170, 200, 255
+end
+
+impact buckshot_magnum.pipe   # pipe: the metal hit, a jet of steam and its hiss
+  bursts = spark_metal, steam_jet_pipe, bits_pipe
+  maybe  = ember_metal 0.55, spark_spray 0.4, steam_hang_pipe 0.6
+  vary   = count 0.5, size 0.25
+  scale  = 0.6, 0.95
+  sound  = rsb/impact/pipe
+  damage = hole_punch, 1.42, 0.41, 0.1, 0.25
+end
+
+impact buckshot_magnum.screen   # screen: glass, a spark burst, one arc, a green-white blink
+  bursts     = glint_glass, spark_hot, arc_electric_one
+  vary       = count 0.4, size 0.2
+  scale      = 0.55, 0.95
+  sound      = rsb/glass
+  damage     = crack, 3.8, 0.23, 0, 0
+  maybe      = bits_board 0.6
+  light      = 50, 1.4, 2
+  lightcolor = 150, 220, 200
+end
+
+impact buckshot_magnum.light   # light: the pop -- bulb glass, a spark spray, one bright blink (no flicker)
+  bursts     = bulb_glass, spark_spray
+  vary       = count 0.4, size 0.2
+  scale      = 0.55, 0.95
+  sound      = rsb/glass
+  damage     = crack, 3.8, 0.23, 0, 0
+  light      = 90, 2.2, 2
+  lightcolor = 255, 245, 220
+end
+# ---------------------------------------------------------------- END SURFACE PASS
+
 # ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
 # Every Vanilla gun at the top effects level: each keeps its own character and does MORE of it,
 # on top of the level's ladder. Material variants each get their own (a material outranks a tier).

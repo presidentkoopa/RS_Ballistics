@@ -8,7 +8,8 @@ lumps turns into:
   gunshot tails
 - spent casings and hulls, and chainsaw engine exhaust
 - impacts by surface material: sparks, 3D chunks, dust, splinters, glints, splashes,
-  marks and ricochets -- each round type with its own hit character
+  marks and ricochets -- each round type with its own hit character; tech panels short out in arcs,
+  screens crack and arc, lights pop, pipes vent steam, brick, marble and tile break into their own pieces
 - room-filling smoke the guns, blasts, flames and rockets fill and the rounds tear; rockets and flames leave black soot (engine smoke volume)
 - debris that bounces, collides with the whole level, patters as it lands and stays for the fight (engine collision and debris pool)
 - lasting wall damage: bullet holes by material, gouges, craters, scorch rings, chainsaw cuts and flamethrower soot
@@ -60,13 +61,13 @@ before the two that use it.)
 |---|---|
 | `RSBDEFS` | Profiles: styles, bursts, impacts, rounds (ballistics + looks), wakes, flashes (incl. `sparkvary`, exhaust, charge), flames, trails, hotspots, ejecta, recoil. `<profile>@extreme` and the other level variants. Any loaded mod may ship its own; a later profile with the same name wins. |
 | `PARTICLEDEFS` | GPU particle definitions: flame, smoke, dust, the textured spark library, 3D debris chunks (mesh), debris keys. |
-| `SURFACES` | Which textures are metal, wood, glass, liquid or dirt. |
+| `SURFACES` | Which textures are metal, wood, glass, liquid, dirt, brick, marble, tile, pipe, tech, screen or light. |
 | `DAMAGEDEFS`, `damage/rsb` | Wall damage brushes: generated masks (soot, depth, heat, wet), four variants each. |
 | `VOLUMEDEFS` | Volumetric flash and blast looks (`emissive` blocks, class gun / biggun / blast), named by flash and impact profiles with `volume`. |
 | `zscript/rsb` | The generator: parser, registry, bullets, impacts, flashes, barrel heat and exhaust, hotspots, casings, flamethrowers, recoil, previews, benchmarks. |
 | `MENUDEF`, `CVARINFO`, `KEYCONF` | Options -> Ballistics & Effects: every look has a setting, "All effects on", Recoil under GAMEPLAY, Preview and Benchmarks rows. |
 | `sounds`, `sprites`, `models` | Impact, ricochet, whiz, crack, casing, flame, debris landing and gunshot tail sounds; tracer, casing, flash, spark and smoke sprites; casing, rocket and debris models. |
-| `tools` | Generators and importers: casings, chunks, wall damage brushes, sparks, the rocket voxel, debris sounds. |
+| `tools` | Generators and importers: casings, chunks, wall damage brushes, sparks, the rocket voxel, debris sounds, the surface pass (surfaces, pieces, hits, sounds). |
 
 A bad profile is refused and named with its lump and line; the rest still load.
 

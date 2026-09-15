@@ -379,6 +379,124 @@ def pebble(seed):
     return m
 
 
+# ------------------------------------------------------------------ the surface pass (2026-09-15)
+# Owner: "Keep counts, add new kinds" -- tech panels, lights, brick, marble and tile each throw their own pieces
+# (_staged/SURFACE_PASS_PLAN.md, section 3). The burst's `color` gives the material, as for every chunk.
+def board(seed):
+    """Tech: a bit of circuit board, ~3 x 2 cm, notched -- two thin plates meeting in an L."""
+    rng = random.Random(seed)
+    t = 0.03
+
+    def plate(x0, x1, y0, y1):
+        pts = []
+        for x in (x0, x1):
+            for y in (y0, y1):
+                j = rng.uniform(-0.04, 0.04)
+                pts += [(x + j, y, -t), (x + j, y, t)]
+        return pts
+
+    a = plate(-0.5, 0.5, -0.33, 0.0)
+    b = plate(-0.5, rng.uniform(0.0, 0.25), 0.0, 0.33)
+    A, B = centred_on_grid([a, b])
+    m = Mesh()
+    m.flat(A, hull(A))
+    m.flat(B, hull(B))
+    return m
+
+
+def wire(seed):
+    """Tech: a torn scrap of wire kinked once, 5 cm."""
+    rng = random.Random(seed)
+    t, w = 0.025, 0.03
+    angle = math.radians(rng.uniform(30.0, 70.0))
+
+    def piece(x0, x1):
+        pts = []
+        for x in (x0, x1):
+            for y in (-w, w):
+                pts += [(x, y, -t), (x, y, t)]
+        for _ in range(2):
+            x = rng.uniform(x0, x1)
+            pts += [(x, rng.uniform(-w, w), -t), (x, rng.uniform(-w, w), t)]
+        return pts
+
+    a = piece(-0.9, 0.0)
+    b = [(x * math.cos(angle) - z * math.sin(angle), y, x * math.sin(angle) + z * math.cos(angle))
+         for x, y, z in piece(0.0, 0.7)]
+    A, B = centred_on_grid([a, b])
+    m = Mesh()
+    m.flat(A, hull(A))
+    m.flat(B, hull(B))
+    return m
+
+
+def bulb(seed):
+    """Light: a curved shard of bulb or lamp cover, 2-3 cm -- two thin panes meeting at a shallow bend."""
+    rng = random.Random(seed)
+    t = 0.018
+    angle = math.radians(rng.uniform(12.0, 24.0))
+
+    def half(sign):
+        pts = []
+        for _ in range(3):
+            x, y = sign * rng.uniform(0.1, 0.5), rng.uniform(-0.35, 0.35)
+            pts += [(x, y, -t), (x, y, t)]
+        for y in (-0.28, 0.28):
+            pts += [(0.0, y, -t), (0.0, y, t)]
+        return pts
+
+    a = half(-1.0)
+    b = [(x * math.cos(angle) - z * math.sin(angle), y, x * math.sin(angle) + z * math.cos(angle))
+         for x, y, z in half(1.0)]
+    A, B = centred_on_grid([a, b])
+    m = Mesh()
+    m.flat(A, hull(A))
+    m.flat(B, hull(B))
+    return m
+
+
+def brick(seed):
+    """Brick: a chipped block of fired clay, ~4 x 2 x 1.5 cm -- a box with its corners knocked in."""
+    rng = random.Random(seed)
+    hx, hy, hz = rng.uniform(0.55, 0.7), rng.uniform(0.3, 0.36), rng.uniform(0.22, 0.27)
+    pts = []
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            for sz in (-1, 1):
+                pts.append((sx * hx * (1.0 - 0.3 * rng.random()), sy * hy * (1.0 - 0.2 * rng.random()),
+                            sz * hz * (1.0 - 0.2 * rng.random())))
+    for _ in range(4):
+        pts.append((rng.uniform(-hx, hx), rng.choice((-1, 1)) * hy * 0.95, rng.uniform(-hz, hz) * 0.9))
+    (P,) = centred_on_grid([pts])
+    m = Mesh()
+    m.flat(P, hull(P))
+    return m
+
+
+def marble(seed):
+    """Marble: a flat, sharp-edged chip, 2-3 cm."""
+    rng = random.Random(seed)
+    (P,) = centred_on_grid([blob(rng, 10, rng.uniform(0.45, 0.6), rng.uniform(0.3, 0.45), rng.uniform(0.08, 0.12), 0.5)])
+    m = Mesh()
+    m.flat(P, hull(P))
+    return m
+
+
+def tile(seed):
+    """Tile: a flat thin piece with one straight glazed edge, 2-3 cm."""
+    rng = random.Random(seed)
+    t = 0.05
+    edge = rng.uniform(0.35, 0.5)
+    pts = [(-0.45, -edge, -t), (-0.45, -edge, t), (-0.45, edge, -t), (-0.45, edge, t)]
+    for _ in range(rng.randint(2, 4)):
+        x, y = rng.uniform(0.0, 0.5), rng.uniform(-edge, edge)
+        pts += [(x, y, -t), (x, y, t)]
+    (P,) = centred_on_grid([pts])
+    m = Mesh()
+    m.flat(P, hull(P))
+    return m
+
+
 SHAPES = [
     ("concrete/chip1", chip, 101), ("concrete/chip2", chip, 102), ("concrete/chip3", chip, 103), ("concrete/chip4", chip, 104),
     ("concrete/slab1", slab, 111), ("concrete/slab2", slab, 112),
@@ -397,6 +515,13 @@ SHAPES = [
     ("glass/shard4", pane, 404), ("glass/shard5", pane, 405), ("glass/sliver1", sliver, 411), ("glass/sliver2", sliver, 412),
     ("dirt/clod4", clod, 504), ("dirt/clod5", clod, 505),
     ("dirt/pebble1", pebble, 521), ("dirt/pebble2", pebble, 522), ("dirt/pebble3", pebble, 523),
+    # THE SURFACE PASS (2026-09-15): tech panels, lights, brick, marble and tile throw their own pieces.
+    ("tech/board1", board, 601), ("tech/board2", board, 602), ("tech/board3", board, 603),
+    ("tech/wire1", wire, 611), ("tech/wire2", wire, 612),
+    ("light/bulb1", bulb, 701), ("light/bulb2", bulb, 702), ("light/bulb3", bulb, 703),
+    ("brick/chunk1", brick, 801), ("brick/chunk2", brick, 802), ("brick/chunk3", brick, 803), ("brick/chunk4", brick, 804),
+    ("marble/chip1", marble, 901), ("marble/chip2", marble, 902), ("marble/chip3", marble, 903), ("marble/chip4", marble, 904),
+    ("tile/shard1", tile, 1001), ("tile/shard2", tile, 1002), ("tile/shard3", tile, 1003), ("tile/shard4", tile, 1004),
 ]
 
 

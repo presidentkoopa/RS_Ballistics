@@ -483,3 +483,75 @@ $random rsb/tail/pistol_mag/int { rsb/tail/pistol/int1 rsb/tail/pistol/int2 rsb/
 $random rsb/tail/dbshotgun/int { rsb/tail/shotgun/int1 rsb/tail/shotgun/int2 rsb/tail/shotgun/int3 rsb/tail/shotgun/int4 rsb/tail/shotgun/int5 rsb/tail/shotgun/int6 }   // borrows shotgun's
 $random rsb/tail/br/int { rsb/tail/ar/int1 rsb/tail/ar/int2 rsb/tail/ar/int3 rsb/tail/ar/int4 }   // borrows ar's
 // ---- END gunshot tails
+
+// ---- BEGIN surface pass sounds (tools/import_surface_sounds.py)
+// The surface pass: a shot panel or screen shorting, a shot pipe venting steam, tile and marble pieces
+// landing (PARTICLEDEFS `landsound`). RSBDEFS impacts `<family>.tech|screen|pipe` name the first two.
+
+rsb/impact/electric1         sounds/rsb/impact_electric/electro8.wav
+$limit rsb/impact/electric1 2
+rsb/impact/electric2         sounds/rsb/impact_electric/pzaphit.ogg
+$limit rsb/impact/electric2 2
+rsb/impact/electric3         sounds/rsb/impact_electric/dsdevzap.ogg
+$limit rsb/impact/electric3 2
+rsb/impact/electric4         sounds/rsb/impact_electric/electro7.ogg
+$limit rsb/impact/electric4 2
+rsb/impact/electric5         sounds/rsb/impact_electric/sparks1.ogg
+$limit rsb/impact/electric5 2
+$random rsb/impact/electric { rsb/impact/electric1 rsb/impact/electric2 rsb/impact/electric3 rsb/impact/electric4 rsb/impact/electric5 }
+
+rsb/debris/tile1             sounds/rsb/debris/tile/tile2_step1.ogg
+$limit rsb/debris/tile1 2
+rsb/debris/tile2             sounds/rsb/debris/tile/tile2_step2.ogg
+$limit rsb/debris/tile2 2
+rsb/debris/tile3             sounds/rsb/debris/tile/tile2_step3.ogg
+$limit rsb/debris/tile3 2
+rsb/debris/tile4             sounds/rsb/debris/tile/tile2_step4.ogg
+$limit rsb/debris/tile4 2
+rsb/debris/tile5             sounds/rsb/debris/tile/dstile01.ogg
+$limit rsb/debris/tile5 2
+rsb/debris/tile6             sounds/rsb/debris/tile/dstile02.ogg
+$limit rsb/debris/tile6 2
+rsb/debris/tile7             sounds/rsb/debris/tile/dstile03.ogg
+$limit rsb/debris/tile7 2
+rsb/debris/tile8             sounds/rsb/debris/tile/dstile04.ogg
+$limit rsb/debris/tile8 2
+rsb/debris/tile9             sounds/rsb/debris/tile/dstile05.ogg
+$limit rsb/debris/tile9 2
+rsb/debris/tile10            sounds/rsb/debris/tile/dstile06.ogg
+$limit rsb/debris/tile10 2
+$random rsb/debris/tile { rsb/debris/tile1 rsb/debris/tile2 rsb/debris/tile3 rsb/debris/tile4 rsb/debris/tile5 rsb/debris/tile6 rsb/debris/tile7 rsb/debris/tile8 rsb/debris/tile9 rsb/debris/tile10 }
+
+rsb/debris/marble1           sounds/rsb/debris/marble/marble_step1.ogg
+$limit rsb/debris/marble1 2
+rsb/debris/marble2           sounds/rsb/debris/marble/marble_step2.ogg
+$limit rsb/debris/marble2 2
+rsb/debris/marble3           sounds/rsb/debris/marble/marble_step3.ogg
+$limit rsb/debris/marble3 2
+rsb/debris/marble4           sounds/rsb/debris/marble/marble_step4.ogg
+$limit rsb/debris/marble4 2
+rsb/debris/marble5           sounds/rsb/debris/marble/marble_step5.ogg
+$limit rsb/debris/marble5 2
+rsb/debris/marble6           sounds/rsb/debris/marble/marble_step6.ogg
+$limit rsb/debris/marble6 2
+rsb/debris/marble7           sounds/rsb/debris/marble/marble_step7.ogg
+$limit rsb/debris/marble7 2
+rsb/debris/marble8           sounds/rsb/debris/marble/marble_step8.ogg
+$limit rsb/debris/marble8 2
+$random rsb/debris/marble { rsb/debris/marble1 rsb/debris/marble2 rsb/debris/marble3 rsb/debris/marble4 rsb/debris/marble5 rsb/debris/marble6 rsb/debris/marble7 rsb/debris/marble8 }
+
+rsb/impact/pipe1             sounds/rsb/impact_pipe/pipe_hit1.ogg
+$limit rsb/impact/pipe1 2
+rsb/impact/pipe2             sounds/rsb/impact_pipe/pipe_hit2.ogg
+$limit rsb/impact/pipe2 2
+rsb/impact/pipe3             sounds/rsb/impact_pipe/pipe_hit3.ogg
+$limit rsb/impact/pipe3 2
+rsb/impact/pipe4             sounds/rsb/impact_pipe/pipe_hit4.ogg
+$limit rsb/impact/pipe4 2
+rsb/impact/pipe5             sounds/rsb/impact_pipe/pipe_hit5.ogg
+$limit rsb/impact/pipe5 2
+rsb/impact/pipe6             sounds/rsb/impact_pipe/pipe_hit6.ogg
+$limit rsb/impact/pipe6 2
+$random rsb/impact/pipe { rsb/impact/pipe1 rsb/impact/pipe2 rsb/impact/pipe3 rsb/impact/pipe4 rsb/impact/pipe5 rsb/impact/pipe6 }
+
+// ---- END surface pass sounds

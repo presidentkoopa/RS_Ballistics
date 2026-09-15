@@ -2001,3 +2001,469 @@ particle rsb_ember_metal
 	lighthold   = 1.5
 	lightmax    = 8
 }
+
+// ---- BEGIN surface pass debris (tools/gen_surface_pass.py)
+// THE SURFACE PASS: each new surface throws its own 3D pieces (models from tools/gen_chunks.py, one white skin
+// tinted by the burst's colour). Lit, never glowing; they collide, rest and patter like the first five.
+
+particle rsb_chunk_tech_board1
+{
+	mesh     = "models/debris/tech/board1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.8
+	spin     = -720, 720
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/chips"
+	landvolume  = 0.22
+	landpitch   = 1.35, 1.6
+}
+
+particle rsb_chunk_tech_board2
+{
+	mesh     = "models/debris/tech/board2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.8
+	spin     = -720, 720
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/chips"
+	landvolume  = 0.22
+	landpitch   = 1.35, 1.6
+}
+
+particle rsb_chunk_tech_board3
+{
+	mesh     = "models/debris/tech/board3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.8
+	spin     = -720, 720
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.5
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/chips"
+	landvolume  = 0.22
+	landpitch   = 1.35, 1.6
+}
+
+particle rsb_chunk_tech_wire1
+{
+	mesh     = "models/debris/tech/wire1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 650
+	drag     = 0.9
+	spin     = -900, 900
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/chips"
+	landvolume  = 0.12
+	landpitch   = 1.5, 1.8
+}
+
+particle rsb_chunk_tech_wire2
+{
+	mesh     = "models/debris/tech/wire2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 650
+	drag     = 0.9
+	spin     = -900, 900
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.25
+	friction    = 0.6
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/chips"
+	landvolume  = 0.12
+	landpitch   = 1.5, 1.8
+}
+
+particle rsb_chunk_light_bulb1
+{
+	mesh     = "models/debris/light/bulb1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 550
+	drag     = 0.8
+	spin     = -900, 900
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.5
+}
+
+particle rsb_chunk_light_bulb2
+{
+	mesh     = "models/debris/light/bulb2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 550
+	drag     = 0.8
+	spin     = -900, 900
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.5
+}
+
+particle rsb_chunk_light_bulb3
+{
+	mesh     = "models/debris/light/bulb3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 550
+	drag     = 0.8
+	spin     = -900, 900
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSGSA0", 4, 16, loop
+	orient   = flake
+	restitution = 0.2
+	friction    = 0.25
+	restlife    = 45
+	restfade    = 2.0
+	landsound   = "rsb/debris/glass", "rsb/debris/glass_big"
+	landvolume  = 0.3
+	landpitch   = 1.2, 1.5
+}
+
+particle rsb_chunk_brick_chunk1
+{
+	mesh     = "models/debris/brick/chunk1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 650
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.22
+	friction    = 0.65
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/rubble", "rsb/debris/chips"
+	landvolume  = 0.38
+	landpitch   = 0.85, 1.05
+}
+
+particle rsb_chunk_brick_chunk2
+{
+	mesh     = "models/debris/brick/chunk2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 650
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.22
+	friction    = 0.65
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/rubble", "rsb/debris/chips"
+	landvolume  = 0.38
+	landpitch   = 0.85, 1.05
+}
+
+particle rsb_chunk_brick_chunk3
+{
+	mesh     = "models/debris/brick/chunk3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 650
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.22
+	friction    = 0.65
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/rubble", "rsb/debris/chips"
+	landvolume  = 0.38
+	landpitch   = 0.85, 1.05
+}
+
+particle rsb_chunk_brick_chunk4
+{
+	mesh     = "models/debris/brick/chunk4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 650
+	drag     = 0.6
+	spin     = -540, 540
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.22
+	friction    = 0.65
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/rubble", "rsb/debris/chips"
+	landvolume  = 0.38
+	landpitch   = 0.85, 1.05
+}
+
+particle rsb_chunk_marble_chip1
+{
+	mesh     = "models/debris/marble/chip1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 620
+	drag     = 0.6
+	spin     = -600, 600
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.45
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/marble"
+	landvolume  = 0.35
+	landpitch   = 1.0, 1.25
+}
+
+particle rsb_chunk_marble_chip2
+{
+	mesh     = "models/debris/marble/chip2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 620
+	drag     = 0.6
+	spin     = -600, 600
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.45
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/marble"
+	landvolume  = 0.35
+	landpitch   = 1.0, 1.25
+}
+
+particle rsb_chunk_marble_chip3
+{
+	mesh     = "models/debris/marble/chip3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 620
+	drag     = 0.6
+	spin     = -600, 600
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.45
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/marble"
+	landvolume  = 0.35
+	landpitch   = 1.0, 1.25
+}
+
+particle rsb_chunk_marble_chip4
+{
+	mesh     = "models/debris/marble/chip4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 620
+	drag     = 0.6
+	spin     = -600, 600
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.3
+	friction    = 0.45
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/marble"
+	landvolume  = 0.35
+	landpitch   = 1.0, 1.25
+}
+
+particle rsb_chunk_tile_shard1
+{
+	mesh     = "models/debris/tile/shard1.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.7
+	spin     = -700, 700
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.25
+	friction    = 0.4
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/tile"
+	landvolume  = 0.35
+	landpitch   = 1.05, 1.3
+}
+
+particle rsb_chunk_tile_shard2
+{
+	mesh     = "models/debris/tile/shard2.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.7
+	spin     = -700, 700
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.25
+	friction    = 0.4
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/tile"
+	landvolume  = 0.35
+	landpitch   = 1.05, 1.3
+}
+
+particle rsb_chunk_tile_shard3
+{
+	mesh     = "models/debris/tile/shard3.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.7
+	spin     = -700, 700
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.25
+	friction    = 0.4
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/tile"
+	landvolume  = 0.35
+	landpitch   = 1.05, 1.3
+}
+
+particle rsb_chunk_tile_shard4
+{
+	mesh     = "models/debris/tile/shard4.md3", "models/debris/chunk.png"
+	lit      = 1
+	emissive = 0 @0, 0 @1
+	color    = 255 255 255 @0, 255 255 255 @1
+	size     = 1.2 @0, 1.2 @1
+	gravity  = 600
+	drag     = 0.7
+	spin     = -700, 700
+	collide  = level
+	alpha    = 1 @0, 1 @1
+	texture  = "RSCHA0", 4, 14, loop
+	orient   = flake
+	restitution = 0.25
+	friction    = 0.4
+	restlife    = 60
+	restfade    = 2.0
+	landsound   = "rsb/debris/tile"
+	landvolume  = 0.35
+	landpitch   = 1.05, 1.3
+}
+// ---- END surface pass debris
+
