@@ -12,8 +12,9 @@
 //   32-47  blasts, used in turn; each fades itself out over its life
 // NEVER ClearHeatSource(-1): that clears every mod's slots.
 //
-// Nothing draws until the player turns on Developer options -> "Heat shimmer";
-// how strong it looks is the engine's "Heat shimmer strength" slider, read live.
+// The engine draws it, on by default (r_heatrefraction, Vulkan only); Ballistics &
+// Effects -> Heat shimmer mirrors its switch and its "Heat shimmer strength"
+// slider (r_heatrefraction_scale), both read live.
 //
 // NETPLAY. Presentation only: setters, nothing read back, no RNG. Which blast
 // slot a machine uses may differ between machines and changes nothing.
