@@ -268,6 +268,21 @@ class RSB_Impact play
 		level.PaintSurfaceDamage(at, normal, Name(brush), clamp(radius, 0.5, 64.0), depth, soot, heat, wet, axis);
 	}
 
+	// AN IMPACT'S VOLUMES (engine #15): each named definition this machine draws, facing out of the surface, scaled by
+	// the effects level and the hit's wobble.
+	static void SpawnVolumes(RSB_ImpactDef im, Vector3 at, Vector3 facing, int tier, int hitTic, int posSeed)
+	{
+		if (tier <= RSB_Tier.T_OFF) return;
+		while (im.volumeHandles.Size() < im.volumeNames.Size())
+			im.volumeHandles.Push(LevelLocals.EmissiveVolumeDefinition(Name(im.volumeNames[im.volumeHandles.Size()])));
+		double scale = RSB_Tier.SizeScale(tier) * RSB_Hash.Wobble(im.varyVolume, hitTic, 531, posSeed);
+		for (int i = 0; i < im.volumeHandles.Size(); i++)
+		{
+			if (LevelLocals.EmissiveVolumeEnabled(im.volumeHandles[i]))
+				level.SpawnEmissiveVolume(im.volumeHandles[i], at, facing, scale, RSB_Tier.GlowScale(tier));
+		}
+	}
+
 	static void LandOn(Actor soundAt, RSB_Surface surf, String impactBase, Vector3 travel)
 	{
 		if (!soundAt || !surf || surf.sky) return;
@@ -367,6 +382,9 @@ class RSB_Impact play
 		else if (im.damageRadius > 0)
 			PaintDamage(surf, travel, im.damageBrush, im.damageRadius, im.damageDepth, im.damageSoot,
 				im.damageHeat, im.damageWet, im.damageAlong);
+
+		// EMISSIVE VOLUMES (engine #15, `volume`): a blast as glowing gas where it lands, in the world.
+		if (im.volumeNames.Size() > 0) SpawnVolumes(im, surf.at + surf.normal * 8.0, surf.normal, tier, hitTic, posSeed);
 
 		if (im.lightRadius > 0 && RSB_Settings.ImpactLights())
 		{

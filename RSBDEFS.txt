@@ -2161,6 +2161,7 @@ impact plasma            # a plasma ball's hit: a blue splash, motes, ozone, arc
   lightcolor = 120, 180, 255
   smokevolume = 12, 0.35, 1.0
   damage     = scorch_ring, 8, 0.2, 0.6, 0.5
+  volume     = rsb_plasma_burst
 end
 
 impact rocket
@@ -2173,6 +2174,7 @@ impact rocket
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
   damage     = crater, 22, 0.6, 0.9, 0
+  volume     = rsb_rocket_fireball
 end
 
 # THE BFG'S BLAST: a shockwave racing across the surface, lit ozone hanging, chunks by surface;
@@ -2187,6 +2189,7 @@ impact bfg
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
   damage     = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume     = rsb_bfg_blast
 end
 
 impact bfg.metal
@@ -2199,6 +2202,7 @@ impact bfg.metal
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
   damage     = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume     = rsb_bfg_blast
 end
 
 impact bfg.wood
@@ -2211,6 +2215,7 @@ impact bfg.wood
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
   damage     = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume     = rsb_bfg_blast
 end
 
 impact bfg.dirt
@@ -2223,6 +2228,7 @@ impact bfg.dirt
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
   damage     = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume     = rsb_bfg_blast
 end
 
 impact bfg.glass
@@ -2235,6 +2241,7 @@ impact bfg.glass
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
   damage     = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume     = rsb_bfg_blast
 end
 
 impact bfg.liquid
@@ -2245,6 +2252,7 @@ impact bfg.liquid
 
   smokevolume = 72, 0.8, 2.5
   push = 384, 900
+  volume     = rsb_bfg_blast
 end
 
 impact bfg_heavy
@@ -2258,6 +2266,7 @@ impact bfg_heavy
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
   damage     = scorch_ring, 46, 0.45, 1, 0.85
+  volume     = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.metal
@@ -2271,6 +2280,7 @@ impact bfg_heavy.metal
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
   damage     = scorch_ring, 46, 0.45, 1, 0.85
+  volume     = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.wood
@@ -2284,6 +2294,7 @@ impact bfg_heavy.wood
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
   damage     = scorch_ring, 46, 0.45, 1, 0.85
+  volume     = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.dirt
@@ -2297,6 +2308,7 @@ impact bfg_heavy.dirt
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
   damage     = scorch_ring, 46, 0.45, 1, 0.85
+  volume     = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.glass
@@ -2310,6 +2322,7 @@ impact bfg_heavy.glass
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
   damage     = scorch_ring, 46, 0.45, 1, 0.85
+  volume     = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.liquid
@@ -2321,6 +2334,7 @@ impact bfg_heavy.liquid
 
   smokevolume = 96, 1.0, 3.0
   push = 448, 1100
+  volume     = rsb_bfg_blast_heavy
 end
 
 impact bfg_spray           # where a BFG ray strikes (on Doom's BFE2 flash): a green flare, arcs, a brief light
@@ -2329,6 +2343,7 @@ impact bfg_spray           # where a BFG ray strikes (on Doom's BFE2 flash): a g
   light      = 120, 2.4, 10
   lightcolor = 140, 255, 150
   damage     = scorch, 9, 0, 0.6, 0.6
+  volume     = rsb_bfg_spray_hit
 end
 
 impact bfg_spray_heavy
@@ -2338,6 +2353,7 @@ impact bfg_spray_heavy
   light      = 160, 2.8, 12
   lightcolor = 150, 255, 160
   damage     = scorch, 11, 0, 0.7, 0.7
+  volume     = rsb_bfg_spray_hit
 end
 
 impact rail
@@ -2555,6 +2571,7 @@ impact plasma.liquid
   vary       = count 0.35, size 0.2, light 0.25
   light      = 140, 2.5, 5
   lightcolor = 120, 180, 255
+  volume     = rsb_plasma_burst
 end
 
 impact plasma_carbine     # the carbine's hit: sharper -- more splash, a smaller ring, a harder, shorter light, arcs now and then
@@ -2568,6 +2585,7 @@ impact plasma_carbine     # the carbine's hit: sharper -- more splash, a smaller
   light      = 110, 2.8, 3
   lightcolor = 150, 200, 255
   damage     = scorch_ring, 6, 0.2, 0.55, 0.45
+  volume     = rsb_plasma_burst
 end
 
 impact plasma_carbine.liquid
@@ -2578,6 +2596,7 @@ impact plasma_carbine.liquid
   scale      = 1.2, 0.85
   light      = 110, 2.8, 3
   lightcolor = 150, 200, 255
+  volume     = rsb_plasma_burst
 end
 
 impact rocket.metal
@@ -2590,6 +2609,7 @@ impact rocket.metal
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
   damage     = crater, 18, 0.4, 0.8, 0.6
+  volume     = rsb_rocket_fireball
 end
 
 impact rocket.wood
@@ -2602,6 +2622,7 @@ impact rocket.wood
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
   damage     = crater, 22, 0.55, 1, 0
+  volume     = rsb_rocket_fireball
 end
 
 impact rocket.dirt
@@ -2614,6 +2635,7 @@ impact rocket.dirt
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
   damage     = crater, 24, 0.7, 0.6, 0
+  volume     = rsb_rocket_fireball
 end
 
 impact rocket.glass
@@ -2626,6 +2648,7 @@ impact rocket.glass
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
   damage     = crack, 28, 0.4, 0.3, 0
+  volume     = rsb_rocket_fireball
 end
 
 impact rocket.liquid
@@ -2635,6 +2658,7 @@ impact rocket.liquid
   lightcolor = 255, 170, 90
   smokevolume = 64, 1.8, 3.0, 0.6
   push = 256, 650
+  volume     = rsb_rocket_fireball
 end
 
 # THE RPG's WARHEAD: the rocket's blasts, hitting harder -- more of everything, a wider heat.
@@ -2649,6 +2673,7 @@ impact rocket_rpg
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
   damage     = crater, 28, 0.7, 1, 0
+  volume     = rsb_rpg_fireball
 end
 
 impact rocket_rpg.metal
@@ -2662,6 +2687,7 @@ impact rocket_rpg.metal
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
   damage     = crater, 23, 0.45, 0.9, 0.7
+  volume     = rsb_rpg_fireball
 end
 
 impact rocket_rpg.wood
@@ -2675,6 +2701,7 @@ impact rocket_rpg.wood
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
   damage     = crater, 28, 0.65, 1, 0
+  volume     = rsb_rpg_fireball
 end
 
 impact rocket_rpg.dirt
@@ -2688,6 +2715,7 @@ impact rocket_rpg.dirt
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
   damage     = crater, 30, 0.8, 0.7, 0
+  volume     = rsb_rpg_fireball
 end
 
 impact rocket_rpg.glass
@@ -2701,6 +2729,7 @@ impact rocket_rpg.glass
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
   damage     = crack, 34, 0.45, 0.35, 0
+  volume     = rsb_rpg_fireball
 end
 
 impact rocket_rpg.liquid
@@ -2711,6 +2740,7 @@ impact rocket_rpg.liquid
   scale      = 1.25, 1.15
   smokevolume = 80, 1.8, 3.5, 0.65
   push = 320, 800
+  volume     = rsb_rpg_fireball
 end
 
 
@@ -3515,6 +3545,7 @@ flash pistol
   blastkick  = kick_puff, 40, 2
   powdervary = 0.45
   maybe      = powder_clump 0.15
+  volume     = rsb_flash_star
 end
 
 flash default              # the plain flash for a gun that names none (WM_Gun's fallback)
@@ -3531,6 +3562,7 @@ flash default              # the plain flash for a gun that names none (WM_Gun's
   blastkick  = kick_puff, 40, 2
   powdervary = 0.45
   maybe      = powder_clump 0.15
+  volume     = rsb_flash_star
 end
 
 flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turns every shot, powder some shots
@@ -3556,6 +3588,7 @@ flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turn
   blastkick  = kick_puff, 40, 2
   powdervary = 0.45
   shockwave  = 14, 0.4, 3
+  volume     = rsb_flash_star
 end
 
 flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic longer, more smoke
@@ -3581,6 +3614,7 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   blastkick  = kick_puff, 48, 3
   powdervary = 0.45
   shockwave  = 18, 0.55, 3
+  volume     = rsb_flash_ball45
 end
 
 flash shotgun
@@ -3598,6 +3632,7 @@ flash shotgun
   powdervary = 0.4
   shockwave  = 32, 0.9, 4
   maybe      = powder_clump 0.35
+  volume     = rsb_flash_gout
 end
 
 flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire (~3 m), a hard white strobe gone fast; steady, precise
@@ -3623,6 +3658,7 @@ flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire
   blastkick  = kick_puff, 64, 5
   powdervary = 0.4
   shockwave  = 32, 0.9, 4
+  volume     = rsb_flash_gout_long
 end
 
 flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide star, powder everywhere, a warm strobe that lingers; wild
@@ -3648,6 +3684,7 @@ flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide
   blastkick  = kick_puff, 64, 5
   powdervary = 0.4
   shockwave  = 32, 0.9, 4
+  volume     = rsb_flash_gout
 end
 
 flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge white-orange twin fireball, the room lit white, the floor kicked up; clean violence
@@ -3674,6 +3711,7 @@ flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge w
   blastkick  = kick_blast, 80, 8
   powdervary = 0.4
   shockwave  = 48, 1.4, 5
+  volume     = rsb_fireball_twin
 end
 
 flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-orange fireball, black soot rolling out, embers spat and falling, a warm strobe that lingers; dirty violence
@@ -3700,6 +3738,7 @@ flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-oran
   blastkick  = kick_blast, 80, 8
   powdervary = 0.4
   shockwave  = 44, 1.2, 5
+  volume     = rsb_fireball_dirty
 end
 
 flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanilla partner: the hammer -- a muzzle brake throws a ring of fire and smoke out sideways, a hard white spike forward, a sharp bright strobe, the floor kicked hard; brutal, mechanical, nearly the same every shot
@@ -3726,6 +3765,7 @@ flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanill
   blastkick  = kick_puff, 64, 5
   powdervary = 0.4
   shockwave  = 32, 0.9, 4
+  volume     = rsb_brake_ring
 end
 
 flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow flashes that stutter, some bright, some dim; a room that flickers; a held burst builds smoke, then shimmer, then a dull glow
@@ -3752,6 +3792,7 @@ flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow
   blastkick  = kick_puff, 48, 2
   powdervary = 0.35
   barrels    = 6, 2.5
+  volume     = rsb_flash_chaingun
 end
 
 flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange star each round, thick smoke building a column, a heavier strobe; the barrel runs hot fast -- a strong heat haze, heavy smoke, a dull glow
@@ -3777,6 +3818,7 @@ flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange st
   powderburn = 36, 7, 0.5
   blastkick  = kick_puff, 56, 3
   powdervary = 0.35
+  volume     = rsb_flash_mg
 end
 
 flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure thump -- a dull flash, a big puff of smoke, little fire
@@ -3795,6 +3837,7 @@ flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure 
   blastkick  = kick_puff, 56, 4
   powdervary = 0.35
   shockwave  = 30, 0.8, 4
+  volume     = rsb_flash_40mm
 end
 
 flash chainsaw             # THE CHAINSAW'S ENGINE (no shot; RSB_Exhaust.Run): a lazy pale puff at idle, a steady stream revved, a dark blip each time the throttle snaps open or it catches, hot air at the port
@@ -4028,6 +4071,7 @@ flash pistol_9mm@extreme   # THE SHOWPIECE AT EXTREME: a double crown of fire, a
   blastkick  = kick_puff, 44, 3
   powdervary = 0.5
   shockwave  = 18, 0.55, 3
+  volume     = rsb_flash_star_x
 end
 
 impact pistol_9mm@extreme  # stone: chips that always spark, glowing jacket fragments, a dust jet most hits, a blink of light
@@ -4144,6 +4188,7 @@ flash rifle
   blastkick  = kick_puff, 56, 3
   powdervary = 0.35
   maybe      = powder_clump 0.15
+  volume     = rsb_flash_rifle
 end
 
 flash smg                # full auto: quicker, smaller, so a burst strobes
@@ -4160,6 +4205,7 @@ flash smg                # full auto: quicker, smaller, so a burst strobes
   blastkick  = kick_puff, 40, 2
   powdervary = 0.35
   maybe      = powder_clump 0.1
+  volume     = rsb_flash_smg
 end
 
 flash revolver           # a big cylinder gap blast
@@ -4177,6 +4223,7 @@ flash revolver           # a big cylinder gap blast
   powdervary = 0.45
   shockwave  = 22, 0.7, 4
   maybe      = powder_clump 0.35
+  volume     = rsb_flash_revolver
 end
 
 flash shotgun_double     # both barrels at once
@@ -4194,6 +4241,7 @@ flash shotgun_double     # both barrels at once
   powdervary = 0.4
   shockwave  = 44, 1.2, 5
   maybe      = powder_clump 0.5
+  volume     = rsb_fireball_dirty
 end
 
 # ---- guns that are not bullet guns still have a muzzle
@@ -4249,6 +4297,7 @@ flash plasma             # a blue flicker, no powder: no flame, no smoke
   cone       = 16, 45, 70, 4
   conetics   = 2
   bursts     = energy_sparks_plasma
+  volume     = rsb_plasma_pulse
 end
 
 flash plasma_rifle         # THE PLASMA RIFLE: a blue-white pulse and a crackle of arcs at the emitter, blue lit air; over a burst the emitter runs hot (glow, shimmer); no powder, no smoke
@@ -4264,6 +4313,7 @@ flash plasma_rifle         # THE PLASMA RIFLE: a blue-white pulse and a crackle 
   barrelshimmer = 3, 0.45
   barrelglow = 0.8, 26, 1.3
   barrelglowcolor = 140, 190, 255
+  volume     = rsb_plasma_pulse
 end
 
 flash plasma_carbine       # THE PLASMA CARBINE: a harder white-blue snap, a crown of streaks from its vents, a flickering strobe; it runs hotter, faster
@@ -4279,6 +4329,7 @@ flash plasma_carbine       # THE PLASMA CARBINE: a harder white-blue snap, a cro
   barrelshimmer = 3, 0.5
   barrelglow = 0.7, 22, 1.4
   barrelglowcolor = 160, 205, 255
+  volume     = rsb_plasma_pulse_small
 end
 
 flash rocket             # the motor lighting: big warm light, sparks, smoke
@@ -4291,6 +4342,7 @@ flash rocket             # the motor lighting: big warm light, sparks, smoke
   flame      = 0.1
   smoke      = 3, 0.04, 0.4
   smokeparticle = rsb_smoke_gun
+  volume     = rsb_flash_rocket
 end
 
 flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -- a hard orange flare out the front, exhaust rolling back over the gun, the floor kicked up, the room lit orange
@@ -4317,6 +4369,7 @@ flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -
   blastkick  = kick_blast, 96, 10
   powdervary = 0.35
   shockwave  = 56, 1.5, 6
+  volume     = rsb_flash_rocket
 end
 
 flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning propellant blasting out of the rear of the tube, heat bending the air behind, the floor kicked up behind; a smaller flash at the front
@@ -4344,6 +4397,7 @@ flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning p
   blastkick  = kick_blast, 96, 12
   powdervary = 0.35
   shockwave  = 64, 1.8, 6
+  volume     = rsb_flash_rpg_front, rsb_backblast_rpg back
 end
 
 flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a flash, a burst of flame, a puff of smoke (no cone: it is not a gun's)
@@ -4355,6 +4409,7 @@ flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a fla
   smokeparticle = rsb_smoke_gun
   heat       = 6, 30, 0.9, 12
   vary       = light 0.2, smoke 0.3
+  volume     = rsb_flash_rpg_front
 end
 
 flash unmaker              # THE UNMAKER, firing every tic: one hellish red glow throbbing on the beam's beat, not a strobe -- a white-hot core bleeding red, blood-red arcs crawling at the muzzle, red lit air; no powder, no smoke; the skull runs red-hot (barrel glow and shimmer)
@@ -4380,6 +4435,7 @@ flash bfg                # a green bloom
   cone       = 30, 70, 120, 6
   conetics   = 4
   bursts     = energy_sparks_bfg
+  volume     = rsb_bfg_release
 end
 
 flash bfg_9000             # THE BFG: while it charges green motes and arcs gather at the muzzle and a green light swells; on release a green bloom and a burst of energy
@@ -4400,6 +4456,7 @@ flash bfg_9000             # THE BFG: while it charges green motes and arcs gath
   barrelglow = 0.6, 40, 1.6
   barrelglowcolor = 120, 255, 140
   push = 96, 320
+  volume     = rsb_bfg_release
 end
 
 flash bfg_heavy            # THE HEAVY BFG, the sun: a bigger storm gathering while it charges, a blinding green release, the air bending hard
@@ -4420,6 +4477,7 @@ flash bfg_heavy            # THE HEAVY BFG, the sun: a bigger storm gathering wh
   barrelglow = 0.5, 48, 2.0
   barrelglowcolor = 130, 255, 150
   push = 128, 420
+  volume     = rsb_bfg_release_heavy
 end
 
 flash rail               # a hard blue-white snap
@@ -4428,6 +4486,7 @@ flash rail               # a hard blue-white snap
   cone       = 10, 30, 140, 5
   conetics   = 3
   bursts     = energy_sparks_rail
+  volume     = rsb_rail_snap
 end
 
 flash none               # no flash at all: a gun whose own effect is the muzzle (the flamers)
@@ -5241,6 +5300,7 @@ flash pistol_45@extreme   # the .45 at extreme: a fat orange ball of fire and a 
   blastkick       = kick_puff, 48, 3
   powdervary      = 0.45
   shockwave       = 18, 0.55, 3
+  volume          = rsb_flash_ball45
   barrelglow      = 1.4, 20, 1.0
   barrelglowcolor = 255, 110, 45
   push            = 40, 160
@@ -5269,6 +5329,7 @@ flash shotgun_m37@extreme   # the M37 at extreme: the gout reaches ~5 m, photore
   blastkick       = kick_puff, 64, 5
   powdervary      = 0.4
   shockwave       = 32, 0.9, 4
+  volume          = rsb_flash_gout_long
   barrelglow      = 1.2, 22, 0.9
   barrelglowcolor = 255, 110, 45
 end
@@ -5296,6 +5357,7 @@ flash shotgun_doom@extreme   # Doom's pump at extreme: a fatter rolling fireball
   blastkick       = kick_puff, 64, 5
   powdervary      = 0.4
   shockwave       = 32, 0.9, 4
+  volume          = rsb_flash_gout
   barrelglow      = 1.2, 24, 1.0
   barrelglowcolor = 255, 105, 40
 end
@@ -5324,6 +5386,7 @@ flash shotgun_ssg@extreme   # the Super Shotgun at extreme: a second bigger twin
   blastkick       = kick_blast, 80, 8
   powdervary      = 0.4
   shockwave       = 48, 1.4, 5
+  volume          = rsb_fireball_twin
   barrelglow      = 1.0, 28, 1.2
   barrelglowcolor = 255, 100, 40
 end
@@ -5352,6 +5415,7 @@ flash shotgun_bullpup@extreme   # the bullpup at extreme: a second, wider ring o
   blastkick       = kick_puff, 64, 5
   powdervary      = 0.4
   shockwave       = 32, 0.9, 4
+  volume          = rsb_brake_ring
   barrelglow      = 1.1, 26, 1.1
   barrelglowcolor = 255, 105, 40
 end
@@ -5380,6 +5444,7 @@ flash chaingun_556@extreme   # the chaingun at extreme: a crown and bore sparks 
   blastkick       = kick_puff, 48, 2
   powdervary      = 0.35
   barrels         = 6, 2.5
+  volume          = rsb_flash_chaingun
 end
 
 flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and embers, a heat line off the muzzle, a barrel that glows sooner, brighter and wider
@@ -5405,6 +5470,7 @@ flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and e
   powderburn      = 36, 7, 0.5
   blastkick       = kick_puff, 56, 3
   powdervary      = 0.35
+  volume          = rsb_flash_mg
 end
 
 flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling out of the tube, embers, a heavier thump of light
@@ -5423,6 +5489,7 @@ flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling ou
   blastkick     = kick_puff, 56, 4
   powdervary    = 0.35
   shockwave     = 30, 0.8, 4
+  volume        = rsb_flash_40mm
 end
 
 flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned out, embers and a starburst, the floor kicked harder, the room lit longer, the tube glowing after a volley
@@ -5449,6 +5516,7 @@ flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned 
   blastkick       = kick_blast, 96, 10
   powdervary      = 0.35
   shockwave       = 56, 1.5, 6
+  volume          = rsb_flash_rocket
   barrelglow      = 1.2, 30, 1.0
   barrelglowcolor = 255, 120, 50
 end
@@ -5478,6 +5546,7 @@ flash rocket_rpg@extreme   # the RPG at extreme: a bigger, hotter backblast that
   blastkick     = kick_blast, 96, 12
   powdervary    = 0.35
   shockwave     = 64, 1.8, 6
+  volume        = rsb_flash_rpg_front, rsb_backblast_rpg back
 end
 
 flash plasma_rifle@extreme   # the plasma rifle at extreme: a crackle of arcs every shot, a ring of vented streaks, brighter blue air, an emitter that glows sooner
@@ -5492,6 +5561,7 @@ flash plasma_rifle@extreme   # the plasma rifle at extreme: a crackle of arcs ev
   barrelshimmer   = 3.5, 0.6
   barrelglow      = 0.6, 30, 1.6
   barrelglowcolor = 140, 190, 255
+  volume          = rsb_plasma_pulse
 end
 
 flash rail@extreme   # the railgun at extreme: a harder snap, a double spray of sparks, bent air along the barrel
@@ -5500,6 +5570,7 @@ flash rail@extreme   # the railgun at extreme: a harder snap, a double spray of 
   cone       = 14, 40, 160, 6
   conetics   = 3
   bursts     = energy_sparks_rail, energy_sparks_rail
+  volume     = rsb_rail_snap
   heat       = 4, 60, 0.7, 12
 end
 
@@ -5521,6 +5592,7 @@ flash bfg_9000@extreme   # the BFG at extreme: a bigger storm gathering as it ch
   barrelglow       = 0.5, 50, 1.9
   barrelglowcolor  = 120, 255, 140
   push             = 128, 420
+  volume           = rsb_bfg_release
 end
 
 flash bfg_heavy@extreme   # the Heavy BFG at extreme: the sun gathering -- a storm of motes and arcs, a blinding release
@@ -5541,6 +5613,7 @@ flash bfg_heavy@extreme   # the Heavy BFG at extreme: the sun gathering -- a sto
   barrelglow       = 0.4, 60, 2.4
   barrelglowcolor  = 130, 255, 150
   push             = 160, 520
+  volume           = rsb_bfg_release_heavy
 end
 
 flash chainsaw@extreme   # the Chainsaw's engine at extreme: a busier exhaust, a thicker stream, blips on smaller snaps
@@ -6016,6 +6089,7 @@ impact plasma@extreme   # a plasma hit at extreme: arcs every hit, a wider scorc
   lightcolor  = 120, 180, 255
   smokevolume = 14, 0.45, 1.0
   damage      = scorch_ring, 8, 0.2, 0.6, 0.5
+  volume      = rsb_plasma_burst
 end
 
 impact plasma.liquid@extreme
@@ -6025,6 +6099,7 @@ impact plasma.liquid@extreme
   vary       = count 0.35, size 0.2, light 0.25
   light      = 170, 2.9, 6
   lightcolor = 120, 180, 255
+  volume     = rsb_plasma_burst
 end
 
 flash plasma_carbine@extreme   # the Blue Plasma Rifle at extreme: a crackle of arcs every shot, streaks off the vents most shots, an emitter that glows sooner
@@ -6040,6 +6115,7 @@ flash plasma_carbine@extreme   # the Blue Plasma Rifle at extreme: a crackle of 
   barrelshimmer   = 3.5, 0.6
   barrelglow      = 0.5, 26, 1.7
   barrelglowcolor = 160, 205, 255
+  volume          = rsb_plasma_pulse_small
 end
 
 roundlook plasma_carbine@extreme   # the Blue Plasma Rifle's bolt at extreme: bent air round the hot bolt, a wider tunnel
@@ -6062,6 +6138,7 @@ impact plasma_carbine@extreme   # the Blue Plasma Rifle's hit at extreme: arcs m
   light      = 130, 3.2, 4
   lightcolor = 150, 200, 255
   damage     = scorch_ring, 6, 0.2, 0.55, 0.45
+  volume     = rsb_plasma_burst
 end
 
 impact plasma_carbine.liquid@extreme
@@ -6072,6 +6149,7 @@ impact plasma_carbine.liquid@extreme
   scale      = 1.2, 0.85
   light      = 130, 3.2, 4
   lightcolor = 150, 200, 255
+  volume     = rsb_plasma_burst
 end
 
 impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
@@ -6084,6 +6162,7 @@ impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring 
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
   damage      = crater, 22, 0.6, 0.9, 0
+  volume      = rsb_rocket_fireball
 end
 
 impact rocket.metal@extreme
@@ -6096,6 +6175,7 @@ impact rocket.metal@extreme
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
   damage      = crater, 18, 0.4, 0.8, 0.6
+  volume      = rsb_rocket_fireball
 end
 
 impact rocket.wood@extreme
@@ -6108,6 +6188,7 @@ impact rocket.wood@extreme
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
   damage      = crater, 22, 0.55, 1, 0
+  volume      = rsb_rocket_fireball
 end
 
 impact rocket.dirt@extreme
@@ -6120,6 +6201,7 @@ impact rocket.dirt@extreme
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
   damage      = crater, 24, 0.7, 0.6, 0
+  volume      = rsb_rocket_fireball
 end
 
 impact rocket.glass@extreme
@@ -6132,6 +6214,7 @@ impact rocket.glass@extreme
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
   damage      = crack, 28, 0.4, 0.3, 0
+  volume      = rsb_rocket_fireball
 end
 
 impact rocket.liquid@extreme
@@ -6141,6 +6224,7 @@ impact rocket.liquid@extreme
   lightcolor  = 255, 170, 90
   smokevolume = 72, 2.0, 3.2, 0.6
   push        = 300, 760
+  volume      = rsb_rocket_fireball
 end
 
 impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
@@ -6154,6 +6238,7 @@ impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ri
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
   damage      = crater, 28, 0.7, 1, 0
+  volume      = rsb_rpg_fireball
 end
 
 impact rocket_rpg.metal@extreme
@@ -6167,6 +6252,7 @@ impact rocket_rpg.metal@extreme
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
   damage      = crater, 23, 0.45, 0.9, 0.7
+  volume      = rsb_rpg_fireball
 end
 
 impact rocket_rpg.wood@extreme
@@ -6180,6 +6266,7 @@ impact rocket_rpg.wood@extreme
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
   damage      = crater, 28, 0.65, 1, 0
+  volume      = rsb_rpg_fireball
 end
 
 impact rocket_rpg.dirt@extreme
@@ -6193,6 +6280,7 @@ impact rocket_rpg.dirt@extreme
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
   damage      = crater, 30, 0.8, 0.7, 0
+  volume      = rsb_rpg_fireball
 end
 
 impact rocket_rpg.glass@extreme
@@ -6206,6 +6294,7 @@ impact rocket_rpg.glass@extreme
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
   damage      = crack, 34, 0.45, 0.35, 0
+  volume      = rsb_rpg_fireball
 end
 
 impact rocket_rpg.liquid@extreme
@@ -6216,6 +6305,7 @@ impact rocket_rpg.liquid@extreme
   scale       = 1.25, 1.15
   smokevolume = 90, 2.0, 3.6, 0.65
   push        = 360, 900
+  volume      = rsb_rpg_fireball
 end
 
 impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starburst, a bigger hex ring, a longer light
@@ -6228,6 +6318,7 @@ impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starbu
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
   damage      = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume      = rsb_bfg_blast
 end
 
 impact bfg.metal@extreme
@@ -6240,6 +6331,7 @@ impact bfg.metal@extreme
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
   damage      = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume      = rsb_bfg_blast
 end
 
 impact bfg.wood@extreme
@@ -6252,6 +6344,7 @@ impact bfg.wood@extreme
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
   damage      = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume      = rsb_bfg_blast
 end
 
 impact bfg.dirt@extreme
@@ -6264,6 +6357,7 @@ impact bfg.dirt@extreme
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
   damage      = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume      = rsb_bfg_blast
 end
 
 impact bfg.glass@extreme
@@ -6276,6 +6370,7 @@ impact bfg.glass@extreme
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
   damage      = scorch_ring, 34, 0.4, 0.9, 0.8
+  volume      = rsb_bfg_blast
 end
 
 impact bfg.liquid@extreme
@@ -6285,6 +6380,7 @@ impact bfg.liquid@extreme
   lightcolor  = 140, 255, 150
   smokevolume = 80, 0.9, 2.6
   push        = 440, 1000
+  volume      = rsb_bfg_blast
 end
 
 impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a storm of energy sparks, a bigger hex ring, the room lit longer
@@ -6298,6 +6394,7 @@ impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
   damage      = scorch_ring, 46, 0.45, 1, 0.85
+  volume      = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.metal@extreme
@@ -6311,6 +6408,7 @@ impact bfg_heavy.metal@extreme
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
   damage      = scorch_ring, 46, 0.45, 1, 0.85
+  volume      = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.wood@extreme
@@ -6324,6 +6422,7 @@ impact bfg_heavy.wood@extreme
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
   damage      = scorch_ring, 46, 0.45, 1, 0.85
+  volume      = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.dirt@extreme
@@ -6337,6 +6436,7 @@ impact bfg_heavy.dirt@extreme
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
   damage      = scorch_ring, 46, 0.45, 1, 0.85
+  volume      = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.glass@extreme
@@ -6350,6 +6450,7 @@ impact bfg_heavy.glass@extreme
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
   damage      = scorch_ring, 46, 0.45, 1, 0.85
+  volume      = rsb_bfg_blast_heavy
 end
 
 impact bfg_heavy.liquid@extreme
@@ -6360,6 +6461,7 @@ impact bfg_heavy.liquid@extreme
   lightcolor  = 150, 255, 160
   smokevolume = 110, 1.1, 3.1
   push        = 520, 1250
+  volume      = rsb_bfg_blast_heavy
 end
 
 impact bfg_spray@extreme   # where a BFG ray strikes at extreme: a starburst in the flare, a longer light
@@ -6368,6 +6470,7 @@ impact bfg_spray@extreme   # where a BFG ray strikes at extreme: a starburst in 
   light      = 150, 2.8, 12
   lightcolor = 140, 255, 150
   damage     = scorch, 9, 0, 0.6, 0.6
+  volume     = rsb_bfg_spray_hit
 end
 
 impact rail@extreme   # a rail hit at extreme: arcs and a starburst, a wider glowing ring, bent air where it struck

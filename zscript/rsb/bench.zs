@@ -11,6 +11,7 @@
 //   netevent rsb_bench_smoke200    about 200 GPU smoke puffs (rsb_smoke_gun) alive, two flashing lights
 //   netevent rsb_bench_flashes     about 8 muzzle flashes a second at fixed points ahead (#20 flash shadows)
 //   netevent rsb_bench_bfg         a Heavy BFG blast and its 40-ray spray every two seconds (the worst light load)
+//   netevent rsb_bench_flashvolumes two chainguns at the eyes and a BFG blast ahead every two seconds (#15 volumes)
 //
 // Each has a Command row on the Preview page. Stand about 256 units from a wall,
 // facing it, and keep still. START and END print with the tic, to find the
@@ -45,6 +46,7 @@ class RSB_Bench : Actor
 	const KIND_SMOKE200  = 3;
 	const KIND_FLASHES   = 4;
 	const KIND_BFG       = 5;
+	const KIND_VOLUMES   = 6;
 
 	const FLASH_EVERY = 9;     // tics: two flashes each time, about 8 a second
 	const FLASH_SLOT  = 12;    // cone slots 12..15, one a point: clear of the hands (0, 1) and the preview (9)
@@ -73,6 +75,7 @@ class RSB_Bench : Actor
 		if (k == KIND_SMOKE200) return "smoke200";
 		if (k == KIND_FLASHES) return "flashes";
 		if (k == KIND_BFG) return "bfg";
+		if (k == KIND_VOLUMES) return "flashvolumes";
 		return "?";
 	}
 
@@ -85,6 +88,7 @@ class RSB_Bench : Actor
 		else if (e.Name ~== "rsb_bench_smoke200") which = KIND_SMOKE200;
 		else if (e.Name ~== "rsb_bench_flashes") which = KIND_FLASHES;
 		else if (e.Name ~== "rsb_bench_bfg") which = KIND_BFG;
+		else if (e.Name ~== "rsb_bench_flashvolumes") which = KIND_VOLUMES;
 		if (which == 0) return false;
 		if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player]) return true;
 		let pmo = players[e.Player].mo;
@@ -147,6 +151,7 @@ class RSB_Bench : Actor
 		else if (kind == KIND_SMOKE200) Smoke();
 		else if (kind == KIND_FLASHES) Flashes();
 		else if (kind == KIND_BFG) Bfg(pmo);
+		else if (kind == KIND_VOLUMES) FlashVolumes(pmo);
 		Super.Tick();
 	}
 
@@ -227,6 +232,28 @@ class RSB_Bench : Actor
 			RSB_Impact.LandOn(spot, surf, "bfg_spray_heavy", dir);
 			RSB_Trail.Lay("bfg_ray_heavy", pmo, eye, surf.at);
 		}
+	}
+
+	// THE VOLUMETRIC FLASH LOAD (#15, the plan's section 4): a chaingun pair at the vanilla rate -- a round every 4 tics
+	// each, the muzzles about 20 units ahead of the eyes and following the head -- and every two seconds a BFG blast about
+	// 512 units ahead (it grows to about 384). "Volumetric flashes" Off is the before (today's cone and flame card).
+	private void FlashVolumes(Actor pmo)
+	{
+		Vector3 right = (sin(yaw), -cos(yaw), 0);
+		Vector3 fwd = Aim(0.0, 0.0);
+		if ((age % 2) == 1)
+		{
+			int h = ((age % 4) == 1) ? 0 : 1;
+			Vector3 at = eye + fwd * 20.0 + right * ((h == 0) ? 8.0 : -8.0) - (0, 0, 8);
+			RSB_Flash.Fire("chaingun_556", at, fwd, FLASH_SLOT + h, (0, 0, 0), playerNum, 2);
+		}
+		if ((age % BFG_EVERY) != 1) return;
+		FLineTraceData d;
+		if (!pmo.LineTrace(yaw, 512.0, 0.0, TRF_ABSPOSITION | TRF_THRUACTORS, eye.z, eye.x, eye.y, d)) return;
+		let surf = RSB_Materials.FromTrace(d, fwd);
+		if (!surf || surf.sky) return;
+		let spot = Actor.SpawnClientSide("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
+		if (spot) RSB_Impact.LandOn(spot, surf, "bfg", fwd);
 	}
 
 	// ABOUT SMOKE_ALIVE GPU SMOKE PUFFS ALIVE -- stage 2d's lit, alpha-blended, soft

@@ -1,0 +1,612 @@
+// ============================================================================
+// VOLUMEDEFS -- RS_Ballistics' emissive volumes (engine #15): muzzle flashes and blasts as real glowing gas with
+// depth in the headset. A flash or impact profile names them with `volume` (RSBDEFS); where one draws, the flat flame
+// card and the lit-air cone stand down, and the sparks, smoke, shimmer and the strobe (with its wall shadows) stay.
+//
+// CLASS is told honestly, so the player's "Volumetric flashes" setting (All / Big guns and blasts / Explosions only /
+// Off) keeps its meaning: gun = pistols, SMGs, rifles, chainguns; biggun = shotguns, launchers, plasma, rail, BFG at
+// the muzzle; blast = where something explodes. Sized for the look (owner, 2026-09-15: "we will do an optimize pass
+// later"). Each light lights the smoke and particles; the strobe lights the walls.
+// The effects level scales every spawn (RSB_Tier.SizeScale, GlowScale): plain smaller and dimmer, extreme bigger.
+// ============================================================================
+
+// ---------------------------------------------------------------- GUNS
+
+emissive rsb_flash_star            // the 9mm and plain pistols: a small white-hot star of five petals
+{
+	class       = gun
+	shape       = 0, 3, 3
+	petals      = 5, 9, 2.8, 50
+	petaljitter = 0.45
+	noise       = 0.12, 0.45, 2
+	billow      = 60
+	grow        = 0.5, 0.25
+	life        = 0.06
+	heat        = 1.0, 0.45
+	heatfalloff = 0.6
+	intensity   = 6 @0, 3 @0.35, 0 @1
+	flicker     = 0.3, 45
+	motion      = trail
+	followtip   = 0.3
+	light       = 140, 1.3
+	lightflags  = smoke, particles
+	wobble      = 0.2
+}
+
+emissive rsb_flash_star_x          // the Pistolet at extreme: a bigger six-petal star, a moment longer
+{
+	class       = gun
+	shape       = 2, 4, 3.5
+	petals      = 6, 13, 3.6, 55
+	petaljitter = 0.5
+	noise       = 0.12, 0.5, 2
+	billow      = 80
+	grow        = 0.45, 0.25
+	life        = 0.08
+	heat        = 1.0, 0.4
+	heatfalloff = 0.6
+	intensity   = 8 @0, 4 @0.3, 0 @1
+	flicker     = 0.35, 50
+	motion      = trail
+	followtip   = 0.3
+	light       = 180, 1.6
+	lightflags  = smoke, particles
+	wobble      = 0.25
+}
+
+emissive rsb_flash_ball45          // the .45: a fat orange ball with short petals
+{
+	class       = gun
+	shape       = 4, 5, 4
+	petals      = 6, 8, 3.5, 60
+	petaljitter = 0.4
+	noise       = 0.1, 0.55, 2
+	billow      = 70
+	grow        = 0.4, 0.3
+	life        = 0.07
+	heat        = 0.85, 0.35
+	heatfalloff = 0.7
+	tint        = 255 225 190
+	intensity   = 6 @0, 3 @0.4, 0 @1
+	flicker     = 0.3, 40
+	motion      = trail
+	followtip   = 0.3
+	light       = 160, 1.4
+	lightflags  = smoke, particles
+	wobble      = 0.2
+}
+
+emissive rsb_flash_revolver        // the .357: a hard bright star with a tongue out of the barrel
+{
+	class       = gun
+	shape       = 6, 4, 3
+	petals      = 7, 14, 3.5, 45
+	petaljitter = 0.4
+	noise       = 0.1, 0.5, 2
+	billow      = 90
+	grow        = 0.45, 0.25
+	life        = 0.08
+	heat        = 1.0, 0.4
+	heatfalloff = 0.6
+	intensity   = 7 @0, 3.5 @0.35, 0 @1
+	flicker     = 0.3, 45
+	motion      = trail
+	followtip   = 0.3
+	light       = 190, 1.6
+	lightflags  = smoke, particles
+	wobble      = 0.2
+}
+
+emissive rsb_flash_smg             // SMGs: a small quick crown
+{
+	class       = gun
+	shape       = 0, 2.5, 2.5
+	petals      = 4, 7, 2.2, 40
+	petaljitter = 0.45
+	noise       = 0.14, 0.45, 2
+	billow      = 60
+	grow        = 0.5, 0.25
+	life        = 0.05
+	heat        = 1.0, 0.45
+	intensity   = 5 @0, 2.5 @0.35, 0 @1
+	flicker     = 0.3, 50
+	motion      = trail
+	followtip   = 0.3
+	light       = 120, 1.1
+	lightflags  = smoke, particles
+	wobble      = 0.2
+}
+
+emissive rsb_flash_rifle           // rifles: a long thin tongue with four short petals
+{
+	class       = gun
+	shape       = 18, 3, 1.5
+	petals      = 4, 10, 2.5, 35
+	petaljitter = 0.4
+	noise       = 0.1, 0.5, 2
+	billow      = 110
+	grow        = 0.45, 0.25
+	life        = 0.06
+	heat        = 1.0, 0.45
+	intensity   = 6 @0, 3 @0.35, 0 @1
+	flicker     = 0.3, 45
+	motion      = trail
+	followtip   = 0.3
+	light       = 160, 1.3
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.2
+}
+
+emissive rsb_flash_chaingun        // the 5.56 chaingun: a small four-petal crown every round
+{
+	class       = gun
+	shape       = 6, 3, 2
+	petals      = 4, 8, 2.5, 45
+	petaljitter = 0.45
+	noise       = 0.12, 0.5, 2
+	billow      = 90
+	grow        = 0.5, 0.25
+	life        = 0.05
+	heat        = 1.0, 0.45
+	intensity   = 5.5 @0, 2.5 @0.35, 0 @1
+	flicker     = 0.35, 55
+	motion      = trail
+	followtip   = 0.3
+	light       = 130, 1.2
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.22
+}
+
+emissive rsb_flash_mg              // the 7.62 machine gun: a bigger crown with a longer tongue
+{
+	class       = gun
+	shape       = 14, 4, 2
+	petals      = 5, 11, 3, 40
+	petaljitter = 0.45
+	noise       = 0.1, 0.55, 2
+	billow      = 110
+	grow        = 0.45, 0.25
+	life        = 0.06
+	heat        = 1.0, 0.4
+	intensity   = 6.5 @0, 3 @0.35, 0 @1
+	flicker     = 0.35, 50
+	motion      = trail
+	followtip   = 0.3
+	light       = 170, 1.4
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.22
+}
+
+// ---------------------------------------------------------------- BIG GUNS
+
+emissive rsb_flash_gout            // pump shotguns: a gout of fire with a ragged crown
+{
+	class       = biggun
+	shape       = 70, 7, 3
+	petals      = 6, 18, 5, 30
+	petaljitter = 0.45
+	noise       = 0.08, 0.6, 2
+	billow      = 120
+	grow        = 0.4, 0.3
+	life        = 0.12
+	heat        = 1.0, 0.35
+	heatfalloff = 0.6
+	intensity   = 5 @0, 3 @0.3, 0 @1
+	flicker     = 0.3, 35
+	motion      = trail
+	followtip   = 0.3
+	light       = 240, 1.6
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.18
+}
+
+emissive rsb_flash_gout_long       // the M37: a narrow tongue reaching about 190 units
+{
+	class       = biggun
+	shape       = 150, 5, 2
+	petals      = 4, 14, 4, 20
+	petaljitter = 0.4
+	noise       = 0.07, 0.6, 2
+	billow      = 160
+	grow        = 0.35, 0.3
+	life        = 0.12
+	heat        = 1.0, 0.35
+	heatfalloff = 0.6
+	intensity   = 5 @0, 3 @0.3, 0 @1
+	flicker     = 0.3, 35
+	motion      = trail
+	followtip   = 0.25
+	light       = 260, 1.6
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.16
+}
+
+emissive rsb_fireball_twin         // the Super Shotgun: a fat white-orange fireball with a wide crown
+{
+	class       = biggun
+	shape       = 20, 16, 12
+	petals      = 8, 26, 9, 60
+	petaljitter = 0.45
+	noise       = 0.07, 0.65, 2
+	billow      = 140
+	churn       = 2
+	grow        = 0.3, 0.3
+	expand      = 60
+	life        = 0.2
+	heat        = 1.0, 0.3
+	heatfalloff = 0.7
+	intensity   = 6 @0, 3.5 @0.35, 0 @1
+	absorption  = 0.15
+	flicker     = 0.25, 30
+	motion      = trail
+	followtip   = 0.3
+	light       = 320, 2.0
+	lightflags  = smoke, particles
+	wobble      = 0.18
+}
+
+emissive rsb_fireball_dirty        // double barrels: a redder, sootier fireball
+{
+	class       = biggun
+	shape       = 18, 14, 10
+	petals      = 6, 22, 8, 55
+	petaljitter = 0.5
+	noise       = 0.07, 0.7, 2
+	billow      = 120
+	churn       = 2
+	grow        = 0.3, 0.3
+	expand      = 40
+	life        = 0.22
+	heat        = 0.85, 0.25
+	heatfalloff = 0.8
+	tint        = 255 200 170
+	intensity   = 5 @0, 3 @0.35, 0 @1
+	absorption  = 0.6
+	flicker     = 0.3, 30
+	motion      = trail
+	followtip   = 0.3
+	light       = 280, 1.7
+	lightflags  = smoke, particles
+	wobble      = 0.2
+}
+
+emissive rsb_brake_ring            // the bullpup's brake: a ring of fire round a white-hot spike
+{
+	class       = biggun
+	shape       = 30, 3, 1.5
+	ring        = 14, 4, 1
+	noise       = 0.1, 0.5, 2
+	billow      = 120
+	grow        = 0.4, 0.25
+	life        = 0.1
+	heat        = 1.0, 0.4
+	intensity   = 6 @0, 0 @1
+	flicker     = 0.25, 40
+	motion      = trail
+	followtip   = 0.3
+	light       = 220, 1.6
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_flash_40mm            // the 40 mm: a dull, smoky thump of fire
+{
+	class       = biggun
+	shape       = 10, 10, 8
+	noise       = 0.07, 0.7, 2
+	billow      = 80
+	churn       = 2
+	grow        = 0.4, 0.3
+	life        = 0.12
+	heat        = 0.6, 0.25
+	heatfalloff = 0.8
+	tint        = 255 210 170
+	intensity   = 3 @0, 0 @1
+	absorption  = 0.4
+	flicker     = 0.2, 25
+	motion      = trail
+	followtip   = 0.3
+	light       = 150, 1.0
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_flash_rocket          // the rocket launcher: the motor lighting in the tube, a hard flare out the front
+{
+	class       = biggun
+	shape       = 40, 8, 3
+	petals      = 5, 16, 5, 25
+	petaljitter = 0.4
+	noise       = 0.08, 0.6, 2
+	billow      = 140
+	churn       = 2
+	grow        = 0.35, 0.3
+	life        = 0.18
+	heat        = 0.95, 0.4
+	heatfalloff = 0.7
+	intensity   = 5 @0, 3 @0.4, 0 @1
+	absorption  = 0.2
+	flicker     = 0.3, 30
+	motion      = trail
+	followtip   = 0.3
+	light       = 300, 1.8
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_flash_rpg_front       // the RPG at its muzzle: a small flare
+{
+	class       = biggun
+	shape       = 14, 5, 2
+	petals      = 4, 10, 3, 30
+	noise       = 0.1, 0.5, 2
+	billow      = 100
+	grow        = 0.4, 0.25
+	life        = 0.08
+	heat        = 1.0, 0.4
+	intensity   = 5 @0, 0 @1
+	flicker     = 0.3, 40
+	motion      = trail
+	followtip   = 0.3
+	light       = 160, 1.2
+	lightflags  = smoke, particles
+}
+
+emissive rsb_backblast_rpg         // the RPG's backblast: a widening gout of burning propellant out of the rear
+{
+	class       = biggun
+	shape       = 110, 12, 22
+	petals      = 6, 30, 10, 35
+	petaljitter = 0.5
+	noise       = 0.06, 0.7, 2
+	billow      = 160
+	churn       = 3
+	grow        = 0.3, 0.3
+	expand      = 40
+	life        = 0.3
+	heat        = 0.9, 0.25
+	heatfalloff = 0.8
+	intensity   = 5 @0, 3 @0.3, 0 @1
+	absorption  = 0.5
+	flicker     = 0.3, 30
+	motion      = trail
+	followtip   = 0.2
+	light       = 320, 1.8
+	lightline   = 1
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_plasma_pulse          // the plasma rifle: a blue pulse with a thin ring
+{
+	class       = biggun
+	shape       = 6, 5, 4
+	ring        = 7, 2, 0.6
+	noise       = 0.12, 0.5, 2
+	billow      = 60
+	churn       = 4
+	grow        = 0.4, 0.25
+	life        = 0.07
+	heat        = 0.8, 0.5
+	tint        = 120 180 255
+	intensity   = 5 @0, 0 @1
+	flicker     = 0.4, 60
+	motion      = trail
+	followtip   = 0.3
+	light       = 160, 1.4
+	lightflags  = smoke, particles
+}
+
+emissive rsb_plasma_pulse_small    // the Blue Plasma Rifle: a quicker, smaller pulse
+{
+	class       = biggun
+	shape       = 4, 3.5, 3
+	noise       = 0.14, 0.5, 2
+	billow      = 60
+	churn       = 4
+	grow        = 0.45, 0.25
+	life        = 0.05
+	heat        = 0.85, 0.5
+	tint        = 140 200 255
+	intensity   = 5 @0, 0 @1
+	flicker     = 0.4, 60
+	motion      = trail
+	followtip   = 0.3
+	light       = 120, 1.1
+	lightflags  = smoke, particles
+}
+
+emissive rsb_rail_snap             // the railgun: a white-blue snap along the barrel with a ring at the muzzle
+{
+	class       = biggun
+	shape       = 30, 3, 1
+	ring        = 8, 2, 1
+	noise       = 0.1, 0.4, 2
+	billow      = 200
+	grow        = 0.5, 0.2
+	life        = 0.1
+	heat        = 1.0, 0.6
+	tint        = 170 200 255
+	intensity   = 7 @0, 0 @1
+	flicker     = 0.2, 60
+	motion      = trail
+	followtip   = 0.3
+	light       = 200, 1.6
+	lightline   = 1
+	lightflags  = smoke, particles
+}
+
+emissive rsb_bfg_release           // the BFG 9000 letting go: a green storm of petals round a fat core
+{
+	class       = biggun
+	shape       = 12, 14, 10
+	petals      = 8, 18, 6, 70
+	petaljitter = 0.5
+	noise       = 0.1, 0.6, 2
+	billow      = 100
+	churn       = 3
+	grow        = 0.3, 0.3
+	life        = 0.25
+	heat        = 0.9, 0.5
+	tint        = 120 255 140
+	intensity   = 6 @0, 3 @0.4, 0 @1
+	flicker     = 0.35, 40
+	motion      = trail
+	followtip   = 0.3
+	light       = 320, 2.0
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_bfg_release_heavy     // the BFG 10000: the sun letting go
+{
+	class       = biggun
+	shape       = 18, 20, 14
+	petals      = 10, 26, 8, 75
+	petaljitter = 0.5
+	noise       = 0.09, 0.65, 2
+	billow      = 120
+	churn       = 3
+	grow        = 0.3, 0.3
+	life        = 0.3
+	heat        = 0.95, 0.5
+	tint        = 130 255 150
+	intensity   = 7 @0, 3.5 @0.4, 0 @1
+	flicker     = 0.35, 40
+	motion      = trail
+	followtip   = 0.3
+	light       = 400, 2.4
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+// ---------------------------------------------------------------- BLASTS (where they land, in the world)
+
+emissive rsb_rocket_fireball       // a rocket's blast: a rolling fireball that swells, cools and chokes on its own smoke
+{
+	class       = blast
+	shape       = 0, 40, 40
+	noise       = 0.06, 0.7, 2
+	billow      = 70
+	churn       = 2
+	grow        = 0.2, 0.35
+	expand      = 50
+	life        = 0.55
+	heat        = 1.0, 0.2
+	heatfalloff = 0.8
+	intensity   = 4 @0, 2 @0.5, 0 @1
+	absorption  = 0.7
+	flicker     = 0.2, 20
+	motion      = stay
+	light       = 360, 1.8
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_rpg_fireball          // the RPG's blast: bigger and longer
+{
+	class       = blast
+	shape       = 0, 48, 48
+	noise       = 0.05, 0.7, 2
+	billow      = 80
+	churn       = 2
+	grow        = 0.2, 0.35
+	expand      = 60
+	life        = 0.6
+	heat        = 1.0, 0.2
+	heatfalloff = 0.8
+	intensity   = 4 @0, 2 @0.5, 0 @1
+	absorption  = 0.7
+	flicker     = 0.2, 20
+	motion      = stay
+	light       = 400, 2.0
+	lightflags  = smoke, particles
+	wobble      = 0.15
+}
+
+emissive rsb_plasma_burst          // a plasma bolt landing: a blue burst
+{
+	class       = blast
+	shape       = 0, 10, 10
+	noise       = 0.1, 0.5, 2
+	billow      = 80
+	churn       = 4
+	grow        = 0.3, 0.3
+	expand      = 40
+	life        = 0.2
+	heat        = 0.85, 0.4
+	tint        = 120 180 255
+	intensity   = 4 @0, 0 @1
+	flicker     = 0.35, 50
+	motion      = stay
+	light       = 160, 1.3
+	lightflags  = smoke, particles
+}
+
+emissive rsb_bfg_blast             // the BFG ball bursting: a green sphere growing to about 384 units
+{
+	class       = blast
+	shape       = 0, 200, 200
+	noise       = 0.03, 0.6, 2
+	billow      = 200
+	churn       = 3
+	grow        = 0.1, 0.8
+	expand      = 300
+	life        = 0.5
+	heat        = 0.9, 0.3
+	heatfalloff = 0.7
+	tint        = 120 255 140
+	intensity   = 4 @0, 2 @0.5, 0 @1
+	absorption  = 0.2
+	flicker     = 0.3, 30
+	motion      = stay
+	light       = 500, 2.5
+	lightflags  = smoke, particles
+	wobble      = 0.1
+}
+
+emissive rsb_bfg_blast_heavy       // the BFG 10000's ball bursting
+{
+	class       = blast
+	shape       = 0, 260, 260
+	noise       = 0.025, 0.6, 2
+	billow      = 240
+	churn       = 3
+	grow        = 0.1, 0.8
+	expand      = 380
+	life        = 0.6
+	heat        = 0.95, 0.3
+	heatfalloff = 0.7
+	tint        = 130 255 150
+	intensity   = 5 @0, 2.5 @0.5, 0 @1
+	absorption  = 0.2
+	flicker     = 0.3, 30
+	motion      = stay
+	light       = 640, 3.0
+	lightflags  = smoke, particles
+	wobble      = 0.1
+}
+
+emissive rsb_bfg_spray_hit         // where a BFG ray strikes: a green flare
+{
+	class       = blast
+	shape       = 0, 14, 14
+	noise       = 0.1, 0.55, 2
+	billow      = 90
+	churn       = 3
+	grow        = 0.3, 0.3
+	life        = 0.18
+	heat        = 0.85, 0.4
+	tint        = 120 255 140
+	intensity   = 4 @0, 0 @1
+	flicker     = 0.35, 40
+	motion      = stay
+	light       = 140, 1.2
+	lightflags  = smoke, particles
+}

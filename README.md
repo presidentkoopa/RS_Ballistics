@@ -14,6 +14,8 @@ lumps turns into:
 - lasting wall damage: bullet holes by material, gouges, craters, scorch rings, chainsaw cuts and flamethrower soot
   (engine surface damage)
 - light from sparks, embers and tracers, and muzzle flashes that can throw shadows (engine effect lights)
+- volumetric flashes and blasts: every gun's flash and every rocket, plasma and BFG blast as real glowing gas with depth
+  that lights the haze, each gun its own shape (engine emissive volumes; the flat flame card and cone are the fallback)
 - flamethrowers: a licking drawn-line core, flame that slides along what it hits,
   scorch and black smoke
 - looks for plasma, rockets, the BFG, the railgun and the chainsaw
@@ -30,7 +32,7 @@ settings.
 
 ## Requirements
 
-- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 8950092f88 or later.
+- **The UZDXREMA engine** (a private GZDoom 5.0 fork) at 481ec2f44e or later.
   RS_Ballistics uses engine features plain GZDoom does not have: GPU particle
   definitions (`PARTICLEDEFS`, `SpawnParticles`, mesh particles, level collision,
   the debris pool), surface materials (`SURFACES`, `TexMan.GetSurface`), drawn-line
@@ -38,7 +40,8 @@ settings.
   (`SetHeatSource`), the smoke volume (`EmitSmoke` with soot, `CarveSmoke`,
   `PushEffectImpulse`), debris landing sounds (`landsound`), precaching
   (`+PRECACHEALWAYS`), surface damage (`PaintSurfaceDamage`, `DAMAGEDEFS`) and effect lights
-  (`SpawnEffectLight`, PARTICLEDEFS `light` keys, `LF_CASTSHADOW`). It will not load on other engines.
+  (`SpawnEffectLight`, PARTICLEDEFS `light` keys, `LF_CASTSHADOW`) and emissive volumes (`VOLUMEDEFS`,
+  `SpawnEmissiveVolume`). It will not load on other engines.
 - Mods that fire its rounds or call its hooks (RS_VR_Reload, RS_VR_Weapons) require
   it and load after it.
 
@@ -59,6 +62,7 @@ before the two that use it.)
 | `PARTICLEDEFS` | GPU particle definitions: flame, smoke, dust, the textured spark library, 3D debris chunks (mesh), debris keys. |
 | `SURFACES` | Which textures are metal, wood, glass, liquid or dirt. |
 | `DAMAGEDEFS`, `damage/rsb` | Wall damage brushes: generated masks (soot, depth, heat, wet), four variants each. |
+| `VOLUMEDEFS` | Volumetric flash and blast looks (`emissive` blocks, class gun / biggun / blast), named by flash and impact profiles with `volume`. |
 | `zscript/rsb` | The generator: parser, registry, bullets, impacts, flashes, barrel heat and exhaust, hotspots, casings, flamethrowers, recoil, previews, benchmarks. |
 | `MENUDEF`, `CVARINFO`, `KEYCONF` | Options -> Ballistics & Effects: every look has a setting, "All effects on", Recoil under GAMEPLAY, Preview and Benchmarks rows. |
 | `sounds`, `sprites`, `models` | Impact, ricochet, whiz, crack, casing, flame, debris landing and gunshot tail sounds; tracer, casing, flash, spark and smoke sprites; casing, rocket and debris models. |

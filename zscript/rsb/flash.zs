@@ -54,6 +54,8 @@ class RSB_Flash : Actor
 	private double densityMul;
 	private double coneMul;
 	private Color  shotColor;      // this shot's light colour (`powdervary`)
+	int            shooterPlayer;  // who fired (-1 = no one): a volume follows that player
+	int            shooterHand;    // 0 main hand, 1 off hand, 2 head
 	private int    shockSlot;      // the shockwave's heat slot, 0 = none
 	private int    shockAge;
 	transient RSB_FlashDef flashDef;
@@ -68,7 +70,9 @@ class RSB_Flash : Actor
 		Stop;
 	}
 
-	static RSB_Flash Fire(String whichFlash, Vector3 at, Vector3 aim, int beamSlot, Vector3 carrierVel)
+	// shooterPlayer, shooterHand: who fired (a player number, -1 = no one) and from where -- 0 the main hand, 1 the off
+	// hand, 2 the head -- so a volume (engine #15) follows it. With no one it stays in the world, carried by carrierVel.
+	static RSB_Flash Fire(String whichFlash, Vector3 at, Vector3 aim, int beamSlot, Vector3 carrierVel, int shooterPlayer = -1, int shooterHand = 0)
 	{
 		let reg = RSB_Registry.Get();
 		if (!reg) return null;
@@ -103,6 +107,8 @@ class RSB_Flash : Actor
 		f.flashDef = fd;
 		f.dir = (aim.Length() > 0.000001) ? aim.Unit() : (1, 0, 0);
 		f.slot = beamSlot;
+		f.shooterPlayer = (shooterPlayer >= 0 && shooterPlayer < MAXPLAYERS) ? shooterPlayer : -1;
+		f.shooterHand = shooterHand;
 		f.Ignite(tier, carrierVel);
 		RSB_Tail.Start(fd, muzzle, beamSlot);
 		return f;
@@ -140,8 +146,11 @@ class RSB_Flash : Actor
 			vCone *= beat;
 		}
 
+		// EMISSIVE VOLUMES (engine #15, `volume`): the flash as real glowing gas. Where one draws, the flat flame card and
+		// the lit-air cone stand down; the sparks, smoke, shimmer and the strobe (its wall shadows) stay.
+		bool volumed = SpawnVolumes(fd, tier, surge, shotTic, posSeed, carrierVel);
 		double flameSize = fd.flameScale * RSB_Settings.FlashFlameSize() * vFlame;
-		if (tier <= RSB_Tier.T_OFF || flameSize <= 0 || !RSB_Settings.FlashFlame()) bINVISIBLE = true;
+		if (tier <= RSB_Tier.T_OFF || flameSize <= 0 || !RSB_Settings.FlashFlame() || volumed) bINVISIBLE = true;
 		else
 		{
 			// Not a stamp: the star stretches a little and turns to a new angle each shot.
@@ -163,7 +172,7 @@ class RSB_Flash : Actor
 		coneMul = 0.85 + 0.15 * vCone;
 
 		if (fd.lightRadius > 0 && fd.lightTics > 0 && punchMul > 0 && rangeMul > 0) StrobeLight(1.0);
-		coneOn = fd.coneLength > 0 && fd.coneTics > 0 && RSB_Settings.FlashCone() && densityMul > 0;
+		coneOn = !volumed && fd.coneLength > 0 && fd.coneTics > 0 && RSB_Settings.FlashCone() && densityMul > 0;
 		if (coneOn) Beam(1.0);
 
 		let reg = RSB_Registry.Get();
@@ -299,6 +308,38 @@ class RSB_Flash : Actor
 		}
 		RSB_Burst.Fire(bd, pos, dir, dir, countScale * mix, sGlow, seed, null, sSize, sizeMul,
 			sSpread, sSpeed, sLife, fd.sparkLean, leanSeed);
+	}
+
+	// THE FLASH'S VOLUMES: each named definition this machine draws, at the muzzle (a `back` one out of the rear), scaled
+	// by the effects level and the shot's wobble, as bright as its surge, following the shooter. True when any drew.
+	private bool SpawnVolumes(RSB_FlashDef fd, int tier, double surge, int shotTic, int posSeed, Vector3 carrierVel)
+	{
+		if (tier <= RSB_Tier.T_OFF || fd.volumeNames.Size() == 0) return false;
+		while (fd.volumeHandles.Size() < fd.volumeNames.Size())
+			fd.volumeHandles.Push(LevelLocals.EmissiveVolumeDefinition(Name(fd.volumeNames[fd.volumeHandles.Size()])));
+		double sizeMul = 1.0;
+		if (fd.sizeCvar.Length() > 0) sizeMul = max(0.05, RSB_Settings.Cvf(fd.sizeCvar, 1.0));
+		double scale = RSB_Tier.SizeScale(tier) * sizeMul * RSB_Hash.Wobble(fd.varyVolume, shotTic, 491, posSeed);
+		double bright = RSB_Tier.GlowScale(tier) * surge;
+		int follow = EVF_WORLD;
+		Vector3 carried = carrierVel;
+		if (shooterPlayer >= 0)
+		{
+			follow = (shooterHand == 1) ? EVF_OFFHAND : ((shooterHand == 2) ? EVF_HEAD : EVF_MAINHAND);
+			carried = (0, 0, 0);
+		}
+		bool drew = false;
+		for (int i = 0; i < fd.volumeNames.Size(); i++)
+		{
+			int handle = fd.volumeHandles[i];
+			if (!LevelLocals.EmissiveVolumeEnabled(handle)) continue;
+			bool back = fd.volumeBack[i] != 0;
+			Vector3 at = back ? pos - dir * (fd.backHeatOffset * sizeMul) : pos;
+			level.SpawnEmissiveVolume(handle, at, back ? -dir : dir, scale, bright, 1.0, Color(255, 255, 255, 255), carried, 0,
+				follow, shooterPlayer, 1.0, 1.0);
+			drew = true;
+		}
+		return drew;
 	}
 
 	// The surface along `d` within `reach` of the muzzle, or null (sky, nothing, too far).

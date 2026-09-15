@@ -31,7 +31,7 @@ $reloadPk3 = 'E:\DOOMWork\RS_VR_Reload\RS_VR_Reload.pk3'
 & python 'E:\DOOMWork\tools\menu_lint.py' $root --prefix rsb_
 if ($LASTEXITCODE -ne 0) { throw "menu lint failed -- a control would be dead. See above." }
 
-$rootLumps = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt', 'PARTICLEDEFS.txt', 'SURFACES.txt', 'KEYCONF.txt', 'DAMAGEDEFS.txt')
+$rootLumps = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt', 'PARTICLEDEFS.txt', 'SURFACES.txt', 'KEYCONF.txt', 'DAMAGEDEFS.txt', 'VOLUMEDEFS.txt')
 $files = @()
 foreach ($l in $rootLumps) {
     $p = Join-Path $root $l
@@ -59,7 +59,7 @@ $zip.Dispose(); $fs.Dispose()
 $check = [System.IO.Compression.ZipFile]::OpenRead($out)
 $names = $check.Entries | ForEach-Object { $_.FullName }
 $check.Dispose()
-$must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt', 'PARTICLEDEFS.txt', 'SURFACES.txt', 'KEYCONF.txt', 'DAMAGEDEFS.txt', 'damage/rsb/hole_chip_a.png',
+$must = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt', 'PARTICLEDEFS.txt', 'SURFACES.txt', 'KEYCONF.txt', 'DAMAGEDEFS.txt', 'VOLUMEDEFS.txt', 'damage/rsb/hole_chip_a.png',
           'zscript/rsb/log.zs', 'zscript/rsb/hash.zs', 'zscript/rsb/defs.zs', 'zscript/rsb/parser.zs',
           'zscript/rsb/registry.zs', 'zscript/rsb/settings.zs', 'zscript/rsb/materials.zs',
           'zscript/rsb/impact.zs', 'zscript/rsb/bullet.zs', 'zscript/rsb/flash.zs',

@@ -76,7 +76,7 @@ class RSB_Preview : EventHandler
 
 		if (flash)
 		{
-			RSB_Flash.Fire(RSB_Settings.PreviewFlash(), eye + fwd * 20.0 - (0, 0, 6), fwd, PREVIEW_BEAM_SLOT, pmo.Vel);
+			RSB_Flash.Fire(RSB_Settings.PreviewFlash(), eye + fwd * 20.0 - (0, 0, 6), fwd, PREVIEW_BEAM_SLOT, pmo.Vel, pmo.PlayerNumber(), 2);
 		}
 
 		if (casing)

@@ -977,6 +977,7 @@ class RSB_Parser
 			im.varyCount = 0;
 			im.varySize = 0;
 			im.varyLight = 0;
+			im.varyVolume = 0;
 			if (v.Size() == 1 && v[0] ~== "none") return "";
 			for (int i = 0; i < v.Size(); i++)
 			{
@@ -988,7 +989,8 @@ class RSB_Parser
 				if (word == "count") im.varyCount = amount;
 				else if (word == "size") im.varySize = amount;
 				else if (word == "light") im.varyLight = amount;
-				else return String.Format("vary \"%s\" is not count, size or light", word);
+				else if (word == "volume") im.varyVolume = amount;
+				else return String.Format("vary \"%s\" is not count, size, light or volume", word);
 			}
 			return "";
 		}
@@ -1029,6 +1031,14 @@ class RSB_Parser
 			im.pushRadius = v[0].ToDouble();
 			im.pushStrength = v[1].ToDouble();
 			return (im.pushRadius >= 0) ? "" : "push radius must be 0 or more";
+		}
+		if (key == "volume")
+		{
+			im.volumeNames.Clear();
+			im.volumeHandles.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++) im.volumeNames.Push(v[i]);
+			return "";
 		}
 		if (key == "damage" || key == "glancedamage")
 		{
@@ -1127,6 +1137,7 @@ class RSB_Parser
 		if (key == "vary")
 		{
 			f.varyLight = 0;
+			f.varyVolume = 0;
 			f.varyFlame = 0;
 			f.varyCone = 0;
 			f.varySparks = 0;
@@ -1144,7 +1155,8 @@ class RSB_Parser
 				else if (word == "cone") f.varyCone = amount;
 				else if (word == "sparks") f.varySparks = amount;
 				else if (word == "smoke") f.varySmoke = amount;
-				else return String.Format("vary \"%s\" is not light, flame, cone, sparks or smoke", word);
+				else if (word == "volume") f.varyVolume = amount;
+				else return String.Format("vary \"%s\" is not light, flame, cone, sparks, smoke or volume", word);
 			}
 			return "";
 		}
@@ -1365,6 +1377,23 @@ class RSB_Parser
 			f.exhaustBlip = v[0];
 			f.exhaustBlipRise = v[1].ToDouble();
 			return (f.exhaustBlipRise > 0 && f.exhaustBlipRise <= 1) ? "" : "exhaustblip rise must be above 0 and at most 1";
+		}
+		if (key == "volume")
+		{
+			f.volumeNames.Clear();
+			f.volumeBack.Clear();
+			f.volumeHandles.Clear();
+			if (v.Size() == 1 && v[0] ~== "none") return "";
+			for (int i = 0; i < v.Size(); i++)
+			{
+				Array<String> words;
+				v[i].Split(words, " ", TOK_SKIPEMPTY);
+				if (words.Size() < 1 || words.Size() > 2 || (words.Size() == 2 && !(words[1] ~== "back")))
+					return "volume is <emissive definition>[ back], ... -- or none";
+				f.volumeNames.Push(words[0]);
+				f.volumeBack.Push((words.Size() == 2) ? 1 : 0);
+			}
+			return "";
 		}
 		if (key == "powderburn")
 		{

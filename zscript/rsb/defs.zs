@@ -203,6 +203,10 @@ class RSB_ImpactDef : RSB_Def
 	double glanceDamageHeat;
 	double glanceDamageWet;
 	int    glanceDamageAlong;
+	// EMISSIVE VOLUMES (engine #15, `volume`): VOLUMEDEFS definitions spawned where it lands (a blast's fireball).
+	Array<String> volumeNames;
+	Array<int>    volumeHandles;
+	double        varyVolume;
 	double heatRadius;     // heat shimmer where it lands: a ball fading over heatTics; 0 = none
 	double heatStrength;
 	int    heatTics;
@@ -342,6 +346,12 @@ class RSB_FlashDef : RSB_Def
 	double shockRadius;
 	double shockStrength;
 	int    shockTics;
+	// EMISSIVE VOLUMES (engine #15, `volume`): VOLUMEDEFS definitions spawned with the flash -- `back` ones out of the
+	// tube's rear at the backheat offset -- and `vary volume`. Where one draws, the flame card and the cone stand down.
+	Array<String> volumeNames;
+	Array<int>    volumeBack;
+	Array<int>    volumeHandles;   // EmissiveVolumeDefinition handles (a hash of the name, alike everywhere), filled on first use
+	double        varyVolume;
 	double exhaustShimmerRadius;
 	double exhaustShimmerStrength;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a

@@ -232,6 +232,18 @@ OptionMenu "RSB_FlashMenu"
 	Option "Powder burns on close walls", "rsb_flash_powderburns", "OnOff"
 	Option "Blast kicks dust off nearby walls", "rsb_flash_blastkick", "OnOff"
 	Option "Shockwave of bent air (big guns)", "rsb_flash_shockwave", "OnOff"
+	StaticText ""
+	StaticText "VOLUMETRIC FLASHES", "Gold"
+	StaticText "The flash and the blast as real glowing gas with depth. Where one draws, the flat", "DarkGray"
+	StaticText "flame card and the lit-air cone stand down; sparks, smoke and the strobe stay.", "DarkGray"
+	Option "Volumetric flashes", "r_emissivevolumes", "EmissiveVolumeClasses"
+	Option "Flash length", "r_emissivevolumes_length", "EmissiveVolumeLengths"
+	Option "Flash motion", "r_emissivevolumes_motion", "EmissiveVolumeMotions"
+	Option "Flashes light the haze", "r_emissivevolumes_light", "OnOff"
+	Slider "Flash brightness", "r_emissivevolumes_brightness", 0, 4, 0.1, 1
+	Option "Flash detail (steps)", "r_emissivevolumes_steps", "EmissiveVolumeSteps"
+	Option "Flash resolution", "r_emissivevolumes_resolution", "EmissiveVolumeResolutions"
+	Option "Flash budget (volumes alive)", "r_emissivevolumes_max", "EmissiveVolumeBudgets"
 }
 
 OptionMenu "RSB_FlightMenu"
@@ -407,6 +419,7 @@ OptionMenu "RSB_QualityMenu"
 	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
 	Command "Bench: flashes (8 muzzle flashes a second)", "netevent rsb_bench_flashes"
 	Command "Bench: BFG lights (a Heavy BFG spray every 2 seconds)", "netevent rsb_bench_bfg"
+	Command "Bench: volumetric flashes (two chainguns and a BFG blast)", "netevent rsb_bench_flashvolumes"
 }
 
 OptionMenu "RSB_PreviewMenu"
@@ -438,6 +451,7 @@ OptionMenu "RSB_PreviewMenu"
 	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
 	Command "Bench: flashes (8 muzzle flashes a second)", "netevent rsb_bench_flashes"
 	Command "Bench: BFG lights (a Heavy BFG spray every 2 seconds)", "netevent rsb_bench_bfg"
+	Command "Bench: volumetric flashes (two chainguns and a BFG blast)", "netevent rsb_bench_flashvolumes"
 }
 
 OptionMenu "RSB_DiagnosticsMenu"
