@@ -203,6 +203,10 @@ OptionMenu "RSB_FlashMenu"
 	StaticText ""
 	Slider "Bore sparks", "rsb_flash_sparks", 0.0, 3.0, 0.1, 1
 	Slider "Smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Slider "Gunshot tails", "rsb_tail_volume", 0.0, 1.5, 0.05, 2
+	StaticText "The room answering each shot: a short boom indoors, a long rolling echo", "DarkGray"
+	StaticText "under open sky. The next shot cuts the last one off.", "DarkGray"
 }
 
 OptionMenu "RSB_FlightMenu"

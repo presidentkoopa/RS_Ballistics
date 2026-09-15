@@ -129,6 +129,9 @@ class RSB_Settings play
 		return max(0.0, Cvf("rsb_flash_smoke", 1.0) * (st ? st.smokeMul : 1.0) * RSB_Tier.SmokeScale(RSB_Tier.Current()));
 	}
 
+	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
+	static double TailVolume() { return max(0.0, Cvf("rsb_tail_volume", 1.0)); }
+
 	// ---- rounds in flight ------------------------------------------------------
 	static bool Glide() { return Cvb("rsb_glide", true); }
 

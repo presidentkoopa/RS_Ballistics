@@ -82,3 +82,11 @@ brush crack
 	turn = hashed
 	flip = hashed
 }
+
+brush melt
+{
+	masks = "damage/rsb/melt_a.png", "damage/rsb/melt_b.png", "damage/rsb/melt_c.png", "damage/rsb/melt_d.png"
+	channels = rgba
+	turn = hashed
+	flip = hashed
+}

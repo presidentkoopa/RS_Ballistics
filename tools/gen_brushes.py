@@ -242,6 +242,18 @@ def crack_glass(rng):
     return np.zeros_like(R), depth, np.zeros_like(R), np.zeros_like(R)
 
 
+def melt(rng):
+    """A beam's molten spot: a smooth glassy bowl, slag spatter round it, a soot ring, a white-hot core."""
+    rr = R * (1.0 + 0.1 * angular_noise(rng))
+    depth = smooth(0.5, 0.0, rr) ** 0.6 * (0.7 + 0.2 * value_noise(rng, 5))
+    for _ in range(6 + int(rng.random() * 6)):
+        a, d = rng.random() * 2 * math.pi, 0.42 + rng.random() * 0.22
+        depth = np.maximum(depth, blob(d * math.cos(a), d * math.sin(a), 0.03 + rng.random() * 0.04, 0.15 + rng.random() * 0.15))
+    soot = smooth(1.0, 0.4, rr) * smooth(0.18, 0.45, rr) * (0.5 + 0.5 * value_noise(rng, 7))
+    heat = smooth(0.55, 0.0, rr) ** 0.8 * (0.8 + 0.2 * value_noise(rng, 6))
+    return soot, depth, heat, np.zeros_like(R)
+
+
 # name, function, seed base, turn, flip
 BRUSHES = [
     ("hole_chip",     hole_chip,     1100, "hashed", "hashed"),
@@ -254,6 +266,7 @@ BRUSHES = [
     ("gouge",         gouge,         1800, "none",   "none"),
     ("cut",           cut,           1900, "none",   "none"),
     ("crack",         crack_glass,   2000, "hashed", "hashed"),
+    ("melt",          melt,          2100, "hashed", "hashed"),
 ]
 
 

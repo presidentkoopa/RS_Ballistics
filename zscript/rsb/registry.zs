@@ -21,6 +21,7 @@ class RSB_Registry : StaticEventHandler
 	Array<RSB_BarrelHeat> barrels;   // RSB_Barrel: heat per gun (drawing only; cleared each map)
 	Array<int>             roundCounts;   // RSB_Bullet: rounds each player's hand has fired, for tracers (drawing only)
 	Array<Actor>           casings;       // casings in the world, oldest first: the shared casing cap -- ours and any mod's that asked (RSB_Service casing.keep); cleared each map
+	Array<RSB_TailSlot>    tailSlots;     // each beam slot's gunshot tail, stopped by the next shot (flash.zs RSB_Tail)
 	Array<RSB_Hotspot>     hotspots;      // live hotspots, oldest first (hotspot.zs; cleared each map)
 	private Array<String> said;                  // once-per-map log keys
 

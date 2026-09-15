@@ -38,6 +38,7 @@ user bool   rsb_flash_flame        = true;
 user float  rsb_flash_flame_size   = 1.0;
 user float  rsb_flash_sparks       = 1.0;
 user float  rsb_flash_smoke        = 1.0;
+user float  rsb_tail_volume        = 1.0;      // gunshot tails: the room answering each shot
 
 // ---- rounds in flight
 user bool   rsb_glide              = true;

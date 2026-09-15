@@ -1366,6 +1366,23 @@ class RSB_Parser
 			f.exhaustBlipRise = v[1].ToDouble();
 			return (f.exhaustBlipRise > 0 && f.exhaustBlipRise <= 1) ? "" : "exhaustblip rise must be above 0 and at most 1";
 		}
+		if (key == "tail")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.tailSound = "";
+				return "";
+			}
+			if (v.Size() < 1 || v.Size() > 2) return "tail is a sound group (rsb/tail/<kind>, with /int and /ext), volume -- or none";
+			f.tailSound = v[0];
+			f.tailVolume = 1.0;
+			if (v.Size() == 2)
+			{
+				if (!IsNum(v[1])) return "tail volume must be a number";
+				f.tailVolume = v[1].ToDouble();
+			}
+			return (f.tailVolume >= 0 && f.tailVolume <= 1) ? "" : "tail volume must be 0..1";
+		}
 		if (key == "exhaustsmoke")
 		{
 			why = NumsBetween(v, 4, 5); if (why != "") return why;

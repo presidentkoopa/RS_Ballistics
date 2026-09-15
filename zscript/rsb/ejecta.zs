@@ -197,6 +197,7 @@ class RSB_LocalEjecta : Actor
 	Default
 	{
 		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
+		+CLIENTSIDE        // a look on this machine only: the engine's client-side thinkers, never the playsim's
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -231,6 +232,9 @@ class RSB_LocalEjecta : Actor
 	private int     wispTics;        // the hot case trails a thin wisp this many tics (the profile's `wisp`)
 	private int     wispHandle;
 	private bool    forceFade;       // over the casing cap: fade now (RSB_Registry.KeepCasing)
+	private int     lastTic;         // level.maptime at its last tick: a casing that slept catches up on waking
+	private int     tickStep;        // tics since that tick
+	private int     floorCheckIn;    // tics until a lying casing checks its floor again
 
 	// How high the casing's centre sits above the floor when it lies still: 0 for a
 	// sprite (its art sits on its origin); a model casing gives its mesh's lying radius.
@@ -258,8 +262,9 @@ class RSB_LocalEjecta : Actor
 			else RSB_Log.Once(RSB_Log.LV_WARN, "ejecta:model:" .. ed.lookName, String.Format(
 				"ejecta %s: %s is not a casing model class (an RSB_LocalEjecta) -- thrown as a sprite", ed.id, ed.lookName));
 		}
-		let c = RSB_LocalEjecta(Actor.Spawn(spawnClass, at, ALLOW_REPLACE));
+		let c = RSB_LocalEjecta(Actor.SpawnClientSide(spawnClass, at, ALLOW_REPLACE));
 		if (!c) return null;
+		c.lastTic = level.maptime - 1;
 
 		c.ejectaId = whichEjecta;
 		int s = RSB_Ejecta.SpriteOf(ed);
@@ -298,9 +303,14 @@ class RSB_LocalEjecta : Actor
 	override void Tick()
 	{
 		if (isFrozen()) return;
-		age++;
+		// THE MAP CLOCK, not a count of ticks: a casing that slept (below) catches up on its age.
+		int now = level.maptime;
+		tickStep = now - lastTic;
+		if (tickStep <= 0) return;
+		lastTic = now;
+		age += tickStep;
 		if (bBRIGHT && age > hotTics) bBRIGHT = false;
-		if (resting) restAge++;
+		if (resting) restAge += tickStep;
 
 		if (forceFade || restAge > fadeFrom || age > MAX_FLIGHT_TICS + fadeFrom)
 		{
@@ -322,12 +332,20 @@ class RSB_LocalEjecta : Actor
 		if (bDestroyed) return;
 		if (age <= wispTics && !resting) Wisp();
 		Super.Tick();
+		// A CASING LYING STILL SLEEPS (engine thinker sleep, in the client-side collection): nothing happens to it
+		// between floor checks, so it wakes only for the next check or its fade. FadeOut wakes it early.
+		if (!bDestroyed && resting && !fading && !forceFade && !bBRIGHT)
+		{
+			int nap = min(FLOOR_CHECK_TICS, fadeFrom - restAge + 1);
+			if (nap > 1) Sleep(nap);
+		}
 	}
 
 	// OVER THE CASING CAP (RSB_Registry.KeepCasing): start fading now, flying or lying.
 	void FadeOut()
 	{
 		forceFade = true;
+		Wake();   // a sleeping casing fades now, not at its next floor check
 	}
 
 	// THE HOT CASE'S WISP: one thin, lit mote a tic where it is, thinning as it cools.
@@ -432,7 +450,9 @@ class RSB_LocalEjecta : Actor
 	// LYING STILL: a lift carries it up; a floor that drops lets it fall.
 	private void Lie()
 	{
-		if ((age % FLOOR_CHECK_TICS) != 0) return;
+		floorCheckIn -= tickStep;
+		if (floorCheckIn > 0) return;
+		floorCheckIn = FLOOR_CHECK_TICS;
 		double fz = GetZAt(flags: GZF_3DRESTRICT);
 		double restZ = fz + RestHeight() * Scale.X;
 		if (restZ > pos.z + 0.01) SetOrigin((pos.x, pos.y, restZ), true);

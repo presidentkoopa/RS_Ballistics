@@ -319,6 +319,10 @@ class RSB_FlashDef : RSB_Def
 	double exhaustSmokeHeat;
 	double exhaustSmokeSpeed;
 	double exhaustSmokeSoot;
+	// A GUNSHOT TAIL (`tail`): the room answering the shot -- a SNDINFO group with /int and /ext ($random
+	// each) and its volume. "" = none (RSB_Tail, flash.zs).
+	String tailSound;
+	double tailVolume;
 	double exhaustShimmerRadius;
 	double exhaustShimmerStrength;
 	// A THROB (`throb`): the light and cone swell and ease on a beat by the map clock, so a

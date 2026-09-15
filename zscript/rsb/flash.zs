@@ -83,6 +83,7 @@ class RSB_Flash : Actor
 		f.dir = (aim.Length() > 0.000001) ? aim.Unit() : (1, 0, 0);
 		f.slot = beamSlot;
 		f.Ignite(tier, carrierVel);
+		RSB_Tail.Start(fd, at, beamSlot);
 		return f;
 	}
 
@@ -357,5 +358,39 @@ class RSB_Smoke : Actor
 			return;
 		}
 		Super.Tick();
+	}
+}
+
+// ============================================================================
+// GUNSHOT TAILS (a flash's `tail`): the room answering a shot -- a short boom under a ceiling, a long rolling
+// echo under open sky, chosen by what is over the muzzle. Each beam slot (a hand) keeps its tail's sound
+// handle and the next shot stops it, so a held trigger rolls one tail instead of stacking them into mush.
+// Played at every effects level: the dial turns the visuals down, not the fight.
+// NETPLAY. Sound is this machine's presentation: nothing reads a handle back, and no gameplay follows it.
+// ============================================================================
+class RSB_TailSlot
+{
+	SoundHandle tail;
+}
+
+class RSB_Tail play
+{
+	const SLOTS = 32;   // the beam slots (Level.SetVolumetricBeam's 0..31)
+
+	static void Start(RSB_FlashDef fd, Vector3 at, int slot)
+	{
+		if (!fd || fd.tailSound.Length() == 0 || slot < 0 || slot >= SLOTS) return;
+		let reg = RSB_Registry.Get();
+		if (!reg) return;
+		while (reg.tailSlots.Size() <= slot) reg.tailSlots.Push(new("RSB_TailSlot"));
+		let s = reg.tailSlots[slot];
+		s.tail.StopSound();
+		double vol = fd.tailVolume * RSB_Settings.TailVolume();
+		if (vol <= 0) return;
+		let sec = level.PointInSector(at.xy);
+		bool openSky = sec && sec.GetTexture(Sector.ceiling) == skyflatnum;
+		String which = fd.tailSound .. (openSky ? "/ext" : "/int");
+		double pitch = RSB_Hash.Between(0.96, 1.04, level.maptime, 431, RSB_Hash.OfPos(at));
+		s.tail = S_StartSoundAt(at, which, CHAN_AUTO, CHANF_OVERLAP, min(vol, 1.0), ATTN_NORM, pitch);
 	}
 }

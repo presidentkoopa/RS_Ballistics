@@ -1280,6 +1280,7 @@ hotspot unmaker_burn       # a wall under the Unmaker: a molten spot that grows,
   shimmer    = 16, 1.2
   sound      = rsb/flame/pilot, 0.9
   smokevolume = 16, 0.8
+  damage     = melt, 3, 12, 0.7, 0.06, 0.35
 end
 
 hotspot unmaker_burn_metal # metal under the Unmaker: brighter and sparkier, the molten mark hotter and wider
@@ -1294,6 +1295,7 @@ hotspot unmaker_burn_metal # metal under the Unmaker: brighter and sparkier, the
   shimmer    = 16, 1.3
   sound      = rsb/flame/pilot, 1.0
   smokevolume = 16, 0.8
+  damage     = melt, 3, 14, 0.6, 0.04, 0.45
 end
 
 hotspot unmaker_burn_wood  # wood under the Unmaker: it chars and smokes hard
@@ -1308,6 +1310,7 @@ hotspot unmaker_burn_wood  # wood under the Unmaker: it chars and smokes hard
   shimmer    = 16, 1.1
   sound      = rsb/flame/pilot, 0.8
   smokevolume = 16, 0.8
+  damage     = melt, 3, 12, 0.6, 0.15, 0.2
 end
 
 hotspot unmaker_burn_dirt  # dirt and rock under the Unmaker: melting to glassy slag, dust and smoke
@@ -1322,6 +1325,7 @@ hotspot unmaker_burn_dirt  # dirt and rock under the Unmaker: melting to glassy 
   shimmer    = 16, 1.2
   sound      = rsb/flame/pilot, 0.85
   smokevolume = 16, 0.8
+  damage     = melt, 3, 12, 0.8, 0.08, 0.35
 end
 
 hotspot unmaker_burn_glass # glass under the Unmaker: shards and molten spatter, a small bright mark
@@ -1336,6 +1340,7 @@ hotspot unmaker_burn_glass # glass under the Unmaker: shards and molten spatter,
   shimmer    = 14, 1.0
   sound      = rsb/flame/pilot, 0.8
   smokevolume = 16, 0.8
+  damage     = melt, 2, 8, 0.4, 0.02, 0.4
 end
 
 hotspot unmaker_burn_liquid # water under the Unmaker: boiling, steam pouring off, no mark
@@ -2804,6 +2809,7 @@ impact laser_burn
   light      = 110, 2.4, 5
   lightcolor = 255, 50, 30
   heat       = 20, 1.1, 16
+  damage     = melt, 3, 0.3, 0.08, 0.25
 end
 
 impact laser_burn.metal
@@ -2814,6 +2820,7 @@ impact laser_burn.metal
   light      = 120, 2.6, 5
   lightcolor = 255, 55, 30
   heat       = 20, 1.2, 18
+  damage     = melt, 2.5, 0.25, 0.05, 0.3
 end
 
 impact laser_burn.liquid
@@ -2830,6 +2837,7 @@ impact laser_burn.glass
   light      = 110, 2.4, 5
   lightcolor = 255, 50, 30
   heat       = 18, 1.0, 14
+  damage     = melt, 2, 0.15, 0.02, 0.2
 end
 
 # THE UNMAKER (owner: "frightening as fuck", kills that MELT). Its bolt lands 35 times a
@@ -3502,6 +3510,7 @@ flash pistol
   flame      = 0.05
   smoke      = 1, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/pistol, 0.7
 end
 
 flash default              # the plain flash for a gun that names none (WM_Gun's fallback)
@@ -3513,6 +3522,7 @@ flash default              # the plain flash for a gun that names none (WM_Gun's
   flame      = 0.05
   smoke      = 1, 0.02, 0.3
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/pistol, 0.6
 end
 
 flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turns every shot, powder some shots
@@ -3533,6 +3543,7 @@ flash pistol_9mm           # THE SHOWPIECE: a sharp white snap, a star that turn
   barrelsmoke = rsb_smoke_barrel, 1.6
   barrelshimmer = 2, 0.35
   smokevolume = 14, 1.3, 0.5, 90, 6
+  tail       = rsb/tail/pistol, 0.75
 end
 
 flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic longer, more smoke
@@ -3553,6 +3564,7 @@ flash pistol_45            # the .45: a rounder, oranger bloom that hangs a tic 
   barrelsmoke = rsb_smoke_barrel, 2
   barrelshimmer = 2.5, 0.4
   smokevolume = 16, 1.3, 0.5, 80, 6
+  tail       = rsb/tail/pistol_mag, 0.8
 end
 
 flash shotgun
@@ -3564,6 +3576,7 @@ flash shotgun
   flame      = 0.08
   smoke      = 3, 0.03, 0.35
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/shotgun, 0.85
 end
 
 flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire (~3 m), a hard white strobe gone fast; steady, precise
@@ -3584,6 +3597,7 @@ flash shotgun_m37          # the M37A2's long barrel: a long narrow gout of fire
   barrelshimmer = 2.5, 0.4
   smokevolume = 20, 1.0, 0.8, 160, 8
   push = 48, 180
+  tail       = rsb/tail/shotgun, 0.85
 end
 
 flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide star, powder everywhere, a warm strobe that lingers; wild
@@ -3604,6 +3618,7 @@ flash shotgun_doom         # Doom's pump: a fat orange fireball (~2 m) in a wide
   barrelshimmer = 3.5, 0.5
   smokevolume = 22, 1.1, 0.8, 140, 8
   push = 56, 200
+  tail       = rsb/tail/shotgun, 0.85
 end
 
 flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge white-orange twin fireball, the room lit white, the floor kicked up; clean violence
@@ -3625,6 +3640,7 @@ flash shotgun_ssg          # THE SUPER SHOTGUN, the mountain destroyer: a huge w
   barrelshimmer = 4, 0.6
   smokevolume = 32, 1.5, 1.2, 200, 12
   push = 96, 320
+  tail       = rsb/tail/dbshotgun, 1
 end
 
 flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-orange fireball, black soot rolling out, embers spat and falling, a warm strobe that lingers; dirty violence
@@ -3646,6 +3662,7 @@ flash shotgun_doublebarrel # THE DOUBLE BARREL, rusted legacy: a ragged red-oran
   barrelshimmer = 4, 0.6
   smokevolume = 18, 2.0, 1.0, 140
   push = 56, 240
+  tail       = rsb/tail/dbshotgun, 0.95
 end
 
 flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanilla partner: the hammer -- a muzzle brake throws a ring of fire and smoke out sideways, a hard white spike forward, a sharp bright strobe, the floor kicked hard; brutal, mechanical, nearly the same every shot
@@ -3667,6 +3684,7 @@ flash shotgun_bullpup      # THE BULLPUP PUMP, a 4-shot SSG and the SSG's vanill
   barrelshimmer = 3.5, 0.55
   smokevolume = 24, 1.2, 1.0, 130, 8
   push = 72, 260
+  tail       = rsb/tail/shotgun, 0.85
 end
 
 flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow flashes that stutter, some bright, some dim; a room that flickers; a held burst builds smoke, then shimmer, then a dull glow
@@ -3688,6 +3706,7 @@ flash chaingun_556         # THE CHAINGUN, the buzzsaw: small sharp white-yellow
   barrelglow = 1.4, 26, 1.2
   barrelglowcolor = 255, 110, 40
   smokevolume = 24, 0.4, 0.4, 60, 12
+  tail       = rsb/tail/ar, 0.6
 end
 
 flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange star each round, thick smoke building a column, a heavier strobe; the barrel runs hot fast -- a strong heat haze, heavy smoke, a dull glow
@@ -3709,6 +3728,7 @@ flash machinegun_762       # THE MACHINE GUN, the jackhammer: a bigger orange st
   barrelglow = 1.3, 30, 1.4
   barrelglowcolor = 255, 104, 36
   smokevolume = 26, 0.45, 0.5, 70, 12
+  tail       = rsb/tail/lmg, 0.7
 end
 
 flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure thump -- a dull flash, a big puff of smoke, little fire
@@ -3722,6 +3742,7 @@ flash launcher_40mm        # the machine gun's grenade launcher: a low-pressure 
   heat       = 5, 12, 0.5, 10
   vary       = light 0.2, smoke 0.3
   smokevolume = 20, 1.2, 0.4, 50, 6
+  tail       = rsb/tail/rpg, 0.5
 end
 
 flash chainsaw             # THE CHAINSAW'S ENGINE (no shot; RSB_Exhaust.Run): a lazy pale puff at idle, a steady stream revved, a dark blip each time the throttle snaps open or it catches, hot air at the port
@@ -3950,6 +3971,7 @@ flash pistol_9mm@extreme   # THE SHOWPIECE AT EXTREME: a double crown of fire, a
   barrelglowcolor = 255, 120, 50
   smokevolume = 16, 1.4, 0.5, 100, 6
   push       = 36, 140
+  tail       = rsb/tail/pistol, 0.8
 end
 
 impact pistol_9mm@extreme  # stone: chips that always spark, glowing jacket fragments, a dust jet most hits, a blink of light
@@ -4061,6 +4083,7 @@ flash rifle
   flame      = 0.06
   smoke      = 1, 0.025, 0.3
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/br, 0.8
 end
 
 flash smg                # full auto: quicker, smaller, so a burst strobes
@@ -4072,6 +4095,7 @@ flash smg                # full auto: quicker, smaller, so a burst strobes
   flame      = 0.045
   smoke      = 1, 0.018, 0.22
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/smg, 0.6
 end
 
 flash revolver           # a big cylinder gap blast
@@ -4083,6 +4107,7 @@ flash revolver           # a big cylinder gap blast
   flame      = 0.07
   smoke      = 2, 0.03, 0.32
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/pistol_mag, 0.85
 end
 
 flash shotgun_double     # both barrels at once
@@ -4094,6 +4119,7 @@ flash shotgun_double     # both barrels at once
   flame      = 0.1
   smoke      = 4, 0.035, 0.38
   smokeparticle = rsb_smoke_gun
+  tail       = rsb/tail/dbshotgun, 0.95
 end
 
 # ---- guns that are not bullet guns still have a muzzle
@@ -4212,6 +4238,7 @@ flash rocket_launcher      # THE ROCKET LAUNCHER: the motor lights in the tube -
   barrelshimmer = 4, 0.55
   smokevolume = 24, 1.4, 1.2, 90, 8, 0.5
   push = 64, 260
+  tail       = rsb/tail/rpg, 0.9
 end
 
 flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning propellant blasting out of the rear of the tube, heat bending the air behind, the floor kicked up behind; a smaller flash at the front
@@ -4234,6 +4261,7 @@ flash rocket_rpg           # THE RPG: the backblast -- fire, smoke and burning p
   sizecvar   = wm_rpg_scale
   smokevolume = 36, 1.6, 1.6, 220, -51.5, 0.6
   push = 112, 450, -51.5
+  tail       = rsb/tail/rpg, 1
 end
 
 flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a flash, a burst of flame, a puff of smoke (no cone: it is not a gun's)
@@ -5030,6 +5058,7 @@ flash pistol_45@extreme   # the .45 at extreme: a fat orange ball of fire and a 
   barrelsmoke     = rsb_smoke_barrel, 2
   barrelshimmer   = 2.5, 0.4
   smokevolume     = 18, 1.5, 0.5, 90, 6
+  tail            = rsb/tail/pistol_mag, 0.8
   barrelglow      = 1.4, 20, 1.0
   barrelglowcolor = 255, 110, 45
   push            = 40, 160
@@ -5053,6 +5082,7 @@ flash shotgun_m37@extreme   # the M37 at extreme: the gout reaches ~5 m, photore
   barrelshimmer   = 2.5, 0.4
   smokevolume     = 22, 1.1, 0.8, 180, 8
   push            = 64, 220
+  tail            = rsb/tail/shotgun, 0.85
   barrelglow      = 1.2, 22, 0.9
   barrelglowcolor = 255, 110, 45
 end
@@ -5075,6 +5105,7 @@ flash shotgun_doom@extreme   # Doom's pump at extreme: a fatter rolling fireball
   barrelshimmer   = 3.5, 0.5
   smokevolume     = 26, 1.3, 0.8, 150, 8
   push            = 64, 230
+  tail            = rsb/tail/shotgun, 0.85
   barrelglow      = 1.2, 24, 1.0
   barrelglowcolor = 255, 105, 40
 end
@@ -5098,6 +5129,7 @@ flash shotgun_ssg@extreme   # the Super Shotgun at extreme: a second bigger twin
   barrelshimmer   = 4, 0.6
   smokevolume     = 36, 1.8, 1.2, 240, 12
   push            = 128, 420
+  tail            = rsb/tail/dbshotgun, 1
   barrelglow      = 1.0, 28, 1.2
   barrelglowcolor = 255, 100, 40
 end
@@ -5121,6 +5153,7 @@ flash shotgun_bullpup@extreme   # the bullpup at extreme: a second, wider ring o
   barrelshimmer   = 3.5, 0.55
   smokevolume     = 28, 1.4, 1.0, 150, 8
   push            = 96, 300
+  tail            = rsb/tail/shotgun, 0.85
   barrelglow      = 1.1, 26, 1.1
   barrelglowcolor = 255, 105, 40
 end
@@ -5144,6 +5177,7 @@ flash chaingun_556@extreme   # the chaingun at extreme: a crown and bore sparks 
   barrelglow      = 1.0, 30, 1.5
   barrelglowcolor = 255, 110, 40
   smokevolume     = 26, 0.45, 0.4, 60, 12
+  tail            = rsb/tail/ar, 0.6
 end
 
 flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and embers, a heat line off the muzzle, a barrel that glows sooner, brighter and wider
@@ -5165,6 +5199,7 @@ flash machinegun_762@extreme   # the machine gun at extreme: heavy streaks and e
   barrelglow      = 1.0, 36, 1.8
   barrelglowcolor = 255, 104, 36
   smokevolume     = 30, 0.55, 0.5, 70, 12
+  tail            = rsb/tail/lmg, 0.7
 end
 
 flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling out of the tube, embers, a heavier thump of light
@@ -5178,6 +5213,7 @@ flash launcher_40mm@extreme   # the 40 mm at extreme: a ring of smoke rolling ou
   heat          = 5, 12, 0.5, 10
   vary          = light 0.2, smoke 0.3
   smokevolume   = 24, 1.4, 0.4, 60, 6
+  tail          = rsb/tail/rpg, 0.5
 end
 
 flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned out, embers and a starburst, the floor kicked harder, the room lit longer, the tube glowing after a volley
@@ -5199,6 +5235,7 @@ flash rocket_launcher@extreme   # the rocket launcher at extreme: sparks fanned 
   barrelshimmer   = 4, 0.55
   smokevolume     = 30, 1.8, 1.2, 100, 8, 0.5
   push            = 96, 360
+  tail            = rsb/tail/rpg, 0.9
   barrelglow      = 1.2, 30, 1.0
   barrelglowcolor = 255, 120, 50
 end
@@ -5223,6 +5260,7 @@ flash rocket_rpg@extreme   # the RPG at extreme: a bigger, hotter backblast that
   sizecvar      = wm_rpg_scale
   smokevolume   = 44, 2.0, 1.6, 260, -51.5, 0.6
   push          = 140, 540, -51.5
+  tail          = rsb/tail/rpg, 1
 end
 
 flash plasma_rifle@extreme   # the plasma rifle at extreme: a crackle of arcs every shot, a ring of vented streaks, brighter blue air, an emitter that glows sooner
