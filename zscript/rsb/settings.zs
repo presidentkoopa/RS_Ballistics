@@ -180,6 +180,9 @@ class RSB_Settings play
 	static bool ViewCull() { return Cvb("rsb_view_cull", true); }
 	static double LodRange() { return max(0.0, Cvf("rsb_lod_range", 1536.0)); }
 
+	// Spark lights (Lights page): 0 every spark lights (the owner's lights answer, the default), 1 capped per burst (M5).
+	static bool SparkLightsCapped() { return Cvf("rsb_spark_lights", 0.0) >= 1.0; }
+
 	// Where `at` is for THIS machine's view: its camera (in VR the head's turn drives the view angle). Behind wins
 	// over far. With both switches off, always VIEW_FULL.
 	static int ViewBand(Vector3 at)

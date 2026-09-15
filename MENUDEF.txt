@@ -29,6 +29,12 @@ OptionValue "RSBAtlasSizes"
 	256, "256 px (recommended)"
 }
 
+OptionValue "RSBSparkLights"
+{
+	0, "Every spark (default)"
+	1, "Capped per burst (faster)"
+}
+
 OptionString "RSBStyles"
 {
 	"",          "Default"
@@ -310,6 +316,9 @@ OptionMenu "RSB_LightMenu"
 	StaticText ""
 	Option "Impact light", "rsb_impact_lights", "OnOff"
 	Slider "Impact light brightness", "rsb_impact_light", 0.0, 3.0, 0.1, 1
+	StaticText ""
+	Option "Spark lights", "rsb_spark_lights", "RSBSparkLights"
+	StaticText "Capped: a burst's sparks share a few stronger lights -- lighter on the GPU.", "DarkGray"
 	StaticText ""
 	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
 	StaticText ""

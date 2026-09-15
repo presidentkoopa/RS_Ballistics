@@ -881,6 +881,8 @@ class RSB_Parser
 			b.particleHandle = 0;
 			b.moreParticles.Clear();
 			b.moreHandles.Clear();
+			b.cappedState.Clear();
+			b.cappedHandles.Clear();
 			if (b.particle.Length() == 0) return (v.Size() == 1) ? "" : "particle none stands alone";
 			for (int i = 1; i < v.Size(); i++) b.moreParticles.Push(v[i]);
 			return "";

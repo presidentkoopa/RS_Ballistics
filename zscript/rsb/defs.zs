@@ -168,6 +168,11 @@ class RSB_BurstDef : RSB_Def
 	// first and these, so one burst throws chips of several shapes. Hash handles, cached.
 	Array<String> moreParticles;
 	Array<int>    moreHandles;
+	// SPARK LIGHTS (Lights -> "Spark lights", rsb_spark_lights; optimization plan M5): capped, a spark or ember definition
+	// draws its `_capped` twin. Per definition slot (0 the first, then the further ones): 0 not looked at yet, 1 it has a
+	// twin (its hash handle in cappedHandles), 2 it has none.
+	Array<int>    cappedState;
+	Array<int>    cappedHandles;
 }
 
 // AN IMPACT: what a landing round does to a surface.

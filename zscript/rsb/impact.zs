@@ -77,7 +77,7 @@ class RSB_Burst play
 			{
 				int share = n / kinds + ((k < n % kinds) ? 1 : 0);
 				if (share <= 0) continue;
-				int handle = (k == 0) ? Handle(b) : MoreHandle(b, k - 1);
+				int handle = HandleFor(b, k);
 				level.SpawnParticles(handle, at + normal * (b.offset * offsetScale), dir, share, clamp(Spread(b) * spreadScale, 0.0, 180.0), b.speed * speedScale, b.speedJitter,
 					b.life * lifeScale, b.lifeJitter, b.tint, glowScale, sizeScale, (k == 0) ? seed : RSB_Hash.Seed(seed, k, 613),
 					b.shape, planeAt, planeNormal, floorAt);
@@ -131,7 +131,7 @@ class RSB_Burst play
 		if (n <= 0) return;
 		if (b.particle.Length() > 0)
 		{
-			level.SpawnParticles(Handle(b), at + dir * b.offset, dir, n, Spread(b), speedValue, b.speedJitter,
+			level.SpawnParticles(HandleFor(b, 0), at + dir * b.offset, dir, n, Spread(b), speedValue, b.speedJitter,
 				lifeValue, b.lifeJitter, b.tint, glowScale, 1.0, seed,
 				b.shape, planeAt, planeNormal, floorAt);
 			return;
@@ -161,6 +161,40 @@ class RSB_Burst play
 	private static double Spread(RSB_BurstDef b)
 	{
 		return (b.shape == RSB_BurstDef.SHAPE_DISC) ? min(b.cone, 90.0) : b.cone;
+	}
+
+	// THE HANDLE TO DRAW definition slot k with (0 the first, then `particle = a, b, c`'s further ones). SPARK LIGHTS
+	// (Lights -> "Spark lights"): every spark lights by default, the owner's lights answer; "Capped per burst" draws the
+	// spark and ember definitions' `_capped` twins, a few stronger lights a burst (optimization plan M5). Looks only.
+	private static int HandleFor(RSB_BurstDef b, int k)
+	{
+		int handle = (k == 0) ? Handle(b) : MoreHandle(b, k - 1);
+		if (!RSB_Settings.SparkLightsCapped()) return handle;
+		while (b.cappedState.Size() <= k)
+		{
+			b.cappedState.Push(0);
+			b.cappedHandles.Push(0);
+		}
+		if (b.cappedState[k] == 0)
+		{
+			String name = (k == 0) ? b.particle : b.moreParticles[k - 1];
+			if (HasCappedTwin(name))
+			{
+				b.cappedHandles[k] = level.ParticleDefinition(name .. "_capped");
+				b.cappedState[k] = 1;
+			}
+			else b.cappedState[k] = 2;
+		}
+		return (b.cappedState[k] == 1) ? b.cappedHandles[k] : handle;
+	}
+
+	// The spark and ember definitions PARTICLEDEFS gives a `_capped` twin (keep in step with its capped section).
+	static bool HasCappedTwin(String particle)
+	{
+		return particle ~== "rsb_spark_spray" || particle ~== "rsb_spark_streak" || particle ~== "rsb_spark_photo"
+			|| particle ~== "rsb_spark_impact" || particle ~== "rsb_spark_ricochet" || particle ~== "rsb_spark_star"
+			|| particle ~== "rsb_spark_speck" || particle ~== "rsb_spark_sparkler" || particle ~== "rsb_spark_ember"
+			|| particle ~== "rsb_ember_metal";
 	}
 
 	// The burst's PARTICLEDEFS handle, looked up once. A hash of the name: the same

@@ -24,6 +24,7 @@ user float  rsb_impact_particles   = 1.0;
 user float  rsb_impact_glow        = 1.0;
 user bool   rsb_impact_lights      = true;
 user float  rsb_impact_light       = 1.0;
+user int    rsb_spark_lights       = 0;         // 0 every spark lights (the owner's answer), 1 capped per burst: a few stronger lights (faster)
 user bool   rsb_marks              = true;
 user float  rsb_mark_life          = 1.0;
 user bool   rsb_ricochets          = true;
