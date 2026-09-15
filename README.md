@@ -17,7 +17,10 @@ lumps turns into:
 - flamethrowers: a licking drawn-line core, flame that slides along what it hits,
   scorch and black smoke
 - looks for plasma, rockets, the BFG, the railgun and the chainsaw
-- two server rules: gameplay recoil for the guns that use it, and whether our rounds also leave vanilla decals
+- enemy fire: monsters' hitscans fly as real rounds with our tracers, cracks and hits, or stay instant and are
+  dressed in our looks; far fights draw lighter
+- three server rules: gameplay recoil for the guns that use it, whether our rounds also leave vanilla decals, and
+  enemy hitscans as rounds
 
 The same system covers everything from no effects at all to EXTREME, in VR. The
 effects level (off, plain, normal, heavy, extreme) scales counts, lights, sizes,

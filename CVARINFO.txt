@@ -70,6 +70,10 @@ user bool   rsb_flame_tube         = true;      // the drawn-line core of a flam
 // player in a netgame (the owner: "gameplay recoil but as a toggle ... for purists").
 server bool sv_rsb_recoil          = true;      // a gun's kick turns where its rounds go
 server bool sv_rsb_decals          = false;     // our rounds leave vanilla decals too (off: the wall damage is the mark)
+server bool sv_rsb_enemy_rounds    = true;      // monsters' hitscans fly as RS_Ballistics rounds (enemyfire.zs)
+server float sv_rsb_enemy_round_speed = 80.0;   // map units a tic
+user bool   rsb_enemy_dress        = true;      // with the rounds off: instant enemy shots get our tracer light, crack and hits
+user float  rsb_enemy_fx_range     = 2048.0;    // past half: no lights or bent air; past it: no flight or hit looks
 user float  rsb_recoil_view        = 1.0;       // the per-shot jolt the arm and the prop show (looks only)
 
 // ---- preview and diagnostics

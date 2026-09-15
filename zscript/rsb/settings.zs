@@ -136,6 +136,35 @@ class RSB_Settings play
 	static bool FlashBlastKick() { return Cvb("rsb_flash_blastkick", true); }
 	static bool FlashShockwave() { return Cvb("rsb_flash_shockwave", true); }
 
+	// ENEMY FIRE (enemyfire.zs): the rounds and their speed are the server's rules; the dressing and the distance are yours.
+	static bool EnemyRounds()
+	{
+		let c = CVar.FindCVar("sv_rsb_enemy_rounds");
+		return c ? c.GetBool() : true;
+	}
+
+	static double EnemyRoundSpeed()
+	{
+		let c = CVar.FindCVar("sv_rsb_enemy_round_speed");
+		return c ? clamp(c.GetFloat(), 8.0, 1000.0) : 80.0;
+	}
+
+	static bool EnemyDress() { return Cvb("rsb_enemy_dress", true); }
+	static double EnemyFxRange() { return max(0.0, Cvf("rsb_enemy_fx_range", 2048.0)); }
+
+	// How far a monster's shot is from this machine's view: 0 near, 1 past half the range (no light or bent air),
+	// 2 past the range (no flight or impact looks). A range of 0 draws every fight in full.
+	static int EnemyBand(Vector3 at)
+	{
+		double range = EnemyFxRange();
+		if (range <= 0) return 0;
+		let cam = players[consoleplayer].camera;
+		if (!cam) return 0;
+		double d = (at - cam.pos).Length();
+		if (d > range) return 2;
+		return (d > range * 0.5) ? 1 : 0;
+	}
+
 	// ---- rounds in flight ------------------------------------------------------
 	static bool Glide() { return Cvb("rsb_glide", true); }
 

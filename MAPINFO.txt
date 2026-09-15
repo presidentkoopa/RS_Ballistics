@@ -3,5 +3,5 @@
 // RSB_Preview answers the menu's preview rows (netevents) on each map.
 gameinfo
 {
-    AddEventHandlers = "RSB_Registry", "RSB_Preview"
+    AddEventHandlers = "RSB_Registry", "RSB_Preview", "RSB_EnemyFire"
 }

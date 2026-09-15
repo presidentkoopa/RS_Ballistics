@@ -4921,6 +4921,64 @@ impact kick_puff.liquid
   sound  = none
 end
 
+# ---------------------------------------------------------------- ENEMY FIRE (owner 2026-09-15; enemyfire.zs)
+# A monster's shot as one of our rounds: the live speed is the server's Enemy round speed, the damage the monster's
+# own rolled shot. Every round a tracer you can read coming, cracking past your head.
+
+ballistics enemy_bullet    # a monster's bullet (speed: sv_rsb_enemy_round_speed at launch; damage: the monster's shot)
+  speed  = 80
+  radius = 1.5
+  damage = 3, 5
+end
+
+roundlook enemy_round      # a zombieman's round, or any mod's: a short hot tracer that lights what it passes and cracks past your head
+  look       = sprite, RSBT
+  glide      = yes
+  wake       = tracer_hot
+  impact     = pistol_9mm
+  whiz       = 96, rsb/crack/near
+  light      = 40, 1.0
+  lightcolor = 255, 176, 96
+  lightlook  = streak
+  carve      = 5, 0.6
+end
+
+roundlook enemy_pellet     # a shotgunner's pellet: a fainter vapour line, no light (three at a time)
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = pellet_vapour
+  impact = buckshot
+  whiz   = 72, rsb/whiz
+  carve  = 4, 0.4
+end
+
+roundlook enemy_heavy      # a chaingunner's or the Spider's: a heavier burning tail and a brighter light
+  look       = sprite, RSBT
+  glide      = yes
+  wake       = tracer_hot_heavy
+  impact     = chaingun_556
+  whiz       = 110, rsb/crack/near
+  light      = 56, 1.3
+  lightcolor = 255, 170, 90
+  lightlook  = streak
+  carve      = 6, 0.7
+end
+
+round enemy_bullet
+  ballistics = enemy_bullet
+  roundlook  = enemy_round
+end
+
+round enemy_pellet
+  ballistics = enemy_bullet
+  roundlook  = enemy_pellet
+end
+
+round enemy_heavy
+  ballistics = enemy_bullet
+  roundlook  = enemy_heavy
+end
+
 # ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
 # Every Vanilla gun at the top effects level: each keeps its own character and does MORE of it,
 # on top of the level's ladder. Material variants each get their own (a material outranks a tier).

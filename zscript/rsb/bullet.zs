@@ -62,6 +62,7 @@ class RSB_Bullet : FastProjectile
 	int    shooterNum;      // player number of the shooter, -1 if none
 	int    damageMin, damageMax;
 	int    roundIndex;      // this hand's round number (1, 2, 3 ...), for tracers; 0 = not counted
+	bool   enemy;           // a monster's shot (enemyfire.zs): its looks follow the distance bands
 
 	private Vector3 travel; // last direction of flight; Vel is zeroed before Death
 	private bool    announced;
@@ -80,6 +81,7 @@ class RSB_Bullet : FastProjectile
 	transient RSB_RoundLookDef lookDef;
 	transient RSB_RoundLookDef flightDef;
 	transient int              flightSprite;
+	transient int              lookBand;     // a monster's round: 0 near, 1 mid (no light or bent air), 2 far (no flight or impact looks)
 
 	States
 	{
@@ -119,6 +121,32 @@ class RSB_Bullet : FastProjectile
 		return b;
 	}
 
+	// A MONSTER'S SHOT AS A ROUND (enemyfire.zs): the shooter fires an RSB_EnemyBullet from where its hitscan would
+	// have started, along the hitscan's aim, at `speed` map units a tic, dealing the shot's own rolled damage.
+	// Playsim, alike on every machine: the engine's event numbers and a server cvar.
+	static RSB_Bullet LaunchFrom(Actor shooter, String whichRound, double spawnHeight, double sideOffset,
+		double aimAngle, double aimPitch, int damage, Name damageType, double speed)
+	{
+		if (!shooter) return null;
+		let b = RSB_Bullet(shooter.A_SpawnProjectile("RSB_EnemyBullet", spawnHeight, sideOffset, aimAngle - shooter.angle,
+			CMF_AIMDIRECTION, aimPitch));
+		if (!b) return null;
+		b.roundId = whichRound;
+		b.hand = 0;
+		b.shooterNum = -1;
+		b.enemy = true;
+		b.roundIndex = 0;
+		b.damageMin = max(1, damage);
+		b.damageMax = b.damageMin;
+		b.DamageType = damageType;
+		double spd = clamp(speed, 1.0, 1000.0);
+		if (b.Vel.Length() > 0.000001) b.Vel = b.Vel.Unit() * spd;
+		b.Speed = spd;
+		let bl = b.Ballistics();
+		if (bl && bl.radius != b.radius) b.A_SetSize(bl.radius, bl.radius);
+		return b;
+	}
+
 	// Not "Round": ZScript names are case-insensitive, and round() is built in.
 	RSB_RoundDef RoundProfile()
 	{
@@ -147,6 +175,7 @@ class RSB_Bullet : FastProjectile
 	{
 		if (looksResolved) return;
 		looksResolved = true;
+		lookBand = enemy ? RSB_Settings.EnemyBand(pos) : 0;
 		flightSprite = -1;
 		let r = RoundProfile();
 		let reg = RSB_Registry.Get();
@@ -184,7 +213,7 @@ class RSB_Bullet : FastProjectile
 
 		// A LIGHT IN FLIGHT (the look's `light`): a burning tracer lights what it passes -- an engine effect
 		// light flying with the round (`lightlook` streak, comet or head), or a point light riding it (attached).
-		if (flightDef.lightRadius > 0 && flightDef.lightIntensity > 0 && RSB_Tier.Current() > RSB_Tier.T_OFF)
+		if (flightDef.lightRadius > 0 && flightDef.lightIntensity > 0 && RSB_Tier.Current() > RSB_Tier.T_OFF && lookBand == 0)
 		{
 			if (flightDef.lightLook != RSB_RoundLookDef.LIGHTLOOK_ATTACHED)
 				FlightEffectLight(flightDef);
@@ -267,7 +296,9 @@ class RSB_Bullet : FastProjectile
 		int dealt;
 		if (damageMin > 0)
 		{
-			dealt = random[RSBBullet](damageMin, max(damageMin, damageMax));
+			// The shooter's damage as given: a range rolls once; a single value takes no roll (enemy fire hands over
+			// the monster's already-rolled shot, so no machine makes a random call the hitscan would not have).
+			dealt = (damageMax > damageMin) ? random[RSBBullet](damageMin, damageMax) : damageMin;
 		}
 		else
 		{
@@ -283,11 +314,13 @@ class RSB_Bullet : FastProjectile
 		ResolveLooks();
 		LayAirHeat();   // the air it tore through shimmers, whatever it hit
 		if (BlockingMobj != null) return;   // an actor bleeds; its own mod decides how
+		if (lookBand >= 2) return;           // a far fight: no impact looks
 		if (lookDef) RSB_Impact.Land(self, lookDef.impact, travel);
 	}
 
 	private void LayWake(Vector3 before)
 	{
+		if (lookBand >= 2) return;
 		if (flightDef) RSB_Wake.Lay(flightDef.wake, before, pos, travel);
 		// CARVING THE ROOM'S SMOKE (engine 13b, the look's `carve`): a tunnel along this tic's flight.
 		if (flightDef && flightDef.carveAmount > 0 && flightDef.carveRadius > 0)
@@ -301,6 +334,7 @@ class RSB_Bullet : FastProjectile
 	private void LayAirHeat()
 	{
 		if (!flightDef || flightDef.heatStrength <= 0 || flightDef.heatRadius <= 0 || !launchKnown) return;
+		if (lookBand >= 1) return;
 		if (RSB_Tier.Current() <= RSB_Tier.T_OFF) return;
 		Vector3 path = pos - launchedAt;
 		double len = path.Length();
@@ -336,5 +370,17 @@ class RSB_Bullet : FastProjectile
 
 		whizzed = true;
 		A_StartSound(lookDef.whizSound, CHAN_AUTO, CHANF_OVERLAP, vol);
+	}
+}
+
+// A MONSTER'S ROUND (enemyfire.zs): an RSB_Bullet that does not pass through players -- RSB_Bullet's
+// +THRUSPECIES with Species "Player" is how a player's rounds spare other players, and a monster's must not.
+class RSB_EnemyBullet : RSB_Bullet
+{
+	Default
+	{
+		-THRUSPECIES
+		Species "RSB_EnemyBullet";
+		+ABSDAMAGE          // no engine dice on the missile's damage: DoSpecialDamage gives the monster's rolled shot
 	}
 }
