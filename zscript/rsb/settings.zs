@@ -165,6 +165,39 @@ class RSB_Settings play
 		return (d > range * 0.5) ? 1 : 0;
 	}
 
+	// ---- what this machine can see (Engine docs/EFFECTS_OPTIMIZATION_PLAN.md, M1 and M2) ------------------------
+	// NETPLAY: viewer-based skipping and LOD may only choose look-only, client-side spawns (SpawnClientSide actors,
+	// particles, effect lights, volumes). Anything a playsim actor does (rounds, puffs, damage, sounds other machines
+	// rely on) must stay identical everywhere, whatever the local camera sees.
+	const VIEW_FULL   = 0;            // in view, or near: everything
+	const VIEW_FAR    = 1;            // past the lighter-effects range: fewer pieces, no maybe bursts, small lights skipped
+	const VIEW_BEHIND = 2;            // behind this machine's view and not near: no short-lived pieces, small lights, marks
+	const VIEW_NEAR   = 128.0;        // closer than this (flat) is always in full: your own muzzle, a wall beside you
+	const VIEW_BEHIND_COS = -0.342;   // more than 110 degrees off where the view faces (a headset sees about 100 across)
+	const VIEW_BIG_LIGHT  = 150.0;    // a light this wide or wider still reaches what you face: never skipped
+	const LOD_COUNT       = 0.5;      // past the range, every burst's count times this
+
+	static bool ViewCull() { return Cvb("rsb_view_cull", true); }
+	static double LodRange() { return max(0.0, Cvf("rsb_lod_range", 1536.0)); }
+
+	// Where `at` is for THIS machine's view: its camera (in VR the head's turn drives the view angle). Behind wins
+	// over far. With both switches off, always VIEW_FULL.
+	static int ViewBand(Vector3 at)
+	{
+		let cam = players[consoleplayer].camera;
+		if (!cam) return VIEW_FULL;
+		Vector3 off = at - cam.pos;
+		double flat = off.xy.Length();
+		if (flat > VIEW_NEAR && ViewCull())
+		{
+			Vector2 look = (cos(cam.angle), sin(cam.angle));
+			if ((off.xy / flat) dot look < VIEW_BEHIND_COS) return VIEW_BEHIND;
+		}
+		double range = LodRange();
+		if (range > 0 && off.Length() > range) return VIEW_FAR;
+		return VIEW_FULL;
+	}
+
 	// ---- rounds in flight ------------------------------------------------------
 	static bool Glide() { return Cvb("rsb_glide", true); }
 

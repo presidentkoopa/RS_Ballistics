@@ -111,6 +111,14 @@ class RSB_Burst play
 			|| id.IndexOf("flash_sparks") == 0 || id.IndexOf("flash_powder") == 0 || id.IndexOf("flash_embers") == 0;
 	}
 
+	// A BURST WHOSE PIECES STAY (3D chunks and debris that rest, collide and patter): kept whatever this machine sees
+	// (M1), so turning round shows the rubble, and its landing sounds play.
+	static bool Stays(RSB_BurstDef b)
+	{
+		if (!b) return false;
+		return b.particle.IndexOf("rsb_chunk_") == 0 || b.particle.IndexOf("rsb_debris_") == 0;
+	}
+
 	// One emission whose speed and life the caller decides (a flame's stream: the
 	// fuel's speed, and the time to where it lands). Everything else is the burst's.
 	// The plane and floor are the caller's (FloorBelow gives the floor); a zero
@@ -181,6 +189,14 @@ class RSB_Wake play
 {
 	static void Lay(String wakeId, Vector3 before, Vector3 after, Vector3 travel)
 	{
+		// WHAT THIS MACHINE CAN SEE (M1, M2; looks only): no wake this tic when both ends are behind the view; past the
+		// range, every other tic.
+		int seen = RSB_Settings.ViewBand(after);
+		if (seen == RSB_Settings.VIEW_BEHIND)
+		{
+			if (RSB_Settings.ViewBand(before) == RSB_Settings.VIEW_BEHIND) return;
+		}
+		else if (seen == RSB_Settings.VIEW_FAR && (level.maptime % 2) == 1) return;
 		if (wakeId.Length() == 0 || wakeId ~== "none") return;
 		int tier = RSB_Tier.Current();
 		if (tier <= RSB_Tier.T_OFF) return;
@@ -322,11 +338,17 @@ class RSB_Impact play
 
 		if (tier <= RSB_Tier.T_OFF || !RSB_Settings.Impacts()) return;
 
+		// WHAT THIS MACHINE CAN SEE (M1, M2; RSB_Settings.ViewBand, looks only): behind the view, the short-lived pieces,
+		// small lights, marks and bent air are not spawned; past the range, fewer pieces and no maybe or glance bursts.
+		// Sounds, the hotspot, lasting damage, pieces that stay, volumes, the room smoke and blast shoves are kept.
+		int seen = RSB_Settings.ViewBand(surf.at);
+
 		// The level scales the counts -- a profile written for a level too (what it adds is on
 		// top of the level's own ladder). The player's sliders and style scale on top.
 		double countScale = RSB_Tier.CountScale(tier);
 		countScale *= RSB_Settings.ImpactParticles();
 		countScale *= im.countScale;   // the profile's `scale`: how hard this class of round bites
+		if (seen == RSB_Settings.VIEW_FAR) countScale *= RSB_Settings.LOD_COUNT;
 		double glowScale = RSB_Settings.ImpactGlow();
 		int posSeed = RSB_Hash.OfPos(surf.at);
 
@@ -347,6 +369,7 @@ class RSB_Impact play
 		for (int i = 0; i < im.bursts.Size(); i++)
 		{
 			let bd = reg.FindBurst(im.bursts[i]);
+			if (seen == RSB_Settings.VIEW_BEHIND && !RSB_Burst.Stays(bd)) continue;
 			bool sp = RSB_Burst.IsSpark(bd);
 			RSB_Burst.Fire(bd, surf.at, surf.normal, travel, countScale, glowScale, RSB_Hash.Seed(hitTic, i + 1, posSeed), surf,
 				sp ? sizeScale * hSize : sizeScale, 1.0, sp ? hSpread : 1.0, sp ? hSpeed : 1.0, 1.0, sp ? HIT_SPARK_LEAN : 0.0, hitLeanSeed);
@@ -355,11 +378,12 @@ class RSB_Impact play
 		{
 			if (RSB_Hash.Frac(hitTic, 511 + i * 2, posSeed) >= im.maybeChance[i]) continue;
 			let bd = reg.FindBurst(im.maybeBursts[i]);
+			if (seen != RSB_Settings.VIEW_FULL && !RSB_Burst.Stays(bd)) continue;
 			bool sp = RSB_Burst.IsSpark(bd);
 			RSB_Burst.Fire(bd, surf.at, surf.normal, travel, countScale, glowScale, RSB_Hash.Seed(hitTic, 41 + i, posSeed), surf,
 				sp ? sizeScale * hSize : sizeScale, 1.0, sp ? hSpread : 1.0, sp ? hSpeed : 1.0, 1.0, sp ? HIT_SPARK_LEAN : 0.0, hitLeanSeed);
 		}
-		if (glancing && !(im.glanceBurst ~== "none"))
+		if (glancing && seen == RSB_Settings.VIEW_FULL && !(im.glanceBurst ~== "none"))
 		{
 			let bd = reg.FindBurst(im.glanceBurst);
 			bool sp = RSB_Burst.IsSpark(bd);
@@ -367,7 +391,7 @@ class RSB_Impact play
 				sp ? sizeScale * hSize : sizeScale, 1.0, sp ? hSpread : 1.0, sp ? hSpeed : 1.0, 1.0, sp ? HIT_SPARK_LEAN : 0.0, hitLeanSeed);
 		}
 
-		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks())
+		if (im.markShape >= 0 && !surf.air && RSB_Settings.Marks() && seen != RSB_Settings.VIEW_BEHIND)
 		{
 			int life = int(im.markLife * RSB_Settings.MarkLife() + 0.5);
 			if (life > 0)
@@ -386,7 +410,7 @@ class RSB_Impact play
 		// EMISSIVE VOLUMES (engine #15, `volume`): a blast as glowing gas where it lands, in the world.
 		if (im.volumeNames.Size() > 0) SpawnVolumes(im, surf.at + surf.normal * 8.0, surf.normal, tier, hitTic, posSeed);
 
-		if (im.lightRadius > 0 && RSB_Settings.ImpactLights())
+		if (im.lightRadius > 0 && RSB_Settings.ImpactLights() && (seen == RSB_Settings.VIEW_FULL || im.lightRadius >= RSB_Settings.VIEW_BIG_LIGHT))
 		{
 			double strength = im.lightIntensity * RSB_Settings.ImpactLight() * lightWobble;
 			if (strength > 0)
@@ -404,7 +428,7 @@ class RSB_Impact play
 			level.PushEffectImpulse(surf.at, im.pushRadius, im.pushStrength * RSB_Tier.PushScale(tier));
 
 		// HEAT SHIMMER where it lands (RSB_Heat): a ball of hot air that fades on its own.
-		if (im.heatStrength > 0)
+		if (im.heatStrength > 0 && seen != RSB_Settings.VIEW_BEHIND)
 			RSB_Heat.Blast(surf.at + surf.normal * (im.heatRadius * 0.4), im.heatRadius, im.heatStrength, im.heatTics);
 	}
 }

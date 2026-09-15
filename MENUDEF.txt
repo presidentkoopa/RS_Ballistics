@@ -424,6 +424,12 @@ OptionMenu "RSB_QualityMenu"
 	StaticText "The performance log times the drawing, not the scripts. In a big fight, this", "DarkGray"
 	StaticText "times every script class for one tic and writes it to the log (doomxr-log.txt).", "DarkGray"
 	Command "Profile scripts for one tic (in a fight)", "profilethinkers -t 25"
+	StaticText ""
+	StaticText "WHAT YOU CANNOT SEE", "Gold"
+	StaticText "Effects behind you skip their short-lived sparks, dust and small lights; sounds,", "DarkGray"
+	StaticText "wall damage, rubble and smoke stay. Far away, hits and flashes draw lighter.", "DarkGray"
+	Option "Skip effects behind you", "rsb_view_cull", "OnOff"
+	Slider "Lighter effects past (map units, 0 = never)", "rsb_lod_range", 0, 4096, 256, 0
 }
 
 OptionMenu "RSB_PreviewMenu"

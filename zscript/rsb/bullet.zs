@@ -336,6 +336,7 @@ class RSB_Bullet : FastProjectile
 		if (!flightDef || flightDef.heatStrength <= 0 || flightDef.heatRadius <= 0 || !launchKnown) return;
 		if (lookBand >= 1) return;
 		if (RSB_Tier.Current() <= RSB_Tier.T_OFF) return;
+		if (RSB_Settings.ViewBand(pos) != RSB_Settings.VIEW_FULL) return;   // M1, M2: bent air no one here can see (looks only)
 		Vector3 path = pos - launchedAt;
 		double len = path.Length();
 		if (len < 1.0) return;

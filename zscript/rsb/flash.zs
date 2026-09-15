@@ -166,6 +166,11 @@ class RSB_Flash : Actor
 
 		if (tier <= RSB_Tier.T_OFF) return;
 
+		// WHAT THIS MACHINE CAN SEE (M1, M2; looks only): someone's flash behind the view throws no sparks, puffs or bent
+		// air; past the range, fewer and no maybe bursts. The strobe, volumes, room smoke, shove, powder burns and blast
+		// kick are kept. Your own muzzle is always near, so always in full.
+		int seen = RSB_Settings.ViewBand(pos);
+
 		punchMul = RSB_Settings.FlashLight() * vLight;
 		rangeMul = RSB_Settings.FlashSize() * (0.75 + 0.25 * vLight);
 		densityMul = RSB_Settings.FlashConeDensity() * vCone;
@@ -182,7 +187,8 @@ class RSB_Flash : Actor
 		if (fd.sizeCvar.Length() > 0) sizeMul = max(0.05, RSB_Settings.Cvf(fd.sizeCvar, 1.0));
 
 		double countScale = RSB_Tier.CountScale(tier);   // a profile written for a level is scaled by it too
-		if (reg)
+		if (seen == RSB_Settings.VIEW_FAR) countScale *= RSB_Settings.LOD_COUNT;
+		if (reg && seen != RSB_Settings.VIEW_BEHIND)
 		{
 			double sparkScale = countScale * RSB_Settings.FlashSparks() * vSparks;
 			// EACH SHOT ITS OWN SPRAY (`sparkvary`, owner 09-14: "the sparks need more randomization per
@@ -201,6 +207,7 @@ class RSB_Flash : Actor
 			// Bursts only some shots throw: powder specks, a wider spray.
 			for (int i = 0; i < fd.maybeBursts.Size(); i++)
 			{
+				if (seen != RSB_Settings.VIEW_FULL) break;
 				if (RSB_Hash.Frac(shotTic, 421 + i * 2, posSeed) >= fd.maybeChance[i]) continue;
 				ShotBurst(reg.FindBurst(fd.maybeBursts[i]), fd, sparkScale, RSB_Hash.Seed(shotTic, 61 + i, posSeed), sizeMul,
 					RSB_Hash.Wobble(fd.sparkMix, shotTic, 481 + i * 2, posSeed), leanSeed, sSpread, sSpeed, sSize, sGlow, sLife);
@@ -208,10 +215,10 @@ class RSB_Flash : Actor
 		}
 
 		// HEAT SHIMMER out of the muzzle (RSB_Heat): a column of hot air along the shot.
-		if (fd.heatStrength > 0)
+		if (fd.heatStrength > 0 && seen != RSB_Settings.VIEW_BEHIND)
 			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength * surge, fd.heatTics);
 		// THE BACKBLAST'S HOT AIR (`backheat`): a column out of the rear of the tube, behind.
-		if (fd.backHeatStrength > 0)
+		if (fd.backHeatStrength > 0 && seen != RSB_Settings.VIEW_BEHIND)
 			RSB_Heat.Along(pos - dir * (fd.backHeatOffset * sizeMul), -dir, fd.backHeatLength * sizeMul, fd.backHeatRadius, fd.backHeatStrength * surge, fd.backHeatTics);
 
 		// THE GROUND KICK (`groundkick`): a big gun's blast raises the floor under and just
@@ -264,6 +271,7 @@ class RSB_Flash : Actor
 			level.PushEffectImpulse(pos + dir * (fd.pushAlong * sizeMul), fd.pushRadius, fd.pushStrength * surge * RSB_Tier.PushScale(tier));
 
 		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() * vSmoke + 0.5);
+		if (seen == RSB_Settings.VIEW_BEHIND) puffs = 0;
 		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
 		// definition: puffs drifting out of the bore, rising and hanging. The handle
 		// is a hash of the name, the same everywhere, so it is cached, never tested.
