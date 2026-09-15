@@ -9,6 +9,8 @@
 //   netevent rsb_bench_flame2      two incinerator streams into what is ahead
 //   netevent rsb_bench_impacts60   60 impacts a second over the wall and floor ahead
 //   netevent rsb_bench_smoke200    about 200 GPU smoke puffs (rsb_smoke_gun) alive, two flashing lights
+//   netevent rsb_bench_flashes     about 8 muzzle flashes a second at fixed points ahead (#20 flash shadows)
+//   netevent rsb_bench_bfg         a Heavy BFG blast and its 40-ray spray every two seconds (the worst light load)
 //
 // Each has a Command row on the Preview page. Stand about 256 units from a wall,
 // facing it, and keep still. START and END print with the tic, to find the
@@ -41,6 +43,13 @@ class RSB_Bench : Actor
 	const KIND_FLAME2    = 1;
 	const KIND_IMPACTS60 = 2;
 	const KIND_SMOKE200  = 3;
+	const KIND_FLASHES   = 4;
+	const KIND_BFG       = 5;
+
+	const FLASH_EVERY = 9;     // tics: two flashes each time, about 8 a second
+	const FLASH_SLOT  = 12;    // cone slots 12..15, one a point: clear of the hands (0, 1) and the preview (9)
+	const BFG_EVERY   = 70;    // a Heavy BFG's blast and spray every two seconds
+	const BFG_RAYS    = 40;    // Doom's A_BFGSpray count
 
 	int kind;
 	int playerNum;
@@ -62,6 +71,8 @@ class RSB_Bench : Actor
 		if (k == KIND_FLAME2) return "flame2";
 		if (k == KIND_IMPACTS60) return "impacts60";
 		if (k == KIND_SMOKE200) return "smoke200";
+		if (k == KIND_FLASHES) return "flashes";
+		if (k == KIND_BFG) return "bfg";
 		return "?";
 	}
 
@@ -72,6 +83,8 @@ class RSB_Bench : Actor
 		if (e.Name ~== "rsb_bench_flame2") which = KIND_FLAME2;
 		else if (e.Name ~== "rsb_bench_impacts60") which = KIND_IMPACTS60;
 		else if (e.Name ~== "rsb_bench_smoke200") which = KIND_SMOKE200;
+		else if (e.Name ~== "rsb_bench_flashes") which = KIND_FLASHES;
+		else if (e.Name ~== "rsb_bench_bfg") which = KIND_BFG;
 		if (which == 0) return false;
 		if (e.Player < 0 || e.Player >= MAXPLAYERS || !playeringame[e.Player]) return true;
 		let pmo = players[e.Player].mo;
@@ -132,6 +145,8 @@ class RSB_Bench : Actor
 		if (kind == KIND_FLAME2) Flames(pmo);
 		else if (kind == KIND_IMPACTS60) Impacts(pmo);
 		else if (kind == KIND_SMOKE200) Smoke();
+		else if (kind == KIND_FLASHES) Flashes();
+		else if (kind == KIND_BFG) Bfg(pmo);
 		Super.Tick();
 	}
 
@@ -163,6 +178,54 @@ class RSB_Bench : Actor
 			if (!surf || surf.sky) continue;
 			let spot = Actor.Spawn("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
 			if (spot) RSB_Impact.LandOn(spot, surf, "bullet", dir);
+		}
+	}
+
+	// THE FLASH LOAD (#20): every FLASH_EVERY tics two muzzle flashes -- the pistol's and the Super
+	// Shotgun's by turns -- at two of four fixed points 128 units apart, 64 units above the floor where
+	// the bench started, 256 units ahead, aimed away. About 8 flashes a second with real lights, for
+	// the shadow map's cost (perflog: shadowmap, scene.opaque + scene.translucent, load dlights).
+	private void Flashes()
+	{
+		if ((age % FLASH_EVERY) != 1) return;
+		Vector3 right = (sin(yaw), -cos(yaw), 0);
+		Vector3 fwd = Aim(0.0, 0.0);
+		int pass = age / FLASH_EVERY;
+		for (int i = 0; i < 2; i++)
+		{
+			int point = (pass % 2) + i * 2;   // points 0 and 2, then 1 and 3
+			Vector3 at = pos + (0, 0, 64) + fwd * 256.0 + right * (-192.0 + 128.0 * point);
+			String which = (((pass + i) % 2) == 0) ? "pistol" : "shotgun_ssg";
+			RSB_Flash.Fire(which, at, fwd, FLASH_SLOT + point, (0, 0, 0));
+		}
+	}
+
+	// A HEAVY BFG'S LIGHTS (#20 and #21's reference load): every BFG_EVERY tics the Heavy BFG's blast
+	// where the middle of the view lands, then BFG_RAYS hashed rays over the 90 degrees ahead -- each a
+	// ray trail and a strike, as RSB_BFGExtraHeavy lays them.
+	private void Bfg(Actor pmo)
+	{
+		if ((age % BFG_EVERY) != 1) return;
+		int burst = age / BFG_EVERY;
+		for (int i = -1; i < BFG_RAYS; i++)
+		{
+			Vector3 dir = (i < 0) ? Aim(0.0, 5.0)
+				: Aim(-45.0 + 90.0 * (i + RSB_Hash.Frac(burst, i, 61)) / BFG_RAYS, RSB_Hash.Between(-5.0, 20.0, burst, i, 67));
+			FLineTraceData d;
+			if (!pmo.LineTrace(VectorAngle(dir.x, dir.y), 4096.0, -asin(clamp(dir.z, -1.0, 1.0)),
+				TRF_ABSPOSITION | TRF_THRUACTORS, eye.z, eye.x, eye.y, d))
+				continue;
+			let surf = RSB_Materials.FromTrace(d, dir);
+			if (!surf || surf.sky) continue;
+			let spot = Actor.Spawn("RSB_SoundSpot", surf.at, ALLOW_REPLACE);
+			if (!spot) continue;
+			if (i < 0)
+			{
+				RSB_Impact.LandOn(spot, surf, "bfg_heavy", dir);
+				continue;
+			}
+			RSB_Impact.LandOn(spot, surf, "bfg_spray_heavy", dir);
+			RSB_Trail.Lay("bfg_ray_heavy", pmo, eye, surf.at);
 		}
 	}
 

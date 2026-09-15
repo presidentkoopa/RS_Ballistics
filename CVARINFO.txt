@@ -65,6 +65,7 @@ user bool   rsb_flame_tube         = true;      // the drawn-line core of a flam
 // ---- recoil (recoil.zs). THE ONE GAMEPLAY CVAR: a server setting, the same rule for every
 // player in a netgame (the owner: "gameplay recoil but as a toggle ... for purists").
 server bool sv_rsb_recoil          = true;      // a gun's kick turns where its rounds go
+server bool sv_rsb_decals          = false;     // our rounds leave vanilla decals too (off: the wall damage is the mark)
 user float  rsb_recoil_view        = 1.0;       // the per-shot jolt the arm and the prop show (looks only)
 
 // ---- preview and diagnostics

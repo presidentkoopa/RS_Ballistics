@@ -50,6 +50,13 @@ class RSB_Bullet : FastProjectile
 		Decal "BulletChip";
 	}
 
+	// DECALS: a server rule (RSB_Decals) -- off, this round's lasting mark is the wall damage alone.
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		RSB_Decals.Apply(self);
+	}
+
 	String roundId;
 	int    hand;            // 0 main, 1 off -- for the log
 	int    shooterNum;      // player number of the shooter, -1 if none

@@ -339,6 +339,9 @@ OptionMenu "RSB_DamageMenu"
 	Slider "Damage hole depth", "r_damage_depth_scale", 0, 2, 0.1, 1
 	Slider "Damage heat", "r_damage_heat_scale", 0, 2, 0.1, 1
 	StaticText ""
+	StaticText "Vanilla decals from our rounds, on top of the damage: one rule the server sets.", "DarkGray"
+	Option "Decals too (server: every player)", "sv_rsb_decals", "OnOff"
+	StaticText ""
 	StaticText "Glowing marks: the brief glow where hot and energy hits land.", "DarkGray"
 	Option "Glowing marks", "rsb_marks", "OnOff"
 	Slider "How long marks glow", "rsb_mark_life", 0.1, 5.0, 0.1, 1
@@ -357,6 +360,8 @@ OptionMenu "RSB_QualityMenu"
 	Command "Two flame streams", "netevent rsb_bench_flame2"
 	Command "60 impacts a second", "netevent rsb_bench_impacts60"
 	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
+	Command "Bench: flashes (8 muzzle flashes a second)", "netevent rsb_bench_flashes"
+	Command "Bench: BFG lights (a Heavy BFG spray every 2 seconds)", "netevent rsb_bench_bfg"
 }
 
 OptionMenu "RSB_PreviewMenu"
@@ -386,6 +391,8 @@ OptionMenu "RSB_PreviewMenu"
 	Command "Two flame streams", "netevent rsb_bench_flame2"
 	Command "60 impacts a second", "netevent rsb_bench_impacts60"
 	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
+	Command "Bench: flashes (8 muzzle flashes a second)", "netevent rsb_bench_flashes"
+	Command "Bench: BFG lights (a Heavy BFG spray every 2 seconds)", "netevent rsb_bench_bfg"
 }
 
 OptionMenu "RSB_DiagnosticsMenu"

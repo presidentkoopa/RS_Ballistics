@@ -127,6 +127,13 @@ class RSB_PlasmaBall : PlasmaBall
 		SeeSound "";
 	}
 
+	// DECALS: a server rule (RSB_Decals) -- off, this round's lasting mark is the wall damage alone.
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		RSB_Decals.Apply(self);
+	}
+
 	private Vector3 travel;
 	private bool    landed;      // follows the playsim's own death: the same everywhere
 	transient bool             looked;
@@ -167,6 +174,13 @@ class RSB_Rocket : Rocket
 	{
 		+PRECACHEALWAYS    // loaded with the map, not on its first use: no stutter (engine precache)
 		SeeSound "";
+	}
+
+	// DECALS: a server rule (RSB_Decals) -- off, this round's lasting mark is the wall damage alone.
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		RSB_Decals.Apply(self);
 	}
 
 	const SPIN = 14;   // degrees a tic about its length: the model (MODELDEF, USEACTORROLL) spins as it flies
@@ -237,6 +251,13 @@ class RSB_BFGBall : BFGBall
 	Default
 	{
 		+PRECACHEALWAYS
+	}
+
+	// DECALS: a server rule (RSB_Decals) -- off, this round's lasting mark is the wall damage alone.
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+		RSB_Decals.Apply(self);
 	}
 
 	private Vector3 travel;

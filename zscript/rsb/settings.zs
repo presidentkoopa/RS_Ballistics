@@ -196,3 +196,23 @@ class RSB_Settings play
 	static String PreviewFlash()  { return Cvs("rsb_preview_flash", "pistol"); }
 	static String PreviewEjecta() { return Cvs("rsb_preview_ejecta", "brass_45"); }
 }
+
+// ============================================================================
+// DECALS ON OUR ROUNDS: a server rule, one for the whole game (sv_rsb_decals, off by default).
+// Off, a round's lasting mark is the wall damage (engine #17); on, the vanilla decals come too.
+// DECALS ARE PLAYSIM THINKERS, so this never follows a player's own r_damage (netplay).
+// ============================================================================
+class RSB_Decals play
+{
+	static bool Enabled()
+	{
+		let c = CVar.FindCVar("sv_rsb_decals");
+		return c ? c.GetBool() : false;
+	}
+
+	// At spawn (BeginPlay), before anything can leave a decal.
+	static void Apply(Actor mo)
+	{
+		if (mo && !Enabled()) mo.DecalGenerator = null;
+	}
+}
