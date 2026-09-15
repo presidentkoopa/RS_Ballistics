@@ -118,6 +118,7 @@ OptionMenu "RSB_Options"
 	StaticText "THE DIAL", "Gold"
 	Option "Effects level", "rsb_tier", "RSBTiers"
 	Option "Smoke", "r_smoke_preset", "RSBSmokeTiers"
+	Option "Smoke blending (smoother smoke for less work)", "r_smoke_temporal", "OnOff"
 	Option "Style", "rsb_style", "RSBStyles"
 	StaticText ""
 	StaticText "EFFECTS", "Gold"
@@ -354,6 +355,7 @@ OptionMenu "RSB_SmokeMenu"
 {
 	Title "SMOKE"
 	Option "Smoke", "r_smoke_preset", "RSBSmokeTiers"
+	Option "Smoke blending (smoother smoke for less work)", "r_smoke_temporal", "OnOff"
 	StaticText "The Smoke dial sets every smoke our guns make, and how the engine draws it -- the", "DarkGray"
 	StaticText "moment it moves. Lower is faster; the rows below fine-tune after it.", "DarkGray"
 	StaticText ""
@@ -364,7 +366,7 @@ OptionMenu "RSB_SmokeMenu"
 	StaticText "Lit by flashes, lamps and tracers. Rockets and flames leave black soot.", "DarkGray"
 	Option "Smoke volume", "r_smoke", "OnOff"
 	Slider "Smoke quality (1 = 59 MB, 2 = 157 MB, 3 = 328 MB, 4 = 472 MB)", "r_smoke_quality", 1, 4, 1, 0
-	Slider "Smoke detail (48 recommended)", "r_smoke_steps", 16, 128, 8, 0
+	Slider "Smoke detail (steps: the Smoke dial sets it, Heavy = 24)", "r_smoke_steps", 16, 128, 8, 0
 	Slider "Smoke thickness", "r_smoke_density_scale", 0.0, 3.0, 0.05, 2
 	Slider "Smoke lingering", "r_smoke_dissipation_scale", 0.25, 3.0, 0.05, 2
 	StaticText ""
@@ -463,9 +465,12 @@ OptionMenu "RSB_QualityMenu"
 	StaticText ""
 	Option "Effects level", "rsb_tier", "RSBTiers"
 	Option "Smoke", "r_smoke_preset", "RSBSmokeTiers"
+	Option "Smoke blending (smoother smoke for less work)", "r_smoke_temporal", "OnOff"
 	Option "Particle atlas size", "r_gpuparticles_atlas_size", "RSBAtlasSizes"
 	StaticText ""
 	Slider "Performance log (seconds, 0 = off)", "r_perflog", 0, 30, 1, 0
+	Option "Smoke lights only where smoke can change (A/B check)", "r_smoke_light_cull", "OnOff"
+	Option "Particles: draw only the live ones (A/B check)", "r_gpuparticles_window", "OnOff"
 	Command "Two flame streams", "netevent rsb_bench_flame2"
 	Command "60 impacts a second", "netevent rsb_bench_impacts60"
 	Command "200 smoke puffs, two flashing lights", "netevent rsb_bench_smoke200"
