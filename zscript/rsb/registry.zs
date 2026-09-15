@@ -217,6 +217,7 @@ class RSB_Registry : StaticEventHandler
 			let d = defs.defs[i];
 			RSB_Log.Err(String.Format("%s line %d: %s %s REFUSED -- %s", d.source, d.lineNo, d.kind, d.id, why));
 			defs.defs.Delete(i);
+			defs.Changed();   // the index and cache must forget it (defs.zs, M3)
 			n++;
 		}
 
@@ -256,6 +257,7 @@ class RSB_Registry : StaticEventHandler
 			let d = defs.defs[i];
 			RSB_Log.Err(String.Format("%s line %d: %s %s REFUSED -- %s", d.source, d.lineNo, d.kind, d.id, why));
 			defs.defs.Delete(i);
+			defs.Changed();   // the index and cache must forget it (defs.zs, M3)
 			n++;
 		}
 
@@ -278,6 +280,7 @@ class RSB_Registry : StaticEventHandler
 			if (why == "") continue;
 			RSB_Log.Err(String.Format("%s line %d: round %s REFUSED -- %s", r.source, r.lineNo, r.id, why));
 			defs.defs.Delete(i);
+			defs.Changed();   // the index and cache must forget it (defs.zs, M3)
 			n++;
 		}
 		return n;

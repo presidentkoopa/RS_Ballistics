@@ -586,11 +586,53 @@ class RSB_DefSet
 {
 	Array<RSB_Def> defs;
 
+	// SPEED (Engine docs/EFFECTS_OPTIMIZATION_PLAN.md, M3). Every hit, flash, wake, casing and burst asks Find or
+	// Resolve, and each Find scanned every profile (about 680) comparing names; a hit asked up to six Resolves' worth
+	// plus one Find per burst. Now: an INDEX by kind and id, and a CACHE of what each request resolved to (misses
+	// included), both keyed lower-case so they match `~==` as the scan did. Anything that changes the set -- Put, or
+	// deleting from `defs` directly (the registry's completeness pass) -- calls Changed, so nothing stale is found.
+	// Looks only: the same profiles resolve as before, on every machine.
+	private Map<String, Object> index;      // "kind:id" -> RSB_Def
+	private Map<String, Object> resolved;   // "kind|base|material|tier|style" -> RSB_Def or null
+	private bool indexed;
+
+	void Changed()
+	{
+		indexed = false;
+		index.Clear();
+		resolved.Clear();
+	}
+
+	private void BuildIndex()
+	{
+		index.Clear();
+		for (int i = 0; i < defs.Size(); i++)
+		{
+			String key = defs[i].kind .. ":" .. defs[i].id;
+			key = key.MakeLower();
+			if (!index.CheckKey(key)) index.Insert(key, defs[i]);
+		}
+		indexed = true;
+	}
+
 	RSB_Def Find(String kind, String id)
 	{
-		for (int i = 0; i < defs.Size(); i++)
-			if (defs[i].kind ~== kind && defs[i].id ~== id) return defs[i];
-		return null;
+		if (!indexed) BuildIndex();
+		String key = kind .. ":" .. id;
+		key = key.MakeLower();
+		if (!index.CheckKey(key)) return null;
+		return RSB_Def(index.Get(key));
+	}
+
+	// The most specific variant that exists (ResolveUncached), remembered per request.
+	RSB_Def Resolve(String kind, String base, String material, String tierName, String styleName = "")
+	{
+		String key = kind .. "|" .. base .. "|" .. material .. "|" .. tierName .. "|" .. styleName;
+		key = key.MakeLower();
+		if (resolved.CheckKey(key)) return RSB_Def(resolved.Get(key));
+		RSB_Def d = ResolveUncached(kind, base, material, tierName, styleName);
+		resolved.Insert(key, d);
+		return d;
 	}
 
 	// The most specific variant that exists. Material outranks style; tier is the
@@ -599,7 +641,7 @@ class RSB_DefSet
 	//   base.material@tier,       base.material,
 	//   base~style@tier,          base~style,
 	//   base@tier,                base
-	RSB_Def Resolve(String kind, String base, String material, String tierName, String styleName = "")
+	private RSB_Def ResolveUncached(String kind, String base, String material, String tierName, String styleName)
 	{
 		RSB_Def d;
 		bool hasMat = material.Length() > 0;
@@ -648,6 +690,7 @@ class RSB_DefSet
 	// True when it replaced an earlier profile of the same kind and id.
 	bool Put(RSB_Def d)
 	{
+		Changed();
 		for (int i = 0; i < defs.Size(); i++)
 		{
 			if (defs[i].kind ~== d.kind && defs[i].id ~== d.id)
