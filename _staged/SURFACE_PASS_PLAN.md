@@ -82,7 +82,43 @@ PARTICLEDEFS definitions as the metal shard's (collide level, restitution, restl
 | `rsb/debris/tile` | ART SOURCE footstep/tilea/tile2_step1-4 (0.42 s, -34), Doomguy Footsteps DSTILE01-06 (0.16 s, -23.6) |
 | `rsb/debris/marble` | ART SOURCE footstep/tileb/marble_step1-8 (0.70 s, -31) |
 
-## 5. The queue when the owner resumes
+## 5. THE AGENDA -- close of day 2026-09-15 (owner: "close up shop"), in order
+
+Installed and pushed today: b9772ee. It covers the #15 volumes (df0c301; they ride the hand since the reload lane's
+04:54 install), the surface pass, and optimization plan items M1, M2, M3 and M5 (the spark-light cap is a setting,
+default every spark), plus the script-profiling row.
+
+1. **The owner's perf log.**
+   - The run: a max-effects firefight, twice. First with "Skip effects behind you" off and "Lighter effects past" 0,
+     then with both on. The six benches if there is time.
+   - Fold the numbers into `Engine docs/EFFECTS_OPTIMIZATION_PLAN.md` and send the build lane the headline figures.
+   - With the numbers, the build lane asks the owner whether "Spark lights" should default to capped.
+2. **The compressed particle atlas books.** The engine step is built (cf3dba0d6f).
+   - Read its hand-off notes.
+   - Regenerate the RBVS smoke and RBVF fireball books with `tools/gen_flipbooks.py --out <scratch>`. The 512 run in
+     the old scratchpad may be gone.
+   - Pack them as the notes say and name them in PARTICLEDEFS. Check, install, push.
+3. **Blast ripple content.** The owner answered; the engine step is next session (`Engine docs/BLAST_RIPPLE_PLAN.md`).
+   - The muzzle `shockwave` becomes one SpawnShockwave call.
+   - Explosions get a `ripple` key (rocket, RPG, BFG, plasma).
+   - Until the step lands, the shockwave stays as it is.
+4. **Flash blindness and ringing ears.** Engine build 4, next session.
+   - Call `ExposureImpulse` / `HearingImpulse` from RSB_Flash for the big guns and from blast impacts, once the keys
+     arrive.
+   - Default OFF, as the engine plan says.
+5. **#15 volumes, tuning only.** The wiring is done. Sizes, brightness and lengths come from the owner's headset look.
+6. **Surface pass, headset review.** The tile floors, the electric zaps' length (1.2-1.4 s) and the pipe hiss level.
+7. **Slow-mo.** Refresh `SLOWMO_PLAN.md` for everything added since 09-12; this lane then builds the RS_SlowMo mod
+   (owner: after the major ballistics work).
+
+**Parked by the owner:**
+- Extreme variants for the remaining profiles ("no more extremes for now")
+- shot-out lights (a glow lanes meetup)
+- gore and liquids
+- whiz loops
+- the gun condition system
+
+## 5a. The earlier queue (kept for history; superseded by section 5)
 
 1. **#15 emissive volumes -- DONE, installed df0c301 (2026-09-15).**
    - VOLUMEDEFS holds 28 looks (8 gun, 14 biggun, 6 blast) on every Vanilla and Vanilla+ flash and on rocket, RPG,
