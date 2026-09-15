@@ -289,7 +289,9 @@ class RSB_Flash : Actor
 			if (puffs > 0)
 			{
 				if (fd.smokeHandle == 0) fd.smokeHandle = level.ParticleDefinition(fd.smokeParticle);
-				level.SpawnParticles(fd.smokeHandle, pos + dir * 1.0, dir, puffs * 2, 30.0, 14.0, 0.6,
+				// SMOKE COST (owner 2026-09-15: "that smoke shit lags like hell"): one puff per counted puff, not two, and
+				// born 6 units out of the bore -- big soft lit quads an arm's length from the eyes are the costliest pixels.
+				level.SpawnParticles(fd.smokeHandle, pos + dir * 6.0, dir, puffs, 30.0, 14.0, 0.6,
 					1.8, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(shotTic, 77, posSeed));
 			}
 			puffs = 0;   // no sprite puffs as well
