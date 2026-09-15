@@ -1034,6 +1034,29 @@ class RSB_Parser
 			im.pushStrength = v[1].ToDouble();
 			return (im.pushRadius >= 0) ? "" : "push radius must be 0 or more";
 		}
+		if (key == "exposure")
+		{
+			why = NumsBetween(v, 2, 6); if (why != "") return why;
+			if (v.Size() == 4 || v.Size() == 5) return "exposure is strength, reach[, recovery[, r, g, b]]";
+			im.exposureStrength = v[0].ToDouble();
+			im.exposureReach = v[1].ToDouble();
+			im.exposureRecovery = (v.Size() >= 3) ? v[2].ToDouble() : 1.0;
+			im.exposureTint = Color(255, 255, 255, 255);
+			if (v.Size() == 6) im.exposureTint = Color(255, clamp(v[3].ToInt(), 0, 255), clamp(v[4].ToInt(), 0, 255), clamp(v[5].ToInt(), 0, 255));
+			return (im.exposureStrength >= 0 && im.exposureStrength <= 16 && im.exposureReach >= 16 && im.exposureReach <= 8192
+				&& im.exposureRecovery >= 0.25 && im.exposureRecovery <= 4) ? ""
+				: "exposure is strength 0..16, reach 16..8192[, recovery 0.25..4[, r, g, b]]";
+		}
+		if (key == "hearing")
+		{
+			why = NumsBetween(v, 2, 3); if (why != "") return why;
+			im.hearingStrength = v[0].ToDouble();
+			im.hearingReach = v[1].ToDouble();
+			im.hearingRecovery = (v.Size() == 3) ? v[2].ToDouble() : 1.0;
+			return (im.hearingStrength >= 0 && im.hearingStrength <= 16 && im.hearingReach >= 16 && im.hearingReach <= 8192
+				&& im.hearingRecovery >= 0.25 && im.hearingRecovery <= 4) ? ""
+				: "hearing is strength 0..16, reach 16..8192[, recovery 0.25..4]";
+		}
 		if (key == "volume")
 		{
 			im.volumeNames.Clear();
@@ -1379,6 +1402,29 @@ class RSB_Parser
 			f.exhaustBlip = v[0];
 			f.exhaustBlipRise = v[1].ToDouble();
 			return (f.exhaustBlipRise > 0 && f.exhaustBlipRise <= 1) ? "" : "exhaustblip rise must be above 0 and at most 1";
+		}
+		if (key == "exposure")
+		{
+			why = NumsBetween(v, 2, 6); if (why != "") return why;
+			if (v.Size() == 4 || v.Size() == 5) return "exposure is strength, reach[, recovery[, r, g, b]]";
+			f.exposureStrength = v[0].ToDouble();
+			f.exposureReach = v[1].ToDouble();
+			f.exposureRecovery = (v.Size() >= 3) ? v[2].ToDouble() : 1.0;
+			f.exposureTint = Color(255, 255, 255, 255);
+			if (v.Size() == 6) f.exposureTint = Color(255, clamp(v[3].ToInt(), 0, 255), clamp(v[4].ToInt(), 0, 255), clamp(v[5].ToInt(), 0, 255));
+			return (f.exposureStrength >= 0 && f.exposureStrength <= 16 && f.exposureReach >= 16 && f.exposureReach <= 8192
+				&& f.exposureRecovery >= 0.25 && f.exposureRecovery <= 4) ? ""
+				: "exposure is strength 0..16, reach 16..8192[, recovery 0.25..4[, r, g, b]]";
+		}
+		if (key == "hearing")
+		{
+			why = NumsBetween(v, 2, 3); if (why != "") return why;
+			f.hearingStrength = v[0].ToDouble();
+			f.hearingReach = v[1].ToDouble();
+			f.hearingRecovery = (v.Size() == 3) ? v[2].ToDouble() : 1.0;
+			return (f.hearingStrength >= 0 && f.hearingStrength <= 16 && f.hearingReach >= 16 && f.hearingReach <= 8192
+				&& f.hearingRecovery >= 0.25 && f.hearingRecovery <= 4) ? ""
+				: "hearing is strength 0..16, reach 16..8192[, recovery 0.25..4]";
 		}
 		if (key == "volume")
 		{

@@ -122,6 +122,7 @@ OptionMenu "RSB_Options"
 	Submenu "Smoke", "RSB_SmokeMenu"
 	Submenu "Debris", "RSB_DebrisMenu"
 	Submenu "Wall damage", "RSB_DamageMenu"
+	Submenu "Flash blindness and ringing ears", "RSB_SensesMenu"
 	StaticText ""
 	StaticText "GAMEPLAY", "Gold"
 	Submenu "Recoil", "RSB_RecoilMenu"
@@ -411,6 +412,33 @@ OptionMenu "RSB_DamageMenu"
 	StaticText "Glowing marks: the brief glow where hot and energy hits land.", "DarkGray"
 	Option "Glowing marks", "rsb_marks", "OnOff"
 	Slider "How long marks glow", "rsb_mark_life", 0.1, 5.0, 0.1, 1
+}
+
+OptionMenu "RSB_SensesMenu"
+{
+	Title "FLASH BLINDNESS AND RINGING EARS"
+	StaticText "Big flashes and close blasts wash out your view and muffle the world for a moment.", "DarkGray"
+	StaticText "Both are off until you turn them on. Our guns and blasts say how strong; your machine", "DarkGray"
+	StaticText "decides how much reaches you: distance, facing, walls, darkness, how small the room is.", "DarkGray"
+	StaticText ""
+	StaticText "FLASH BLINDNESS", "Gold"
+	Option "Flash blindness", "r_exposureimpulse", "OnOff"
+	Option "Look", "r_exposureimpulse_look", "ExposureImpulseLooks"
+	Option "Comfort (slower, softer)", "r_exposureimpulse_comfort", "OnOff"
+	Slider "Strength", "r_exposureimpulse_strength", 0, 2, 0.1, 1
+	Slider "Limit", "r_exposureimpulse_cap", 0.1, 0.6, 0.05, 2
+	Slider "Recovery (x the look's own)", "r_exposureimpulse_recovery_scale", 0.5, 2, 0.25, 2
+	Option "Lasers stay crisp while flashed", "r_exposureimpulse_holdbeams", "OnOff"
+	Slider "Test (flashes a second)", "r_exposureimpulse_test", 0, 4, 1, 0
+	StaticText ""
+	StaticText "RINGING EARS", "Gold"
+	Option "Ringing ears", "snd_hearingimpulse", "OnOff"
+	Option "Muffle", "snd_hearingimpulse_muffle", "HearingImpulseMuffles"
+	Option "Ear ring", "snd_hearingimpulse_ring", "HearingImpulseRings"
+	Slider "Strength", "snd_hearingimpulse_strength", 0, 2, 0.1, 1
+	Slider "Recovery (x the muffle's own)", "snd_hearingimpulse_recovery_scale", 0.5, 2, 0.25, 2
+	Option "Enable EFX (the real muffle needs it)", "snd_efx", "OnOff"
+	Option "Test (a blast every 2.5 s)", "snd_hearingimpulse_test", "OnOff"
 }
 
 OptionMenu "RSB_QualityMenu"

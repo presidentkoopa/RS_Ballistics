@@ -208,6 +208,15 @@ class RSB_ImpactDef : RSB_Def
 	double glanceDamageHeat;
 	double glanceDamageWet;
 	int    glanceDamageAlong;
+	// SENSORY IMPULSES (engine build 4; `exposure`, `hearing`): flash blindness -- strength 0..16, reach 16..8192, recovery
+	// 0.25..4, tint -- and ringing ears -- strength, reach, recovery. 0 strength = none. Presentation only.
+	double exposureStrength;
+	double exposureReach;
+	double exposureRecovery;
+	Color  exposureTint;
+	double hearingStrength;
+	double hearingReach;
+	double hearingRecovery;
 	// EMISSIVE VOLUMES (engine #15, `volume`): VOLUMEDEFS definitions spawned where it lands (a blast's fireball).
 	Array<String> volumeNames;
 	Array<int>    volumeHandles;
@@ -355,6 +364,15 @@ class RSB_FlashDef : RSB_Def
 	// tube's rear at the backheat offset -- and `vary volume`. Where one draws, the flame card and the cone stand down.
 	Array<String> volumeNames;
 	Array<int>    volumeBack;
+	// SENSORY IMPULSES (engine build 4; `exposure`, `hearing`): flash blindness -- strength 0..16, reach 16..8192, recovery
+	// 0.25..4, tint -- and ringing ears -- strength, reach, recovery. 0 strength = none. Presentation only.
+	double exposureStrength;
+	double exposureReach;
+	double exposureRecovery;
+	Color  exposureTint;
+	double hearingStrength;
+	double hearingReach;
+	double hearingRecovery;
 	Array<int>    volumeHandles;   // EmissiveVolumeDefinition handles (a hash of the name, alike everywhere), filled on first use
 	double        varyVolume;
 	double exhaustShimmerRadius;

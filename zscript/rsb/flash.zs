@@ -164,6 +164,15 @@ class RSB_Flash : Actor
 			}
 		}
 
+		// SENSORY IMPULSES (engine build 4; `hearing`, `exposure`): ringing ears and flash blindness. Every machine calls
+		// them alike; the engine weighs each against its own listener and camera (distance, facing, walls, darkness, room)
+		// and both are off until the player turns them on. Ringing ears at every effects level -- the dial turns the visuals
+		// down, not the fight; flash blindness goes with the visuals. The shot's surge makes both a little stronger.
+		if (fd.hearingStrength > 0)
+			level.HearingImpulse(pos, fd.hearingStrength * surge, fd.hearingReach, fd.hearingRecovery);
+		if (fd.exposureStrength > 0 && tier > RSB_Tier.T_OFF)
+			level.ExposureImpulse(pos + dir * 4.0, fd.exposureStrength * surge, fd.exposureReach, fd.exposureRecovery, fd.exposureTint);
+
 		if (tier <= RSB_Tier.T_OFF) return;
 
 		// WHAT THIS MACHINE CAN SEE (M1, M2; looks only): someone's flash behind the view throws no sparks, puffs or bent

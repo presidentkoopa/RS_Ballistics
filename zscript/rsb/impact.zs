@@ -370,6 +370,11 @@ class RSB_Impact play
 		// Fed at every effects level, so its sound plays even with the visuals off.
 		if (im.hotspot.Length() > 0) RSB_Hotspot.Feed(im.hotspot, surf);
 
+		// RINGING EARS (engine build 4, `hearing`) at every effects level, like the sound: every machine calls it alike and
+		// the engine weighs it against its own listener and how enclosed the space is. Off until the player turns it on.
+		if (im.hearingStrength > 0)
+			level.HearingImpulse(surf.at + surf.normal * 8.0, im.hearingStrength, im.hearingReach, im.hearingRecovery);
+
 		if (tier <= RSB_Tier.T_OFF || !RSB_Settings.Impacts()) return;
 
 		// WHAT THIS MACHINE CAN SEE (M1, M2; RSB_Settings.ViewBand, looks only): behind the view, the short-lived pieces,
@@ -458,6 +463,10 @@ class RSB_Impact play
 		// Both follow the effects level (RSB_Tier: heavy x1, extreme up).
 		if (im.smokeVolAmount > 0)
 			level.EmitSmoke(surf.at + surf.normal * (im.smokeVolRadius * 0.5), im.smokeVolRadius, im.smokeVolAmount * RSB_Tier.SmokeScale(tier), im.smokeVolHeat, surf.normal * 20.0, (0, 0, 0), im.smokeVolSoot);
+		// FLASH BLINDNESS (engine build 4, `exposure`): the blast's light, weighed by each machine against its own camera
+		// (distance, facing, walls, darkness). Not thinned by the view band: the engine does its own facing.
+		if (im.exposureStrength > 0)
+			level.ExposureImpulse(surf.at + surf.normal * 16.0, im.exposureStrength, im.exposureReach, im.exposureRecovery, im.exposureTint);
 		if (im.pushRadius > 0 && im.pushStrength > 0)
 			level.PushEffectImpulse(surf.at, im.pushRadius, im.pushStrength * RSB_Tier.PushScale(tier));
 
