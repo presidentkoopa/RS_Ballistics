@@ -123,10 +123,14 @@ class RSB_Settings play
 		return max(0.0, Cvf("rsb_flash_sparks", 1.0) * (st ? st.particlesMul : 1.0));
 	}
 
-	// THE SMOKE DIAL (Ballistics & Effects -> Smoke; the owner, 2026-09-15): 0 off .. 4 extreme, beside the effects
-	// level. Every smoke amount and smoke burst follows it (RSB_Tier.SmokeScale), and RSB_Registry sets the engine's
-	// smoke drawing from it. Looks only, each player's own.
-	static int SmokeLevel() { return clamp(int(Cvf("rsb_smoke_tier", 3.0)), RSB_Tier.T_OFF, RSB_Tier.T_EXTREME); }
+	// THE SMOKE DIAL (Ballistics & Effects -> Smoke; the owner, 2026-09-15): the engine's r_smoke_preset, 0 off .. 4 extreme,
+	// renderer-read -- it sets the engine's smoke drawing the instant it moves. Every RS_Ballistics smoke amount and smoke
+	// burst follows it too (RSB_Tier.SmokeScale). Looks only, this machine's.
+	static int SmokeLevel()
+	{
+		let c = CVar.FindCVar("r_smoke_preset");
+		return c ? clamp(c.GetInt(), RSB_Tier.T_OFF, RSB_Tier.T_EXTREME) : RSB_Tier.T_HEAVY;
+	}
 
 	static double FlashSmoke()
 	{

@@ -17,7 +17,6 @@
 // ---- the dial
 user int    rsb_tier               = 3;       // 0 off, 1 plain, 2 normal, 3 heavy (recommended), 4 extreme
 user string rsb_style              = "";      // "" default, or a style profile's name
-user int    rsb_smoke_tier         = 3;       // Smoke: 0 off, 1 plain, 2 normal, 3 heavy (recommended), 4 extreme -- our smoke and the engine's smoke drawing
 
 // ---- impacts
 user bool   rsb_impacts            = true;
