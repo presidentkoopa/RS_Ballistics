@@ -351,6 +351,16 @@ class RSB_Fires : Thinker
 
 	clearscope bool AnyFire() const { return hotSec.Size() > 0; }
 
+	// ENUMERATING WHAT IS BURNING. A falling value has to be polled several times a second to be
+	// followed smoothly, and asking every sector on a 3000-sector map at that rate is not a thing
+	// anyone should ship. Only burning sectors are kept, so this hands out that short list directly.
+	//
+	// THE INDEX IS ONLY GOOD FOR THE PASS YOU READ THE COUNT IN. Entries are removed as fires die and
+	// the last one is swapped down into the hole, so position `i` is not the same room next tic. Read
+	// the count and walk it in one go; never remember an `i` across ticks.
+	clearscope int HotCount() const { return hotSec.Size(); }
+	clearscope int HotSector(int i) const { return (i >= 0 && i < hotSec.Size()) ? hotSec[i] : -1; }
+
 	clearscope double FireShare(Sector sec) const
 	{
 		if (!sec) return 0;
@@ -441,6 +451,20 @@ class RSB_FixtureService : Service
 		{
 			let f = RSB_Fires.Existing();
 			return (f && f.AnyFire()) ? 1.0 : 0.0;
+		}
+
+		// "firecount" / "firesector" -- the short list of rooms actually alight, so a reader can follow a
+		// falling value at whatever rate the effect needs without scanning the map. Read the count and
+		// walk it in ONE pass: an entry that dies is replaced by the last one, so `i` is not stable.
+		if (request ~== "firecount")
+		{
+			let f = RSB_Fires.Existing();
+			return f ? double(f.HotCount()) : 0.0;
+		}
+		if (request ~== "firesector")
+		{
+			let f = RSB_Fires.Existing();
+			return f ? double(f.HotSector(intArg)) : -1.0;
 		}
 
 		// "fireshare", intArg = a SECTOR INDEX. 0..1, how brightly this room is burning RIGHT NOW.
