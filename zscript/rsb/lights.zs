@@ -226,8 +226,16 @@ class RSB_Lights : Thinker
 		int set = RSB_Settings.LightFloor();
 		if (darknessState == 1) return set;      // asked already: nothing to correct for
 
+		// ServiceIterator.Find MATCHES ON SUBSTRING, by its own documentation -- "services with names
+		// that match serviceName or have it as a part of their names". So a third mod shipping
+		// RSD_DarknessServiceExtra would be handed to this Find and could arrive first, and we would
+		// silently be asking the wrong thing how dark the room is. Take the first EXACT match only.
+		Service s = null;
 		let it = ServiceIterator.Find("RSD_DarknessService");
-		Service s = it.Next();
+		for (Service cand = it.Next(); cand; cand = it.Next())
+		{
+			if (cand.GetClassName() == 'RSD_DarknessService') { s = cand; break; }
+		}
 		if (!s)
 		{
 			darknessState = 1;       // no darkness mod in the load order: the raw number is the truth
