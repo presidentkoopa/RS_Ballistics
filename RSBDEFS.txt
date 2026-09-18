@@ -6926,6 +6926,102 @@ impact c4   # C4: a heavy charge -- the RPG's blast, bigger: a wider fireball, a
 end
 # ---------------------------------------------------------------- END BREACH
 
+# ---------------------------------------------------------------- THE GRENADE
+# THE WORLD REACTING to a thrown grenade (RS_VR_Weapons, RSVG_Warhead calls RSB_Impact.Land with
+# "frag"). THE EXPLOSION ITSELF IS NOT OURS: RSVG_Blast brings the flames, the smoke, the embers
+# and the shrapnel, and the owner picked that look on purpose -- so nothing here spawns fire, a
+# smoke column or a fireball volume. What it brings is what the room does about it: a crater and a
+# scorch where it went off, the surface own debris thrown out of it, a dust ring rolling across the
+# floor, a blast light (a sprite explosion lights nothing), the shove, the air bent over the heat,
+# and the roll coming back off the walls. The bang is ours as well (owner, 2026-09-18: "yes, and
+# let it use our blast sound too") -- a frag-sized blast, so the warhead plays none of its own.
+# Sized between a rocket and a pistol hit: a grenade cracks and throws grit, it does not level a room.
+impact frag
+  heat        = 54, 1.3, 26
+  bursts      = chips_concrete, slabs_concrete, rubble_concrete, dust_concrete, dust_kick_ring, spark_spray
+  mark        = sunburst, 34, 150
+  markcolor   = 255, 130, 60
+  light       = 360, 3.6, 9
+  lightcolor  = 255, 175, 110
+  sound       = rsb/blast/med
+  tail        = rsb/blast/roll, 0.9
+  push        = 300, 760
+  damage      = crater, 26, 0.6, 0.9, 0
+  exposure    = 2.5, 416
+  hearing     = 2.2, 384
+end
+
+impact frag.metal   # metal: the plate rings, sparks off it, torn shards, a shallower dish
+  heat        = 54, 1.3, 26
+  bursts      = spark_metal, shards_metal, spark_spray, dust_kick_ring
+  mark        = sunburst, 34, 150
+  markcolor   = 255, 130, 60
+  light       = 360, 3.6, 9
+  lightcolor  = 255, 175, 110
+  sound       = rsb/blast/med
+  tail        = rsb/blast/roll, 0.9
+  push        = 300, 760
+  damage      = crater, 20, 0.35, 0.8, 0.6
+  exposure    = 2.5, 416
+  hearing     = 2.2, 384
+end
+
+impact frag.wood   # wood: splinters and planks, dust off the grain, a deeper bite
+  heat        = 54, 1.3, 26
+  bursts      = splinter_wood, planks_wood, dust_wood, dust_kick_ring_wood, spark_spray
+  mark        = sunburst, 34, 150
+  markcolor   = 255, 130, 60
+  light       = 360, 3.6, 9
+  lightcolor  = 255, 175, 110
+  sound       = rsb/blast/med
+  tail        = rsb/blast/roll, 0.9
+  push        = 300, 760
+  damage      = crater, 24, 0.55, 1, 0
+  exposure    = 2.5, 416
+  hearing     = 2.2, 384
+end
+
+impact frag.dirt   # dirt: clods thrown, a rolling cloud, the deepest hole and the dullest sound
+  heat        = 54, 1.3, 26
+  bursts      = clods_dirt, dust_dirt, dust_kick_ring_dirt, spark_spray
+  mark        = sunburst, 34, 150
+  markcolor   = 255, 130, 60
+  light       = 360, 3.6, 9
+  lightcolor  = 255, 175, 110
+  sound       = rsb/blast/med
+  tail        = rsb/blast/roll, 0.9
+  push        = 300, 760
+  damage      = crater, 28, 0.7, 0.6, 0
+  exposure    = 2.5, 416
+  hearing     = 2.2, 384
+end
+
+impact frag.glass   # glass: it goes through -- a glittering spray and a crack, no crater
+  heat        = 54, 1.3, 26
+  bursts      = glint_glass, spark_spray, dust_kick_ring
+  mark        = sunburst, 34, 150
+  markcolor   = 255, 130, 60
+  light       = 360, 3.6, 9
+  lightcolor  = 255, 175, 110
+  sound       = rsb/blast/med
+  tail        = rsb/blast/roll, 0.9
+  push        = 300, 760
+  damage      = crack, 30, 0.4, 0.3, 0
+  exposure    = 2.5, 416
+  hearing     = 2.2, 384
+end
+
+impact frag.liquid   # water: a column thrown up, nothing left behind, the bang gone flat
+  bursts      = splash_liquid
+  light       = 300, 3.0, 8
+  lightcolor  = 255, 175, 110
+  sound       = rsb/blast/med
+  tail        = rsb/blast/roll, 0.7
+  push        = 300, 760
+  exposure    = 2.2, 384
+  hearing     = 2.0, 352
+end
+
 # ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
 # Every Vanilla gun at the top effects level: each keeps its own character and does MORE of it,
 # on top of the level's ladder. Material variants each get their own (a material outranks a tier).
