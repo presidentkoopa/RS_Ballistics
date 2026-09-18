@@ -12,7 +12,10 @@
 // and the room's lights reach them. Only hot things (fire, sparks) and Doom's energy
 // weapons glow.
 //
-// SPRITES: sprites/ -- RSSK (smoke), and from tools/import_fx.py (ASSETS.md):
+// SPRITES: sprites/ -- the smoke books (tools/import_smoke_books.py): RSSK 17 frames, the roll;
+//   RSSG 23, a darker puff for the sooty ones; RSSW 8, the thread hot brass trails. A definition's
+//   frame count x its fps is the book's duration, and the ramps are tuned against it, so raising
+//   one without the other cuts the dissipation off. And from tools/import_fx.py (ASSETS.md):
 //   RSDS dust roll, RSFB fireball, RSFK flame lick, RSSO soot puff, RSSP spark
 //   spray, RSEC electric arc (copied from RS_Main's combat effects, owner-cleared);
 //   RSCH chips, RSSL splinters, RSCL clods, RSGS glass shards (generated).
@@ -123,7 +126,7 @@ particle rsb_smoke_flame
 	drag     = 0.9
 	maxsize  = 64
 	soft     = 16
-	texture  = "RSSKA0", 6, 8, loop
+	texture  = "RSSKA0", 17, 23, loop
 	orient   = billboard
 	spin     = -20, 20
 	collide  = plane
@@ -220,7 +223,7 @@ particle rsb_smoke_gun
 	drag     = 1.6
 	maxsize  = 40
 	soft     = 12
-	texture  = "RSSKA0", 6, 10, once
+	texture  = "RSSKA0", 17, 28, once
 	orient   = billboard
 	spin     = -30, 30
 }
@@ -283,7 +286,7 @@ particle rsb_smoke_soot_gun
 	drag     = 2.2
 	maxsize  = 48
 	soft     = 8
-	texture  = "RSSKA0", 6, 4, once
+	texture  = "RSSGA0", 23, 15, once
 	orient   = billboard
 	spin     = -30, 30
 }
@@ -300,7 +303,7 @@ particle rsb_smoke_barrel_soot
 	drag     = 1.6
 	maxsize  = 9
 	soft     = 2
-	texture  = "RSSKA0", 6, 5, once
+	texture  = "RSSGA0", 23, 19, once
 	orient   = billboard
 	spin     = -50, 50
 }
@@ -562,7 +565,7 @@ particle rsb_smoke_rocket
 	drag     = 2.5
 	maxsize  = 36
 	soft     = 6
-	texture  = "RSSKA0", 6, 3, once
+	texture  = "RSSKA0", 17, 9, once
 	orient   = billboard
 	spin     = -30, 30
 }
@@ -581,7 +584,7 @@ particle rsb_smoke_port
 	drag     = 3.5
 	maxsize  = 14
 	soft     = 3
-	texture  = "RSSKA0", 6, 8, once
+	texture  = "RSSKA0", 17, 23, once
 	orient   = billboard
 	spin     = -40, 40
 }
@@ -597,6 +600,7 @@ particle rsb_casing_wisp
 	drag     = 4
 	maxsize  = 4
 	soft     = 1
+	texture  = "RSSWA0", 8, 10, once
 	orient   = billboard
 }
 
@@ -613,7 +617,7 @@ particle rsb_smoke_exhaust
 	drag     = 3
 	maxsize  = 14
 	soft     = 3
-	texture  = "RSSKA0", 6, 8, once
+	texture  = "RSSKA0", 17, 23, once
 	orient   = billboard
 	spin     = -40, 40
 }
@@ -630,7 +634,7 @@ particle rsb_smoke_exhaust_blip
 	drag     = 2.8
 	maxsize  = 20
 	soft     = 4
-	texture  = "RSSKA0", 6, 6, once
+	texture  = "RSSKA0", 17, 17, once
 	orient   = billboard
 	spin     = -50, 50
 }
@@ -646,7 +650,7 @@ particle rsb_smoke_barrel
 	drag     = 1.6
 	maxsize  = 8
 	soft     = 2
-	texture  = "RSSKA0", 6, 5, once
+	texture  = "RSSKA0", 17, 14, once
 	orient   = billboard
 	spin     = -50, 50
 }

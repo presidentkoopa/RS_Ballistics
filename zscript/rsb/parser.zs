@@ -241,6 +241,8 @@ class RSB_Parser
 			d.markLife = 0;
 			d.markColor = white;
 			d.soundName = "none";
+			d.tailSound = "";
+			d.tailVolume = 1.0;
 			d.lightRadius = 0;
 			d.lightIntensity = 1;
 			d.lightTics = 3;
@@ -934,6 +936,26 @@ class RSB_Parser
 			if (v.Size() != 1) return "sound is one SNDINFO name, or none";
 			im.soundName = v[0];
 			return "";
+		}
+
+		// THE ROOM ANSWERING A BLAST: the roll that comes back off the walls after the crack. Its files
+		// carry their own head silence (rsb/blast/roll), so nothing here has to time it.
+		if (key == "tail")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				im.tailSound = "";
+				return "";
+			}
+			if (v.Size() < 1 || v.Size() > 2) return "tail is a sound group (rsb/blast/roll), volume -- or none";
+			im.tailSound = v[0];
+			im.tailVolume = 1.0;
+			if (v.Size() == 2)
+			{
+				if (!IsNum(v[1])) return "tail volume must be a number";
+				im.tailVolume = v[1].ToDouble();
+			}
+			return (im.tailVolume >= 0 && im.tailVolume <= 1) ? "" : "tail volume must be 0..1";
 		}
 		if (key == "light")
 		{

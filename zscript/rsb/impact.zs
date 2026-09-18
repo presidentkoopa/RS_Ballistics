@@ -370,6 +370,17 @@ class RSB_Impact play
 		if (vol > 0 && !(im.soundName ~== "none"))
 			soundAt.A_StartSound(im.soundName, CHAN_AUTO, CHANF_OVERLAP, vol);
 
+		// THE ROOM ANSWERING A BLAST (`tail`): the roll off the walls, on its own channel so the crack
+		// keeps ringing under it. The delay is in the files (rsb/blast/roll carries 180 ms of silence),
+		// so this needs no timer and no per-listener work: the crack attenuates faster than the rumble,
+		// which is what makes a far blast read as far.
+		if (vol > 0 && im.tailSound.Length() > 0)
+		{
+			double tailVol = vol * im.tailVolume * RSB_Settings.TailVolume();
+			if (tailVol > 0)
+				soundAt.A_StartSound(im.tailSound, CHAN_AUTO, CHANF_OVERLAP, min(tailVol, 1.0));
+		}
+
 		bool glancing = false;
 		if (im.glanceDeg > 0 && travel != (0, 0, 0) && RSB_Settings.Ricochets())
 			glancing = abs(travel dot surf.normal) < sin(im.glanceDeg);

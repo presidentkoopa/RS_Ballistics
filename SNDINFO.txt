@@ -555,3 +555,47 @@ $limit rsb/impact/pipe6 2
 $random rsb/impact/pipe { rsb/impact/pipe1 rsb/impact/pipe2 rsb/impact/pipe3 rsb/impact/pipe4 rsb/impact/pipe5 rsb/impact/pipe6 }
 
 // ---- END surface pass sounds
+
+// ---- BEGIN blast sounds (tools/import_blast_sounds.py)
+
+// a sharp crack: a flashbang, a stun charge
+rsb/blast/small1             sounds/rsb/blast/small1.ogg
+$limit rsb/blast/small1 3
+rsb/blast/small2             sounds/rsb/blast/small2.ogg
+$limit rsb/blast/small2 3
+rsb/blast/small3             sounds/rsb/blast/small3.ogg
+$limit rsb/blast/small3 3
+$random rsb/blast/small { rsb/blast/small1 rsb/blast/small2 rsb/blast/small3 }
+
+// a blast with a snap on it: a frag, a rocket, a grenade
+rsb/blast/med1               sounds/rsb/blast/med1.ogg
+$limit rsb/blast/med1 3
+rsb/blast/med2               sounds/rsb/blast/med2.ogg
+$limit rsb/blast/med2 3
+rsb/blast/med3               sounds/rsb/blast/med3.ogg
+$limit rsb/blast/med3 3
+rsb/blast/med4               sounds/rsb/blast/med4.ogg
+$limit rsb/blast/med4 3
+rsb/blast/med5               sounds/rsb/blast/med5.ogg
+$limit rsb/blast/med5 3
+$random rsb/blast/med { rsb/blast/med1 rsb/blast/med2 rsb/blast/med3 rsb/blast/med4 rsb/blast/med5 }
+
+// a deep, long boom: a demolition charge
+rsb/blast/big1               sounds/rsb/blast/big1.ogg
+$limit rsb/blast/big1 3
+rsb/blast/big2               sounds/rsb/blast/big2.ogg
+$limit rsb/blast/big2 3
+rsb/blast/big3               sounds/rsb/blast/big3.ogg
+$limit rsb/blast/big3 3
+$random rsb/blast/big { rsb/blast/big1 rsb/blast/big2 rsb/blast/big3 }
+
+// the room answering a blast, arriving 180 ms after it
+rsb/blast/roll1              sounds/rsb/blast/roll1.ogg
+$limit rsb/blast/roll1 3
+rsb/blast/roll2              sounds/rsb/blast/roll2.ogg
+$limit rsb/blast/roll2 3
+rsb/blast/roll3              sounds/rsb/blast/roll3.ogg
+$limit rsb/blast/roll3 3
+$random rsb/blast/roll { rsb/blast/roll1 rsb/blast/roll2 rsb/blast/roll3 }
+
+// ---- END blast sounds

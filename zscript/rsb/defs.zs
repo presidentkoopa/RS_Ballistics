@@ -184,6 +184,13 @@ class RSB_ImpactDef : RSB_Def
 	int    markLife;       // tics
 	Color  markColor;
 	String soundName;      // an SNDINFO name, or "none"
+	// THE ROOM ANSWERING A BLAST (`tail`): a second sound at the same place, whose files carry their
+	// own head silence, so the roll arrives after the crack the way a real one comes back off the
+	// walls. A near listener hears crack then roll; a far one hears mostly roll, because the crack
+	// attenuates faster than the low rumble does -- distance changes an explosion shape, not just
+	// its volume, with no per-listener code. Blast profiles only: a bullet hit has nothing to roll.
+	String tailSound;      // "" = none
+	double tailVolume;     // x the Gunshot tails slider (the same room-answering knob)
 	double lightRadius;    // 0 = no light
 	double lightIntensity;
 	int    lightTics;

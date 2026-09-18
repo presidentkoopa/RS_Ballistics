@@ -2178,6 +2178,7 @@ impact rocket
   volume     = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 # THE BFG'S BLAST: a shockwave racing across the surface, lit ozone hanging, chunks by surface;
@@ -2195,6 +2196,7 @@ impact bfg
   volume     = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.metal
@@ -2210,6 +2212,7 @@ impact bfg.metal
   volume     = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.wood
@@ -2225,6 +2228,7 @@ impact bfg.wood
   volume     = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.dirt
@@ -2240,6 +2244,7 @@ impact bfg.dirt
   volume     = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.glass
@@ -2255,6 +2260,7 @@ impact bfg.glass
   volume     = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.liquid
@@ -2268,6 +2274,7 @@ impact bfg.liquid
   volume     = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg_heavy
@@ -2284,6 +2291,7 @@ impact bfg_heavy
   volume     = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.metal
@@ -2300,6 +2308,7 @@ impact bfg_heavy.metal
   volume     = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.wood
@@ -2316,6 +2325,7 @@ impact bfg_heavy.wood
   volume     = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.dirt
@@ -2332,6 +2342,7 @@ impact bfg_heavy.dirt
   volume     = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.glass
@@ -2348,6 +2359,7 @@ impact bfg_heavy.glass
   volume     = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.liquid
@@ -2362,6 +2374,7 @@ impact bfg_heavy.liquid
   volume     = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_spray           # where a BFG ray strikes (on Doom's BFE2 flash): a green flare, arcs, a brief light
@@ -2642,6 +2655,7 @@ impact rocket.metal
   volume     = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.wood
@@ -2657,6 +2671,7 @@ impact rocket.wood
   volume     = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.dirt
@@ -2672,6 +2687,7 @@ impact rocket.dirt
   volume     = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.glass
@@ -2687,6 +2703,7 @@ impact rocket.glass
   volume     = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.liquid
@@ -2699,6 +2716,7 @@ impact rocket.liquid
   volume     = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 # THE RPG's WARHEAD: the rocket's blasts, hitting harder -- more of everything, a wider heat.
@@ -2716,6 +2734,7 @@ impact rocket_rpg
   volume     = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.metal
@@ -2732,6 +2751,7 @@ impact rocket_rpg.metal
   volume     = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.wood
@@ -2748,6 +2768,7 @@ impact rocket_rpg.wood
   volume     = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.dirt
@@ -2764,6 +2785,7 @@ impact rocket_rpg.dirt
   volume     = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.glass
@@ -2780,6 +2802,7 @@ impact rocket_rpg.glass
   volume     = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.liquid
@@ -2793,6 +2816,7 @@ impact rocket_rpg.liquid
   volume     = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 
@@ -6874,15 +6898,17 @@ impact flashbang   # A FLASHBANG going off: a blinding white flash, a bang that 
   bursts      = flashbang_core, flashbang_smoke, spk_specks
   light       = 600, 8, 6
   lightcolor  = 255, 255, 255
-  sound       = none
+  sound       = rsb/blast/small
   smokevolume = 48, 1.2, 0.5
   push        = 128, 300
   damage      = scorch, 10, 0, 0.35, 0
   exposure    = 6, 192, 1.5
   hearing     = 4, 256, 1.5
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact c4   # C4: a heavy charge -- the RPG's blast, bigger: a wider fireball, a deeper crater, a harder shove
+  sound       = rsb/blast/big
   heat        = 110, 2.3, 44
   bursts      = rocket_fire, rocket_embers, chips_concrete, slabs_concrete, rubble_concrete, rocket_smoke, rocket_fireball, rocket_soot, dust_kick_ring
   mark        = sunburst, 40, 140
@@ -6896,6 +6922,7 @@ impact c4   # C4: a heavy charge -- the RPG's blast, bigger: a wider fireball, a
   volume      = rsb_rpg_fireball
   exposure    = 3.5, 512
   hearing     = 3.5, 448
+  tail        = rsb/blast/roll, 1.0
 end
 # ---------------------------------------------------------------- END BREACH
 
@@ -8056,6 +8083,7 @@ impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring 
   volume      = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.metal@extreme
@@ -8071,6 +8099,7 @@ impact rocket.metal@extreme
   volume      = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.wood@extreme
@@ -8086,6 +8115,7 @@ impact rocket.wood@extreme
   volume      = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.dirt@extreme
@@ -8101,6 +8131,7 @@ impact rocket.dirt@extreme
   volume      = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.glass@extreme
@@ -8116,6 +8147,7 @@ impact rocket.glass@extreme
   volume      = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket.liquid@extreme
@@ -8128,6 +8160,7 @@ impact rocket.liquid@extreme
   volume      = rsb_rocket_fireball
   exposure   = 2.5, 384
   hearing    = 2, 320
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
@@ -8144,6 +8177,7 @@ impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ri
   volume      = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.metal@extreme
@@ -8160,6 +8194,7 @@ impact rocket_rpg.metal@extreme
   volume      = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.wood@extreme
@@ -8176,6 +8211,7 @@ impact rocket_rpg.wood@extreme
   volume      = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.dirt@extreme
@@ -8192,6 +8228,7 @@ impact rocket_rpg.dirt@extreme
   volume      = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.glass@extreme
@@ -8208,6 +8245,7 @@ impact rocket_rpg.glass@extreme
   volume      = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact rocket_rpg.liquid@extreme
@@ -8221,6 +8259,7 @@ impact rocket_rpg.liquid@extreme
   volume      = rsb_rpg_fireball
   exposure   = 3, 448
   hearing    = 2.4, 384
+  tail        = rsb/blast/roll, 0.9
 end
 
 impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starburst, a bigger hex ring, a longer light
@@ -8236,6 +8275,7 @@ impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starbu
   volume      = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.metal@extreme
@@ -8251,6 +8291,7 @@ impact bfg.metal@extreme
   volume      = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.wood@extreme
@@ -8266,6 +8307,7 @@ impact bfg.wood@extreme
   volume      = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.dirt@extreme
@@ -8281,6 +8323,7 @@ impact bfg.dirt@extreme
   volume      = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.glass@extreme
@@ -8296,6 +8339,7 @@ impact bfg.glass@extreme
   volume      = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg.liquid@extreme
@@ -8308,6 +8352,7 @@ impact bfg.liquid@extreme
   volume      = rsb_bfg_blast
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
+  tail        = rsb/blast/roll, 0.7
 end
 
 impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a storm of energy sparks, a bigger hex ring, the room lit longer
@@ -8324,6 +8369,7 @@ impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a
   volume      = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.metal@extreme
@@ -8340,6 +8386,7 @@ impact bfg_heavy.metal@extreme
   volume      = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.wood@extreme
@@ -8356,6 +8403,7 @@ impact bfg_heavy.wood@extreme
   volume      = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.dirt@extreme
@@ -8372,6 +8420,7 @@ impact bfg_heavy.dirt@extreme
   volume      = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.glass@extreme
@@ -8388,6 +8437,7 @@ impact bfg_heavy.glass@extreme
   volume      = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_heavy.liquid@extreme
@@ -8401,6 +8451,7 @@ impact bfg_heavy.liquid@extreme
   volume      = rsb_bfg_blast_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
+  tail        = rsb/blast/roll, 0.8
 end
 
 impact bfg_spray@extreme   # where a BFG ray strikes at extreme: a starburst in the flare, a longer light
