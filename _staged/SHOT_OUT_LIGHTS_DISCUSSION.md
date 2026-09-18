@@ -274,3 +274,31 @@ not commissioned. Outstanding when it becomes work:
    the floor via `RSD_DarknessService`, and generated broken-lamp textures.
 3. Glow lane: the Service, and the emergency-lighting reaction with its threshold.
 4. Gameplay, neither lane: making lamp actors shootable.
+
+---
+
+# The inverse, if it is ever picked up: FIRE LIGHTING A ROOM
+
+Raised by the owner 2026-09-18 ("does our flamethrower light up a room?"). NOT STARTED, not
+commissioned. Recorded because the shape is already built and it would be wasteful to rediscover it.
+
+**What is true today:** the flamethrower has two attenuated point lights -- one riding the nozzle
+(240 units, warm, brightness pulsing on the flame's own flicker) and one where the fire lands (160,
+building with the pool). Both are real lights on walls, both on a slider.
+
+**The gap:** BURNING FLOOR HOLDS NO LIGHT OF ITS OWN. Sweep a corridor and it lights while you pour,
+then goes dark behind you with fire visibly still on the ground. And it is two lights whether there
+is a puddle or a blaze.
+
+**It is the same design with the sign flipped:** ballistics owns the burning-surface state and the
+per-sector count, the glow lane owns the reaction, and the query is the same sentence -- "what share
+of this room is on fire" instead of "what share of its lamps are dead". `RSB_FixtureService` is most
+of the pattern already.
+
+**Two things the glow lane flagged that would otherwise be found late:**
+1. **IT HAS TO COME BACK DOWN.** A lamp stays dead; fire goes out. The share must fall SMOOTHLY as
+   the fire dies, not drop in one step when the last flame expires, or their reaction cannot ease off
+   and the room snaps dark.
+2. **THE DARKNESS FLOOR DOES NOT APPLY.** Its whole job is stopping a room going unplayably dark. A
+   room getting BRIGHTER needs no floor, and nobody should ask for one out of symmetry with the
+   lights work.
