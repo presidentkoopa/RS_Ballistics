@@ -16,8 +16,15 @@
 // stops smoking and keeps cooling, so it is still warm if it comes straight back out.
 //
 // NETPLAY: presentation only. Heat is kept per gun actor (never the console player),
-// counted from the calls and cooled by the map clock; no RNG, nothing the game reads.
-// SLOW MOTION: heat cools and smoke is laid by the map clock (level.maptime).
+// counted from the calls and cooled by the clock; no RNG, nothing the game reads.
+// SLOW MOTION (engine build 13): ALL OF THIS IS ON THE REAL CLOCK (level.realtime). A barrel is
+// part of the gun in your hands, and your gun cycles at full speed while the world crawls -- so it
+// has to heat per shot fired and cool per real second, or a string emptied in slow motion would
+// leave the barrel glowing for what feels like a minute. The smoke it lays becomes world smoke the
+// moment it leaves the muzzle and drifts on the world clock, which is the engine's doing, not ours.
+// The hash seeds are real tics for the same reason: on the world clock they would repeat while the
+// world was slowed and every puff would come out identical. With no slow motion running
+// level.realtime == level.maptime and none of this changes.
 // ============================================================================
 
 class RSB_BarrelHeat
@@ -97,12 +104,12 @@ class RSB_Barrel play
 				if (fd.barrelSmokeHandle == 0) fd.barrelSmokeHandle = level.ParticleDefinition(fd.barrelSmokeParticle);
 				level.SpawnParticles(fd.barrelSmokeHandle, at + bore * 0.5, rise, min(n, 8), 18.0, 3.0 + 7.0 * amount, 0.5,
 					1.2 + 1.0 * amount, 0.35, Color(255, 255, 255, 255), 1.0, 0.7 + 0.5 * amount,
-					RSB_Hash.Seed(level.maptime, 331, posSeed));
+					RSB_Hash.Seed(level.realtime, 331, posSeed));
 			}
 		}
 
 		// THE HOT AIR over it: a fresh narrow column every few tics, each outliving the gap.
-		if (fd.barrelShimmerStrength > 0 && fd.barrelShimmerRadius > 0 && (level.maptime % SHIMMER_EVERY) == 0)
+		if (fd.barrelShimmerStrength > 0 && fd.barrelShimmerRadius > 0 && (level.realtime % SHIMMER_EVERY) == 0)
 			RSB_Heat.Along(at, rise, fd.barrelShimmerRadius * 5.0, fd.barrelShimmerRadius,
 				fd.barrelShimmerStrength * amount, SHIMMER_EVERY + 4);
 	}
@@ -124,7 +131,7 @@ class RSB_Barrel play
 		let b = Find(reg, gun, true);
 		double f = clamp(fraction, 0.0, 1.0);
 		Vector3 bore = (dir.Length() > 0.000001) ? dir.Unit() : (1, 0, 0);
-		int now = level.maptime;
+		int now = level.realtime;   // the gun's own clock: see the note at the top
 		int posSeed = RSB_Hash.OfPos(at);
 
 		double countScale = RSB_Tier.CountScale(tier) * RSB_Settings.FlashSparks();
@@ -167,10 +174,11 @@ class RSB_Barrel play
 			b.glowLight.Hold(at, fd.barrelGlowColor, fd.barrelGlowRadius * (0.6 + 0.4 * hot), fd.barrelGlowIntensity * hot);
 	}
 
-	// Heat lost since it was last brought up to date, by the map clock.
+	// Heat lost since it was last brought up to date, by the REAL clock: a barrel cools per real second,
+	// not per world second (slow motion).
 	private static void Cool(RSB_BarrelHeat b)
 	{
-		int now = level.maptime;
+		int now = level.realtime;   // the gun's own clock: see the note at the top
 		if (b.fd && b.heatTic > 0 && now > b.heatTic)
 			b.heat = max(0.0, b.heat - b.fd.barrelCool * double(now - b.heatTic) / double(TICRATE));
 		b.heatTic = now;
@@ -227,7 +235,7 @@ class RSB_Exhaust play
 		if (smokeMul <= 0) return;
 
 		let b = RSB_Barrel.Find(reg, gun, true);
-		int now = level.maptime;
+		int now = level.realtime;   // the gun's own clock: see the note at the top
 		double t = clamp(throttle, 0.0, 1.0);
 		double share = fd.exhaustIdle + (1.0 - fd.exhaustIdle) * t;
 		Vector3 blow = (dir.Length() > 0.000001) ? dir.Unit() : (0, 0, 1);
@@ -282,6 +290,8 @@ class RSB_BarrelGlow : Actor
 	Default
 	{
 		+CLIENTSIDE        // a look for this machine: the engine's client-side thinkers, never the playsim's
+		+REALTIME          // SLOW MOTION: this light is held on the muzzle of a gun that never slows, and
+		                   // its own expiry is counted in real tics (Hold, Tick) -- so it ticks in real ones too
 		+NOBLOCKMAP
 		+NOGRAVITY
 		+NOINTERACTION
@@ -306,12 +316,12 @@ class RSB_BarrelGlow : Actor
 		SetOrigin(at, true);
 		A_AttachLight("rsb_barrelglow", DynamicLight.PointLight, tint, int(radius), 0,
 			DynamicLight.LF_ATTENUATE, (0, 0, 0), 0, 10, 25, 0, intensity);
-		heldTic = level.maptime;
+		heldTic = level.realtime;
 	}
 
 	override void Tick()
 	{
-		if (level.maptime - heldTic > 2)
+		if (level.realtime - heldTic > 2)
 		{
 			A_RemoveLight("rsb_barrelglow");
 			Destroy();

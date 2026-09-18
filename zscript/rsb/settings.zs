@@ -140,6 +140,13 @@ class RSB_Settings play
 
 	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
 	static double TailVolume() { return max(0.0, Cvf("rsb_tail_volume", 1.0)); }
+	// SLOW MOTION, THE MUZZLE FLASH'S CLOCK (engine build 13). A flash is three tics. On the world
+	// clock at a fifth speed it becomes a fifteen-tic flash hanging off the barrel -- which is either
+	// the best thing in the game or plainly broken, and that is a headset question, not a keyboard one.
+	// True (the default) keeps the flash on the real clock, so it snaps exactly as it does at full
+	// speed; the powder and sparks it throws are world particles either way and still hang in the air.
+	static bool SlowMoFlashReal() { return Cvb("rsb_slowmo_flash", true); }
+
 	// Muzzle spice: powder burns on close walls, the blast kicking what is near, the shockwave.
 	static bool FlashPowderBurns() { return Cvb("rsb_flash_powderburns", true); }
 	static bool FlashBlastKick() { return Cvb("rsb_flash_blastkick", true); }
