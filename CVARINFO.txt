@@ -81,6 +81,14 @@ user float  rsb_recoil_view        = 1.0;       // the per-shot jolt the arm and
 user bool   rsb_view_cull          = true;      // effects behind your view skip their short-lived sparks, dust, small lights and marks
 user float  rsb_lod_range          = 1536.0;    // past this many map units, hits, flashes and wakes draw lighter (0 = never)
 
+// ---- LIQUIDS: what comes OUT of something that carries liquid, and the wet it leaves behind.
+// Water and coolant only. Blood and gore are a separate job the owner has held (2026-09-18), and
+// nothing here touches them. The wet mark is the engine's fourth surface-damage channel (soot,
+// hole depth, heat, WET) -- shipped since #17 and, until now, never once painted by us.
+user bool  rsb_liquids        = true;     // liquid effects at all: splashes out of water, jets out of a burst pipe, the wet they leave
+user float rsb_liquid_splash  = 1.0;      // how much a hit throws up out of water or a pipe, x this
+user float rsb_liquid_wet     = 1.0;      // how wet a hit leaves the surface, x this (0 = no wet marks, the hole still gets punched)
+
 // ---- SLOW MOTION (engine build 13): which clock a look that belongs to YOU runs on.
 // The world can crawl while you and your gun stay at full speed, so every effect has to pick a
 // clock. Ones in the world (bullets, smoke, debris, brass on the floor) always take the world's.

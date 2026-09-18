@@ -36,7 +36,18 @@ surface glass
 surface liquid
 {
 	walls = "SFALL*", "BFALL*"
-	flats = "FWATER*", "NUKAGE*", "BLOOD*", "SLIME*", "LAVA*"
+	flats = "FWATER*", "NUKAGE*", "BLOOD*", "SLIME*"
+}
+
+// LAVA IS NOT A LIQUID, whatever the flat list used to say. A round into molten rock does not
+// splash and does not leave the surface WET: it throws lumps that arc, glow and cool, it spits,
+// it lifts embers and it burns the air above it. It is listed after `liquid` on purpose -- a later
+// surface takes its textures back -- and it takes the lava falls with it, which were falling
+// through to no surface at all before.
+surface lava
+{
+	walls = "FIRELAV*", "FIREMAG*"
+	flats = "LAVA*"
 }
 
 surface dirt

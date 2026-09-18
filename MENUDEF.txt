@@ -229,6 +229,17 @@ OptionMenu "RSB_ImpactMenu"
 	StaticText ""
 	Option "Ricochets on glancing hits", "rsb_ricochets", "OnOff"
 	Slider "Impact volume", "rsb_impact_volume", 0.0, 1.0, 0.05, 2
+	StaticText ""
+	StaticText "LIQUIDS", "Gold"
+	StaticText "What comes out of something that carries liquid: the column thrown up out of water, the", "DarkGray"
+	StaticText "jet out of a pipe you have holed, the lumps of molten rock thrown out of lava, and the", "DarkGray"
+	StaticText "wet patch the cold ones leave. With these off the round still strikes -- the metal rings", "DarkGray"
+	StaticText "and the hole is still punched.", "DarkGray"
+	Option "Liquids", "rsb_liquids", "OnOff"
+	Slider "How much it throws up", "rsb_liquid_splash", 0.0, 3.0, 0.1, 1
+	Slider "How wet it leaves the surface", "rsb_liquid_wet", 0.0, 1.0, 0.05, 2
+	StaticText "A wet patch is painted into the wall when the round lands, so these two change the", "DarkGray"
+	StaticText "NEXT hit -- marks already on the walls stay as they were painted.", "DarkGray"
 }
 
 OptionMenu "RSB_FlashMenu"

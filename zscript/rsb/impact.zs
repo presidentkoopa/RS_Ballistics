@@ -415,6 +415,11 @@ class RSB_Impact play
 		// EVERY HIT ITS OWN (the profile's `vary` and `maybe`), hashed from the tic and the spot.
 		int hitTic = level.maptime;
 		countScale *= RSB_Hash.Wobble(im.varyCount, hitTic, 501, posSeed);
+		// WHAT THE LIQUID ITSELF DOES (Ballistics -> Liquids): the column out of water, the jet out of a
+		// burst pipe, the lumps thrown out of lava. Only these materials, and only the liquid's share --
+		// the round still strikes, the metal still sparks and the hole is still punched with this at zero.
+		if (surf.material == "liquid" || surf.material == "pipe" || surf.material == "lava")
+			countScale *= RSB_Settings.LiquidSplash();
 		double sizeScale = im.sizeScale * RSB_Hash.Wobble(im.varySize, hitTic, 503, posSeed);
 		double lightWobble = RSB_Hash.Wobble(im.varyLight, hitTic, 505, posSeed);
 
@@ -460,12 +465,15 @@ class RSB_Impact play
 
 		// LASTING DAMAGE (engine #17, `damage`; `glancedamage` when it glances): a hole, gouge, crater or
 		// scorch that stays for the map. The glowing stamp above is the brief heat; this is the wound.
+		// The WET share of a paint is the Liquids dial's (a wet mark is a liquid, a hole is not), so
+		// turning liquids down leaves the wound and takes away only the damp.
+		double wetMul = RSB_Settings.LiquidWet();
 		if (glancing && im.glanceDamageRadius > 0)
 			PaintDamage(surf, travel, im.glanceDamageBrush, im.glanceDamageRadius, im.glanceDamageDepth, im.glanceDamageSoot,
-				im.glanceDamageHeat, im.glanceDamageWet, im.glanceDamageAlong);
+				im.glanceDamageHeat, im.glanceDamageWet * wetMul, im.glanceDamageAlong);
 		else if (im.damageRadius > 0)
 			PaintDamage(surf, travel, im.damageBrush, im.damageRadius, im.damageDepth, im.damageSoot,
-				im.damageHeat, im.damageWet, im.damageAlong);
+				im.damageHeat, im.damageWet * wetMul, im.damageAlong);
 
 		// EMISSIVE VOLUMES (engine #15, `volume`): a blast as glowing gas where it lands, in the world.
 		if (im.volumeNames.Size() > 0) SpawnVolumes(im, surf.at + surf.normal * 8.0, surf.normal, tier, hitTic, posSeed);

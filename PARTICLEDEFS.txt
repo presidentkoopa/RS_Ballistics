@@ -678,6 +678,54 @@ particle rsb_smoke_barrel
 	spin     = -50, 50
 }
 
+// ---------------------------------------------------------------- LAVA
+// Molten rock is HEAVY. It does not spray the way water does -- it is thrown, in lumps that arc,
+// tumble, and cool from white-orange through red while they are still in the air. They land still
+// glowing and dull where they lie. lit 0 and emissive: this stuff makes its own light rather than
+// taking the room's, which is the one place our grounded colour rule has always allowed glow.
+particle rsb_lava_glob
+{
+	size     = 2.6 @0, 2.8 @0.55, 2.3 @1
+	color    = 255 225 160 @0, 255 135 45 @0.35, 190 60 15 @0.75, 80 22 8 @1
+	alpha    = 1 @0, 1 @1
+	emissive = 3.0 @0, 1.7 @0.5, 0.2 @1
+	lit      = 0
+	gravity  = 560
+	drag     = 0.7
+	maxsize  = 7
+	texture  = "RSCHA0", 4, 10, loop
+	orient   = flake
+	spin     = -420, 420
+	collide  = level
+	restitution = 0.15
+	friction    = 0.85
+	restlife    = 14
+	restfade    = 2.0
+	light       = 36, 1.0
+	lightcolor  = 255 120 40
+	lightramp   = 1 @0, 0.25 @1
+	lighthold   = 1.2
+	lightmax    = 6
+}
+
+// THE AIR OVER LAVA, burnt rather than steamed: dark, thin, rising fast and thinning as it goes.
+// Darker than gun smoke and it never glows -- what glows is the rock, not the smoke off it.
+particle rsb_lava_smoke
+{
+	size     = 1.6 @0, 6 @0.4, 12 @1
+	color    = 96 88 84 @0, 62 58 56 @0.5, 44 42 41 @1
+	alpha    = 0 @0, 0.3 @0.1, 0.14 @0.5, 0 @1
+	emissive = 0 @0, 0 @1
+	lit      = 1
+	gravity  = -34
+	drag     = 2.2
+	maxsize  = 16
+	soft     = 3
+	texture  = "RSSGA0", 23, 12, once
+	orient   = billboard
+	spin     = -40, 40
+}
+
 // ---------------------------------------------------------------- BULLET VAPOUR
 // The air a round tears through: a thin, pale wisp laid along its flight that spreads
 // and thins. Lit by the room, never glowing. Faint at full speed; in slow motion it

@@ -140,6 +140,13 @@ class RSB_Settings play
 
 	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
 	static double TailVolume() { return max(0.0, Cvf("rsb_tail_volume", 1.0)); }
+	// LIQUIDS: water and coolant -- a round into standing water, or through a pipe. NOT blood, which is
+	// its own job and held by the owner. `Liquids` off leaves the hit itself alone (the hole is still
+	// punched, the metal still rings) and takes away only what the liquid does.
+	static bool Liquids() { return Cvb("rsb_liquids", true); }
+	static double LiquidSplash() { return Liquids() ? max(0.0, Cvf("rsb_liquid_splash", 1.0)) : 0.0; }
+	static double LiquidWet() { return Liquids() ? clamp(Cvf("rsb_liquid_wet", 1.0), 0.0, 1.0) : 0.0; }
+
 	// SLOW MOTION, THE MUZZLE FLASH'S CLOCK (engine build 13). A flash is three tics. On the world
 	// clock at a fifth speed it becomes a fifteen-tic flash hanging off the barrel -- which is either
 	// the best thing in the game or plainly broken, and that is a headset question, not a keyboard one.
