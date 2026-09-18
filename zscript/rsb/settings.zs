@@ -152,8 +152,10 @@ class RSB_Settings play
 	// than the look: a darkened room is level state, it is saved, and in co-op it is darker for everyone.
 	// So it is deliberately a plain on/off with a floor, and it defaults ON at a conservative drop.
 	static bool ShootOutLights() { return Cvb("rsb_shootlights", true); }
-	// The light a room loses when EVERY one of its fixtures is dead. Each break takes its share.
-	static double LightDrop() { return clamp(Cvf("rsb_shootlights_drop", 96.0), 0.0, 255.0); }
+	// The SHARE of its own light a room loses when every one of its fixtures is dead; each break
+	// takes its part of that. A share rather than a count of light units, because that is what the
+	// engine's trim takes and because a bright room should lose more than a dim one.
+	static double LightShare() { return clamp(Cvf("rsb_shootlights_share", 0.8), 0.0, 1.0); }
 	// How dark a room may get this way. Doom's monsters do not care about light, so darkness only ever
 	// costs the player -- and with a Darkness preset running, the room is deeper than this number looks.
 	static int LightFloor() { return int(clamp(Cvf("rsb_shootlights_floor", 48.0), 0.0, 255.0)); }

@@ -236,11 +236,11 @@ OptionMenu "RSB_ImpactMenu"
 	StaticText "gridded, so you walk your fire across it. THIS ONE CHANGES THE GAME, not just the look:", "DarkGray"
 	StaticText "the dark room is saved, and in co-op it is dark for everyone.", "DarkGray"
 	Option "Shoot out lights", "rsb_shootlights", "OnOff"
-	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_drop", 0, 255, 8, 0
+	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_share", 0.0, 1.0, 0.05, 2
 	Slider "Never darker than", "rsb_shootlights_floor", 0, 255, 8, 0
-	StaticText "A rooms with a flickering, strobing or glowing light rewrites its own level every tic and", "DarkGray"
-	StaticText "will NOT dim yet -- that needs engine support, which is being built. Not a bug.", "DarkGray"
-	StaticText "A Darkness preset deepens the floor well past the number above.", "DarkGray"
+	StaticText "A share of the room's own light, so a bright room loses more than a dim one. Rooms with", "DarkGray"
+	StaticText "a flickering or strobing light dim too and keep flickering. A Darkness preset deepens", "DarkGray"
+	StaticText "the floor well past the number above.", "DarkGray"
 	StaticText ""
 	StaticText "LIQUIDS", "Gold"
 	StaticText "What comes out of something that carries liquid: the column thrown up out of water, the", "DarkGray"
@@ -383,7 +383,7 @@ OptionMenu "RSB_LightMenu"
 	StaticText "Shoot a lamp and the room it lit gets darker by that lamp's share. This one changes the", "DarkGray"
 	StaticText "GAME, not just the look: the dark room is saved and in co-op it is dark for everyone.", "DarkGray"
 	Option "Shoot out lights", "rsb_shootlights", "OnOff"
-	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_drop", 0, 255, 8, 0
+	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_share", 0.0, 1.0, 0.05, 2
 	Slider "Never darker than", "rsb_shootlights_floor", 0, 255, 8, 0
 	StaticText ""
 	Slider "Lights on smoke and dust (32 recommended)", "r_gpuparticles_lights", 0, 32, 1, 0

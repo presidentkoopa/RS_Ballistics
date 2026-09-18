@@ -36,12 +36,18 @@
 // 256-unit world grid: each cell dies once, and the player has to walk their fire
 // across the panel to take the room down.
 //
-// KNOWN LIMITATION, stated in the menu rather than left to look like a bug: a sector
-// with a light special (flicker, strobe, glow) recomputes its own light every tic and
-// overwrites anything written here. Script cannot reach those specials at all --
-// `class Lighting : SectorEffect native { }` is empty and their endpoints live only in
-// C++ -- so a specialled room needs the engine's per-sector light trim, which is with
-// the build lane. Until it lands, those rooms do not dim.
+// FLICKERING AND STROBING ROOMS DIM TOO, and keep flickering. Writing `lightlevel` was
+// hopeless in those rooms -- the special recomputes its own light every tic and wipes it,
+// and script cannot reach the specials at all, `class Lighting : SectorEffect native { }`
+// being empty -- so this needed an engine change (the per-sector light trim, exe 13:55).
+// The trim is applied AFTER the special decides, so a strobe keeps its rhythm and simply
+// runs darker.
+//
+// AND IT TAKES A SHARE, NOT A NUMBER OF LIGHT UNITS, which is the right shape and was not
+// what the first version did: a bright room loses more than a dim one when its lamps die,
+// which is what looks right. `SetLightTrim(0, 0)` puts a room back exactly where the map
+// left it, and the trimmed value IS `lightlevel`, so the smoke's ambient and any darkness
+// curve see a shot-out room as dark with no call of their own.
 // ============================================================================
 
 class RSB_Lights : Thinker
@@ -305,8 +311,6 @@ class RSB_Lights : Thinker
 		r.deadB.Push(b);
 		r.dead[idx] = min(r.dead[idx] + 1, r.tally[idx]);
 
-		// ITS SHARE OF THE ROOM. The whole budget only comes off when every fixture is out.
-		double budget = RSB_Settings.LightDrop();
 		int floorLevel = r.FloorNow();
 		if (floorLevel < 0)
 		{
@@ -316,16 +320,29 @@ class RSB_Lights : Thinker
 				"a fixture was shot out, but the darkness curve leaves no light to take: not dimming");
 			return true;
 		}
-		int drop = int(budget / double(max(1, r.tally[idx])) + 0.5);
+
+		// THE SHARE OF THE ROOM THAT IS OUT, recomputed from the tally every time rather than taken off
+		// a bit at a time. That makes it idempotent: the trim is whatever the room's state says it
+		// should be, nothing drifts, and no lamp can dim a room twice however the breaks arrive.
 		int now = surf.sec.lightlevel;
-		int want = max(floorLevel, now - drop);
-		if (want < now) surf.sec.SetLightLevel(want);
+		double dim = clamp(r.DeadShare(surf.sec) * RSB_Settings.LightShare(), 0.0, 1.0);
+
+		// THE FLOOR IS WORKED OUT AGAINST THE UNTRIMMED LIGHT. In a flickering room `lightlevel` is a
+		// different number every tic, so a share measured against it would wander; the base is what the
+		// map and the special asked for, and it holds still.
+		int base = surf.sec.GetLightTrimBase();
+		if (base > 0)
+		{
+			double most = 1.0 - double(floorLevel) / double(base);
+			dim = min(dim, max(0.0, most));
+		}
+		surf.sec.SetLightTrim(dim, 0);
 
 		r.Blacken(surf, idx);
 
 		RSB_Log.Once(RSB_Log.LV_INFO, "lights:first", String.Format(
-			"first fixture shot out: %s, room %d has %d, %d now dead, light %d -> %d",
-			surf.texName, idx, r.tally[idx], r.dead[idx], now, want));
+			"first fixture shot out: %s, room %d has %d, %d now dead, trim %.2f, light %d -> %d",
+			surf.texName, idx, r.tally[idx], r.dead[idx], dim, now, surf.sec.lightlevel));
 		return true;
 	}
 }

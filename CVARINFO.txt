@@ -90,7 +90,7 @@ user float rsb_firelight_linger = 3.5;     // seconds a room keeps its glow afte
 // ---- SHOOTING THE LIGHTS OUT (zscript/rsb/lights.zs). THE ONLY SETTING HERE THAT CHANGES THE GAME:
 // a darkened room is level state -- saved, and darker for everyone in co-op. Server, therefore, not user.
 server bool  rsb_shootlights       = true;    // shooting a lamp takes it out and darkens the room it lit
-server float rsb_shootlights_drop  = 96.0;    // light a room loses when EVERY fixture in it is dead; each break takes its share
+server float rsb_shootlights_share = 0.8;     // SHARE of its own light a room loses when every fixture in it is dead; each break takes its part
 server float rsb_shootlights_floor = 48.0;    // how dark a room may get this way (a Darkness preset deepens it further)
 
 // ---- LIQUIDS: what comes OUT of something that carries liquid, and the wet it leaves behind.
