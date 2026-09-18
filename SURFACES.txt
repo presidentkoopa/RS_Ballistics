@@ -36,7 +36,17 @@ surface glass
 surface liquid
 {
 	walls = "SFALL*", "BFALL*"
-	flats = "FWATER*", "NUKAGE*", "BLOOD*", "SLIME*"
+	flats = "FWATER*", "BLOOD*"
+}
+
+// NUKAGE AND SLIME are a liquid, but they are not WATER, and every toxic pool in Doom was throwing
+// up a pale blue splash because they shared water's. They keep the whole of water's behaviour and
+// change only what comes out: thicker, slower, green, and it hangs a moment longer before it falls.
+// (The wet mark they leave is still colourless -- a surface paint carries four amounts and no tint,
+// which is the one engine field this and blood both need, and it is held.)
+surface slime
+{
+	flats = "NUKAGE*", "SLIME*"
 }
 
 // LAVA IS NOT A LIQUID, whatever the flat list used to say. A round into molten rock does not

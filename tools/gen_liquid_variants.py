@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-gen_lava_pass.py -- a `.lava` impact for every profile that has a `.liquid` one.
+gen_liquid_variants.py -- a `.lava` and a `.slime` impact for every profile that has a `.liquid` one.
 
 WHY THIS EXISTS. SURFACES.txt used to put FWATER, NUKAGE, BLOOD, SLIME and LAVA in one bucket called
 `liquid`, so a round into molten rock threw a clear water splash and painted the surface DAMP. The
@@ -22,10 +22,15 @@ AND WHAT IT DELIBERATELY DOES NOT DO:
     light their own hit and keep their own colour; only the plain kinetic hits get lava's warm one,
     because a bullet into lava has no light but the rock's.
 
-    python tools/gen_lava_pass.py            # rewrite the block between the markers in RSBDEFS.txt
-    python tools/gen_lava_pass.py --check    # print what it would write, change nothing
+    python tools/gen_liquid_variants.py            # rewrite the block between the markers in RSBDEFS.txt
+    python tools/gen_liquid_variants.py --check    # print what it would write, change nothing
 
-Run it again after editing any `.liquid` profile: the lava ones are derived, not maintained by hand.
+Run it again after editing any `.liquid` profile: the derived ones are not maintained by hand.
+
+SLIME AND NUKAGE were the other half of the owner's catch. A `.liquid` splash is coloured 150,190,210 --
+water. Every toxic pool in Doom was throwing up water. The splash colour needs NO engine work at all; it is
+one `color` on one burst. What slime still cannot have is a GREEN WET MARK, because a surface paint carries
+four amounts and no colour -- the same missing field blood needs, and the one thing here that is held.
 """
 import argparse
 import io
@@ -37,8 +42,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.dirname(HERE)
 DEFS = os.path.join(PKG, "RSBDEFS.txt")
 
-BEGIN = "# ---- BEGIN lava pass (tools/gen_lava_pass.py)"
-END = "# ---- END lava pass"
+BEGIN = "# ---- BEGIN liquid variants (tools/gen_liquid_variants.py)"
+END = "# ---- END liquid variants"
 
 # Bases whose hit is a BLAST rather than a strike: they take the heavier sets.
 BIG = {"rocket", "rocket_rpg", "bfg", "bfg_heavy", "frag", "c4"}
@@ -73,6 +78,18 @@ def read_blocks(text, nl):
             i += 1
         out.append((ident, body))
         i += 1
+    return out
+
+
+def convert_slime(ident, body):
+    """SLIME AND NUKAGE are still a liquid: the profile is kept whole and only the splash changes,
+    from water to something thicker, greener and slower. No engine work is involved in that -- it is
+    one `color` on one burst. The WET MARK it leaves stays colourless, which is the held part."""
+    out = ["impact %s   # nukage and slime: the same hit as water, thrown up thicker, slower and green"
+           % ident.replace(".liquid", ".slime")]
+    for row in body:
+        out.append("  " + row.strip().replace("splash_liquid", "splash_slime"))
+    out.append("end")
     return out
 
 
@@ -128,15 +145,18 @@ def main():
 
     body = [BEGIN,
             "# Derived from every `.liquid` profile above. DO NOT EDIT BY HAND: edit the .liquid one and",
-            "# run tools/gen_lava_pass.py again.",
+            "# run tools/gen_liquid_variants.py again.",
             ""]
     for ident, lines in blocks:
         body.extend(convert(ident, lines))
         body.append("")
+    for ident, lines in blocks:
+        body.extend(convert_slime(ident, lines))
+        body.append("")
     body.append(END)
     block = nl.join(body)
 
-    print("%d lava impacts derived: %s" % (len(blocks), ", ".join(i.replace(".liquid", ".lava") for i, _ in blocks)))
+    print("%d lava and %d slime impacts derived from %d .liquid profiles" % (len(blocks), len(blocks), len(blocks)))
     if args.check:
         print()
         print(block)
