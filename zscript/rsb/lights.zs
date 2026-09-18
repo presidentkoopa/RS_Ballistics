@@ -67,6 +67,18 @@ class RSB_Lights : Thinker
 	const CELL_BIAS = 2048;    // so a negative cell packs positive
 	const MAX_CELLS = 12;      // a vast lit ceiling must not need two hundred rounds
 
+	// THE RECORD IF THERE IS ONE, never making it. A question must not create state -- something asking
+	// "has anything been shot out" on a map where nothing has would otherwise leave a thinker behind.
+	clearscope static RSB_Lights Existing()
+	{
+		ThinkerIterator it = ThinkerIterator.Create("RSB_Lights", Thinker.STAT_STATIC);
+		return RSB_Lights(it.Next());
+	}
+
+	// Has ANY fixture on this map been shot out? One cheap call that lets a listener skip a whole
+	// per-sector pass on the ordinary map where nobody has shot a lamp.
+	clearscope bool AnyDead() const { return deadA.Size() > 0; }
+
 	static RSB_Lights Get()
 	{
 		ThinkerIterator it = ThinkerIterator.Create("RSB_Lights", Thinker.STAT_STATIC);
@@ -275,5 +287,42 @@ class RSB_Lights : Thinker
 			"first fixture shot out: %s, room %d has %d, %d now dead, light %d -> %d",
 			surf.texName, idx, r.tally[idx], r.dead[idx], now, want));
 		return true;
+	}
+}
+
+// ============================================================================
+// WHAT OTHER MODS ASK. A Service, and for exactly the reason RS_Ballistics reads
+// RS_Darkness through one: a ZScript call to a class that is not in the load order
+// fails at COMPILE, so a lighting mod naming RSB_Lights directly would refuse to
+// load for anyone not running this package. Through a Service, a missing answer is
+// simply no answer.
+//
+// PLAY SCOPE, and that is not my choice: `Service.GetDouble` is declared `play` in
+// the engine, so an override cannot widen it to clearscope. The UI family is a
+// SEPARATE set of virtuals (GetDoubleUI and friends). A caller that needs this from
+// a UI tick should read it on a play tick and cache, which is the ordinary GZDoom
+// shape anyway -- reaching into the playsim from the UI is what those scopes exist
+// to prevent.
+// ============================================================================
+class RSB_FixtureService : Service
+{
+	// NOT `override play`: restating the scope on an override is "Attempt to change scope for virtual
+	// function", even when it matches the base. The scope comes from the base and is not repeated.
+	override double GetDouble(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		let r = RSB_Lights.Existing();
+		if (!r) return 0.0;                    // nothing has been shot out on this map, or no level yet
+
+		// "anydead" -- has ANYTHING on this map been shot out. Ask this first and skip the rest.
+		if (request ~== "anydead") return r.AnyDead() ? 1.0 : 0.0;
+
+		// "deadshare", intArg = a SECTOR INDEX (not a Sector: a Sector is a struct and a Service only
+		// carries an Object). Returns 0..1, how much of that room's lighting is out.
+		if (request ~== "deadshare")
+		{
+			if (!level || intArg < 0 || intArg >= level.sectors.Size()) return 0.0;
+			return r.DeadShare(level.sectors[intArg]);
+		}
+		return 0.0;
 	}
 }
