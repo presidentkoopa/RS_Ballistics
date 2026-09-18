@@ -22,6 +22,25 @@
 // DEBRIS cycles through its four shapes as it spins, so a tumbling piece changes
 // silhouette like a real one turning.
 //
+// THE COLOUR RULE AND ITS EXCEPTION -- AND THE SYSTEM IS NOT THE RULE. Dust, smoke and debris give
+// no light of their own; fire, sparks and energy weapons do. That is a choice made in these profiles,
+// NOT a limit of the system: `emissive` has no ceiling (3.6 is used here), `lit = 0` takes a particle
+// off the room's light entirely, colour is unclamped and unsaturated by anything, and VOLUMEDEFS will
+// light haze in any tint asked for. So a NEON GUN IS BUILDABLE HERE TODAY (owner, 2026-09-18: "i might
+// still want a lightning gun one day so i want us to be neon-friendly"). It gets its own profiles; the
+// realistic ones do not move.
+//
+// A STARTING POINT FOR THAT GUN, measured out of RS_Main's lightning frames with tools/fx_curves.py
+// (their art is not used -- only what the numbers say lightning DOES):
+//   ROUGHNESS 18 to 38. A smooth ball is 3.5 and a fireball tearing apart at death peaks at 12.6, so
+//     an arc is three to ten times more broken-edged than anything else in the folder: it is nearly
+//     all edge. Whatever draws it has to be edge, not a blob with a bright middle.
+//   IT DOES NOT GROW AND SHRINK. A 25-frame arc holds full size from 0.12 of its life to the end and
+//     FLICKERS in brightness instead (0.82, 0.94, 0.85, 1.00, 0.92...). No size ramp; an alpha jitter.
+//   A SINGLE BOLT CLIMBS: the 13-frame one rises 90% of its own height and peaks at exactly mid-life.
+//   COLOUR sits in one narrow band the whole way (8 101 151 to 30 122 164) -- it does not cool like
+//     fire. Brightness moves; hue does not.
+
 // LIGHT: sector light at spawn, plus up to 32 dynamic lights in view.
 // NOT SORTED: a newer puff dims an older spark in front of it, and so on.
 // SOFT: a definition's own `soft` wins over the Soft particles slider.
@@ -465,11 +484,15 @@ particle rsb_spark_sparkler
 // A plasma bolt's hot core: a soft blue-white glow around the vanilla ball, following it.
 // Energy, so it may glow blue.
 particle rsb_plasma_glow
+// HOW AN ENERGY BALL DIES (measured, tools/fx_curves.py on RS_Main plasma/RSP6, 13 frames): it does
+// NOT fade evenly. It grows to full by about 0.58 of its life, HOLDS its size and its brightness,
+// and then lets go all at once -- 0.94 bright at 0.42, 0.76 at 0.58, 0.39 at 0.75, gone at 1. That
+// reads as containment failing, which is what plasma is. Nothing of that art is here; only its timing.
 {
-	size     = 12 @0, 16 @0.5, 10 @1
+	size     = 12 @0, 16 @0.5, 15 @0.75, 6 @1
 	color    = 190 225 255 @0, 120 180 255 @1
 	alpha    = 0 @0, 0 @1
-	emissive = 3.2 @0, 2.0 @0.5, 0 @1
+	emissive = 3.2 @0, 3.0 @0.42, 2.4 @0.58, 1.2 @0.75, 0 @1
 	lit      = 0
 	maxsize  = 24
 	soft     = 4
@@ -479,10 +502,10 @@ particle rsb_plasma_glow
 // The carbine's smaller, whiter core.
 particle rsb_plasma_glow_small
 {
-	size     = 7 @0, 10 @0.5, 6 @1
+	size     = 7 @0, 10 @0.5, 9.4 @0.75, 3.5 @1        // holds, then lets go: see rsb_plasma_glow
 	color    = 220 238 255 @0, 150 200 255 @1
 	alpha    = 0 @0, 0 @1
-	emissive = 3.6 @0, 2.2 @0.5, 0 @1
+	emissive = 3.6 @0, 3.4 @0.42, 2.7 @0.58, 1.4 @0.75, 0 @1
 	lit      = 0
 	maxsize  = 16
 	soft     = 3
@@ -493,10 +516,10 @@ particle rsb_plasma_glow_small
 // The BFG ball's core: a big soft green bloom around the vanilla ball. Energy: BFG green.
 particle rsb_bfg_glow
 {
-	size     = 26 @0, 36 @0.5, 22 @1
+	size     = 26 @0, 36 @0.5, 34 @0.75, 13 @1        // holds, then lets go: see rsb_plasma_glow
 	color    = 200 255 205 @0, 120 255 140 @1
 	alpha    = 0 @0, 0 @1
-	emissive = 2.6 @0, 1.8 @0.5, 0 @1
+	emissive = 2.6 @0, 2.5 @0.42, 2.0 @0.58, 1.0 @0.75, 0 @1
 	lit      = 0
 	maxsize  = 48
 	soft     = 8
