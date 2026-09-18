@@ -81,6 +81,12 @@ user float  rsb_recoil_view        = 1.0;       // the per-shot jolt the arm and
 user bool   rsb_view_cull          = true;      // effects behind your view skip their short-lived sparks, dust, small lights and marks
 user float  rsb_lod_range          = 1536.0;    // past this many map units, hits, flashes and wakes draw lighter (0 = never)
 
+// ---- SLOW MOTION (engine build 13): which clock a look that belongs to YOU runs on.
+// The world can crawl while you and your gun stay at full speed, so every effect has to pick a
+// clock. Ones in the world (bullets, smoke, debris, brass on the floor) always take the world's.
+// These are the ones attached to the gun in your hands, where either answer is defensible.
+user bool   rsb_slowmo_flash       = true;      // muzzle flash on the REAL clock: a crisp flash even in slow motion (off = it blooms and hangs in the air)
+
 // ---- preview and diagnostics
 user string rsb_preview_flame      = "incinerator";
 user string rsb_preview_impact     = "bullet";

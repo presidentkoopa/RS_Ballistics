@@ -92,6 +92,12 @@ OptionString "RSBPreviewFlamers"
 	"napalm",      "Napalm -- wide, sticks and burns"
 }
 
+OptionValue "RSBFlashClocks"
+{
+	1, "Snaps (real time)"
+	0, "Blooms and hangs (world time)"
+}
+
 OptionValue "RSBLogLevels"
 {
 	0, "Off"
@@ -250,6 +256,11 @@ OptionMenu "RSB_FlashMenu"
 	Option "Powder burns on close walls", "rsb_flash_powderburns", "OnOff"
 	Option "Blast kicks dust off nearby walls", "rsb_flash_blastkick", "OnOff"
 	Option "Shockwave of bent air (big guns)", "rsb_flash_shockwave", "OnOff"
+	StaticText ""
+	StaticText "IN SLOW MOTION", "Gold"
+	StaticText "The world can crawl while you and your gun stay at full speed. Smoke, sparks and", "DarkGray"
+	StaticText "powder are in the world and always slow with it. The flash itself is the gun's.", "DarkGray"
+	Option "Muzzle flash in slow motion", "rsb_slowmo_flash", "RSBFlashClocks"
 	StaticText ""
 	StaticText "VOLUMETRIC FLASHES", "Gold"
 	StaticText "The flash and the blast as real glowing gas with depth. Where one draws, the flat", "DarkGray"

@@ -43,7 +43,11 @@ class RSB_Recoil play
 	// dead on, and the kick is forgotten.
 	static double, double, double Step(String profile, Actor shooter, out double kickPitch, out double kickYaw, out int lastTic, out int runShot)
 	{
-		int now = level.maptime;
+		// THE REAL CLOCK, not the world one (slow motion, engine build 13). Recoil recovery is the gun
+		// settling in YOUR hands, and your gun cycles at full speed while the world crawls -- so a string
+		// fired in slow motion climbs and settles exactly as it does at full speed. With no slow motion
+		// running level.realtime == level.maptime, so nothing changes until it is switched on.
+		int now = level.realtime;
 		let rd = Enabled() ? Profile(profile) : null;
 		if (!rd)
 		{
@@ -124,7 +128,7 @@ class RSB_Recoil play
 		let rd = Enabled() ? Profile(profile) : null;
 		if (!rd) return 0, 0;
 		int runShot = 0;
-		Recover(rd, level.maptime, kickPitch, kickYaw, lastTic, runShot);
+		Recover(rd, level.realtime, kickPitch, kickYaw, lastTic, runShot);   // the real clock, as in Step
 		return kickPitch, kickYaw;
 	}
 

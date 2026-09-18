@@ -103,6 +103,10 @@ class RSB_Flash : Actor
 		}
 		let f = RSB_Flash(Actor.SpawnClientSide("RSB_Flash", muzzle, ALLOW_REPLACE));
 		if (!f) return null;
+		// SLOW MOTION: the flash belongs to the gun in your hands, not to the world, so by default it
+		// ticks on the real clock and snaps the way it does at full speed. Set per flash at spawn rather
+		// than in Default, because it is the player's choice (Ballistics -> "Muzzle flash in slow motion").
+		f.bREALTIME = RSB_Settings.SlowMoFlashReal();
 		f.flashId = whichFlash;
 		f.flashDef = fd;
 		f.dir = (aim.Length() > 0.000001) ? aim.Unit() : (1, 0, 0);
