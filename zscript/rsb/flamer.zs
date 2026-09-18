@@ -632,6 +632,12 @@ class RSB_FlameEmitter : Actor
 				fd.damageHeat, fd.damageWet);
 		}
 
+		// THE ROOM THIS IS BURNING IN (lights.zs). Presentation only, and deliberately not the sector's
+		// light level: this emitter is client-side, so what it feeds is this machine's own look for a
+		// lighting mod to read. Pouring for about a third of a second brings a room to a full burn.
+		if (surf && surf.sec && !surf.air && !surf.sky)
+			RSB_Fires.Feed(surf.sec, strength / 12.0);
+
 		double lightMul = RSB_Settings.FlameLight();
 		if (fd.landLightRadius > 0 && lightMul > 0)
 		{

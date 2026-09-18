@@ -269,6 +269,12 @@ OptionMenu "RSB_FlashMenu"
 	Option "Flame", "rsb_flash_flame", "OnOff"
 	Slider "Flame size", "rsb_flash_flame_size", 0.25, 3.0, 0.05, 2
 	StaticText ""
+	Option "Fire lights the room it burns in", "rsb_firelight", "OnOff"
+	Slider "Room keeps its glow for (seconds)", "rsb_firelight_linger", 0.5, 12.0, 0.5, 1
+	StaticText "Set a room alight and it gets brighter while it burns, then falls dark as the fire", "DarkGray"
+	StaticText "dies -- the opposite of shooting its lights out. Needs a lighting mod listening;", "DarkGray"
+	StaticText "with none in the load order nothing here does anything.", "DarkGray"
+	StaticText ""
 	Slider "Bore sparks", "rsb_flash_sparks", 0.0, 3.0, 0.1, 1
 	Slider "Smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
 	StaticText ""

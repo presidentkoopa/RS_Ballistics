@@ -140,6 +140,14 @@ class RSB_Settings play
 
 	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
 	static double TailVolume() { return max(0.0, Cvf("rsb_tail_volume", 1.0)); }
+	// A ROOM ON FIRE (lights.zs, RSB_Fires): fire lights the room it is burning in, through whatever
+	// lighting mod is listening. Presentation and this machine's alone -- where the flame lands is
+	// already client-side -- so `user`, unlike the shot-out lights beside it, which are level state.
+	static bool FireLight() { return Cvb("rsb_firelight", true); }
+	// How long a room keeps its glow after the last flame dies, seconds. It falls smoothly: fire goes
+	// out, unlike a lamp, and a room that snapped dark would look worst exactly as it died down.
+	static double FireLightLinger() { return clamp(Cvf("rsb_firelight_linger", 3.5), 0.1, 30.0); }
+
 	// SHOOTING THE LIGHTS OUT (lights.zs). The ONLY setting in this package that changes the GAME rather
 	// than the look: a darkened room is level state, it is saved, and in co-op it is darker for everyone.
 	// So it is deliberately a plain on/off with a floor, and it defaults ON at a conservative drop.

@@ -299,6 +299,110 @@ class RSB_Lights : Thinker
 }
 
 // ============================================================================
+// A ROOM ON FIRE. The inverse of shooting the lights out: set a room alight and it
+// gets BRIGHTER while it burns, then falls dark as the fire dies.
+//
+// AND IT IS THE OPPOSITE KIND OF THING, which is what makes it cheap. A shot-out
+// lamp changes a sector's light level -- level state, saved, identical on every
+// machine. Fire does not: RSB_FlameEmitter is +CLIENTSIDE, so where the fire lands
+// is already this machine's own look. So THIS WRITES NO SECTOR LIGHT AND NOTHING THE
+// GAME READS. It keeps a number, a lighting mod reads it, and two machines disagreeing
+// about it costs nothing -- which is exactly why it must never be allowed to touch
+// sector.lightlevel, however tempting the symmetry with the lights work is.
+//
+// A COUNT WOULD BE WRONG. The dead-lamp registry is a RATCHET: a lamp stays dead and
+// the share only ever rises. Fire goes OUT. If this were a count of burning surfaces,
+// the share would drop in one step when the last flame expired and the room would snap
+// dark at exactly the moment the effect should look best -- dying down. So it is a
+// DECAYING QUANTITY per sector: pouring fire feeds it, and it falls smoothly on its own
+// whether or not anything is still burning. (The glow lane caught this before either of
+// us built the wrong structure.)
+//
+// NO FLOOR. The lights work has one because darkness can make a room unplayable. A room
+// getting brighter needs no protecting, and nobody should add one for symmetry.
+//
+// WORLD CLOCK, not real: fire in the world burns slowly when the world is slowed.
+// ============================================================================
+class RSB_Fires : Thinker
+{
+	// Only the sectors actually burning, so the per-tic decay is over a handful of entries
+	// rather than every sector on the map.
+	private Array<int> hotSec;
+	private Array<double> hotVal;
+	private int lastTic;
+
+	clearscope static RSB_Fires Existing()
+	{
+		ThinkerIterator it = ThinkerIterator.Create("RSB_Fires", Thinker.STAT_STATIC);
+		return RSB_Fires(it.Next());
+	}
+
+	private static RSB_Fires Get()
+	{
+		let r = Existing();
+		if (!r)
+		{
+			r = new("RSB_Fires");
+			r.ChangeStatNum(Thinker.STAT_STATIC);
+			r.lastTic = level.maptime;
+		}
+		return r;
+	}
+
+	clearscope bool AnyFire() const { return hotSec.Size() > 0; }
+
+	clearscope double FireShare(Sector sec) const
+	{
+		if (!sec) return 0;
+		int idx = sec.Index();
+		for (int i = 0; i < hotSec.Size(); i++)
+			if (hotSec[i] == idx) return clamp(hotVal[i], 0.0, 1.0);
+		return 0;
+	}
+
+	// FIRE LANDED HERE. Called from the flamethrower every tic it is pouring onto a surface.
+	// `amount` is how much of a full burn one tic of pouring is worth.
+	static void Feed(Sector sec, double amount)
+	{
+		if (!sec || amount <= 0) return;
+		if (!RSB_Settings.FireLight()) return;
+		let r = Get();
+		if (!r) return;
+		int idx = sec.Index();
+		if (idx < 0) return;
+		for (int i = 0; i < r.hotSec.Size(); i++)
+			if (r.hotSec[i] == idx)
+			{
+				r.hotVal[i] = min(1.0, r.hotVal[i] + amount);
+				return;
+			}
+		r.hotSec.Push(idx);
+		r.hotVal.Push(min(1.0, amount));
+	}
+
+	override void Tick()
+	{
+		// The world clock: a room burns down slowly when the world is slowed.
+		int now = level.maptime;
+		int step = now - lastTic;
+		lastTic = now;
+		if (step <= 0 || hotSec.Size() == 0) return;
+
+		double linger = RSB_Settings.FireLightLinger();
+		double fall = (linger > 0.01) ? (double(step) / (linger * TICRATE)) : 1.0;
+		for (int i = hotSec.Size() - 1; i >= 0; i--)
+		{
+			hotVal[i] -= fall;
+			if (hotVal[i] <= 0)
+			{
+				hotSec.Delete(i);
+				hotVal.Delete(i);
+			}
+		}
+	}
+}
+
+// ============================================================================
 // WHAT OTHER MODS ASK. A Service, and for exactly the reason RS_Ballistics reads
 // RS_Darkness through one: a ZScript call to a class that is not in the load order
 // fails at COMPILE, so a lighting mod naming RSB_Lights directly would refuse to
@@ -319,10 +423,10 @@ class RSB_FixtureService : Service
 	override double GetDouble(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
 		let r = RSB_Lights.Existing();
-		if (!r) return 0.0;                    // nothing has been shot out on this map, or no level yet
 
 		// "anydead" -- has ANYTHING on this map been shot out. Ask this first and skip the rest.
-		if (request ~== "anydead") return r.AnyDead() ? 1.0 : 0.0;
+		if (request ~== "anydead") return (r && r.AnyDead()) ? 1.0 : 0.0;
+		if (request ~== "deadshare" && !r) return 0.0;
 
 		// "deadshare", intArg = a SECTOR INDEX (not a Sector: a Sector is a struct and a Service only
 		// carries an Object). Returns 0..1, how much of that room's lighting is out.
@@ -330,6 +434,23 @@ class RSB_FixtureService : Service
 		{
 			if (!level || intArg < 0 || intArg >= level.sectors.Size()) return 0.0;
 			return r.DeadShare(level.sectors[intArg]);
+		}
+
+		// "anyfire" -- is ANY room on this map burning. The same cheap first question as anydead.
+		if (request ~== "anyfire")
+		{
+			let f = RSB_Fires.Existing();
+			return (f && f.AnyFire()) ? 1.0 : 0.0;
+		}
+
+		// "fireshare", intArg = a SECTOR INDEX. 0..1, how brightly this room is burning RIGHT NOW.
+		// Unlike deadshare this FALLS as the fire dies, so a reader can ease its reaction off
+		// instead of snapping when the last flame goes out.
+		if (request ~== "fireshare")
+		{
+			let f = RSB_Fires.Existing();
+			if (!f || !level || intArg < 0 || intArg >= level.sectors.Size()) return 0.0;
+			return f.FireShare(level.sectors[intArg]);
 		}
 		return 0.0;
 	}
