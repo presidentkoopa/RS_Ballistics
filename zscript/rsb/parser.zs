@@ -2183,7 +2183,13 @@ class RSB_Parser
 			for (int i = 0; i < v.Size(); i++) fx.textures.Push(v[i]);
 			return "";
 		}
-		return String.Format("unknown fixture key \"%s\" -- a fixture names `textures`", key);
+		if (key == "actors")
+		{
+			if (v.Size() < 1) return "actors is one or more actor class names";
+			for (int i = 0; i < v.Size(); i++) fx.actors.Push(v[i]);
+			return "";
+		}
+		return String.Format("unknown fixture key \"%s\" -- a fixture names `textures` or `actors`", key);
 	}
 
 	private static String ApplyStyle(RSB_StyleDef st, String key, out Array<String> v)

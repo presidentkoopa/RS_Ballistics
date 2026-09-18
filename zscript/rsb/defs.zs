@@ -604,6 +604,10 @@ class RSB_RecoilDef : RSB_Def
 class RSB_FixtureDef : RSB_Def
 {
 	Array<String> textures;
+	// LIT DECORATIONS (`actors`): torches, tech lamps, burning barrels -- props that carry their own
+	// GLDEFS light. Shooting one kills the light with no sector arithmetic at all, which is why they
+	// are the easy half of the lights work and were the last part nobody had picked up.
+	Array<String> actors;
 }
 
 class RSB_StyleDef : RSB_Def

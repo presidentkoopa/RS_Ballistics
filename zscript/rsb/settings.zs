@@ -152,6 +152,11 @@ class RSB_Settings play
 	// than the look: a darkened room is level state, it is saved, and in co-op it is darker for everyone.
 	// So it is deliberately a plain on/off with a floor, and it defaults ON at a conservative drop.
 	static bool ShootOutLights() { return Cvb("rsb_shootlights", true); }
+	// LIT DECORATIONS: torches, tech lamps, burning barrels. Separate from the texture half because
+	// this one makes scenery SHOOTABLE, which changes what the player can interact with.
+	static bool ShootOutLamps() { return Cvb("rsb_shootlamps", true); }
+	static int LampHealth() { return int(clamp(Cvf("rsb_shootlamps_health", 20.0), 1.0, 500.0)); }
+	static Color DeadLampShade() { return Color(255, 26, 24, 22); }
 	// The SHARE of its own light a room loses when every one of its fixtures is dead; each break
 	// takes its part of that. A share rather than a count of light units, because that is what the
 	// engine's trim takes and because a bright room should lose more than a dim one.

@@ -195,6 +195,10 @@ end
 fixture lamp_wall_tnt   # TNT's coloured lamps -- read out of the IWAD, and missing from the list above
   textures = LITEGRN1, LITERED1, LITERED2, LITEYEL1, LITEYEL2, LITEYEL3
 end
+fixture lamp_props   # LIT DECORATIONS: they carry their own light, so killing one snuffs it outright
+  actors = TechLamp, TechLamp2, Column, BurningBarrel, HeadCandles, Candelabra
+  actors = BlueTorch, GreenTorch, RedTorch, ShortBlueTorch, ShortGreenTorch, ShortRedTorch
+end
 fixture lamp_panel   # ceiling light panels: gridded on the hit, so a big one takes several shots
   textures = TLITE6_1, TLITE6_4, TLITE6_5, TLITE6_6, GRNLITE1
 end
