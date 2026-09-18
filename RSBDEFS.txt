@@ -190,10 +190,13 @@ end
 # Anything can be a lit-looking surface; only a lamp is a fixture.
 # Patterns are exact or end in * -- a PWAD adds its own names with one more line, no code change.
 fixture lamp_wall
-  textures = LITE2, LITE3, LITE4, LITE5, LITE96, LITEBLU*, LITERED, TEKLITE, TEKLITE2, BRICKLIT, GRNLITE1
+  textures = LITE2, LITE3, LITE4, LITE5, LITE96, LITEBLU*, LITERED, TEKLITE, TEKLITE2, BRICKLIT
+end
+fixture lamp_wall_tnt   # TNT's coloured lamps -- read out of the IWAD, and missing from the list above
+  textures = LITEGRN1, LITERED1, LITERED2, LITEYEL1, LITEYEL2, LITEYEL3
 end
 fixture lamp_panel   # ceiling light panels: gridded on the hit, so a big one takes several shots
-  textures = TLITE6_1, TLITE6_4, TLITE6_5, TLITE6_6
+  textures = TLITE6_1, TLITE6_4, TLITE6_5, TLITE6_6, GRNLITE1
 end
 
 # ---------------------------------------------------------------- LAVA

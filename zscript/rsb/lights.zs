@@ -207,6 +207,36 @@ class RSB_Lights : Thinker
 		return clamp(double(dead[idx]) / double(tally[idx]), 0.0, 1.0);
 	}
 
+	// ---------------------------------------------------------------- the broken look
+	// A DEAD LAMP THAT STILL LOOKS LIT is the thing the owner noticed first: a Doom lamp texture emits
+	// nothing, so taking the room's light away just dims the PICTURE of a working lamp along with the
+	// walls. RS_ShotOutLights ships a `<NAME>_OUT` for every lamp in the four IWADs -- the lit element
+	// crushed, the housing kept, scorched and cracked. If that package is not loaded the lookup simply
+	// fails and nothing swaps, which is why the art lives in its own pk3 and this does not depend on it.
+	//
+	// A WALL SWAPS AT ONCE: one sidedef is one lamp. A FLAT WAITS UNTIL THE ROOM IS OUT, because a
+	// ceiling panel is usually the whole ceiling and there is no way to break a quarter of a flat --
+	// swapping on the first hit would black out a ceiling the player has only started shooting.
+	private void Blacken(RSB_Surface surf, int idx)
+	{
+		// NOT named `out`: that is the parameter qualifier and a local called it is "Unexpected 'out'".
+		// Same family as Break(), Case(), Void() and Static() -- ZScript keywords are case-insensitive.
+		// Type_Any, not Wall or Flat: the broken versions come from PNGs in the addon's textures/ folder,
+		// which GZDoom makes into plain textures named by their file rather than into wall or flat types.
+		TextureID broken = TexMan.CheckForTexture(surf.texName .. "_OUT", TexMan.Type_Any);
+		if (!broken.IsValid()) return;
+
+		if (!surf.flat)
+		{
+			if (!surf.hitLine) return;
+			let sd = surf.hitLine.sidedef[(surf.lineSide == 1) ? 1 : 0];
+			if (sd) sd.SetTexture(surf.linePart, broken);
+			return;
+		}
+		if (idx >= 0 && idx < tally.Size() && dead[idx] >= tally[idx])
+			surf.sec.SetTexture(surf.plane, broken);
+	}
+
 	// ---------------------------------------------------------------- the floor
 	// HOW DARK A ROOM MAY GET, and why the setting alone is not the answer. A raw sector level of 48
 	// is a lit room with no darkness mod and pitch black under a Darkness preset -- the curve is not
@@ -290,6 +320,8 @@ class RSB_Lights : Thinker
 		int now = surf.sec.lightlevel;
 		int want = max(floorLevel, now - drop);
 		if (want < now) surf.sec.SetLightLevel(want);
+
+		r.Blacken(surf, idx);
 
 		RSB_Log.Once(RSB_Log.LV_INFO, "lights:first", String.Format(
 			"first fixture shot out: %s, room %d has %d, %d now dead, light %d -> %d",
