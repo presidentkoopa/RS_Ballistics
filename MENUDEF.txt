@@ -268,12 +268,7 @@ OptionMenu "RSB_FlashMenu"
 	StaticText ""
 	Option "Flame", "rsb_flash_flame", "OnOff"
 	Slider "Flame size", "rsb_flash_flame_size", 0.25, 3.0, 0.05, 2
-	StaticText ""
-	Option "Fire lights the room it burns in", "rsb_firelight", "OnOff"
-	Slider "Room keeps its glow for (seconds)", "rsb_firelight_linger", 0.5, 12.0, 0.5, 1
-	StaticText "Set a room alight and it gets brighter while it burns, then falls dark as the fire", "DarkGray"
-	StaticText "dies -- the opposite of shooting its lights out. Needs a lighting mod listening;", "DarkGray"
-	StaticText "with none in the load order nothing here does anything.", "DarkGray"
+
 	StaticText ""
 	Slider "Bore sparks", "rsb_flash_sparks", 0.0, 3.0, 0.1, 1
 	Slider "Smoke", "rsb_flash_smoke", 0.0, 3.0, 0.1, 1
@@ -344,6 +339,14 @@ OptionMenu "RSB_FlameMenu"
 	Slider "Flames", "rsb_flame_particles", 0.0, 3.0, 0.1, 1
 	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
 	Slider "Flame volume", "rsb_flame_volume", 0.0, 1.0, 0.05, 2
+	StaticText ""
+	StaticText "A ROOM ON FIRE", "Gold"
+	StaticText "The two lights above ride the nozzle and the spot the fire lands on, so a corridor went", "DarkGray"
+	StaticText "dark behind you with the floor still burning. With this on, a room you set alight lights", "DarkGray"
+	StaticText "ITSELF while it burns and falls back as the fire dies -- the opposite of shooting its", "DarkGray"
+	StaticText "lights out. Needs a lighting mod listening; with none loaded this does nothing.", "DarkGray"
+	Option "Fire lights the room it burns in", "rsb_firelight", "OnOff"
+	Slider "Room keeps its glow for (seconds)", "rsb_firelight_linger", 0.5, 12.0, 0.5, 1
 }
 
 OptionMenu "RSB_HeatMenu"
@@ -373,6 +376,15 @@ OptionMenu "RSB_LightMenu"
 	StaticText "Capped: a burst's sparks share a few stronger lights -- lighter on the GPU.", "DarkGray"
 	StaticText ""
 	Slider "Fire light", "rsb_flame_light", 0.0, 3.0, 0.1, 1
+	Option "Fire lights the room it burns in", "rsb_firelight", "OnOff"
+	Slider "Room keeps its glow for (seconds)", "rsb_firelight_linger", 0.5, 12.0, 0.5, 1
+	StaticText ""
+	StaticText "SHOOTING THE LIGHTS OUT", "Gold"
+	StaticText "Shoot a lamp and the room it lit gets darker by that lamp's share. This one changes the", "DarkGray"
+	StaticText "GAME, not just the look: the dark room is saved and in co-op it is dark for everyone.", "DarkGray"
+	Option "Shoot out lights", "rsb_shootlights", "OnOff"
+	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_drop", 0, 255, 8, 0
+	Slider "Never darker than", "rsb_shootlights_floor", 0, 255, 8, 0
 	StaticText ""
 	Slider "Lights on smoke and dust (32 recommended)", "r_gpuparticles_lights", 0, 32, 1, 0
 	StaticText ""
