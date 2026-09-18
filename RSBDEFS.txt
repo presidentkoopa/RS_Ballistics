@@ -181,6 +181,21 @@ burst glint_glass          # 3D glass shards turning in the room's light (flat w
   particle = rsb_chunk_glass_shard1, rsb_chunk_glass_shard2, rsb_chunk_glass_shard3, rsb_chunk_glass_shard4, rsb_chunk_glass_shard5, rsb_chunk_glass_sliver1, rsb_chunk_glass_sliver2
 end
 
+# ---------------------------------------------------------------- FIXTURES
+# WHICH TEXTURES ARE LAMPS. Not the same list as the `light` material in SURFACES.txt, which is
+# tuned for the LOOK and is generous on purpose -- a bright ceiling tile deserves the pop and the
+# bulb glass when it is shot. THIS list alone decides what DARKENS A ROOM when it dies, and it is
+# strict: lit trim (LITEMET, LITESTON) pops and sparks without taking any light out, and an
+# ordinary ceiling or floor that merely reads as bright is not a lamp at all.
+# Anything can be a lit-looking surface; only a lamp is a fixture.
+# Patterns are exact or end in * -- a PWAD adds its own names with one more line, no code change.
+fixture lamp_wall
+  textures = LITE2, LITE3, LITE4, LITE5, LITE96, LITEBLU*, LITERED, TEKLITE, TEKLITE2, BRICKLIT, GRNLITE1
+end
+fixture lamp_panel   # ceiling light panels: gridded on the hit, so a big one takes several shots
+  textures = TLITE6_1, TLITE6_4, TLITE6_5, TLITE6_6
+end
+
 # ---------------------------------------------------------------- LAVA
 # What a round does to molten rock. No splash and no wet: lumps thrown, a spit of hot droplets,
 # embers lifting on the heat, and the air over it burning. A blast gets the heavier `_big` sets.

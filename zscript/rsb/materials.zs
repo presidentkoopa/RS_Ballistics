@@ -26,6 +26,15 @@ class RSB_Surface
 	bool    sky;        // the round went into the sky: no effects
 	bool    flat;
 	bool    air;        // no surface: a blast in mid-air or on a monster; no mark
+	// WHAT IT WAS PART OF (shot-out lights). Presentation never needed these -- a spark does not care
+	// which sidedef it came off -- but BREAKING something does: a fixture has to be identified exactly,
+	// so a second round into a dead lamp is recognised, and the room that loses its light has to be the
+	// one the lamp FACES, which is the side's own sector and never the line's front sector.
+	Sector  sec;        // the side's sector for a wall, the sector itself for a flat; null if unknown
+	Line    hitLine;    // null for a flat
+	int     lineSide;   // 0 front, 1 back; -1 for a flat
+	int     linePart;   // 0 upper, 1 middle, 2 lower; -1 for a flat
+	int     plane;      // for a flat: 0 floor, 1 ceiling; -1 for a wall
 }
 
 class RSB_Materials play
@@ -70,18 +79,29 @@ class RSB_Materials play
 			if (travel != (0, 0, 0) && (n dot travel) > 0) n = -n;
 			s.normal = n;
 			tex = d.HitTexture;
+			// THE SIDE YOU ARE LOOKING AT IT FROM, and its OWN sector -- not the line's front sector.
+			// A lamp on a wall between two rooms must darken the room it faces (shot-out lights).
+			s.hitLine = d.HitLine;
+			s.lineSide = d.LineSide;
+			s.linePart = d.LinePart;
+			let sd = d.HitLine.sidedef[(d.LineSide == 1) ? 1 : 0];
+			s.sec = sd ? sd.sector : d.HitSector;
 		}
 		else if (d.HitType == FLineTraceData.TRACE_HitFloor)
 		{
 			s.normal = (0, 0, 1);
 			s.flat = true;
 			tex = d.HitTexture;
+			s.sec = d.HitSector;
+			s.plane = 0;
 		}
 		else if (d.HitType == FLineTraceData.TRACE_HitCeiling)
 		{
 			s.normal = (0, 0, -1);
 			s.flat = true;
 			tex = d.HitTexture;
+			s.sec = d.HitSector;
+			s.plane = 1;
 		}
 		else
 		{
@@ -138,6 +158,11 @@ class RSB_Materials play
 		s.sky = false;
 		s.flat = false;
 		s.air = false;
+		s.sec = null;
+		s.hitLine = null;
+		s.lineSide = -1;
+		s.linePart = -1;
+		s.plane = -1;
 		return s;
 	}
 

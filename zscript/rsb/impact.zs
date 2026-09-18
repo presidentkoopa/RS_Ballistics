@@ -358,6 +358,11 @@ class RSB_Impact play
 				"impact \"%s\" is not defined in any RSBDEFS, but something names it", impactBase));
 			return;
 		}
+		// SHOOTING THE LIGHTS OUT (lights.zs), FIRST and in the playsim -- before a single look is
+		// spawned. Everything below this line is client-side and is allowed to differ between machines;
+		// a darkened sector is not, so the break must never depend on it.
+		RSB_Lights.ShootOut(surf);
+
 		String surfName = (surf.material.Length() > 0) ? surf.material : "default";
 		RSB_Log.Once(RSB_Log.LV_INFO, "impact:first:" .. im.id, String.Format(
 			"first impact this map using %s (surface %s, effects %s)", im.id, surfName, RSB_Tier.Name(tier)));

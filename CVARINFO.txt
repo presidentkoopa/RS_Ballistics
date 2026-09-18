@@ -81,6 +81,12 @@ user float  rsb_recoil_view        = 1.0;       // the per-shot jolt the arm and
 user bool   rsb_view_cull          = true;      // effects behind your view skip their short-lived sparks, dust, small lights and marks
 user float  rsb_lod_range          = 1536.0;    // past this many map units, hits, flashes and wakes draw lighter (0 = never)
 
+// ---- SHOOTING THE LIGHTS OUT (zscript/rsb/lights.zs). THE ONLY SETTING HERE THAT CHANGES THE GAME:
+// a darkened room is level state -- saved, and darker for everyone in co-op. Server, therefore, not user.
+server bool  rsb_shootlights       = true;    // shooting a lamp takes it out and darkens the room it lit
+server float rsb_shootlights_drop  = 96.0;    // light a room loses when EVERY fixture in it is dead; each break takes its share
+server float rsb_shootlights_floor = 48.0;    // how dark a room may get this way (a Darkness preset deepens it further)
+
 // ---- LIQUIDS: what comes OUT of something that carries liquid, and the wet it leaves behind.
 // Water and coolant only. Blood and gore are a separate job the owner has held (2026-09-18), and
 // nothing here touches them. The wet mark is the engine's fourth surface-damage channel (soot,

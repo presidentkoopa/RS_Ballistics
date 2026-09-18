@@ -140,6 +140,16 @@ class RSB_Settings play
 
 	// Gunshot tails (a flash's `tail`): the room answering each shot, x this.
 	static double TailVolume() { return max(0.0, Cvf("rsb_tail_volume", 1.0)); }
+	// SHOOTING THE LIGHTS OUT (lights.zs). The ONLY setting in this package that changes the GAME rather
+	// than the look: a darkened room is level state, it is saved, and in co-op it is darker for everyone.
+	// So it is deliberately a plain on/off with a floor, and it defaults ON at a conservative drop.
+	static bool ShootOutLights() { return Cvb("rsb_shootlights", true); }
+	// The light a room loses when EVERY one of its fixtures is dead. Each break takes its share.
+	static double LightDrop() { return clamp(Cvf("rsb_shootlights_drop", 96.0), 0.0, 255.0); }
+	// How dark a room may get this way. Doom's monsters do not care about light, so darkness only ever
+	// costs the player -- and with a Darkness preset running, the room is deeper than this number looks.
+	static int LightFloor() { return int(clamp(Cvf("rsb_shootlights_floor", 48.0), 0.0, 255.0)); }
+
 	// LIQUIDS: water and coolant -- a round into standing water, or through a pipe. NOT blood, which is
 	// its own job and held by the owner. `Liquids` off leaves the hit itself alone (the hole is still
 	// punched, the metal still rings) and takes away only what the liquid does.

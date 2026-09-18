@@ -597,6 +597,15 @@ class RSB_RecoilDef : RSB_Def
 
 // A STYLE: a named look the player picks in the menu. Multipliers over every
 // profile, plus any `~style` variants written for it.
+// A FIXTURE LIST (`fixture`): which textures are LAMPS, as opposed to surfaces that merely read as
+// lit. SURFACES.txt's `light` material is generous on purpose -- a bright ceiling tile deserves the
+// pop and the bulb glass -- but only a lamp darkens a room when it dies, and using the generous list
+// for that would make a room's own ceiling a fixture. Patterns are exact or end in * (LITEBLU*).
+class RSB_FixtureDef : RSB_Def
+{
+	Array<String> textures;
+}
+
 class RSB_StyleDef : RSB_Def
 {
 	double particlesMul;   // particle counts: impacts, flash bursts, wakes
@@ -746,6 +755,7 @@ class RSB_DefSet
 	{
 		Array<String> kinds;
 		kinds.Push("style");
+		kinds.Push("fixture");
 		kinds.Push("round");
 		kinds.Push("ballistics");
 		kinds.Push("roundlook");

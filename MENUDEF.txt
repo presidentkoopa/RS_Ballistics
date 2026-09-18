@@ -230,6 +230,18 @@ OptionMenu "RSB_ImpactMenu"
 	Option "Ricochets on glancing hits", "rsb_ricochets", "OnOff"
 	Slider "Impact volume", "rsb_impact_volume", 0.0, 1.0, 0.05, 2
 	StaticText ""
+	StaticText "SHOOTING THE LIGHTS OUT", "Gold"
+	StaticText "Shoot a lamp and it goes out, and the room it lit gets darker by that lamp's share.", "DarkGray"
+	StaticText "One of four dims a quarter; all four take the room to its floor. A ceiling panel is", "DarkGray"
+	StaticText "gridded, so you walk your fire across it. THIS ONE CHANGES THE GAME, not just the look:", "DarkGray"
+	StaticText "the dark room is saved, and in co-op it is dark for everyone.", "DarkGray"
+	Option "Shoot out lights", "rsb_shootlights", "OnOff"
+	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_drop", 0, 255, 8, 0
+	Slider "Never darker than", "rsb_shootlights_floor", 0, 255, 8, 0
+	StaticText "A rooms with a flickering, strobing or glowing light rewrites its own level every tic and", "DarkGray"
+	StaticText "will NOT dim yet -- that needs engine support, which is being built. Not a bug.", "DarkGray"
+	StaticText "A Darkness preset deepens the floor well past the number above.", "DarkGray"
+	StaticText ""
 	StaticText "LIQUIDS", "Gold"
 	StaticText "What comes out of something that carries liquid: the column thrown up out of water, the", "DarkGray"
 	StaticText "jet out of a pipe you have holed, the lumps of molten rock thrown out of lava, and the", "DarkGray"

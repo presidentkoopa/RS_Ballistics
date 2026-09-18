@@ -456,6 +456,10 @@ class RSB_Parser
 			d.sputterSound = "none";
 			return d;
 		}
+		if (kind == "fixture")
+		{
+			return new("RSB_FixtureDef");
+		}
 		if (kind == "style")
 		{
 			let d = new("RSB_StyleDef");
@@ -492,6 +496,8 @@ class RSB_Parser
 		if (f) return ApplyFlash(f, key, v);
 		let e = RSB_EjectaDef(d);
 		if (e) return ApplyEjecta(e, key, v);
+		let fx = RSB_FixtureDef(d);
+		if (fx) return ApplyFixture(fx, key, v);
 		let st = RSB_StyleDef(d);
 		if (st) return ApplyStyle(st, key, v);
 		let fm = RSB_FlameDef(d);
@@ -2166,6 +2172,18 @@ class RSB_Parser
 			return (rc.viewBack >= 0 && rc.viewTics >= 0) ? "" : "view is back units, rise degrees, roll degrees, tics";
 		}
 		return String.Format("unknown recoil key \"%s\"", key);
+	}
+
+	// ---------------------------------------------------------------- FIXTURE
+	private static String ApplyFixture(RSB_FixtureDef fx, String key, out Array<String> v)
+	{
+		if (key == "textures")
+		{
+			if (v.Size() < 1) return "textures is one or more texture names, each exact or ending in *";
+			for (int i = 0; i < v.Size(); i++) fx.textures.Push(v[i]);
+			return "";
+		}
+		return String.Format("unknown fixture key \"%s\" -- a fixture names `textures`", key);
 	}
 
 	private static String ApplyStyle(RSB_StyleDef st, String key, out Array<String> v)
