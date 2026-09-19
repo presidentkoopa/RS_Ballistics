@@ -143,6 +143,20 @@ class RSB_Materials play
 				if (!tex.IsValid()) tex = sd.GetTexture(Side.bottom);
 			}
 		}
+		else
+		{
+			// NOTHING WAS HIT, SO NOTHING HAPPENS. The owner, in play: melee weapons "go fuckin nuts
+			// even when they aren't near a wall or surface".
+			//
+			// A melee puff is spawned wherever the swing landed -- including in mid-air on a monster's
+			// chest -- and this used to hand back a surface ANYWAY, with an invalid texture. Classify
+			// then gave that surface the default material and the full stone impact played: sparks,
+			// chips, dust, a mark and a sound, hanging in the air where there was no wall at all.
+			//
+			// A caller that genuinely wants an effect in open air asks for one: Land(..., inAirToo).
+			// Silence is the right answer to "what did this hit" when the answer is nothing.
+			return null;
+		}
 		Classify(s, tex);
 		return s;
 	}

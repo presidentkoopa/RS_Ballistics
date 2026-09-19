@@ -417,6 +417,14 @@ class RSB_SawPuffHeavy : RSB_HitPuff
 	override String ImpactProfile() { return "saw_heavy"; }
 }
 
+// A FIST. Name it as a melee weapon's puff and a punch leaves a little dust on a surface and nothing
+// anywhere else (owner: fists should not have "fuckin crazy effects"). It was borrowing the chainsaw's
+// puff, which is a CUTTING TOOL -- sparks, a hotspot that keeps burning into the wall, the lot.
+class RSB_PunchPuff : RSB_HitPuff
+{
+	override String ImpactProfile() { return "punch"; }
+}
+
 // A LASER BURNING A SURFACE: pass it as a laser attack's puff (A_RailAttack or
 // LineAttack). Plays the `laser_burn` impact where the beam hit. First user: the
 // Unmaker (WM_Unmaker).

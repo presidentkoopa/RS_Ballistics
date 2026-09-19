@@ -10109,6 +10109,93 @@ end
 
 # ---- END liquid variants
 
+# ============================================================ DEFLECTION, AND FISTS
+# THE OWNER, IN PLAY: "THE SHIELDSAW NEEDS TO SPARK N SHIT WHEN IT DEFLECTS THINGS... LIKE FIREBALLS
+# AND BULLETS AND MONSTER GOO", and "I DON'T THINK THE FISTS SHOULD HAVE FUCKIN CRAZY EFFECTS, MAYBE
+# JUST A TINY BIT OF DUST WHEN PUNCHING A SURFACE".
+#
+# WHAT IS DEFLECTED DECIDES THE LOOK, AND A MATERIAL VARIANT CANNOT DO THAT. A `.metal` variant asks
+# what the SURFACE is made of; a shield in mid-air has no surface, and the interesting question is what
+# hit it. So these are separate base profiles the shield NAMES, rather than one profile with variants.
+#
+# HOW TO PLAY ONE (RS_ShieldSaw, one line at the moment of the deflect):
+#     RSB_Impact.Land(shield, "deflect_energy", incomingTravel, true);
+# The last argument is inAirToo -- a deflection happens in open air, and without it nothing draws.
+
+impact deflect             # the generic turn-aside: a hard clang and a shower off the blade
+  bursts     = spark_metal, spark_spray, ember_metal
+  sound      = rsb/impact/metal
+  light      = 60, 1.4, 3
+  lightcolor = 255, 210, 150
+end
+
+impact deflect_bullet      # a round turned: a bright scrape along the blade and a ricochet away from it
+  bursts     = spark_metal, spark_spray, spk_streaks_fine
+  sound      = rsb/impact/metal
+  light      = 70, 1.6, 3
+  lightcolor = 255, 220, 170
+end
+
+impact deflect_energy      # a plasma bolt broken on the blade. It does not bounce -- it COMES APART,
+                           # which is the whole reason a shield against energy reads differently
+  bursts     = plasma_glow, energy_sparks_plasma, plasma_ozone, arcs_electric
+  sound      = rsb/impact/electric
+  light      = 140, 2.4, 4
+  lightcolor = 120, 190, 255
+end
+
+impact deflect_fire        # a fireball swatted aside: it bursts, and the pieces keep burning as they go
+  bursts     = flame_embers, melt_embers, flame_smoke, spark_hot
+  sound      = rsb/impact/metal
+  light      = 150, 2.6, 4
+  lightcolor = 255, 150, 60
+end
+
+impact deflect_goo         # monster spit turned: a wet slap and droplets thrown off the edge
+  bursts     = splash_slime, laser_droplets
+  sound      = none
+  light      = 40, 1.2, 2
+  lightcolor = 140, 255, 120
+end
+
+# A FIST ON A SURFACE, AND ALMOST NOTHING ELSE. No sparks, no chips, no mark, no sound of its own --
+# a punch is not a cutting tool and it was borrowing a cutting tool's impact. A little dust, and that
+# is the entire effect the owner asked for.
+#
+# Punching a MONSTER now draws nothing at all, which is the other half of the same complaint and is
+# fixed in materials.zs rather than here: a melee puff with no surface under it used to be handed a
+# default surface anyway and played a full stone impact in mid-air.
+impact punch
+  bursts     = dust_concrete
+  sound      = none
+end
+
+impact punch.metal
+  bursts     = spark_hot
+  sound      = none
+end
+
+impact punch.wood
+  bursts     = dust_wood
+  sound      = none
+end
+
+impact punch.dirt
+  bursts     = dust_dirt
+  sound      = none
+end
+
+impact punch.glass         # the one place a fist earns a real effect
+  bursts     = glint_glass
+  sound      = rsb/glass
+  damage     = crack, 7.0, 0.3, 0, 0
+end
+
+impact punch.liquid
+  bursts     = splash_liquid
+  sound      = none
+end
+
 # ---- BEGIN WW2 (tools/gen_ww2_profiles.py)
 # THE WW2 SET. Twenty-six guns and a flamethrower, ten cartridges, NOTHING REUSED FROM THE
 # MODERN SET (owner). DO NOT EDIT BY HAND: change tools/gen_ww2_profiles.py and run it again.
