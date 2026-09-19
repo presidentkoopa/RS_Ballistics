@@ -47,6 +47,7 @@ import io
 import os
 import re
 import sys
+import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.dirname(HERE)
@@ -75,6 +76,36 @@ EXEMPT = {
 }
 
 KINDS = ("flash", "recoil", "ejecta", "round")
+
+
+# THE FILE THE GAME LOADS IS THE PK3, NOT THE SOURCE TREE, AND THEY ARE NOT THE SAME STATEMENT.
+#
+# This cost the owner a working feature. The weapons lane wired five `deflect` profiles by name, their
+# lint checked those names against RSBDEFS.txt IN MY SOURCE TREE and went green, and the profiles were
+# real -- but they had not been PACKED. He hit a shield with plasma and nothing happened, because the
+# pk3 in his load order did not contain them. A reference with no definition, one level up from the 68
+# dead rtcw_ names: not a name with nothing behind it, but a name whose definition exists everywhere
+# except the file being run.
+#
+# So this tool reads the INSTALLED pk3 by default and only falls back to the source tree when there is
+# no pk3 to read -- saying loudly which one it used, because "it is in RSBDEFS" and "it is in the pack
+# he is running" are different claims and only the second one matters.
+def read_defs():
+    """RSBDEFS as the GAME sees it: out of the installed pk3, falling back to source with a warning."""
+    pk3 = os.path.join(PKG, "RS_Ballistics.pk3")
+    src = io.open(DEFS, encoding="utf-8", errors="replace").read()
+    if not os.path.exists(pk3):
+        print("RSBDEFS: from the SOURCE TREE -- no packed pk3 to read, so this proves nothing about what the game loads")
+        return src, None
+    with zipfile.ZipFile(pk3) as z:
+        packed = z.read("RSBDEFS.txt").decode("utf-8", "replace")
+    if packed.replace("\r\n", "\n") != src.replace("\r\n", "\n"):
+        print("RSBDEFS: from the INSTALLED pk3 -- WHICH DIFFERS FROM THE SOURCE TREE.")
+        print("         Something is built and not packed, or packed and not committed. The pk3 wins here,")
+        print("         because it is what the game loads -- run build.ps1 if the source is the newer one.")
+    else:
+        print("RSBDEFS: from the INSTALLED pk3 (identical to the source tree)")
+    return packed, pk3
 
 
 def declared_sounds(path):
@@ -108,13 +139,13 @@ SOUND_KEYS = ("sound", "tail", "whiz", "sounds", "glance", "sputter")
 PREFIX_KEYS = ("tail",)
 
 
-def check_sounds(defs_path, sndinfo_path):
+def check_sounds(defs_text, sndinfo_path):
     """Every sound a profile names, against what SNDINFO actually declares."""
     have = declared_sounds(sndinfo_path)
     bad = []
     used = 0
     where = "?"
-    for n, line in enumerate(io.open(defs_path, encoding="utf-8", errors="replace"), 1):
+    for n, line in enumerate(defs_text.splitlines(), 1):
         s = line.split("#")[0].strip()
         if "=" not in s:
             m = re.match(r"^([a-z]+)\s+([^\s#]+)", s)
@@ -140,11 +171,11 @@ def check_sounds(defs_path, sndinfo_path):
     return 1 if bad else 0
 
 
-def defined_profiles(path):
+def defined_profiles(text):
     """Every profile in RSBDEFS, by kind, base name only (variants resolve back to their base)."""
     have = {k: set() for k in ("flash", "recoil", "ejecta", "round", "ballistics", "roundlook",
                                "impact", "burst", "wake", "trail", "flame", "hotspot", "style", "fixture")}
-    for line in io.open(path, encoding="utf-8", errors="replace"):
+    for line in text.splitlines():
         m = re.match(r"^([a-z]+)\s+([^\s#]+)", line)
         if not m:
             continue
@@ -250,7 +281,8 @@ def check(sheet, have, guns=None, label=None):
 def main():
     if not os.path.exists(DEFS):
         sys.exit("no RSBDEFS at %s" % DEFS)
-    have = defined_profiles(DEFS)
+    defs_text, _pk3 = read_defs()
+    have = defined_profiles(defs_text)
     print("RSBDEFS: %d flash, %d recoil, %d ejecta, %d round"
           % (len(have["flash"]), len(have["recoil"]), len(have["ejecta"]), len(have["round"])))
     sheets = sys.argv[1:]
@@ -261,7 +293,7 @@ def main():
                   if f.upper().startswith("WMSHEET")]
     if not sheets:
         sys.exit("no WMSHEET files found")
-    rc = check_sounds(DEFS, os.path.join(PKG, "SNDINFO.txt"))
+    rc = check_sounds(defs_text, os.path.join(PKG, "SNDINFO.txt"))
     for s in sheets:
         rc |= check(s, have)
     # AND EVERY SET THAT DECLARES ITS PROFILES IN ZSCRIPT INSTEAD OF A SHEET. RS_Modern is one, and it
