@@ -310,8 +310,14 @@ class RSB_Bullet : FastProjectile
 		}
 		else
 		{
+			// A `ballistics` WITH NO `damage` LINE is a real and deliberate case, not a mistake: a profile
+			// that exists for its LOOK while the gun mod owns the damage (the WW2 set, whose numbers are
+			// Brutal Wolfenstein's and live in the weapons sheet). Unset is -1, and -1 * random(1, -1) is
+			// nonsense with a reversed range -- so an unset profile falls back to the same default as no
+			// profile at all rather than dealing garbage to whoever wires it without reading.
 			let bl = Ballistics();
-			if (bl) dealt = bl.damageBase * random[RSBBullet](1, bl.damageDice);
+			if (bl && bl.damageBase > 0 && bl.damageDice > 0)
+				dealt = bl.damageBase * random[RSBBullet](1, bl.damageDice);
 			else dealt = 5 * random[RSBBullet](1, 3);
 		}
 		return Super.DoSpecialDamage(victim, dealt, damagetype);

@@ -10064,7 +10064,7 @@ end
 ballistics ww2_9mm   # 9x19 Parabellum: light, fast, clean-ish for the period
   speed  = 330
   radius = 1.5
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_9mm
@@ -10085,7 +10085,7 @@ end
 ballistics ww2_45   # .45 ACP: heavy, slow, a big soft hole
   speed  = 250
   radius = 2.0
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_45
@@ -10106,7 +10106,7 @@ end
 ballistics ww2_762tok   # 7.62x25 Tokarev: a bottlenecked pistol round, fast and spiteful
   speed  = 430
   radius = 1.4
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_762tok
@@ -10127,7 +10127,7 @@ end
 ballistics ww2_792kurz   # 7.92x33 Kurz: a short rifle round, the first of its kind
   speed  = 470
   radius = 1.7
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_792kurz
@@ -10148,7 +10148,7 @@ end
 ballistics ww2_792   # 7.92x57 Mauser: a full rifle cartridge, and it shows
   speed  = 620
   radius = 2.0
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_792
@@ -10169,7 +10169,7 @@ end
 ballistics ww2_3006   # .30-06 Springfield: the American full-power round
   speed  = 600
   radius = 2.0
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_3006
@@ -10190,7 +10190,7 @@ end
 ballistics ww2_12ga   # 12 gauge buckshot: ten pellets of it
   speed  = 300
   radius = 2.2
-  damage = 5, 3
+  damage = none
 end
 
 roundlook ww2_12ga

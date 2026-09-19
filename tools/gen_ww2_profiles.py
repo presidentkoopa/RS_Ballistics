@@ -96,7 +96,14 @@ def cartridge_blocks(nl):
         out += ["ballistics %s   # %s" % (p, what),
                 "  speed  = %d" % speed,
                 "  radius = %.1f" % radius,
-                "  damage = 5, 3",
+                "  damage = none",
+                # NO `damage` LINE, DELIBERATELY. The weapons sheet has no look-only key -- naming a
+                # `roundprofile` brings the ballistics def and its damage with it (sheet.zs:420 ->
+                # RSB_Bullet.RoundProfile -> FindBallistics) -- and this set's damage is Brutal
+                # Wolfenstein's, by the owner's instruction, living in their sheet. So the damage must
+                # not be here to take. Two places holding one truth is what cost this project a night:
+                # their rate of fire came from a reader measuring the wrong thing, my flash chance came
+                # out at 1.04 from two multipliers each fine alone.
                 "end",
                 "",
                 "roundlook %s" % p,

@@ -558,12 +558,26 @@ class RSB_Parser
 		}
 		if (key == "damage")
 		{
+			// `damage = none`: THE GUN OWNS THE NUMBER, not this profile. A real case rather than a way
+			// out of stating it -- the WW2 set's damage is the weapons sheet's, by the owner's
+			// instruction, and the sheet has no look-only key: naming a `roundprofile` brings the
+			// ballistics def and its damage with it. So the damage must not be here to take.
+			//
+			// EXPLICIT, AND OMITTING IT IS STILL AN ERROR. "it never states `damage`" exists to catch a
+			// forgotten line and it keeps doing that; this is a stated intention, which is a different
+			// thing from silence. A shooter that supplies neither gets the same default as no profile.
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				bl.damageBase = 0;
+				bl.damageDice = 1;
+				return "";
+			}
 			why = Nums(v, 2); if (why != "") return why;
 			bl.damageBase = v[0].ToInt();
 			bl.damageDice = v[1].ToInt();
 			return (bl.damageBase >= 0 && bl.damageDice >= 1) ? "" : "damage is base (0 or more), dice (1 or more)";
 		}
-		return String.Format("unknown ballistics key \"%s\" -- speed, radius or damage", key);
+		return String.Format("unknown ballistics key \"%s\" -- speed, radius or damage (damage may be `none`: the gun supplies it)", key);
 	}
 
 	// ------------------------------------------------------------ ROUNDLOOK
