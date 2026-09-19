@@ -93,6 +93,21 @@ RECOILLESS = {
 NL = "\n"   # set from the file in main(): an inserted line must match what is already there
 
 
+# WHICH CARTRIDGE PROFILE EACH GUN FIRES, for `roundmass` and nothing else. Stated per gun rather
+# than guessed from the profile name: shotgun_ssg fires `buckshot`, not a cartridge called ssg, and
+# glock17_sup fires the same 9x19 as the bare Glock however differently it leaves the barrel.
+CARTRIDGE_OF = {
+    "pistol_9mm": "pistol_9mm", "pistol_45": "pistol_45", "revolver_357": "revolver_357",
+    "shotgun_m37": "buckshot", "shotgun_doom": "buckshot", "shotgun_ssg": "buckshot",
+    "shotgun_bullpup": "buckshot", "benelli_m4": "buckshot",
+    "chaingun_556": "rifle_556", "machinegun_762": "rifle_762",
+    "glock17": "pistol_9mm", "glock17_sup": "pistol_9mm", "kimber1911": "pistol_45",
+    "mk18": "rifle_556", "mk18_sup": "rifle_556", "hk416_sup": "rifle_556",
+    "mcx_sup": "rifle_556", "g36c_sup": "rifle_556", "mp5": "pistol_9mm",
+    # launcher_40mm and the recoilless weapons name none: no cartridge profile describes them.
+}
+
+
 def free_recoil(row):
     wb, vb, wc, wg = row[0], row[1], row[2], row[3]
     vg = (wb * vb + 4700.0 * wc) / (7000.0 * wg)
@@ -134,6 +149,9 @@ def rewrite(text, name, climb, mx, vg=None, energy=None, impulse=None):
     new = re.sub(r"(?m)^(\s*max\s*=\s*)[-0-9.]+", lambda g: "%s%.1f" % (g.group(1), mx), new, count=1)
     if vg is not None:
         line = "  shot    = %.2f, %.1f, %.3f" % (vg, energy, impulse)
+        cart = CARTRIDGE_OF.get(name, "")
+        if cart:
+            line += NL + "  cartridge = %s" % cart
         if re.search(r"(?m)^\s*shot\s*=", new):
             new = re.sub(r"(?m)^[^\r\n]*shot\s*=[^\r\n]*", line, new, count=1)
         else:

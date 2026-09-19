@@ -4175,6 +4175,7 @@ end
 recoil pistol_9mm          # the Pistolet: snappy; aimed fire is dead on, only a mag dump climbs
   climb   = 1.62
   shot    = 9.53, 3.2, 0.681
+  cartridge = pistol_9mm
   drift   = 0.3, 4
   recover = 12, 6
   max     = 6.6, 2
@@ -4186,6 +4187,7 @@ end
 recoil pistol_45           # the M4A3: a bigger push; fast follow-ups walk up
   climb   = 1.93
   shot    = 11.34, 5.4, 0.952
+  cartridge = pistol_45
   drift   = 0.4, 4
   recover = 12, 6
   max     = 7.2, 2.5
@@ -4197,6 +4199,7 @@ end
 recoil shotgun_m37         # fired as fast as it pumps it climbs; paced, never
   climb   = 3.44
   shot    = 16.03, 26.0, 3.239
+  cartridge = buckshot
   drift   = 0.8, 3
   recover = 6, 4
   max     = 9.0, 3
@@ -4208,6 +4211,7 @@ end
 recoil shotgun_doom        # heavier than the M37
   climb   = 3.19
   shot    = 14.89, 24.1, 3.239
+  cartridge = buckshot
   drift   = 1.0, 3
   recover = 6, 4
   max     = 9.0, 3
@@ -4219,6 +4223,7 @@ end
 recoil shotgun_ssg         # the train wreck: a huge kick, recovered by the time it is reloaded
   climb   = 4.20
   shot    = 29.77, 96.4, 6.478
+  cartridge = buckshot
   drift   = 1.2, 3
   recover = 8, 6
   max     = 9.0, 4
@@ -4230,6 +4235,7 @@ end
 recoil shotgun_bullpup     # magazine-fed and fast: it climbs if rushed
   climb   = 4.20
   shot    = 27.23, 96.8, 7.109
+  cartridge = buckshot
   drift   = 1.0, 3
   recover = 8, 4
   max     = 9.0, 3.5
@@ -4241,6 +4247,7 @@ end
 recoil chaingun_556        # caps in about 13 shots (1.5 s); held, it sits there -- pull down to stay on
   climb   = 0.08
   shot    = 1.24, 0.8, 1.353
+  cartridge = rifle_556
   drift   = 0.25, 6
   recover = 4, 6
   max     = 3.2, 1.5
@@ -4252,6 +4259,7 @@ end
 recoil machinegun_762      # a heavier walk than the chaingun; bracing matters more
   climb   = 0.24
   shot    = 3.55, 4.9, 2.755
+  cartridge = rifle_762
   drift   = 0.4, 5
   recover = 4, 6
   max     = 3.5, 2
@@ -7022,6 +7030,7 @@ end
 recoil glock17   # the Glock 17: snappy; aimed fire is dead on, only a mag dump climbs
   climb   = 1.98
   shot    = 11.61, 4.2, 0.722
+  cartridge = pistol_9mm
   drift   = 0.3, 4
   recover = 12, 6
   max     = 7.3, 2
@@ -7033,6 +7042,7 @@ end
 recoil glock17_sup   # the suppressed Glock: the can's weight softens the snap
   climb   = 1.28
   shot    = 7.51, 2.4, 0.630
+  cartridge = pistol_9mm
   drift   = 0.3, 4
   recover = 12, 6
   max     = 5.8, 2
@@ -7044,6 +7054,7 @@ end
 recoil kimber1911   # the 1911: a bigger push; fast follow-ups walk up
   climb   = 1.93
   shot    = 11.34, 5.4, 0.952
+  cartridge = pistol_45
   drift   = 0.4, 4
   recover = 12, 6
   max     = 7.2, 2.5
@@ -7055,6 +7066,7 @@ end
 recoil mk18   # the MK18: a short 5.56 carbine -- a sharp push, full auto walks up
   climb   = 0.78
   shot    = 6.19, 3.9, 1.251
+  cartridge = rifle_556
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.7, 2
@@ -7066,6 +7078,7 @@ end
 recoil mk18_sup   # the suppressed MK18: the can tames the push a little
   climb   = 0.66
   shot    = 5.24, 3.2, 1.237
+  cartridge = rifle_556
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.4, 2
@@ -7077,6 +7090,7 @@ end
 recoil hk416_sup   # the suppressed HK416: a heavier gun, a smoother push
   climb   = 0.60
   shot    = 4.77, 3.1, 1.320
+  cartridge = rifle_556
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.3, 2
@@ -7088,6 +7102,7 @@ end
 recoil mcx_sup   # the suppressed MCX: the softest shooter
   climb   = 0.41
   shot    = 3.24, 1.3, 0.805
+  cartridge = rifle_556
   drift   = 0.35, 5
   recover = 10, 5
   max     = 3.9, 2
@@ -7099,6 +7114,7 @@ end
 recoil g36c_sup   # the suppressed G36C
   climb   = 0.63
   shot    = 4.99, 3.1, 1.226
+  cartridge = rifle_556
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.4, 2
@@ -7110,6 +7126,7 @@ end
 recoil mp5   # the MP5: a 9mm SMG -- a low, even push, controllable in bursts
   climb   = 0.45
   shot    = 3.56, 1.3, 0.753
+  cartridge = pistol_9mm
   drift   = 0.2, 5
   recover = 10, 5
   max     = 4.0, 1.5
@@ -7121,6 +7138,7 @@ end
 recoil benelli_m4   # the Benelli M4: a semi-auto 12-gauge -- it climbs if rushed
   climb   = 2.11
   shot    = 12.41, 20.1, 3.239
+  cartridge = buckshot
   drift   = 1.0, 3
   recover = 8, 4
   max     = 7.6, 3.5
@@ -11053,6 +11071,7 @@ end
 recoil ww2_kar98k   # bolt at 3.2 a second, spread 0,0
   climb   = 2.63
   shot    = 11.47, 18.2, 3.173
+  cartridge = ww2_792
   drift   = 0.30, 5
   recover = 30, 6
   max     = 9, 4
@@ -11099,6 +11118,7 @@ end
 recoil ww2_mg42   # belt at 11.7 a second, spread 6,4
   climb   = 0.27
   shot    = 4.00, 6.3, 3.173
+  cartridge = ww2_792
   drift   = 0.85, 5
   recover = 18, 6
   max     = 4, 2
@@ -11145,6 +11165,7 @@ end
 recoil ww2_heavymg   # belt at 8.8 a second, spread 8,6
   climb   = 0.20
   shot    = 3.02, 4.4, 2.908
+  cartridge = ww2_3006
   drift   = 1.07, 5
   recover = 21, 6
   max     = 4, 2
@@ -11191,6 +11212,7 @@ end
 recoil ww2_garand   # semi at 4.4 a second, spread 3,3
   climb   = 1.52
   shot    = 8.91, 13.0, 2.908
+  cartridge = ww2_3006
   drift   = 0.63, 5
   recover = 30, 6
   max     = 6, 3
@@ -11237,6 +11259,7 @@ end
 recoil ww2_bar   # auto at 7.0 a second, spread 5,5
   climb   = 0.74
   shot    = 5.85, 8.5, 2.908
+  cartridge = ww2_3006
   drift   = 0.85, 5
   recover = 24, 6
   max     = 5, 2
@@ -11283,6 +11306,7 @@ end
 recoil ww2_trench   # pump at 2.9 a second, spread 4,2
   climb   = 2.98
   shot    = 13.89, 22.5, 3.239
+  cartridge = ww2_12ga
   drift   = 0.63, 5
   recover = 30, 6
   max     = 10, 5
@@ -11329,6 +11353,7 @@ end
 recoil ww2_m1911   # semi at 5.8 a second, spread 1,1
   climb   = 2.14
   shot    = 12.55, 6.0, 0.952
+  cartridge = ww2_45
   drift   = 0.41, 5
   recover = 26, 6
   max     = 8, 4
@@ -11375,6 +11400,7 @@ end
 recoil ww2_luger   # semi at 5.8 a second, spread 1,1
   climb   = 1.97
   shot    = 11.59, 4.0, 0.692
+  cartridge = ww2_9mm
   drift   = 0.41, 5
   recover = 26, 6
   max     = 7, 3
@@ -11421,6 +11447,7 @@ end
 recoil ww2_thompson   # auto at 11.7 a second, spread 3,3
   climb   = 0.39
   shot    = 3.11, 1.6, 1.044
+  cartridge = ww2_45
   drift   = 0.63, 5
   recover = 18, 6
   max     = 4, 2
@@ -11467,6 +11494,7 @@ end
 recoil ww2_mp40   # auto at 8.8 a second, spread 3,3
   climb   = 0.35
   shot    = 2.81, 1.1, 0.763
+  cartridge = ww2_9mm
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11513,6 +11541,7 @@ end
 recoil ww2_ppsh   # auto at 17.5 a second, spread 4,5
   climb   = 0.24
   shot    = 1.95, 0.7, 0.726
+  cartridge = ww2_762tok
   drift   = 0.79, 5
   recover = 15, 6
   max     = 4, 2
@@ -11559,6 +11588,7 @@ end
 recoil ww2_stg44   # auto at 7.0 a second, spread 2,2
   climb   = 0.70
   shot    = 5.58, 4.9, 1.771
+  cartridge = ww2_792kurz
   drift   = 0.52, 5
   recover = 24, 6
   max     = 5, 2
@@ -11605,6 +11635,7 @@ end
 recoil ww2_p38   # semi at 5.8 a second, spread 1,1
   climb   = 2.10
   shot    = 12.36, 4.3, 0.692
+  cartridge = ww2_9mm
   drift   = 0.41, 5
   recover = 26, 6
   max     = 8, 4
@@ -11651,6 +11682,7 @@ end
 recoil ww2_sten   # auto at 8.8 a second, spread 3,3
   climb   = 0.42
   shot    = 3.34, 1.2, 0.738
+  cartridge = ww2_9mm
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11697,6 +11729,7 @@ end
 recoil ww2_mp34   # auto at 8.8 a second, spread 3,3
   climb   = 0.33
   shot    = 2.61, 1.0, 0.763
+  cartridge = ww2_9mm
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11743,6 +11776,7 @@ end
 recoil ww2_goldluger   # semi at 2.2 a second, spread 2,2
   climb   = 1.97
   shot    = 11.59, 4.0, 0.692
+  cartridge = ww2_9mm
   drift   = 0.52, 5
   recover = 30, 6
   max     = 7, 3
@@ -11789,6 +11823,7 @@ end
 recoil ww2_tt33   # semi at 5.0 a second, spread 1,1
   climb   = 1.86
   shot    = 10.93, 3.5, 0.646
+  cartridge = ww2_762tok
   drift   = 0.41, 5
   recover = 28, 6
   max     = 7, 3
@@ -11835,6 +11870,7 @@ end
 recoil ww2_mosin   # bolt at 2.9 a second, spread 0,0
   climb   = 2.40
   shot    = 10.48, 15.0, 2.867
+  cartridge = ww2_762x54r
   drift   = 0.30, 5
   recover = 30, 6
   max     = 8, 4
@@ -11876,6 +11912,7 @@ end
 recoil ww2_hdm   # semi at 5.8 a second, spread 1,1
   climb   = 0.43
   shot    = 2.55, 0.3, 0.218
+  cartridge = ww2_22lr
   drift   = 0.41, 5
   recover = 26, 6
   max     = 4, 2
@@ -11922,6 +11959,7 @@ end
 recoil ww2_revolver   # revolver at 3.9 a second, spread 2,3
   climb   = 2.57
   shot    = 14.47, 8.5, 1.169
+  cartridge = ww2_357
   drift   = 0.57, 5
   recover = 30, 6
   max     = 9, 4
@@ -11958,6 +11996,7 @@ end
 recoil ww2_g43   # semi at 3.5 a second, spread 3,3
   climb   = 1.79
   shot    = 10.52, 16.7, 3.173
+  cartridge = ww2_792
   drift   = 0.63, 5
   recover = 30, 6
   max     = 7, 3
@@ -12004,6 +12043,7 @@ end
 recoil ww2_fg42   # auto at 11.7 a second, spread 2,2
   climb   = 1.30
   shot    = 10.31, 16.4, 3.173
+  cartridge = ww2_792
   drift   = 0.52, 5
   recover = 18, 6
   max     = 6, 3
@@ -12050,6 +12090,7 @@ end
 recoil ww2_marksman   # semi at 7.0 a second, spread 10,8
   climb   = 1.93
   shot    = 11.34, 18.0, 3.173
+  cartridge = ww2_792
   drift   = 1.29, 5
   recover = 24, 6
   max     = 7, 3
@@ -12096,6 +12137,7 @@ end
 recoil ww2_venom   # belt at 17.5 a second, spread 6,4
   climb   = 0.27
   shot    = 4.08, 6.5, 3.173
+  cartridge = ww2_792
   drift   = 0.85, 5
   recover = 15, 6
   max     = 4, 2
@@ -12142,6 +12184,7 @@ end
 recoil ww2_aa12   # auto at 5.8 a second, spread 4,2
   climb   = 1.09
   shot    = 8.68, 14.1, 3.239
+  cartridge = ww2_12ga
   drift   = 0.63, 5
   recover = 26, 6
   max     = 5, 2
@@ -12188,6 +12231,7 @@ end
 recoil ww2_auto5   # semi at 3.2 a second, spread 5,3
   climb   = 1.97
   shot    = 11.58, 18.7, 3.239
+  cartridge = ww2_12ga
   drift   = 0.74, 5
   recover = 30, 6
   max     = 7, 3
@@ -12234,6 +12278,7 @@ end
 recoil ww2_m30   # break at 5.0 a second, spread 10,1
   climb   = 3.30
   shot    = 14.89, 24.1, 3.239
+  cartridge = ww2_12ga
   drift   = 0.91, 5
   recover = 28, 6
   max     = 10, 5
@@ -15284,6 +15329,7 @@ end
 recoil rc_auto9   # the Auto 9: a machine pistol with a compensator longer than the slide -- 3.3 ft-lb, Vg 8.83 fps, impulse 0.743 lb-s, compensator takes 38%
   climb   = 0.69
   shot    = 8.83, 3.3, 0.743
+  cartridge = pistol_9mm
   drift   = 0.30, 5
   recover = 30, 6
   max     = 4.5, 2.0
@@ -15295,6 +15341,7 @@ end
 recoil rc_m27   # an M16-class 5.56 service rifle -- 3.7 ft-lb, Vg 5.44 fps, impulse 1.353 lb-s
   climb   = 0.68
   shot    = 5.44, 3.7, 1.353
+  cartridge = rifle_556
   drift   = 0.30, 5
   recover = 30, 6
   max     = 4.5, 2.0
@@ -15306,6 +15353,7 @@ end
 recoil rc_ksg   # a bullpup 12 gauge -- 20.6 ft-lb, Vg 12.71 fps, impulse 3.239 lb-s
   climb   = 2.73
   shot    = 12.71, 20.6, 3.239
+  cartridge = buckshot
   drift   = 0.30, 5
   recover = 26, 6
   max     = 9.0, 4.0
@@ -15317,6 +15365,7 @@ end
 recoil rc_shotgun   # a LIGHT pump gun -- five and a half pounds, so it kicks harder than the bullpup -- 27.2 ft-lb, Vg 16.79 fps, impulse 3.239 lb-s
   climb   = 3.60
   shot    = 16.79, 27.2, 3.239
+  cartridge = buckshot
   drift   = 0.30, 5
   recover = 24, 6
   max     = 10.0, 5.0
@@ -15328,6 +15377,7 @@ end
 recoil rc_m32   # a six-shot revolver grenade launcher: 230 g at 250 fps, a shove not a snap -- 34.2 ft-lb, Vg 16.90 fps, impulse 4.045 lb-s
   climb   = 3.00
   shot    = 16.90, 34.2, 4.045
+  cartridge = none
   drift   = 0.30, 5
   recover = 25, 6
   max     = 9.6, 4.3
@@ -15339,6 +15389,7 @@ end
 recoil rc_chaingun   # a 7.62 belt gun on a 25 lb mount -- 4.0 ft-lb, Vg 2.93 fps, impulse 2.755 lb-s
   climb   = 0.19
   shot    = 2.93, 4.0, 2.755
+  cartridge = rifle_762
   drift   = 0.22, 5
   recover = 30, 6
   max     = 3.4, 2.0
@@ -15350,6 +15401,7 @@ end
 recoil hx_pistol   # a light 9mm sidearm -- 3.1 ft-lb, Vg 9.22 fps, impulse 0.681 lb-s
   climb   = 1.57
   shot    = 9.22, 3.1, 0.681
+  cartridge = pistol_9mm
   drift   = 0.30, 5
   recover = 30, 6
   max     = 6.5, 2.7
@@ -15361,6 +15413,7 @@ end
 recoil hx_uzi   # an Uzi: heavy for the round, so it is steady -- 1.3 ft-lb, Vg 3.51 fps, impulse 0.763 lb-s
   climb   = 0.44
   shot    = 3.51, 1.3, 0.763
+  cartridge = pistol_9mm
   drift   = 0.30, 5
   recover = 30, 6
   max     = 4.0, 2.0

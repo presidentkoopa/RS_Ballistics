@@ -396,6 +396,8 @@ def derive(gid):
     profiles can never disagree about what a gun is."""
     cid, dmg, pellets, firetics, spread, action, note = GUN[gid]
     speed, radius, brass, hole, charge, dirt, kick = CARTRIDGE[cid][:7]
+    # WHICH CARTRIDGE, carried through so the recoil profile can REFER to it. Not a copy of anything:
+    # the only figure read through the reference is roundmass, so a gun gets lighter as it empties.
     sx, sy = spread
     slop = sx + sy
 
@@ -438,6 +440,7 @@ def derive(gid):
     d["vary"] = unit((0.35 + 0.035 * slop) * fin)   # a sloppy OR badly made gun sprays powder wider
     # NOTHING OUTLIVES THE SHOT INTERVAL. This is the owner's headset note about flashes that "last a
     # while": one that overlaps the next shot stops reading as a flash.
+    d["cid"] = cid
     d["conetics"] = int(max(2, min(5, min(firetics - 1, round(3 + d["fsize"])))))
     d["lighttics"] = int(max(1, min(3, firetics - 1)))
     return d
@@ -631,6 +634,7 @@ def recoil_and_ejecta(p, d):
                 # THE PHYSICS, STATED. climb above is derived from these; without them the only copy
                 # lives in this file and the Body IK lane has to be handed a stale table by hand.
                 "  shot    = %.2f, %.1f, %.3f" % (d["vg"], d["energy"], d["impulse"]),
+                "  cartridge = ww2_%s" % d["cid"],
                 "  drift   = %.2f, %d" % (d["drift"], 5),
                 "  recover = %d, %d" % (d["recover"], 6),
                 "  max     = %d, %d" % (d["max"], max(2, d["max"] // 2)),

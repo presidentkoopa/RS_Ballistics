@@ -734,6 +734,10 @@ class RSB_RecoilDef : RSB_Def
 	// Zero means not stated, and a consumer must treat zero as "no data", never as "no recoil": a BFG
 	// has no cartridge and inventing one to make the arithmetic run would be false precision.
 	double vg, energy, impulse;
+	// WHICH CARTRIDGE THIS GUN FIRES (`cartridge`), by ballistics profile name. A REFERENCE, not a
+	// copy: the only thing read through it is `roundmass`, so the gun's weight can fall as it empties.
+	// Empty means the live weight is not applied and the stated climb above stands.
+	String cartridge;
 	double viewBack;       // THE LOOK (render only): map units back ...
 	double viewRise;       // ... degrees up ...
 	double viewRoll;       // ... degrees of roll ...

@@ -76,6 +76,7 @@ server bool sv_rsb_recoil          = true;      // a gun's kick turns where its 
 // old behaviour for anyone who wants it. Server, because this decides where bullets go and a
 // per-player answer to that is a desync.
 server bool sv_rsb_recoil_default  = true;      // a gun with no recoil profile uses the house kick
+server bool sv_rsb_recoil_weight   = true;      // a gun's kick follows its LIVE weight: harder as it empties
 server bool sv_rsb_decals          = false;     // our rounds leave vanilla decals too (off: the wall damage is the mark)
 server bool sv_rsb_enemy_rounds    = true;      // monsters' hitscans fly as RS_Ballistics rounds (enemyfire.zs)
 server float sv_rsb_enemy_round_speed = 80.0;   // map units a tic

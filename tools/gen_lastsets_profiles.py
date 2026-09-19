@@ -72,6 +72,16 @@ STATED = {
 }
 
 
+# WHICH CARTRIDGE PROFILE EACH GUN FIRES. A reference for `roundmass` only -- what one round weighs,
+# so the gun gets lighter as it empties. `none` where the package describes no such cartridge: the
+# M32's 40 mm has no ballistics profile, so that gun simply keeps the kick it was written with.
+CARTRIDGE_OF = {
+    "rc_auto9": "pistol_9mm", "rc_m27": "rifle_556", "rc_ksg": "buckshot",
+    "rc_shotgun": "buckshot", "rc_chaingun": "rifle_762", "rc_m32": "none",
+    "hx_pistol": "pistol_9mm", "hx_uzi": "pistol_9mm",
+}
+
+
 def free_recoil(wb, vb, wc, lb):
     vg = (wb * vb + 4700.0 * wc) / (7000.0 * lb)
     return vg, lb * vg * vg / 64.348, lb * vg / 32.174
@@ -94,6 +104,7 @@ def recoil_blocks():
                 % (gid, note, e, vg, imp, ", compensator takes 38%" if brake < 1 else ""),
                 "  climb   = %.2f" % climb,
                 "  shot    = %.2f, %.1f, %.3f" % (vg, e, imp),
+                "  cartridge = %s" % CARTRIDGE_OF.get(gid, "none"),
                 "  drift   = %.2f, %d" % (0.30 if action != "belt" else 0.22, 5),
                 "  recover = %d, %d" % (int(max(8, min(30, 26 * (3.0 / max(1.0, climb)) ** 0.3))), 6),
                 "  max     = %.1f, %.1f" % (max(3.0, min(10.0, 3.0 + 2.2 * climb)),

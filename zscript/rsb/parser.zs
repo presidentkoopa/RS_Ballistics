@@ -2379,6 +2379,13 @@ class RSB_Parser
 			rc.viewTics = v[3].ToInt();
 			return (rc.viewBack >= 0 && rc.viewTics >= 0) ? "" : "view is back units, rise degrees, roll degrees, tics";
 		}
+		if (key == "cartridge")
+		{
+			// The ballistics profile this gun fires, so a live weight can include its ammunition.
+			if (v.Size() != 1) return "cartridge is one ballistics profile name, or none";
+			rc.cartridge = (v[0] ~== "none") ? "" : v[0];
+			return "";
+		}
 		if (key == "shot")
 		{
 			// THE PHYSICS, not a tuning knob: free recoil velocity (fps), free recoil energy (ft-lb)

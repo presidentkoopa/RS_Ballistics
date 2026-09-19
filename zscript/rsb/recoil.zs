@@ -60,7 +60,58 @@ class RSB_Recoil play
 	// ONE SHOT. Returns the turn this shot's rounds take (yaw, pitch, in degrees) and the
 	// extra spread, then moves the gun's kick on for its next shot. Off, or no profile:
 	// dead on, and the kick is forgotten.
-	static double, double, double Step(String profile, Actor shooter, out double kickPitch, out double kickYaw, out int lastTic, out int runShot)
+	// THE GUN'S WEIGHT RIGHT NOW, in pounds, or 0 when it is not known.
+	//
+	// Two halves from two packages, which is the whole point of the split: RS_VR_Reload owns what the
+	// hand is holding and how many rounds are in it, this package owns what one round weighs. Neither
+	// holds the other's number and neither can go stale against it.
+	//
+	// REACHED BY STRING, NEVER BY CLASS NAME. A hard reference to a class in another pk3 broke the
+	// whole game three times in RS_Grenade; this package must keep working with the reload system
+	// absent, which it does -- no service, no live weight, stated climb stands.
+	//
+	// `has` IS ASKED FIRST AND ITS ANSWER IS NOT THE DOUBLE. 80 of 155 shipped guns state no weight,
+	// because the weapons lane refused to invent eighty numbers to fill a column. The double reads 0.0
+	// for those, and 0.0 means DO NOT APPLY WEIGHT -- never "this gun is weightless".
+	private static double LiveWeightLb(RSB_RecoilDef rd, Actor shooter, int hand)
+	{
+		if (hand < 0 || !shooter || !rd) return 0;
+		let it = ServiceIterator.Find("RS_WeaponWeightService");
+		if (!it) return 0;
+		Service sv = null;
+		Service s;
+		// EXACT name: ServiceIterator.Find matches on SUBSTRING, so a near-miss can answer first.
+		while (s = it.Next())
+			if (s.GetClassName() == 'RS_WeaponWeightService') { sv = s; break; }
+		if (!sv) return 0;
+		if (sv.GetInt("weapon.weight.has", "", hand, 0, shooter) != 1) return 0;
+		double lb = sv.GetDouble("weapon.weight.lbs", "", hand, 0, shooter);
+		if (lb <= 0) return 0;
+		// AND THE AMMUNITION, which is ours: a PPSh is 10.30 lb empty and 12.00 with its drum in.
+		//
+		// WITHOUT IT THIS RETURNS NOTHING RATHER THAN THE EMPTY WEIGHT, and that is the important half.
+		// The stated climb was authored at the LOADED weight, so scaling it against an empty one would
+		// make every weighted gun kick harder for ever -- a systematic change dressed as a feature. A
+		// gun that does not name its cartridge simply keeps the kick it was written with.
+		if (rd.cartridge.Length() == 0) return 0;
+		let reg = RSB_Registry.Get();
+		let bl = (reg && reg.defs) ? RSB_BallisticsDef(reg.defs.Find("ballistics", rd.cartridge)) : null;
+		if (!bl || bl.roundGrains <= 0) return 0;
+		int rounds = sv.GetInt("weapon.weight.rounds", "", hand, 0, shooter);
+		if (rounds > 0) lb += rounds * bl.roundGrains / 7000.0;
+		return lb;
+	}
+
+	// WHAT THIS PROFILE'S STATED CLIMB WAS AUTHORED AT, in pounds, recovered from its own shot line.
+	// climb is proportional to Vg and Vg is impulse x g / weight, so the weight falls straight out of
+	// the two numbers already stated -- no new data, and no need to know the action multiplier at the
+	// shot. A profile with no shot line returns 0 and keeps its stated climb.
+	private static double AuthoredLb(RSB_RecoilDef rd)
+	{
+		return (rd && rd.vg > 0.0001 && rd.impulse > 0) ? (rd.impulse * 32.174 / rd.vg) : 0;
+	}
+
+	static double, double, double Step(String profile, Actor shooter, out double kickPitch, out double kickYaw, out int lastTic, out int runShot, int hand = -1)
 	{
 		// THE REAL CLOCK, not the world one (slow motion, engine build 13). Recoil recovery is the gun
 		// settling in YOUR hands, and your gun cycles at full speed while the world crawls -- so a string
@@ -95,7 +146,28 @@ class RSB_Recoil play
 		// THE KICK THIS SHOT ADDS, steadied by bracing: a climb, and a fixed left-right walk
 		// by shot number (the same every time, so it can be learned).
 		double brace = Brace(rd, shooter);
-		kickPitch = min(rd.maxPitch, kickPitch + rd.climb * brace);
+		// THE KICK THIS GUN HAS RIGHT NOW, not the one it was written with. A lighter gun is pushed
+		// harder by the same shot, so climb scales by authored weight over live weight -- and AT A FULL
+		// MAGAZINE THOSE ARE THE SAME NUMBER, so nothing changes until you start shooting. A PPSh's
+		// drum is a seventh of the gun: it climbs 16% harder empty than full, off one figure, with no
+		// second system and nothing typed.
+		//
+		// INERT UNTIL A CALLER PASSES ITS HAND (`hand` defaults to -1), until the gun states a
+		// `cartridge`, and until the reload system publishes a weight for it. Any of those missing and
+		// the stated climb stands exactly as before -- which is what makes this reviewable one gun at
+		// a time instead of all of them at once.
+		double climb = rd.climb;
+		// THE CVAR READ DIRECTLY, as Enabled() and Profile() above do: this is a SERVER rule, because
+		// it decides where bullets go and a per-player answer to that is a desync.
+		let wc = CVar.FindCVar("sv_rsb_recoil_weight");
+		if (hand >= 0 && wc && wc.GetBool())
+		{
+			double live = LiveWeightLb(rd, shooter, hand);
+			double made = AuthoredLb(rd);
+			if (live > 0.05 && made > 0.05)
+				climb = rd.climb * clamp(made / live, 0.4, 2.5);
+		}
+		kickPitch = min(rd.maxPitch, kickPitch + climb * brace);
 		if (rd.drift > 0 && rd.driftPeriod > 0)
 			kickYaw = clamp(kickYaw + rd.drift * sin(360.0 * runShot / rd.driftPeriod) * brace, -rd.maxYaw, rd.maxYaw);
 		runShot++;
