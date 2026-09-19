@@ -619,6 +619,12 @@ class RSB_Parser
 			String k = v[0].MakeLower();
 			if (k != "sprite" && k != "model") return String.Format("look kind \"%s\" is not sprite, model or none", v[0]);
 			if (k == "sprite" && v[1].Length() != 4) return String.Format("sprite \"%s\" is not four letters", v[1]);
+			// A MODEL NAMES A SPRITE **FRAME**, because that is how GZDoom binds one: four letters and
+			// the frame letter, `RSBMD`. The frame is what picks the calibre out of MODELDEF, so it is
+			// part of the name rather than a second key -- and a name one letter short is the whole
+			// difference between a .30-06 streak and a buckshot pellet, so it is checked here.
+			if (k == "model" && (v[1].Length() != 5 || v[1].ByteAt(4) < 65 || v[1].ByteAt(4) > 90))
+				return String.Format("model \"%s\" is not four letters and a frame letter (RSBMD)", v[1]);
 			lk.lookKind = k;
 			lk.lookName = v[1];
 			return "";
@@ -641,6 +647,15 @@ class RSB_Parser
 		{
 			if (v.Size() != 1) return "impact is one profile name, or none";
 			lk.impact = v[0];
+			return "";
+		}
+		if (key == "trail")
+		{
+			// A BEAM THE ROUND DRAWS ITSELF, muzzle to landing. See RSB_RoundLookDef.trail: this is how
+			// a beam weapon gets its beam WITHOUT a line of code in the weapon package. Naming a
+			// roundprofile is the whole wiring.
+			if (v.Size() != 1) return "trail is one trail profile name, or none";
+			lk.trail = (v[0] ~== "none") ? "" : v[0];
 			return "";
 		}
 		if (key == "whiz")
@@ -755,7 +770,7 @@ class RSB_Parser
 			return (lk.smokeRadius >= 1 && lk.smokeRadius <= 256 && lk.smokeAmount >= 0 && lk.smokeSoot >= 0 && lk.smokeSoot <= 1) ? ""
 				: "smoke is radius (1..256), amount, heat[, soot 0..1] -- smoke into the room along its flight -- or none";
 		}
-		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset, carve, smoke or lightlook", key);
+		return String.Format("unknown roundlook key \"%s\" -- look, glide, wake, impact, trail, whiz, heat, tracer, light, lightcolor, motor, motormaybe, onset, carve, smoke or lightlook", key);
 	}
 
 	// ----------------------------------------------------------------- WAKE

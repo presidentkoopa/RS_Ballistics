@@ -456,7 +456,14 @@ def cartridge_blocks(nl):
                 "end",
                 "",
                 "roundlook %s" % p,
-                "  look   = sprite, RSBT",
+                # THE ROUND IN FLIGHT: one mesh, sized by frame (MODELDEF). The calibre is READ from
+                # the cartridge, the same way the vapour wake above it is -- buckshot is a stub, a
+                # pistol round a short dart, a 9.3x74R the long heavy streak. Nothing is per-gun and
+                # nothing is typed twice: change a speed and the streak follows it.
+                "  look   = model, RSBM%s" % ("F" if cid == "12ga" else
+                                              "A" if speed < 450 else
+                                              "C" if speed < 550 else
+                                              "D" if speed < 635 else "E"),
                 "  glide  = yes",
                 "  wake   = %s" % ("pellet_vapour" if cid == "12ga" else "rifle_vapour" if speed >= 470 else "pistol_vapour"),
                 "  impact = %s" % p,

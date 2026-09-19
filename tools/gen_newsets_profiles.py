@@ -38,6 +38,7 @@ is ASSUMED and marked -- send me firetics and I re-run rather than re-tune.
 import argparse
 import io
 import os
+import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.dirname(HERE)
@@ -72,6 +73,52 @@ ENERGY = {
                      "THE PLASMA GUN: it throws a BALL you can see coming and can sidestep. Twelve a second, so the muzzle stays small and the bolts do the work"),
 }
 
+
+
+# A SOUND NAME THAT DOES NOT EXIST DOES NOT ERROR -- it is simply silent, which is the single failure
+# shape that has cost this project more than any other. I killed `rsb/tail/rail` on the Tesla hours
+# ago and then wrote it again here, in a different file, from memory. So the generator now refuses to
+# write one rather than trusting me to remember.
+#
+# Knows the two conventions that defeat a naive check: SNDINFO's `$random` groups define most names,
+# and a flash's `tail` names a PREFIX -- /int under a ceiling, /ext under open sky.
+def check_sounds(body):
+    snd = os.path.join(PKG, "SNDINFO.txt")
+    declared = set()
+    for line in io.open(snd, encoding="utf-8", errors="replace"):
+        t = line.split("//")[0].strip()
+        if not t:
+            continue
+        for kw in ("$random", "$alias", "$playersound", "$limit", "$pitchset", "$volume"):
+            if t.lower().startswith(kw):
+                t = t[len(kw):].strip()
+                break
+        m = re.match(r"^([A-Za-z0-9_/-]+)", t)
+        if m:
+            declared.add(m.group(1).lower())
+    bad, where = [], "?"
+    for line in body:
+        t = line.strip()
+        if "=" not in t and t.split():
+            where = t.split("#")[0].strip() or where
+            continue
+        if "=" not in t:
+            continue
+        key = t.split("=")[0].strip().lower()
+        if key not in ("tail", "sound", "sounds", "whiz", "sputter"):
+            continue
+        for tok in t.split("=", 1)[1].split(","):
+            tok = tok.strip().lower()
+            if not tok.startswith("rsb/"):
+                continue
+            ok = tok in declared
+            if not ok and key == "tail":
+                ok = (tok + "/int") in declared or (tok + "/ext") in declared
+            if not ok:
+                bad.append("%s: %s = %s IS NOT DECLARED IN SNDINFO" % (where, key, tok))
+    if bad:
+        raise SystemExit("REFUSED BEFORE WRITING -- a sound name that does not exist is simply silent:"
+                         + chr(10) + "  " + (chr(10) + "  ").join(bad))
 
 def derive(gid):
     wb, vb, wc, wg, action, rate, spread, fsize, brass, rnd, assumed, note = GUNS[gid]
@@ -280,7 +327,7 @@ def blocks():
             "  shockwave     = 34, 0.9, 4, 0, 0.45",
             "  exposure      = 0.55, 130",
             "  hearing       = 0.35, 100",
-            "  tail          = rsb/tail/rail, 0.8",
+            "  tail          = rsb/tail/ar, 0.8",   # NOT rsb/tail/rail: no such sound, and I wrote it twice
             "end",
             "",
             "recoil cl_particlegun   # a stream of particles has almost no mass to push back with. What you feel is the machine, not the shot: a hard electrical SNAP rather than a shove",
@@ -357,9 +404,11 @@ def main():
                 print('    REMOVE shotclass RSB_PlasmaBall -- it is a beam; lay trail "cl_particlegun"')
             print()
         return
+    body = blocks()
+    check_sounds(body)
     text = io.open(DEFS, encoding="utf-8", newline="").read()
     nl = "\r\n" if "\r\n" in text else "\n"
-    block = nl.join(blocks())
+    block = nl.join(body)
     if BEGIN in text and END in text:
         a, b = text.index(BEGIN), text.index(END) + len(END)
         out = text[:a] + block + text[b:]

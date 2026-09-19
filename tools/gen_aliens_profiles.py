@@ -103,7 +103,9 @@ def blocks():
             "end",
             "",
             "roundlook ae_10mm",
-            "  look   = sprite, RSBT",
+            # The M41A's 10mm caseless is a light armour-piercing rifle round out of a bullpup:
+            # the intermediate streak, same as 5.56 (models/bullet, MODELDEF frame C).
+            "  look   = model, RSBMC",
             "  glide  = yes",
             "  wake   = rifle_vapour",
             "  impact = ae_10mm",

@@ -3331,7 +3331,7 @@ end
 # played where the projectile is when this look takes over mid-flight (an RPG's sustainer).
 # `motormaybe = <burst> <chance a tic>, ...`: more tail bursts some tics (arcs round a ball).
 roundlook pistol_45
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol45_vapour
   impact = pistol_45
@@ -3341,7 +3341,7 @@ roundlook pistol_45
 end
 
 roundlook buckshot
-  look   = sprite, RSBT
+  look   = model, RSBMF
   glide  = yes
   wake   = pellet_vapour
   impact = buckshot
@@ -3350,7 +3350,7 @@ roundlook buckshot
 end
 
 roundlook buckshot_magnum  # the SSGs' pellets: buckshot's look, hitting harder to the eye
-  look   = sprite, RSBT
+  look   = model, RSBMF
   glide  = yes
   wake   = pellet_vapour_magnum
   impact = buckshot_magnum
@@ -3359,7 +3359,7 @@ roundlook buckshot_magnum  # the SSGs' pellets: buckshot's look, hitting harder 
 end
 
 roundlook rifle_556
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -3368,7 +3368,7 @@ roundlook rifle_556
 end
 
 roundlook pistol_9mm
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = pistol_9mm
@@ -3378,7 +3378,7 @@ roundlook pistol_9mm
 end
 
 roundlook rifle_762
-  look   = sprite, RSBT
+  look   = model, RSBMD
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -3387,7 +3387,7 @@ roundlook rifle_762
 end
 
 roundlook revolver_357
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = none
   impact = magnum
@@ -3396,7 +3396,7 @@ roundlook revolver_357
 end
 
 roundlook smg_9mm          # the 9mm out of an SMG: the plain look, so full auto stays disciplined
-  look   = sprite, RSBT
+  look   = model, RSBMB
   glide  = yes
   wake   = none
   impact = pistol
@@ -3405,7 +3405,7 @@ roundlook smg_9mm          # the 9mm out of an SMG: the plain look, so full auto
 end
 
 roundlook smg_45           # the .45 out of an SMG: the plain look
-  look   = sprite, RSBT
+  look   = model, RSBMB
   glide  = yes
   wake   = none
   impact = pistol
@@ -3414,7 +3414,7 @@ roundlook smg_45           # the .45 out of an SMG: the plain look
 end
 
 roundlook default          # the plain look for a gun that names no round -- never a showpiece
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = none
   impact = bullet
@@ -3423,7 +3423,7 @@ roundlook default          # the plain look for a gun that names no round -- nev
 end
 
 roundlook chaingun_556     # the chaingun's rounds: a thin vapour line; every 4th a burning tracer
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_vapour
   impact = chaingun_556
@@ -3433,7 +3433,7 @@ roundlook chaingun_556     # the chaingun's rounds: a thin vapour line; every 4t
 end
 
 roundlook tracer_556       # a 5.56 tracer: a hot orange-white streak with a short burning tail, lighting what it passes
-  look   = sprite, RSBT
+  look   = model, RSBMG
   glide  = yes
   wake   = tracer_hot
   impact = chaingun_556
@@ -3445,7 +3445,7 @@ roundlook tracer_556       # a 5.56 tracer: a hot orange-white streak with a sho
 end
 
 roundlook machinegun_762   # the machine gun's rounds: a vapour line; every 5th a heavier tracer
-  look   = sprite, RSBT
+  look   = model, RSBMD
   glide  = yes
   wake   = mg_vapour
   impact = machinegun_762
@@ -3455,7 +3455,7 @@ roundlook machinegun_762   # the machine gun's rounds: a vapour line; every 5th 
 end
 
 roundlook tracer_762       # a 7.62 tracer: brighter, with a longer burning tail than the 5.56's
-  look   = sprite, RSBT
+  look   = model, RSBMH
   glide  = yes
   wake   = tracer_hot_heavy
   impact = machinegun_762
@@ -3468,7 +3468,7 @@ end
 
 # The menu's Round look choices. Only look, glide and wake are used from these.
 roundlook tracer         # every round a bright streak with a glowing trail
-  look   = sprite, RSBT
+  look   = model, RSBMG
   glide  = yes
   wake   = tracer_bright
 end
@@ -4414,7 +4414,7 @@ wake x9_vapour             # the Pistolet's round at extreme: a vapour line that
 end
 
 roundlook pistol_9mm@extreme   # the Pistolet's round at extreme: the longer vapour line, stronger bent air, a wider tunnel through smoke
-  look   = sprite, RSBT
+  look   = model, RSBMB
   glide  = yes
   wake   = x9_vapour
   impact = pistol_9mm
@@ -5299,7 +5299,7 @@ ballistics enemy_bullet    # a monster's bullet (speed: sv_rsb_enemy_round_speed
 end
 
 roundlook enemy_round      # a zombieman's round, or any mod's: a short hot tracer that lights what it passes and cracks past your head
-  look       = sprite, RSBT
+  look       = model, RSBMC
   glide      = yes
   wake       = tracer_hot
   impact     = pistol_9mm
@@ -5311,7 +5311,7 @@ roundlook enemy_round      # a zombieman's round, or any mod's: a short hot trac
 end
 
 roundlook enemy_pellet     # a shotgunner's pellet: a fainter vapour line, no light (three at a time)
-  look   = sprite, RSBT
+  look   = model, RSBMF
   glide  = yes
   wake   = pellet_vapour
   impact = buckshot
@@ -5320,7 +5320,7 @@ roundlook enemy_pellet     # a shotgunner's pellet: a fainter vapour line, no li
 end
 
 roundlook enemy_heavy      # a chaingunner's or the Spider's: a heavier burning tail and a brighter light
-  look       = sprite, RSBT
+  look       = model, RSBMD
   glide      = yes
   wake       = tracer_hot_heavy
   impact     = chaingun_556
@@ -6522,7 +6522,7 @@ burst flashbang_smoke   # a flashbang's cloud: a thick white-grey smoke rolling 
 end
 
 roundlook glock17   # the Glock 17's 9mm: the showpiece pistol's look
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = pistol_9mm
@@ -6537,7 +6537,7 @@ round glock17   # the glock17 round: pistol_9mm ballistics (no gameplay change),
 end
 
 roundlook glock17_sup   # the suppressed Glock's 9mm: no bent air behind it, a thinner tunnel through smoke
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = pistol_9mm
@@ -6551,7 +6551,7 @@ round glock17_sup   # the glock17_sup round: pistol_9mm ballistics (no gameplay 
 end
 
 roundlook kimber1911   # the Kimber 1911's .45: the showpiece .45 look
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol45_vapour
   impact = pistol_45
@@ -6566,7 +6566,7 @@ round kimber1911   # the kimber1911 round: pistol_45 ballistics (no gameplay cha
 end
 
 roundlook mk18   # the MK18's 5.56 out of a short barrel: it cracks past you
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -6580,7 +6580,7 @@ round mk18   # the mk18 round: rifle_556 ballistics (no gameplay change), its ow
 end
 
 roundlook mk18_sup   # the suppressed MK18's 5.56: still supersonic, still a crack
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -6594,7 +6594,7 @@ round mk18_sup   # the mk18_sup round: rifle_556 ballistics (no gameplay change)
 end
 
 roundlook hk416_sup   # the suppressed HK416's 5.56
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -6608,7 +6608,7 @@ round hk416_sup   # the hk416_sup round: rifle_556 ballistics (no gameplay chang
 end
 
 roundlook mcx_sup   # the suppressed MCX's 5.56
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -6622,7 +6622,7 @@ round mcx_sup   # the mcx_sup round: rifle_556 ballistics (no gameplay change), 
 end
 
 roundlook g36c_sup   # the suppressed G36C's 5.56
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_trail
   impact = rifle
@@ -6636,7 +6636,7 @@ round g36c_sup   # the g36c_sup round: rifle_556 ballistics (no gameplay change)
 end
 
 roundlook mp5   # the MP5's 9mm: the SMG's plainer look, so full auto stays disciplined
-  look   = sprite, RSBT
+  look   = model, RSBMB
   glide  = yes
   wake   = none
   impact = pistol
@@ -6650,7 +6650,7 @@ round mp5   # the mp5 round: pistol_9mm ballistics (no gameplay change), its own
 end
 
 roundlook benelli_m4   # the Benelli M4's buckshot
-  look   = sprite, RSBT
+  look   = model, RSBMF
   glide  = yes
   wake   = pellet_vapour
   impact = buckshot
@@ -7860,7 +7860,7 @@ wake xmg_vapour             # the machine gun's 7.62 at extreme: a thick vapour 
 end
 
 roundlook pistol_45@extreme   # the .45 at extreme: its lazy trail hanging longer, stronger bent air, a wider smoke tunnel
-  look   = sprite, RSBT
+  look   = model, RSBMB
   glide  = yes
   wake   = x45_vapour
   impact = pistol_45
@@ -7870,7 +7870,7 @@ roundlook pistol_45@extreme   # the .45 at extreme: its lazy trail hanging longe
 end
 
 roundlook buckshot@extreme   # pellets at extreme: wisps that hang longer, wider tunnels
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = xpellet_vapour
   impact = buckshot
@@ -7879,7 +7879,7 @@ roundlook buckshot@extreme   # pellets at extreme: wisps that hang longer, wider
 end
 
 roundlook buckshot_magnum@extreme   # magnum pellets at extreme: heavier wisps that hang longer, wider tunnels
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = xpellet_vapour_magnum
   impact = buckshot_magnum
@@ -7888,7 +7888,7 @@ roundlook buckshot_magnum@extreme   # magnum pellets at extreme: heavier wisps t
 end
 
 roundlook chaingun_556@extreme   # the chaingun's rounds at extreme: wider tunnels (and tracers twice as often, from the level)
-  look   = sprite, RSBT
+  look   = model, RSBMD
   glide  = yes
   wake   = rifle_vapour
   impact = chaingun_556
@@ -7898,7 +7898,7 @@ roundlook chaingun_556@extreme   # the chaingun's rounds at extreme: wider tunne
 end
 
 roundlook tracer_556@extreme   # a 5.56 tracer at extreme: a longer burning tail, a brighter light
-  look       = sprite, RSBT
+  look       = model, RSBMH
   glide      = yes
   wake       = xtracer_hot
   impact     = chaingun_556
@@ -7910,7 +7910,7 @@ roundlook tracer_556@extreme   # a 5.56 tracer at extreme: a longer burning tail
 end
 
 roundlook machinegun_762@extreme   # the machine gun's rounds at extreme: a thick trail that hangs longer, wider tunnels
-  look   = sprite, RSBT
+  look   = model, RSBME
   glide  = yes
   wake   = xmg_vapour
   impact = machinegun_762
@@ -7920,7 +7920,7 @@ roundlook machinegun_762@extreme   # the machine gun's rounds at extreme: a thic
 end
 
 roundlook tracer_762@extreme   # a 7.62 tracer at extreme: a brighter light
-  look       = sprite, RSBT
+  look       = model, RSBMH
   glide      = yes
   wake       = tracer_hot_heavy
   impact     = machinegun_762
@@ -10252,7 +10252,7 @@ ballistics ww2_9mm   # 9x19 Parabellum: light, fast, clean-ish for the period
 end
 
 roundlook ww2_9mm
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = ww2_9mm
@@ -10273,7 +10273,7 @@ ballistics ww2_45   # .45 ACP: heavy, slow, a big soft hole
 end
 
 roundlook ww2_45
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = ww2_45
@@ -10294,7 +10294,7 @@ ballistics ww2_762tok   # 7.62x25 Tokarev: a bottlenecked pistol round, fast and
 end
 
 roundlook ww2_762tok
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = ww2_762tok
@@ -10315,7 +10315,7 @@ ballistics ww2_792kurz   # 7.92x33 Kurz: a short rifle round, the first of its k
 end
 
 roundlook ww2_792kurz
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_vapour
   impact = ww2_792kurz
@@ -10336,7 +10336,7 @@ ballistics ww2_792   # 7.92x57 Mauser: a full rifle cartridge, and it shows
 end
 
 roundlook ww2_792
-  look   = sprite, RSBT
+  look   = model, RSBMD
   glide  = yes
   wake   = rifle_vapour
   impact = ww2_792
@@ -10357,7 +10357,7 @@ ballistics ww2_3006   # .30-06 Springfield: the American full-power round
 end
 
 roundlook ww2_3006
-  look   = sprite, RSBT
+  look   = model, RSBMD
   glide  = yes
   wake   = rifle_vapour
   impact = ww2_3006
@@ -10378,7 +10378,7 @@ ballistics ww2_12ga   # 12 gauge buckshot: seven pellets of it
 end
 
 roundlook ww2_12ga
-  look   = sprite, RSBT
+  look   = model, RSBMF
   glide  = yes
   wake   = pellet_vapour
   impact = ww2_12ga
@@ -10399,7 +10399,7 @@ ballistics ww2_22lr   # .22 LR: the OSS's answer, and a charge small enough to b
 end
 
 roundlook ww2_22lr
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = ww2_22lr
@@ -10420,7 +10420,7 @@ ballistics ww2_357   # .357 class: a big slow hole and far more flash than a han
 end
 
 roundlook ww2_357
-  look   = sprite, RSBT
+  look   = model, RSBMA
   glide  = yes
   wake   = pistol_vapour
   impact = ww2_357
@@ -10441,7 +10441,7 @@ ballistics ww2_93x74r   # 9.3x74R: the drilling's rifle barrel, a boar round, th
 end
 
 roundlook ww2_93x74r
-  look   = sprite, RSBT
+  look   = model, RSBME
   glide  = yes
   wake   = rifle_vapour
   impact = ww2_93x74r
@@ -10462,7 +10462,7 @@ ballistics ww2_762x54r   # 7.62x54R: rimmed, Russian, and still in service longe
 end
 
 roundlook ww2_762x54r
-  look   = sprite, RSBT
+  look   = model, RSBMD
   glide  = yes
   wake   = rifle_vapour
   impact = ww2_762x54r
@@ -13911,7 +13911,7 @@ ballistics ae_10mm   # 10x28mm caseless: a heavy pistol-calibre round pushed har
 end
 
 roundlook ae_10mm
-  look   = sprite, RSBT
+  look   = model, RSBMC
   glide  = yes
   wake   = rifle_vapour
   impact = ae_10mm
@@ -14369,7 +14369,7 @@ flash cl_particlegun   # the aperture letting go: a hard violet-white crack and 
   shockwave     = 34, 0.9, 4, 0, 0.45
   exposure      = 0.55, 130
   hearing       = 0.35, 100
-  tail          = rsb/tail/rail, 0.8
+  tail          = rsb/tail/ar, 0.8
 end
 
 recoil cl_particlegun   # a stream of particles has almost no mass to push back with. What you feel is the machine, not the shot: a hard electrical SNAP rather than a shove

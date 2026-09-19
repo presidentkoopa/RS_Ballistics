@@ -72,6 +72,20 @@ class RSB_RoundLookDef : RSB_Def
 	bool   glide;        // smoothed between tics
 	String wake;         // a wake profile, or "none"
 	String impact;       // an impact profile's base name, or "none"
+	// A BEAM THE ROUND DRAWS FOR ITSELF (`trail`): laid muzzle-to-landing the moment it arrives.
+	//
+	// THIS EXISTS BECAUSE I BUILT TWO BEAMS AND THEN HANDED THE LAST MILE AWAY TWICE. `RSB_Trail.Lay`
+	// has to be called by the GUN, so a beam needed a line of code in somebody else's package before
+	// it drew anything -- and until that line existed the Tesla and the particle gun were a trail
+	// profile nobody laid, which is to say nothing at all.
+	//
+	// The round already knows both ends: `spawnedAt` is the firing hand and `pos` is where it landed.
+	// So it can lay its own beam and a gun gets one by naming a `roundprofile` -- no gun code, no
+	// cross-lane change, and it cannot be half-wired into a weapon that fires an invisible nothing.
+	//
+	// The gun-side call stays for a weapon that needs its own timing (the rail gun's charge). This is
+	// the path for a weapon whose beam simply IS its shot.
+	String trail;
 	double whizRadius;   // a round passing this close to the listener's head whizzes; 0 = never
 	String whizSound;
 	// AIR SHIMMER along its flight (`heat`): a narrow line of bent air over the last

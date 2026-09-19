@@ -142,3 +142,216 @@ Model RSB_RocketRPG
 	USEACTORROLL
 	FrameIndex MISL A 0 0
 }
+
+
+// ============================================================================
+// THE ROUND IN FLIGHT (zscript/rsb/bullet.zs; roundlook `look = model, RSBM<frame>`).
+//
+// models/bullet/btracer.obj, out of E:/oldshit/outdatedHFmaster/Models/btracer -- the owner's
+// own older tree, and the bullet they have been watching fly. It is one hexagonal tube, 80
+// units long and 7 across, centred on the origin.
+//
+// EIGHT SIZES OF ONE MESH. A round's calibre is a LOOK, not a second model: each block below
+// is the same tube at its own length and girth, bound to its own frame of the RSBM sprite.
+// A mod that wants a ninth adds a block and names its frame -- no ZScript, no new asset.
+//
+// RSBM itself is a 1x1 transparent lump. GZDoom has to hang a model on a sprite frame and
+// TNT1 is special-cased out of drawing, so the sprite is a mount point that draws nothing.
+// There is no bullet sprite in this package and there is not going to be one.
+//
+// DontCullBackfaces: the tube is thin enough to see the inside of at a grazing angle.
+// USEACTORPITCH / USEACTORROLL: bullet.zs turns the actor to face its own velocity each tic,
+// so the streak lies along the flight instead of wherever the gun was pointing at spawn.
+// ============================================================================
+
+Model RSB_Bullet   // pistol -- a 9mm, .45 or .38 in flight: a short thin dart
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.2500 0.2286 0.2286
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM A 0 0
+}
+
+Model RSB_Bullet   // smg -- the same round out of a submachine gun, and the extreme pistol looks
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.3250 0.2714 0.2714
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM B 0 0
+}
+
+Model RSB_Bullet   // intermediate -- 5.56, 7.92 Kurz, 10mm caseless: the assault-rifle streak
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.4250 0.2857 0.2857
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM C 0 0
+}
+
+Model RSB_Bullet   // rifle -- full-power rifle -- 7.62, .30-06, 7.92, 7.62x54R
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.5750 0.3286 0.3286
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM D 0 0
+}
+
+Model RSB_Bullet   // heavy -- 9.3x74R and the extreme machine-gun look: the heavy stuff
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.7250 0.4143 0.4143
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM E 0 0
+}
+
+Model RSB_Bullet   // pellet -- one pellet of buckshot: a stub, and there are nine of them
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.1250 0.1714 0.1714
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM F 0 0
+}
+
+Model RSB_Bullet   // tracer -- a burning tracer: long and bright, the round you are meant to read
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.8000 0.4571 0.4571
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM G 0 0
+}
+
+Model RSB_Bullet   // tracerheavy -- a 7.62 tracer: the mesh at its full authored size
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 1.0000 0.5571 0.5571
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM H 0 0
+}
+
+
+// ----------------------------------------------------------------------------
+// AND THE SAME EIGHT FOR A MONSTER'S ROUND. MODELDEF binds a model to ONE actor class and
+// not to its children, so RSB_EnemyBullet -- which is an RSB_Bullet in every other respect --
+// would fly unseen off the end of this file. This is the whole reason the enemy round looks
+// (enemy_round, enemy_pellet, enemy_heavy) exist, so it is worth the repetition.
+// ----------------------------------------------------------------------------
+Model RSB_EnemyBullet   // pistol -- a 9mm, .45 or .38 in flight: a short thin dart
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.2500 0.2286 0.2286
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM A 0 0
+}
+Model RSB_EnemyBullet   // smg -- the same round out of a submachine gun, and the extreme pistol looks
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.3250 0.2714 0.2714
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM B 0 0
+}
+Model RSB_EnemyBullet   // intermediate -- 5.56, 7.92 Kurz, 10mm caseless: the assault-rifle streak
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.4250 0.2857 0.2857
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM C 0 0
+}
+Model RSB_EnemyBullet   // rifle -- full-power rifle -- 7.62, .30-06, 7.92, 7.62x54R
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.5750 0.3286 0.3286
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM D 0 0
+}
+Model RSB_EnemyBullet   // heavy -- 9.3x74R and the extreme machine-gun look: the heavy stuff
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.7250 0.4143 0.4143
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM E 0 0
+}
+Model RSB_EnemyBullet   // pellet -- one pellet of buckshot: a stub, and there are nine of them
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.1250 0.1714 0.1714
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM F 0 0
+}
+Model RSB_EnemyBullet   // tracer -- a burning tracer: long and bright, the round you are meant to read
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 0.8000 0.4571 0.4571
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM G 0 0
+}
+Model RSB_EnemyBullet   // tracerheavy -- a 7.62 tracer: the mesh at its full authored size
+{
+	Path "models/bullet"
+	Model 0 "btracer.obj"
+	SurfaceSkin 0 0 "btracer.png"
+	Scale 1.0000 0.5571 0.5571
+	DontCullBackfaces
+	USEACTORPITCH
+	USEACTORROLL
+	FrameIndex RSBM H 0 0
+}

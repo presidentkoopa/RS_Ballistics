@@ -86,12 +86,13 @@ class RSB_Bullet : FastProjectile
 	transient RSB_RoundLookDef lookDef;
 	transient RSB_RoundLookDef flightDef;
 	transient int              flightSprite;
+	transient int              flightFrame;  // a model look's frame: which calibre of the one mesh
 	transient int              lookBand;     // a monster's round: 0 near, 1 mid (no light or bent air), 2 far (no flight or impact looks)
 
 	States
 	{
 	Spawn:
-		RSBT A -1 Bright;
+		RSBM A -1 Bright;
 		Stop;
 	Death:
 		TNT1 A 0 { Landed(); }
@@ -187,6 +188,7 @@ class RSB_Bullet : FastProjectile
 		looksResolved = true;
 		lookBand = enemy ? RSB_Settings.EnemyBand(pos) : 0;
 		flightSprite = -1;
+		flightFrame = -1;
 		let r = RoundProfile();
 		let reg = RSB_Registry.Get();
 		if (!r || !reg) return;
@@ -213,12 +215,27 @@ class RSB_Bullet : FastProjectile
 		if (!flightDef) return;
 
 		bINVISIBLE = (flightDef.lookKind == "none");
-		if (flightDef.lookKind == "sprite" && !(flightDef.lookName ~== "RSBT"))
+		if (flightDef.lookKind == "sprite")
 		{
 			flightSprite = GetSpriteIndex(flightDef.lookName);
 			if (flightSprite < 0)
 				RSB_Log.Once(RSB_Log.LV_WARN, "roundlook:sprite:" .. flightDef.lookName, String.Format(
-					"round look %s: sprite %s is not loaded (no actor's states use it) -- drawn as RSBT", flightDef.id, flightDef.lookName));
+					"round look %s: sprite %s is not loaded (no actor's states use it) -- it flies unseen", flightDef.id, flightDef.lookName));
+		}
+		// A MODEL ROUND (`look = model, RSBMD`). The name is a sprite and a frame letter, and the
+		// FRAME is the calibre: MODELDEF binds one mesh eight times at eight sizes, so the pellet and
+		// the .30-06 tracer are one asset and a letter apart. Nothing here knows the mesh.
+		else if (flightDef.lookKind == "model")
+		{
+			flightSprite = GetSpriteIndex(flightDef.lookName.Left(4));
+			flightFrame = flightDef.lookName.ByteAt(4) - 65;
+			if (flightSprite < 0)
+			{
+				flightFrame = -1;
+				RSB_Log.Once(RSB_Log.LV_WARN, "roundlook:model:" .. flightDef.lookName, String.Format(
+					"round look %s: sprite %s is not loaded, so MODELDEF has nothing to hang a model on -- it flies unseen",
+					flightDef.id, flightDef.lookName.Left(4)));
+			}
 		}
 
 		// A LIGHT IN FLIGHT (the look's `light`): a burning tracer lights what it passes -- an engine effect
@@ -288,6 +305,19 @@ class RSB_Bullet : FastProjectile
 		Super.Tick();
 		if (bDestroyed) return;
 		if (flightSprite >= 0) sprite = flightSprite;
+		// THE CALIBRE, AND WHICH WAY IT POINTS. A model is drawn along the actor's angle and pitch,
+		// and a projectile's pitch is whatever the shot was spawned with -- so an 80-unit streak would
+		// lie along the gun's aim instead of its own flight, and be visibly wrong the moment anything
+		// curved, ricocheted or was fired from a moving hand. It follows its own velocity instead.
+		if (flightFrame >= 0)
+		{
+			frame = flightFrame;
+			if (travel != (0, 0, 0))
+			{
+				angle = VectorAngle(travel.x, travel.y);
+				pitch = -asin(clamp(travel.z, -1.0, 1.0));
+			}
+		}
 
 		if (flightDef && flightDef.glide && RSB_Settings.Glide())
 		{
@@ -349,6 +379,17 @@ class RSB_Bullet : FastProjectile
 		Vector3 lastFrom = tickFromKnown ? tickFrom : spawnedAt;
 		LayWake(lastFrom);
 		if (ticksFlown == 0) FlightStreak(lastFrom);
+		// THE BEAM, BEFORE ANY OF THE EARLY RETURNS BELOW. A beam weapon's shot IS the beam, so it
+		// draws whether it hit a wall, a monster, or something across the map -- the two reasons a
+		// round skips its impact looks are both wrong reasons to skip a beam.
+		//
+		// THIS EXISTS BECAUSE I BUILT TWO BEAMS AND HANDED THE LAST MILE AWAY TWICE. RSB_Trail.Lay has
+		// to be called by the GUN, so a beam needed a line in somebody else's package before it drew
+		// anything -- and until that line existed the Tesla and the particle gun were a trail profile
+		// nobody laid. The round knows both ends itself: spawnedAt is the firing hand, pos is where it
+		// landed. So it lays its own, and a gun gets a beam by naming a roundprofile.
+		if (lookDef && lookDef.trail.Length() > 0)
+			RSB_Trail.Lay(lookDef.trail, self, spawnedAt, pos);
 		if (BlockingMobj != null) return;   // an actor bleeds; its own mod decides how
 		if (lookBand >= 2) return;           // a far fight: no impact looks
 		if (lookDef) RSB_Impact.Land(self, lookDef.impact, travel);
