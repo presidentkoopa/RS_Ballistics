@@ -80,6 +80,11 @@ LOAD = {
     "ww2_22lr":     ( 40, 1050, 1.5,  56, ".22 LR -- the tiny charge is half of why the HDm is quiet"),
     "ww2_12ga":     (437, 1325, 32.0, 694, "12 gauge 00 buck"),
 
+    # ---------------------------------------------------------------- Blood
+    # A 26.5 mm signal flare: a 35 g star lobbed on a small charge. Its mass lived in
+    # gen_blood_profiles.py until the WW2 roundmass loss showed what a second copy costs.
+    "bl_flare":     (540, 250, 4.0, 900, "26.5 mm flare -- a heavy star at low velocity"),
+
     # ---------------------------------------------------------------- Aliens
     # FICTION, and the one cartridge here with no case at all. 10mm explosive-tip caseless: the round
     # is bullet plus a moulded propellant block, so its mass is the two together and there is no brass

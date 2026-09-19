@@ -38,6 +38,13 @@ if ($LASTEXITCODE -ne 0) { throw "menu lint failed -- a control would be dead. S
 & python (Join-Path $root 'tools/model_lint.py') $root
 if ($LASTEXITCODE -ne 0) { throw "model lint failed -- a round would fly invisible. See above." }
 
+# AND THE CARTRIDGE CHAIN. A gun naming a cartridge with no roundmass keeps the kick it was written
+# with for ever and looks exactly like a gun that works -- eleven cartridges lost theirs to a
+# generator that owned the block and stopped emitting the line, and nothing in this build noticed
+# for four commits. Both directions are proven to fire.
+& python (Join-Path $root 'tools/cartridge_lint.py') $root
+if ($LASTEXITCODE -ne 0) { throw "cartridge lint failed -- a gun cannot learn what its ammunition weighs. See above." }
+
 $rootLumps = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt', 'PARTICLEDEFS.txt', 'SURFACES.txt', 'KEYCONF.txt', 'DAMAGEDEFS.txt', 'VOLUMEDEFS.txt')
 $files = @()
 foreach ($l in $rootLumps) {

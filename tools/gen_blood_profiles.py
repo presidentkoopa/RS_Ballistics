@@ -36,7 +36,11 @@ END = "# ---- END BLOOD ----"
 # A 26.5 mm flare: a 35 g star lobbed at about 250 fps on a small charge. Low velocity and a lot of
 # mass, which is why it reads as a soft heavy shove rather than a crack, and why it flies slowly
 # enough to watch. Same free-recoil arithmetic as every other gun in the package.
-FLARE_GRAINS, FLARE_FPS, FLARE_CHARGE, FLARE_ROUND = 540, 250, 4.0, 900
+sys.path.insert(0, HERE)
+from cartridges import LOAD as CART_LOAD
+# READ, NOT REPEATED. tools/cartridges.py holds the only copy of what a round weighs; a second
+# one here is how eleven WW2 cartridges lost theirs without anything noticing.
+FLARE_GRAINS, FLARE_FPS, FLARE_CHARGE, FLARE_ROUND = CART_LOAD["bl_flare"][:4]
 FLARE_LB = 2.70          # the sheet's baseweight for BL_FlareGun
 ACTION_SEMI = 1.15
 CLIMB_PER_FPS = 0.148
