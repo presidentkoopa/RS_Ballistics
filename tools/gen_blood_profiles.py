@@ -557,9 +557,10 @@ SHEET = [
     ("BL_Napalm", [
         ("flashprofile", "bl_napalm", "was `rocket_launcher`"),
         ("recoilprofile", "bl_napalm", "stated: burning tar has no load to derive from"),
-        ("roundprofile", "bl_napalm", "NOTE: as with the lighter, whatever the Rocket class lands as "
-                                      "must name the impact `bl_napalm` -- it leaves a burning pool "
-                                      "that RIDES whoever is standing in it"),
+        (None, None, "NO roundprofile. `bl_napalm` is an IMPACT, not a round -- a lobbed canister "
+                     "has no round in flight. BL_NapalmRocket names it where it lands: "
+                     "RSB_Impact.Land(self, \"bl_napalm\", vel). It leaves a burning pool that RIDES "
+                     "whoever is standing in it."),
     ]),
     ("BL_LifeLeech", [
         ("flashprofile", "bl_lifeleech", "was `plasma_rifle`; this one is organic, not energetic"),
@@ -570,16 +571,40 @@ SHEET = [
         ("recoilprofile", "bl_sigil", "stated"),
     ]),
     ("BL_SprayCan", [
-        ("flameprofile", "bl_spray_inert", "the can ON ITS OWN: an inert jet, no fire, no light. "
-                                           "SWITCH to bl_spray_lit while a lit lighter is in front "
-                                           "of the nozzle -- two profiles, the gun picks"),
+        (None, None, "NO SHEET KEY, and no new one is needed. A flame gun does not name its profile "
+                     "on the sheet at all -- WM_FlameGun.FlameProfile() is a VIRTUAL, which is why "
+                     "`flameprofile` is absent from the reader: nothing has ever wanted it."),
+        (None, None, "AND A SHEET KEY COULD NOT WORK HERE ANYWAY. A key states ONE name. The whole "
+                     "point of this weapon is that which jet comes out depends on something only the "
+                     "weapon can see -- whether a lit lighter is in front of the nozzle. A condition "
+                     "is code; the two names are data. Keep them on the right sides of that line."),
+        (None, None, "SO: make BL_SprayCan a WM_FlameGun (it is generated as a plain WM_Gun today, "
+                     "which is why it has no flame at all) and override the virtual: return "
+                     "\"bl_spray_lit\" when the lighter is lit and in front, \"bl_spray_inert\" "
+                     "otherwise. No ask of the reload lane, no new key, no key that can be stated "
+                     "wrong."),
+        (None, None, "IF a second weapon ever needs the same pairing, the shape to ask for then is "
+                     "TWO keys (flameprofile and litflameprofile), not one -- but building that for "
+                     "a single caller is a key nobody consults, which is the failure we keep finding."),
     ]),
     ("BL_Lighter", [
-        ("roundprofile", "bl_lighter", "NOTE: it is thrown, so whatever BL_ThrownLighter calls on "
-                                       "landing must name the impact `bl_lighter`; if the class does "
-                                       "not read roundprofile, tell me and I will meet it where it is"),
+        (None, None, "NO SHEET KEY. It is thrown, so there is no round in flight for a roundprofile "
+                     "to describe -- the class names the impact where the impact happens: "
+                     "RSB_Impact.Land(self, \"bl_lighter\", vel) in its Death state."),
     ]),
 ]
+
+
+def wrap(t, width=86):
+    out, line = [], ""
+    for w in t.split():
+        if len(line) + len(w) + 1 > width:
+            out.append(line); line = w
+        else:
+            line = (line + " " + w).strip()
+    if line:
+        out.append(line)
+    return out
 
 
 def print_sheet():
@@ -588,8 +613,18 @@ def print_sheet():
     for gun, keys in SHEET:
         print('gun "%s"' % gun)
         for k, v, why in keys:
+            # A NOTE WITH NO KEY. The weapons lane took `roundprofile = "bl_napalm"` literally --
+            # correctly, it was printed as a sheet line -- and their lint refused it, because
+            # bl_napalm is an impact and no `round bl_napalm` exists. The NOTE underneath was the
+            # real instruction and the line above it said the opposite. A tool that prints a key it
+            # then talks you out of is a tool that has invented work, so it no longer prints one.
+            if k is None:
+                for chunk in wrap(why):
+                    print("  # %s" % chunk)
+                continue
             print('  %-20s = "%s"' % (k, v))
-            print('  %s# %s' % (" " * 20, why))
+            for chunk in wrap(why):
+                print('  %s# %s' % (" " * 20, chunk))
         print()
     print("BL_TommyGun and BL_Shotgun keep their EJECTA as they are: brass_45 and hull_12ga are")
     print("exactly what those guns throw, so that was never borrowing, it was correct reuse.")
