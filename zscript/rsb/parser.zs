@@ -2048,6 +2048,18 @@ class RSB_Parser
 			tr.helixMax = v[0].ToInt();
 			return (tr.helixMax >= 1 && tr.helixMax <= 4096) ? "" : "helixmax is 1 to 4096 motes";
 		}
+		if (key == "beamlight")
+		{
+			// ONE SEGMENT LIGHT ALONG THE BEAM. See RSB_TrailDef.beamRadius for why this beats `lights`.
+			if (v.Size() < 3 || v.Size() > 4) return "beamlight is radius, intensity, tics[, far-end brightness 0..1]";
+			why = Nums(v, v.Size()); if (why != "") return why;
+			tr.beamRadius = v[0].ToDouble();
+			tr.beamIntensity = v[1].ToDouble();
+			tr.beamTics = v[2].ToInt();
+			tr.beamEnd = (v.Size() == 4) ? v[3].ToDouble() : 1.0;
+			return (tr.beamRadius >= 0 && tr.beamIntensity >= 0 && tr.beamTics >= 1 && tr.beamEnd >= 0 && tr.beamEnd <= 1) ? ""
+				: "beamlight is radius, intensity, tics (1 or more)[, far-end brightness 0..1]";
+		}
 		if (key == "lights")
 		{
 			why = Nums(v, 4); if (why != "") return why;

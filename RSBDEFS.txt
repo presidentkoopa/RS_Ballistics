@@ -11980,6 +11980,948 @@ recoil ww2_nebelwerfer   # recoilless: the backblast cancels the kick, so it bar
   view    = 1.5, 3, 1, 12
 end
 
+trail ww2_tesla   # THE TESLA GUN: a white-hot arc in a violet halo that lights every wall it passes and is gone in two tics
+  line        = 1.1, 5.0, 4.0, 2
+  linecolor   = 235, 245, 255
+  linecolorend = 150, 120, 255
+  linelook    = 0.9, 4.5
+  licks       = 0.45, 1.85, 0.22, 3.0
+  helix       = rsb_arc, 9.0, 7.0, 1.6
+  helixmotion = 14, 2.6, 0.9
+  helixcolor  = 170, 200, 255
+  helixmax    = 900
+  beamlight   = 170, 3.6, 3, 0.75
+  lightcolor  = 180, 205, 255
+  heat        = 9, 0.8, 26
+end
+
+flash ww2_tesla   # the coils letting go: a hard blue-white crack at the muzzle, arcs off the horns, and NO smoke -- this thing burns no powder
+  light         = 330, 7.0, 2
+  lightcolor    = 190, 215, 255
+  cone          = 20, 70, 90, 6
+  conetics      = 2
+  bursts        = arcs_electric, wisp_electric, energy_sparks_rail, plasma_ozone
+  maybe         = arc_electric_one 0.8, spk_stars 0.45
+  flame         = 0.00
+  vary          = light 0.35, sparks 0.4
+  barrelglow    = 0.0, 26, 1.6
+  barrelglowcolor = 150, 190, 255
+  barrelshimmer = 4.0, 0.7
+  shockwave     = 40, 1.1, 4, 0, 0.35
+  exposure      = 0.80, 150
+  hearing       = 0.45, 120
+  tail          = rsb/tail/rail, 0.9
+end
+
+recoil ww2_tesla   # a coil gun has nothing to push back with: it SHUDDERS rather than kicks
+  climb   = 0.22
+  drift   = 0.85, 5
+  recover = 10, 5
+  max     = 4, 2
+  bloom   = 0.00
+  brace   = 0.6, 0.85
+  view    = 1.2, 5, 1, 7
+end
+
+impact ww2_tesla
+  bursts    = arcs_electric, energy_sparks_rail, spark_spray
+  sound     = rsb/impact/concrete
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = scorch, 7.0, 0.1, 0.45, 0.8
+end
+
+impact ww2_tesla.metal
+  bursts    = arcs_electric, arc_electric_one, spark_metal, ember_metal
+  sound     = rsb/impact/metal
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = pit, 6.0, 0.25, 0.4, 0.95
+end
+
+impact ww2_tesla.wood
+  bursts    = arcs_electric, splinter_wood, melt_smoke_rise
+  sound     = rsb/impact/wood
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = scorch, 8.0, 0.2, 0.5, 0.7
+end
+
+impact ww2_tesla.dirt
+  bursts    = arcs_electric, clods_dirt, dust_dirt
+  sound     = none
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = scorch, 9.0, 0.3, 0.3, 0.5
+end
+
+impact ww2_tesla.glass
+  bursts    = glint_glass, arc_electric_one
+  sound     = rsb/glass
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = crack, 9.0, 0.3, 0.1, 0.3
+end
+
+impact ww2_tesla.liquid
+  bursts    = splash_liquid, arcs_electric
+  sound     = none
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = none
+end
+
+impact ww2_tesla.tech
+  bursts    = arcs_electric, arc_electric_one, bits_wire, bits_board
+  sound     = rsb/impact/metal
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = pit, 8.0, 0.3, 0.5, 1.0
+end
+
+impact ww2_tesla.screen
+  bursts    = arc_electric_one, bits_board
+  sound     = rsb/glass
+  light     = 110, 2.2, 3
+  lightcolor = 180, 205, 255
+  damage    = crack, 10.0, 0.3, 0.2, 0.6
+end
+
+ballistics ww2_tesla   # an arc, and it arrives when it arrives
+  speed  = 1400
+  radius = 3.0
+  damage = none
+end
+
+roundlook ww2_tesla   # the bolt itself, if it flies: a short blue-white streak lighting its own path
+  look   = none
+  glide  = yes
+  impact = ww2_tesla
+  light  = 90, 2.6
+  lightcolor = 180, 205, 255
+  lightlook  = streak
+  heat   = 10, 0.9, 28
+end
+
+round ww2_tesla
+  ballistics = ww2_tesla
+  roundlook  = ww2_tesla
+end
+
+flash ww2_leichenfaust43   # THE LEICHENFAUST 1943: the prototype, and it looks it -- a ragged green vent that spits as much as it fires
+  light         = 375, 6.9, 3
+  lightcolor    = 140, 255, 140
+  cone          = 27, 82, 150, 8
+  conetics      = 3
+  bursts        = plasma_glow, plasma_vent_ring, plasma_ozone, unmaker_arcs
+  maybe         = plasma_crackle_muzzle 0.88, melt_embers 0.62
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 27, 1.8
+  barrelglowcolor = 140, 255, 140
+  barrelshimmer = 5.6, 0.6
+  shockwave     = 87, 2.5, 6, 0, 0.5
+  exposure      = 0.95, 225
+  hearing       = 0.94, 237
+  tail          = rsb/tail/rpg, 0.98
+end
+
+recoil ww2_leichenfaust43   # it does not recoil so much as OBJECT: a long slow shove and a wander that takes its time
+  climb   = 0.88
+  drift   = 1.12, 5
+  recover = 24, 6
+  max     = 6, 3
+  bloom   = 0.00
+  brace   = 0.6, 0.85
+  view    = 1.8, 6, 1, 10
+end
+
+flash ww2_leichenfaust44   # THE LEICHENFAUST 1944: the year-later refinement. Tighter, brighter, colder, and far more frightening for it
+  light         = 255, 6.3, 3
+  lightcolor    = 170, 255, 210
+  cone          = 18, 56, 102, 8
+  conetics      = 3
+  bursts        = plasma_glow, plasma_vent_ring, plasma_ozone, unmaker_arcs
+  maybe         = plasma_crackle_muzzle 0.59, melt_embers 0.42
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 18, 1.2
+  barrelglowcolor = 170, 255, 210
+  barrelshimmer = 3.8, 0.6
+  shockwave     = 59, 1.7, 6, 0, 0.5
+  exposure      = 0.72, 153
+  hearing       = 0.64, 161
+  tail          = rsb/tail/rpg, 0.77
+end
+
+recoil ww2_leichenfaust44   # it does not recoil so much as OBJECT: a long slow shove and a wander that takes its time
+  climb   = 0.59
+  drift   = 0.77, 5
+  recover = 24, 6
+  max     = 6, 3
+  bloom   = 0.00
+  brace   = 0.6, 0.85
+  view    = 1.2, 6, 1, 10
+end
+
+flash ww2_bluemp40   # THE BLUE MP40: the MP40 rhythm with none of its dirt -- a cold blue crack nine times a second and not one grain of powder
+  light         = 150, 3.4, 3
+  lightcolor    = 140, 185, 255
+  cone          = 14, 44, 60, 8
+  conetics      = 3
+  bursts        = plasma_glow_small, plasma_crackle_muzzle
+  maybe         = plasma_ozone 0.5, spk_specks 0.25
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 14, 1.1
+  barrelglowcolor = 140, 185, 255
+  barrelshimmer = 2.8, 0.5
+  exposure      = 0.35, 90
+  hearing       = 0.30, 90
+  tail          = rsb/tail/smg, 0.5
+end
+
+recoil ww2_bluemp40   # the MP40 numbers, because it is an MP40
+  climb   = 0.38
+  drift   = 0.63, 5
+  recover = 21, 6
+  max     = 4, 2
+  bloom   = 0.12
+  brace   = 0.6, 0.85
+  view    = 1.2, 4, 1, 6
+end
+
+
+# ---- EVERY FLASH ABOVE, AGAIN, AT THE EXTREME EFFECTS LEVEL.
+# Generated from the base blocks by a transformer, never hand-written: see extreme_blocks().
+# The ladder already scales counts, light, size and smoke (including for an authored profile),
+# so these add STRUCTURE the ladder cannot -- bursts that are not in the base recipe, chances
+# pushed toward certainty, a longer cone, and a shockwave on anything big enough to earn one.
+
+flash ww2_kar98k@extreme   # THE KAR98K: the set in one gun. One hundred damage, ZERO spread, one shot every eleven tics -- the biggest flash and the biggest single cloud in the game, because nothing else gets this much time to spend -- AT EXTREME
+  # bolt, 100 damage at 3.2 a second (firetics 11), spread 0,0
+  light         = 375, 5.00, 3
+  lightcolor    = 255, 200, 130
+  cone          = 29, 71, 317, 8
+  conetics      = 5
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.23
+  smoke         = 1, 0.075, 0.95
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 85, 11, 0.75
+  powdervary    = 0.35
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 127, 3
+  exposure      = 0.68, 199
+  hearing       = 0.77, 227
+  smokevolume   = 25, 1.6, 1.1, 150, 10
+  barrelheat    = 0.42, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.81
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_mg42@extreme   # THE MG42: the same cartridge as the Kar98k and nothing else in common. Small per shot because there are twelve a second, but the standing smoke is the thickest in the set and never gets a chance to clear -- AT EXTREME
+  # belt, 40 damage at 11.7 a second (firetics 3), spread 6,4
+  light         = 239, 3.80, 2
+  lightcolor    = 255, 200, 130
+  cone          = 21, 57, 200, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.15
+  smoke         = 1, 0.038, 0.58
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 52, 11, 0.75
+  powdervary    = 0.70
+  maybe         = powder_clump 0.95, flash_soot 0.71, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 103, 3
+  exposure      = 0.45, 128
+  hearing       = 0.50, 148
+  smokevolume   = 37, 2.5, 1.8, 150, 10
+  barrelheat    = 0.67, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 7.54
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_heavymg@extreme   # THE CHAINGUN: a Browning M1919 and the sloppiest thing in the set at an 8,6 spread, and it should look it -- the widest powder spray and the most bloom of the lot -- AT EXTREME
+  # belt, 40 damage at 8.8 a second (firetics 4), spread 8,6
+  light         = 255, 3.90, 3
+  lightcolor    = 255, 200, 130
+  cone          = 22, 59, 215, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.16
+  smoke         = 1, 0.041, 0.62
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 56, 11, 0.75
+  powdervary    = 0.84
+  maybe         = powder_clump 0.95, flash_soot 0.77, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 105, 3
+  exposure      = 0.47, 137
+  hearing       = 0.53, 158
+  smokevolume   = 32, 2.1, 1.5, 150, 10
+  barrelheat    = 0.57, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 6.37
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_garand@extreme   # THE M1 GARAND: a hundred damage of full-power round from a semi-auto -- a hard flash and a real push, eight times before the clip leaves -- AT EXTREME
+  # semi, 100 damage at 4.4 a second (firetics 8), spread 3,3
+  light         = 323, 4.60, 3
+  lightcolor    = 255, 200, 130
+  cone          = 26, 66, 273, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.20
+  smoke         = 1, 0.056, 0.85
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 73, 11, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 118, 3
+  exposure      = 0.59, 173
+  hearing       = 0.67, 197
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.45, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.07
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_bar@extreme   # THE BAR: a hundred damage of rifle cartridge on full auto seven times a second, which is as unreasonable as it sounds and is the most lethal sustained thing in the set -- AT EXTREME
+  # auto, 100 damage at 7.0 a second (firetics 5), spread 5,5
+  light         = 275, 4.10, 3
+  lightcolor    = 255, 200, 130
+  cone          = 23, 61, 231, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.17
+  smoke         = 1, 0.046, 0.68
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 60, 11, 0.75
+  powdervary    = 0.70
+  maybe         = powder_clump 0.95, flash_soot 0.85, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 109, 3
+  exposure      = 0.51, 147
+  hearing       = 0.57, 169
+  smokevolume   = 30, 1.9, 1.4, 150, 10
+  barrelheat    = 0.53, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.98
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_trench@extreme   # THE TRENCH GUN: seven pellets and a cloud, once every twelve tics. The slowest gun in the set and the only pellet gun, so it gets the longest cone and the fattest smoke -- AT EXTREME
+  # pump, 25 damage x7 at 2.9 a second (firetics 12), spread 4,2
+  light         = 282, 4.80, 3
+  lightcolor    = 255, 200, 130
+  cone          = 28, 69, 243, 8
+  conetics      = 5
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.21
+  smoke         = 1, 0.095, 0.95
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 80, 11, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 124, 3
+  exposure      = 0.64, 187
+  hearing       = 0.72, 213
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.45, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.07
+  tail          = rsb/tail/smg, 0.7
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_m1911@extreme   # THE COLT M1911: a fat slow .45 at the reference rate, a soft yellow flash and a lazy push -- AT EXTREME
+  # semi, 30 damage at 5.8 a second (firetics 6), spread 1,1
+  light         = 155, 3.60, 3
+  lightcolor    = 255, 200, 130
+  cone          = 21, 56, 134, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.14
+  smoke         = 1, 0.034, 0.52
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 49, 11, 0.75
+  powdervary    = 0.42
+  maybe         = powder_clump 0.88, flash_soot 0.64, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 100, 3
+  exposure      = 0.42, 121
+  hearing       = 0.46, 140
+  smokevolume   = 22, 1.3, 0.9, 150, 10
+  barrelheat    = 0.34, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.90
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_luger@extreme   # THE LUGER P08: small, sharp and tidy -- the cleanest thing here, which is not saying much -- AT EXTREME
+  # semi, 20 damage at 5.8 a second (firetics 6), spread 1,1
+  light         = 138, 3.50, 3
+  lightcolor    = 255, 200, 130
+  cone          = 20, 54, 119, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.13
+  smoke         = 1, 0.030, 0.45
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 45, 11, 0.75
+  powdervary    = 0.42
+  maybe         = powder_clump 0.77, flash_soot 0.56, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 98, 3
+  exposure      = 0.39, 112
+  hearing       = 0.43, 130
+  smokevolume   = 20, 1.1, 0.8, 150, 10
+  barrelheat    = 0.30, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.38
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_thompson@extreme   # THE THOMPSON M1A1: .45 on full auto at twelve a second -- fat rounds, a short fat flash, and it climbs -- AT EXTREME
+  # auto, 30 damage at 11.7 a second (firetics 3), spread 3,3
+  light         = 113, 3.30, 2
+  lightcolor    = 255, 200, 130
+  cone          = 18, 51, 97, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.12
+  smoke         = 1, 0.025, 0.38
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 38, 11, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.64, flash_soot 0.48, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 92, 3
+  exposure      = 0.35, 99
+  hearing       = 0.38, 115
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.44, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.94
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_mp40@extreme   # THE MP40: NOT the hose it was carded as. Eight and a half a second, dead mid-pack, sharing its rate with the Chaingun -- a small sooty flash and a gun you can actually aim -- AT EXTREME
+  # auto, 20 damage at 8.8 a second (firetics 4), spread 3,3
+  light         = 114, 3.30, 3
+  lightcolor    = 255, 200, 130
+  cone          = 18, 51, 99, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.12
+  smoke         = 1, 0.025, 0.37
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 38, 11, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.64, flash_soot 0.46, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 92, 3
+  exposure      = 0.35, 99
+  hearing       = 0.38, 116
+  smokevolume   = 22, 1.3, 0.9, 150, 10
+  barrelheat    = 0.35, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.90
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_ppsh@extreme   # THE PPSH-41: the fast pole. Seventeen and a half a second out of a drum, so the smallest flash in the set and a cone that dies before the next shot -- a stream of brass and a wall of standing smoke -- AT EXTREME
+  # auto, 20 damage at 17.5 a second (firetics 2), spread 4,5
+  light         = 89, 3.00, 1
+  lightcolor    = 255, 200, 130
+  cone          = 17, 49, 77, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.10
+  smoke         = 1, 0.018, 0.27
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 32, 11, 0.75
+  powdervary    = 0.67
+  maybe         = powder_clump 0.48, flash_soot 0.34, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 88, 3
+  exposure      = 0.31, 86
+  hearing       = 0.33, 101
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.44, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.94
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_stg44@extreme   # THE STG 44: the first assault rifle, and at seven a second with a 2,2 spread it sits exactly between the rifles and the subguns, because that is what it was for -- AT EXTREME
+  # auto, 40 damage at 7.0 a second (firetics 5), spread 2,2
+  light         = 236, 3.70, 3
+  lightcolor    = 255, 200, 130
+  cone          = 21, 57, 197, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.15
+  smoke         = 1, 0.035, 0.52
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 52, 11, 0.75
+  powdervary    = 0.49
+  maybe         = powder_clump 0.88, flash_soot 0.64, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 103, 3
+  exposure      = 0.44, 127
+  hearing       = 0.49, 146
+  smokevolume   = 24, 1.5, 1.1, 150, 10
+  barrelheat    = 0.40, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.55
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_p38@extreme   # THE WALTHER P38: the Luger's replacement and a plainer gun in every way -- the same 9mm at the same rate, and it should look ordinary next to it -- AT EXTREME
+  # semi, 20 damage at 5.8 a second (firetics 6), spread 1,1
+  light         = 138, 3.50, 3
+  lightcolor    = 255, 200, 130
+  cone          = 20, 54, 119, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.13
+  smoke         = 1, 0.030, 0.45
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 45, 11, 0.75
+  powdervary    = 0.42
+  maybe         = powder_clump 0.77, flash_soot 0.56, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 98, 3
+  exposure      = 0.39, 112
+  hearing       = 0.43, 130
+  smokevolume   = 20, 1.1, 0.8, 150, 10
+  barrelheat    = 0.30, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.38
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_sten@extreme   # THE STEN: a pipe with a trigger. Same cartridge and rate as the MP40, and the crudeness has to come from the powder spray rather than from the numbers, which are identical -- AT EXTREME
+  # auto, 20 damage at 8.8 a second (firetics 4), spread 3,3
+  light         = 114, 3.30, 3
+  lightcolor    = 255, 200, 130
+  cone          = 18, 51, 99, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.12
+  smoke         = 1, 0.031, 0.47
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 38, 11, 0.75
+  powdervary    = 0.70
+  maybe         = powder_clump 0.80, flash_soot 0.59, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 92, 3
+  exposure      = 0.35, 99
+  hearing       = 0.38, 116
+  smokevolume   = 22, 1.3, 0.9, 150, 10
+  barrelheat    = 0.35, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.90
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_mp34@extreme   # THE MP34: the Sten's opposite -- a beautifully made gun with exactly the Sten's numbers, which is the joke and worth showing in how clean its flash is -- AT EXTREME
+  # auto, 20 damage at 8.8 a second (firetics 4), spread 3,3
+  light         = 114, 3.30, 3
+  lightcolor    = 255, 200, 130
+  cone          = 18, 51, 99, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.12
+  smoke         = 1, 0.020, 0.31
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 38, 11, 0.75
+  powdervary    = 0.46
+  maybe         = powder_clump 0.53, flash_soot 0.38, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 92, 3
+  exposure      = 0.35, 99
+  hearing       = 0.38, 116
+  smokevolume   = 22, 1.3, 0.9, 150, 10
+  barrelheat    = 0.35, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.90
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_goldluger@extreme   # THE GOLDEN LUGER: a hundred damage out of a 9mm at two shots a second. The SLOWEST thing in the set, slower even than the Trench Gun, so it can afford the biggest flash any pistol gets -- AT EXTREME
+  # semi, 100 damage at 2.2 a second (firetics 16), spread 2,2
+  light         = 214, 4.20, 3
+  lightcolor    = 255, 200, 130
+  cone          = 24, 62, 184, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.17
+  smoke         = 1, 0.037, 0.56
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 63, 11, 0.75
+  powdervary    = 0.39
+  maybe         = powder_clump 0.95, flash_soot 0.70, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 110, 3
+  exposure      = 0.52, 151
+  hearing       = 0.59, 174
+  smokevolume   = 15, 0.8, 0.6, 150, 10
+  barrelheat    = 0.21, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.34
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_tt33@extreme   # THE TT-33 TOKAREV: the PPSh's cartridge fired deliberately instead of hosed -- fast, spiteful, and a sharp little flash -- AT EXTREME
+  # semi, 30 damage at 5.0 a second (firetics 7), spread 1,1
+  light         = 156, 3.70, 3
+  lightcolor    = 255, 200, 130
+  cone          = 21, 56, 135, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.14
+  smoke         = 1, 0.032, 0.48
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 49, 11, 0.75
+  powdervary    = 0.42
+  maybe         = powder_clump 0.83, flash_soot 0.60, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 100, 3
+  exposure      = 0.42, 121
+  hearing       = 0.47, 141
+  smokevolume   = 19, 1.0, 0.8, 150, 10
+  barrelheat    = 0.28, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.25
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_hdm@extreme   # THE HIGH STANDARD HDM: the OSS's suppressed .22, and the quietest thing anyone built. NO FLASH, NO CONE, NO REPORT -- gas out of the ports, a glow at the can, and the action working -- AT EXTREME
+  # semi, 25 damage at 5.8 a second (firetics 6), spread 1,1 -- SUPPRESSED
+  light         = 38, 0.80, 1
+  lightcolor    = 255, 214, 170
+  bursts        = sup_gas_puff
+  maybe         = spk_specks 0.14
+  smoke         = 1, 0.007, 0.09
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.3, smoke 0.4
+  powdervary    = 0.42
+  barrelheat    = 0.07, 0.20, 0.35
+  barrelsmoke   = rsb_smoke_barrel, 1.04
+  barrelshimmer = 2.5, 0.4
+  smokevolume   = 7, 0.3, 0.1, 40, 8
+  tail          = rsb/tail/pistol, 0.2
+end
+
+flash ww2_revolver@extreme   # THE REVOLVER: a big slow cartridge and a cylinder gap, so far more flash than a handgun should have -- and no brass, because a revolver holds onto it -- AT EXTREME
+  # revolver, 60 damage at 3.9 a second (firetics 9), spread 2,3
+  light         = 217, 4.20, 3
+  lightcolor    = 255, 200, 130
+  cone          = 24, 62, 186, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.18
+  smoke         = 1, 0.047, 0.70
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 63, 11, 0.75
+  powdervary    = 0.53
+  maybe         = powder_clump 0.95, flash_soot 0.87, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 112, 3
+  exposure      = 0.53, 153
+  hearing       = 0.59, 176
+  smokevolume   = 21, 1.2, 0.9, 150, 10
+  barrelheat    = 0.34, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.77
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_g43@extreme   # THE G43: Germany's answer to the Garand. Full-power 7.92 from a semi-auto at three and a half a second -- nearly the Kar98k's flash without the wait -- AT EXTREME
+  # semi, 80 damage at 3.5 a second (firetics 10), spread 3,3
+  light         = 361, 4.90, 3
+  lightcolor    = 255, 200, 130
+  cone          = 28, 70, 305, 8
+  conetics      = 5
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.22
+  smoke         = 1, 0.069, 0.95
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 81, 11, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 125, 3
+  exposure      = 0.66, 192
+  hearing       = 0.74, 219
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.44, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.94
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_fg42@extreme   # THE FG42: full-power rifle rounds on full auto at twelve a second out of a paratrooper's rifle, which is the least reasonable thing in the whole set -- AT EXTREME
+  # auto, 40 damage at 11.7 a second (firetics 3), spread 2,2
+  light         = 239, 3.80, 2
+  lightcolor    = 255, 200, 130
+  cone          = 21, 57, 200, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.15
+  smoke         = 1, 0.038, 0.58
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 52, 11, 0.75
+  powdervary    = 0.49
+  maybe         = powder_clump 0.95, flash_soot 0.71, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 103, 3
+  exposure      = 0.45, 128
+  hearing       = 0.50, 148
+  smokevolume   = 37, 2.5, 1.8, 150, 10
+  barrelheat    = 0.67, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 7.54
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_marksman@extreme   # THE MARKSMAN: a hundred damage and a TEN DEGREE spread, which makes it the sloppiest gun in the game by a distance. Whatever it is, it is not a marksman rifle, and the powder should spray everywhere -- AT EXTREME
+  # semi, 100 damage at 7.0 a second (firetics 5), spread 10,8
+  light         = 283, 4.20, 3
+  lightcolor    = 255, 200, 130
+  cone          = 24, 62, 238, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.17
+  smoke         = 1, 0.048, 0.73
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 63, 11, 0.75
+  powdervary    = 0.95
+  maybe         = powder_clump 0.95, flash_soot 0.90, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 110, 3
+  exposure      = 0.52, 151
+  hearing       = 0.59, 174
+  smokevolume   = 32, 2.1, 1.5, 150, 10
+  barrelheat    = 0.56, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 6.24
+  tail          = rsb/tail/br, 0.9
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_venom@extreme   # THE VENOM: full-power 7.92 seventeen and a half times a second. It ties the PPSh for rate while firing four times the cartridge, so it has the thickest standing smoke of anything here -- AT EXTREME
+  # belt, 60 damage at 17.5 a second (firetics 2), spread 6,4
+  light         = 210, 3.50, 1
+  lightcolor    = 255, 200, 130
+  cone          = 20, 54, 176, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_heavy_streaks, flash_embers, spk_embers_heavy
+  flame         = 0.13
+  smoke         = 1, 0.032, 0.48
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 45, 11, 0.75
+  powdervary    = 0.70
+  maybe         = powder_clump 0.83, flash_soot 0.60, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 98, 3
+  exposure      = 0.40, 114
+  hearing       = 0.44, 132
+  smokevolume   = 41, 2.8, 2.1, 150, 10
+  barrelheat    = 0.77, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 7.80
+  tail          = rsb/tail/br, 0.9
+end
+
+flash ww2_aa12@extreme   # THE AA-12: ten pellets six times a second. The only automatic shotgun, and the per-shot cloud has to come down hard or it is a fog machine -- AT EXTREME
+  # auto, 16 damage x10 at 5.8 a second (firetics 6), spread 4,2
+  light         = 207, 4.10, 3
+  lightcolor    = 255, 200, 130
+  cone          = 24, 61, 178, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.17
+  smoke         = 1, 0.057, 0.85
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 62, 11, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 109, 3
+  exposure      = 0.51, 148
+  hearing       = 0.57, 170
+  smokevolume   = 32, 2.1, 1.5, 150, 10
+  barrelheat    = 0.57, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 6.37
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_auto5@extreme   # THE AUTO-5: Browning's humpback, ten pellets three times a second -- half the AA-12's rate and twice its cloud -- AT EXTREME
+  # semi, 16 damage x10 at 3.2 a second (firetics 11), spread 5,3
+  light         = 271, 4.70, 3
+  lightcolor    = 255, 200, 130
+  cone          = 27, 68, 234, 8
+  conetics      = 5
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.21
+  smoke         = 1, 0.088, 0.95
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 77, 11, 0.75
+  powdervary    = 0.63
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 121, 3
+  exposure      = 0.62, 181
+  hearing       = 0.70, 207
+  smokevolume   = 27, 1.7, 1.2, 150, 10
+  barrelheat    = 0.46, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.20
+  tail          = rsb/tail/smg, 0.7
+  shockwave     = 46, 1.3, 5
+end
+
+flash ww2_m30@extreme   # THE M30 DRILLING: two shotgun barrels and a rifle one. A 10,1 spread is a flat horizontal fan, which is a strange and specific thing, and the break action means no brass leaves it while firing -- AT EXTREME
+  # break, 13 damage x9 at 5.0 a second (firetics 7), spread 10,1
+  light         = 221, 4.30, 3
+  lightcolor    = 255, 200, 130
+  cone          = 24, 63, 190, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine, flash_embers, spk_embers_heavy
+  flame         = 0.18
+  smoke         = 1, 0.052, 0.78
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 64, 11, 0.75
+  powdervary    = 0.62
+  maybe         = powder_clump 0.95, flash_soot 0.95, spk_specks 0.42, flash_tongue 0.45
+  blastkick     = kick_puff, 112, 3
+  exposure      = 0.54, 155
+  hearing       = 0.60, 178
+  smokevolume   = 31, 2.0, 1.4, 150, 10
+  barrelheat    = 0.54, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 6.11
+  tail          = rsb/tail/smg, 0.7
+end
+
+flash ww2_panzerfaust@extreme   # THE PANZERFAUST: a disposable tube with a warhead on a stick. Fired once and thrown away, so it gets the dirtiest, least controlled blast of the three -- and being the shortest tube, the backblast lands nearest the shooter -- AT EXTREME
+  light         = 420, 5.40, 4
+  lightcolor = 255, 196, 124
+  cone          = 24, 66, 182, 10
+  conetics   = 4
+  bursts        = flash_core, flash_petals, backblast_fire, backblast_smoke, backblast_sparks, flash_embers, spk_embers_heavy
+  backblast  = 39, 0.85
+  maybe         = spk_stars 0.42, powder_clump 0.95, flash_tongue 0.45
+  flame      = 0.09
+  smoke      = 3, 0.060, 0.60
+  smokeparticle = rsb_smoke_soot_gun
+  vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  surge      = 0.12, 1.3
+  barrelheat = 0.38, 0.20, 0.40
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.25
+  barrelshimmer = 3.5, 0.5
+  powderburn    = 84, 16, 0.60
+  powdervary = 0.45
+  blastkick     = kick_blast, 187, 12
+  shockwave  = 54, 1.5, 6
+  tail       = rsb/tail/rpg, 1
+  exposure   = 0.95, 285
+  hearing    = 0.95, 330
+end
+
+flash ww2_panzerschreck@extreme   # THE PANZERSCHRECK: a real rocket launcher with a blast shield, because the backblast will take your face off. The longest tube here, so the blast throws furthest behind -- AT EXTREME
+  light         = 420, 5.70, 4
+  lightcolor = 255, 196, 124
+  cone          = 27, 74, 207, 10
+  conetics   = 4
+  bursts        = flash_core, flash_petals, backblast_fire, backblast_smoke, backblast_sparks, flash_embers, spk_embers_heavy
+  backblast  = 64, 1.15
+  maybe         = spk_stars 0.42, powder_clump 0.95, flash_tongue 0.45
+  flame      = 0.10
+  smoke      = 3, 0.068, 0.68
+  smokeparticle = rsb_smoke_soot_gun
+  vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  surge      = 0.12, 1.3
+  barrelheat = 0.52, 0.20, 0.40
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.42
+  barrelshimmer = 3.5, 0.5
+  powderburn    = 95, 16, 0.60
+  powdervary = 0.45
+  blastkick     = kick_blast, 212, 12
+  shockwave  = 73, 2.1, 6
+  tail       = rsb/tail/rpg, 1
+  exposure   = 0.95, 323
+  hearing    = 0.95, 374
+end
+
+flash ww2_nebelwerfer@extreme   # THE NEBELWERFER: a twin over-under tube, and the heaviest blast of the three. Two rockets are two separate moving parts -- that half is the reload lane's; this is what one tube does when it goes -- AT EXTREME
+  light         = 420, 6.00, 4
+  lightcolor = 255, 196, 124
+  cone          = 30, 83, 231, 10
+  conetics   = 4
+  bursts        = flash_core, flash_petals, backblast_fire, backblast_smoke, backblast_sparks, flash_embers, spk_embers_heavy
+  backblast  = 51, 1.40
+  maybe         = spk_stars 0.42, powder_clump 0.95, flash_tongue 0.45
+  flame      = 0.11
+  smoke      = 3, 0.076, 0.76
+  smokeparticle = rsb_smoke_soot_gun
+  vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  surge      = 0.12, 1.3
+  barrelheat = 0.63, 0.20, 0.40
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.46
+  barrelshimmer = 3.5, 0.5
+  powderburn    = 106, 16, 0.60
+  powdervary = 0.45
+  blastkick     = kick_blast, 237, 12
+  shockwave  = 89, 2.5, 6
+  tail       = rsb/tail/rpg, 1
+  exposure   = 0.95, 361
+  hearing    = 0.95, 418
+end
+
+flash ww2_tesla@extreme   # the coils letting go: a hard blue-white crack at the muzzle, arcs off the horns, and NO smoke -- this thing burns no powder -- AT EXTREME
+  light         = 379, 7.00, 2
+  lightcolor    = 190, 215, 255
+  cone          = 20, 70, 122, 6
+  conetics      = 2
+  bursts        = arcs_electric, wisp_electric, energy_sparks_rail, plasma_ozone, flash_embers, spk_embers_heavy
+  maybe         = arc_electric_one 0.95, spk_stars 0.63, flash_tongue 0.45
+  flame         = 0.00
+  vary          = light 0.35, sparks 0.4
+  barrelglow    = 0.0, 26, 1.6
+  barrelglowcolor = 150, 190, 255
+  barrelshimmer = 4.0, 0.7
+  shockwave     = 40, 1.1, 4, 0, 0.35
+  exposure      = 0.80, 150
+  hearing       = 0.45, 120
+  tail          = rsb/tail/rail, 0.9
+end
+
+flash ww2_leichenfaust43@extreme   # THE LEICHENFAUST 1943: the prototype, and it looks it -- a ragged green vent that spits as much as it fires -- AT EXTREME
+  light         = 420, 6.90, 3
+  lightcolor    = 140, 255, 140
+  cone          = 27, 82, 202, 8
+  conetics      = 3
+  bursts        = plasma_glow, plasma_vent_ring, plasma_ozone, unmaker_arcs, flash_embers, spk_embers_heavy
+  maybe         = plasma_crackle_muzzle 0.95, melt_embers 0.87, flash_tongue 0.45
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 27, 1.8
+  barrelglowcolor = 140, 255, 140
+  barrelshimmer = 5.6, 0.6
+  shockwave     = 87, 2.5, 6, 0, 0.5
+  exposure      = 0.95, 225
+  hearing       = 0.94, 237
+  tail          = rsb/tail/rpg, 0.98
+end
+
+flash ww2_leichenfaust44@extreme   # THE LEICHENFAUST 1944: the year-later refinement. Tighter, brighter, colder, and far more frightening for it -- AT EXTREME
+  light         = 293, 6.30, 3
+  lightcolor    = 170, 255, 210
+  cone          = 18, 56, 138, 8
+  conetics      = 3
+  bursts        = plasma_glow, plasma_vent_ring, plasma_ozone, unmaker_arcs, flash_embers, spk_embers_heavy
+  maybe         = plasma_crackle_muzzle 0.83, melt_embers 0.59, flash_tongue 0.45
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 18, 1.2
+  barrelglowcolor = 170, 255, 210
+  barrelshimmer = 3.8, 0.6
+  shockwave     = 59, 1.7, 6, 0, 0.5
+  exposure      = 0.72, 153
+  hearing       = 0.64, 161
+  tail          = rsb/tail/rpg, 0.77
+end
+
+flash ww2_bluemp40@extreme   # THE BLUE MP40: the MP40 rhythm with none of its dirt -- a cold blue crack nine times a second and not one grain of powder -- AT EXTREME
+  light         = 172, 3.40, 3
+  lightcolor    = 140, 185, 255
+  cone          = 14, 44, 81, 8
+  conetics      = 3
+  bursts        = plasma_glow_small, plasma_crackle_muzzle, flash_embers, spk_embers_heavy
+  maybe         = plasma_ozone 0.70, spk_specks 0.35, flash_tongue 0.45
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 14, 1.1
+  barrelglowcolor = 140, 185, 255
+  barrelshimmer = 2.8, 0.5
+  exposure      = 0.35, 90
+  hearing       = 0.30, 90
+  tail          = rsb/tail/smg, 0.5
+end
+
 flame ww2_flame   # THE FLAMMENWERFER: a fat wet gout, not a modern jet -- slower, shorter, and it clings
   reach       = 420
   speed       = 700

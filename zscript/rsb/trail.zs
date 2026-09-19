@@ -74,6 +74,16 @@ class RSB_Trail play
 			}
 		}
 
+		// ONE CAPSULE LIGHT DOWN THE WHOLE BEAM. The engine's segment light: a start, an end, and every
+		// wall between them lit as one shape. No beads, and one light where `lights` would spend sixteen.
+		if (td.beamRadius > 0 && td.beamIntensity > 0 && RSB_Settings.ImpactLights())
+		{
+			double life = td.beamTics / 35.0;
+			level.SpawnEffectLight(from, td.lightColor, td.beamRadius,
+				td.beamIntensity * RSB_Settings.ImpactLight() * RSB_Tier.LightScale(tier),
+				life, (0, 0, 0), from + u * len, 0.0, EFL_IMPORTANT, 0.0, 0.0, life, 0.0, 0.0, td.beamEnd);
+		}
+
 		// LIGHTS along the path, brief.
 		if (td.lightCount > 0 && td.lightRadius > 0 && RSB_Settings.ImpactLights())
 		{

@@ -472,6 +472,25 @@ class RSB_TrailDef : RSB_Def
 	double helixLifeJitter;
 	Color  helixColor;
 	int    helixMax;
+	// ONE CAPSULE LIGHT ALONG THE WHOLE BEAM (`beamlight`), instead of N point lights beaded along it.
+	//
+	// `lights` puts lightCount point lights down the path, which is what you do when the engine has only
+	// point lights -- and ours does not. UZDXREMA has SEGMENT LIGHTS: level.SpawnEffectLight takes a
+	// posEnd, and everything between the two points lights the room as one capsule. A beam is the exact
+	// shape that was invented for.
+	//
+	// It is CHEAPER AND BETTER AT ONCE, which is rare. Sixteen point lights is the cap the `lights` key
+	// enforces, so a long arc gets a light every sixty-odd units and at close range you can SEE the
+	// beads; one segment light has no beads at any length and costs one light instead of sixteen.
+	//
+	// ADDITIVE AND DEFAULT-OFF: a trail that does not say `beamlight` behaves exactly as it did, so the
+	// rail and the BFG ray are untouched until someone looks at them deliberately. Both should probably
+	// move over, but their brightness was tuned against overlapping point lights and that is a change
+	// the owner should see rather than inherit.
+	double beamRadius;      // 0 = no beam light
+	double beamIntensity;
+	int    beamTics;
+	double beamEnd;         // brightness at the far end as a share of the near end; 1 = even
 	int    lightCount;
 	double lightRadius;
 	double lightIntensity;

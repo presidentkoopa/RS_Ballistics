@@ -85,7 +85,22 @@ END = "# ---- END WW2"
 # into a four-thousand-line boot log and otherwise looks exactly like a gun with no muzzle flash, so the
 # failure has to happen HERE, loudly, at generate time -- not at load, where the only symptom is a gun
 # that goes quiet in the owner's headset and nobody knows why.
-UNIT_KEYS = {"smoke": 2, "flame": 0, "powdervary": 0, "barrelheat": 0, "exposure": 0, "hearing": 0}
+# key -> list of (value index, low, high), READ OFF THE PARSER'S OWN REFUSAL MESSAGES rather than
+# guessed. Not every bound is 0..1, which is exactly how the second round of this bug got through: the
+# guard knew about 0..1 keys, so `licks` (0-2), `tail` volume (0..1) and `barrelsmoke` puffs (0-8) all
+# sailed past it and refused four more profiles at load.
+UNIT_KEYS = {
+    "smoke":       [(2, 0.0, 1.0)],
+    "powdervary":  [(0, 0.0, 1.0)],
+    "barrelheat":  [(0, 0.0, 1.0)],
+    "exposure":    [(0, 0.0, 1.0)],
+    "hearing":     [(0, 0.0, 2.0)],
+    "tail":        [(1, 0.0, 1.0)],
+    "barrelsmoke": [(1, 0.0, 8.0)],
+    "licks":       [(0, 0.0, 2.0), (1, 0.0, 2.0), (2, 0.0, 1.0)],
+    "beamlight":   [(3, 0.0, 1.0)],
+    "cling":       [(0, 0.0, 1.0)],
+}
 
 
 def unit(x):
@@ -93,8 +108,14 @@ def unit(x):
     return max(0.0, min(0.95, x))
 
 
+def within(x, lo, hi):
+    """Clamp to any bounded key, with a hair of headroom at the top."""
+    return max(lo, min(hi - (hi - lo) * 0.02, x))
+
+
 def check_units(body):
-    """Read back what we are about to write and refuse to write it if any 0..1 key overflowed."""
+    """Read back what we are about to write and refuse to write it if any BOUNDED key fell outside its
+    range. Not only 0..1 -- see UNIT_KEYS."""
     bad = []
     where = "?"
     for line in body:
@@ -110,15 +131,16 @@ def check_units(body):
         if key not in UNIT_KEYS:
             continue
         vals = [v.strip() for v in s.split("=", 1)[1].split(",")]
-        i = UNIT_KEYS[key]
-        if i >= len(vals):
-            continue
-        try:
-            v = float(vals[i])
-        except ValueError:
-            continue
-        if v > 1.0:
-            bad.append("%s: %s value %d is %.3f, over 1.0 -- the parser would REFUSE this profile" % (where, key, i, v))
+        for i, lo, hi in UNIT_KEYS[key]:
+            if i >= len(vals):
+                continue
+            try:
+                v = float(vals[i])
+            except ValueError:
+                continue
+            if v < lo or v > hi:
+                bad.append("%s: %s value %d is %.3f, outside %g..%g -- the parser would REFUSE this profile"
+                           % (where, key, i, v, lo, hi))
     if bad:
         raise SystemExit("REFUSED BEFORE WRITING, and a refused profile is a silent gun:\n  " + "\n  ".join(bad))
 
@@ -432,7 +454,7 @@ def gun_blocks(nl):
                     "  vary          = light 0.3, smoke 0.4",
                     "  powdervary    = %.2f" % d["vary"],
                     "  barrelheat    = %.2f, 0.20, 0.35" % unit(0.20 * haze),
-                    "  barrelsmoke   = rsb_smoke_barrel, %.1f" % (2.2 * haze),
+                    "  barrelsmoke   = rsb_smoke_barrel, %.1f" % within(2.2 * haze, 0.0, 8.0),
                     "  barrelshimmer = 2.5, 0.4",
                     "  smokevolume   = %d, %.1f, %.1f, %d, %d" % (int(10 * haze) + 4, 0.8 * haze, 0.3 * haze, 40, 8),
                     "  tail          = rsb/tail/pistol, 0.2",
@@ -474,7 +496,7 @@ def gun_blocks(nl):
                 # second-smallest flash, and both of those are correct.
                 "  smokevolume   = %d, %.1f, %.1f, %d, %d" % (int(14 * haze) + 6, 1.1 * haze, 0.8 * haze, 150, 10),
                 "  barrelheat    = %.2f, %.2f, %.2f" % (unit(0.30 * haze), 0.22, 0.30),
-                "  barrelsmoke   = rsb_smoke_barrel_soot, %.1f" % (2.6 * haze),
+                "  barrelsmoke   = rsb_smoke_barrel_soot, %.1f" % within(2.6 * haze, 0.0, 8.0),
                 "  tail          = %s, %.1f" % ("rsb/tail/br" if heavy else "rsb/tail/smg", 0.9 if heavy else 0.7),
                 "end",
                 ""]
@@ -564,7 +586,7 @@ def ordnance_blocks():
                 "  vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3",
                 "  surge      = 0.12, 1.3",
                 "  barrelheat = %.2f, 0.20, 0.40" % unit(0.45 * blast),
-                "  barrelsmoke = rsb_smoke_barrel_soot, %.1f" % (3.0 * blast),
+                "  barrelsmoke = rsb_smoke_barrel_soot, %.1f" % within(3.0 * blast, 0.0, 8.0),
                 "  barrelshimmer = 3.5, 0.5",
                 "  powderburn = %d, 12, 0.6" % int(40 * fsize),
                 "  powdervary = 0.45",
@@ -587,6 +609,359 @@ def ordnance_blocks():
                 "  view    = 1.5, 3, 1, 12",
                 "end",
                 ""]
+    return out
+
+
+# ============================================================================ THE FANTASY GUNS
+# DELIBERATELY NOT PERIOD, and that is the point: they are the Wolfenstein half of a Wolfenstein set.
+# Everything above this line is derived from a sheet row; NONE of these are, because none of them is
+# hitscan and four of the five have no rate, spread or cartridge to derive from. What a look needs from
+# a wonder-weapon is not a damage figure.
+#
+# THE RULE THEY ALL FOLLOW: no powder, no soot, no brass, no smoke that hangs. These do not burn
+# nitrocellulose. Where a real gun gets dirt, these get LIGHT -- which is also why the Tesla is the one
+# that found an engine gap.
+def fantasy_blocks():
+    out = []
+
+    # ---------------------------------------------------------------- THE TESLA GUN
+    # THE OWNER ASKED FOR CRAZY LIGHTING AND THIS IS WHERE IT GOES. A lightning arc does not light the
+    # room from the muzzle -- it lights it FROM ITS WHOLE LENGTH, every wall it passes, for two tics,
+    # and then the room is black again. That is the thing to sell.
+    #
+    # `lights` on a trail is CAPPED AT 16 (parser.zs, the trail `lights` key), so a 1000-unit arc gets a
+    # light every 62 units and at close range you can see the beads. Sixteen is what there is, so
+    # sixteen is what it takes -- and this is the case for the SEGMENT LIGHT going to the build lane:
+    # one capsule light along the arc would be cheaper than sixteen point lights and would not bead.
+    out += ["trail ww2_tesla   # THE TESLA GUN: a white-hot arc in a violet halo that lights every wall it passes and is gone in two tics",
+            "  line        = 1.1, 5.0, 4.0, 2",
+            "  linecolor   = 235, 245, 255",
+            "  linecolorend = 150, 120, 255",
+            "  linelook    = 0.9, 4.5",
+            # LICKS ARE THE JAG. Lightning is not a straight line, and a straight one reads as a laser;
+            # these throw the arc off its own axis and back again.
+            "  licks       = 0.45, 1.85, 0.22, 3.0",
+            "  helix       = rsb_arc, 9.0, 7.0, 1.6",
+            "  helixmotion = 14, 2.6, 0.9",
+            "  helixcolor  = 170, 200, 255",
+            "  helixmax    = 900",
+            # ONE CAPSULE LIGHT DOWN THE WHOLE ARC, not sixteen point lights beaded along it. `lights`
+            # caps at 16, so a long bolt lit that way shows the beads at close range -- and this is
+            # cheaper as well as better, because the engine already has segment lights and a beam is
+            # the shape they were invented for. Falls off slightly toward the far end, because a bolt
+            # is brightest where it leaves the coils.
+            "  beamlight   = 170, 3.6, 3, 0.75",
+            "  lightcolor  = 180, 205, 255",
+            "  heat        = 9, 0.8, 26",
+            "end",
+            "",
+            "flash ww2_tesla   # the coils letting go: a hard blue-white crack at the muzzle, arcs off the horns, and NO smoke -- this thing burns no powder",
+            "  light         = 330, 7.0, 2",
+            "  lightcolor    = 190, 215, 255",
+            "  cone          = 20, 70, 90, 6",
+            "  conetics      = 2",
+            "  bursts        = arcs_electric, wisp_electric, energy_sparks_rail, plasma_ozone",
+            "  maybe         = arc_electric_one 0.8, spk_stars 0.45",
+            "  flame         = 0.00",
+            "  vary          = light 0.35, sparks 0.4",
+            "  barrelglow    = 0.0, 26, 1.6",
+            "  barrelglowcolor = 150, 190, 255",
+            "  barrelshimmer = 4.0, 0.7",
+            "  shockwave     = 40, 1.1, 4, 0, 0.35",
+            "  exposure      = 0.80, 150",
+            "  hearing       = 0.45, 120",
+            "  tail          = rsb/tail/rail, 0.9",
+            "end",
+            "",
+            "recoil ww2_tesla   # a coil gun has nothing to push back with: it SHUDDERS rather than kicks",
+            "  climb   = 0.22",
+            "  drift   = 0.85, 5",
+            "  recover = 10, 5",
+            "  max     = 4, 2",
+            "  bloom   = 0.00",
+            "  brace   = 0.6, 0.85",
+            "  view    = 1.2, 5, 1, 7",
+            "end",
+            ""]
+    # THE STRIKE. Arcs crawl on what it hit and keep crawling after the bolt is gone -- the one thing
+    # this weapon leaves behind, and it is a burn rather than a hole.
+    for mat, bursts, dmg, snd in [
+            ("", "arcs_electric, energy_sparks_rail, spark_spray", "scorch, 7.0, 0.1, 0.45, 0.8", "rsb/impact/concrete"),
+            (".metal", "arcs_electric, arc_electric_one, spark_metal, ember_metal", "pit, 6.0, 0.25, 0.4, 0.95", "rsb/impact/metal"),
+            (".wood", "arcs_electric, splinter_wood, melt_smoke_rise", "scorch, 8.0, 0.2, 0.5, 0.7", "rsb/impact/wood"),
+            (".dirt", "arcs_electric, clods_dirt, dust_dirt", "scorch, 9.0, 0.3, 0.3, 0.5", "none"),
+            (".glass", "glint_glass, arc_electric_one", "crack, 9.0, 0.3, 0.1, 0.3", "rsb/glass"),
+            (".liquid", "splash_liquid, arcs_electric", "none", "none"),
+            (".tech", "arcs_electric, arc_electric_one, bits_wire, bits_board", "pit, 8.0, 0.3, 0.5, 1.0", "rsb/impact/metal"),
+            (".screen", "arc_electric_one, bits_board", "crack, 10.0, 0.3, 0.2, 0.6", "rsb/glass")]:
+        out += ["impact ww2_tesla%s" % mat,
+                "  bursts    = %s" % bursts,
+                "  sound     = %s" % snd,
+                "  light     = 110, 2.2, 3",
+                "  lightcolor = 180, 205, 255",
+                "  damage    = %s" % dmg,
+                "end",
+                ""]
+    out += ["ballistics ww2_tesla   # an arc, and it arrives when it arrives",
+            "  speed  = 1400",
+            "  radius = 3.0",
+            "  damage = none",
+            "end",
+            "",
+            # A TRAIL IS LAID BY THE GUN, not named on a round look -- RSB_Trail.Lay(profile, shooter,
+            # from, to), one call per shot, the same way the rail gun and the BFG ray do it. There is no
+            # `trail` key here and there should not be; `trail ww2_tesla` above is what the weapons lane
+            # lays. This round look is the OTHER path: if the Tesla is wired as a flying bolt instead of
+            # an instant beam, it is a fat blue-white streak that lights what it passes.
+            "roundlook ww2_tesla   # the bolt itself, if it flies: a short blue-white streak lighting its own path",
+            "  look   = none",
+            "  glide  = yes",
+            "  impact = ww2_tesla",
+            "  light  = 90, 2.6",
+            "  lightcolor = 180, 205, 255",
+            "  lightlook  = streak",
+            "  heat   = 10, 0.9, 28",
+            "end",
+            "",
+            "round ww2_tesla",
+            "  ballistics = ww2_tesla",
+            "  roundlook  = ww2_tesla",
+            "end",
+            ""]
+
+    # ---------------------------------------------------------------- THE LEICHENFAUST
+    # "Corpse fist": 20 damage on contact and then A_Explode(800, 300), which is by a wide margin the
+    # biggest blast in the set. 1943 is the prototype and 1944 the refinement, so the 43 is dirtier and
+    # less contained and the 44 is tighter and colder -- the same weapon twice, one year apart.
+    for gid, tint, wild, note in [
+            ("leichenfaust43", (140, 255, 140), 1.25,
+             "THE LEICHENFAUST 1943: the prototype, and it looks it -- a ragged green vent that spits as much as it fires"),
+            ("leichenfaust44", (170, 255, 210), 0.85,
+             "THE LEICHENFAUST 1944: the year-later refinement. Tighter, brighter, colder, and far more frightening for it")]:
+        p2 = "ww2_" + gid
+        r, g, b = tint
+        out += ["flash %s   # %s" % (p2, note),
+                "  light         = %d, %.1f, 3" % (int(300 * wild), 5.0 + 1.5 * wild),
+                "  lightcolor    = %d, %d, %d" % (r, g, b),
+                "  cone          = %d, %d, %d, 8" % (int(22 * wild), int(66 * wild), int(120 * wild)),
+                "  conetics      = 3",
+                "  bursts        = plasma_glow, plasma_vent_ring, plasma_ozone, unmaker_arcs",
+                "  maybe         = plasma_crackle_muzzle %.2f, melt_embers %.2f" % (unit(0.7 * wild), unit(0.5 * wild)),
+                "  flame         = 0.00",
+                "  vary          = light 0.3, sparks 0.35",
+                "  barrelglow    = 0.0, %d, %.1f" % (int(22 * wild), 1.4 * wild),
+                "  barrelglowcolor = %d, %d, %d" % (r, g, b),
+                "  barrelshimmer = %.1f, 0.6" % (4.5 * wild),
+                "  shockwave     = %d, %.1f, 6, 0, 0.5" % (int(70 * wild), 2.0 * wild),
+                "  exposure      = %.2f, %d" % (unit(0.85 * wild), int(180 * wild)),
+                "  hearing       = %.2f, %d" % (unit(0.75 * wild), int(190 * wild)),
+                "  tail          = rsb/tail/rpg, %.2f" % within(0.9 * wild, 0.0, 1.0),
+                "end",
+                "",
+                "recoil %s   # it does not recoil so much as OBJECT: a long slow shove and a wander that takes its time" % p2,
+                "  climb   = %.2f" % (0.7 * wild),
+                "  drift   = %.2f, 5" % (0.9 * wild),
+                "  recover = 24, 6",
+                "  max     = 6, 3",
+                "  bloom   = 0.00",
+                "  brace   = 0.6, 0.85",
+                "  view    = %.1f, 6, 1, 10" % (1.4 * wild),
+                "end",
+                ""]
+
+    # ---------------------------------------------------------------- THE BLUE MP40
+    # The MP40 rate firing plasma instead of 9mm. Its A_FireBullets line is commented out in the source:
+    # it is a projectile weapon wearing an SMG body, which is exactly how it should read -- the MP40
+    # rhythm, none of the MP40 dirt. Its recoil IS the MP40 recoil, derived like every other gun here.
+    mp = derive("mp40")
+    out += ["flash ww2_bluemp40   # THE BLUE MP40: the MP40 rhythm with none of its dirt -- a cold blue crack nine times a second and not one grain of powder",
+            "  light         = 150, 3.4, 3",
+            "  lightcolor    = 140, 185, 255",
+            "  cone          = 14, 44, 60, 8",
+            "  conetics      = %d" % mp["conetics"],
+            "  bursts        = plasma_glow_small, plasma_crackle_muzzle",
+            "  maybe         = plasma_ozone 0.5, spk_specks 0.25",
+            "  flame         = 0.00",
+            "  vary          = light 0.3, sparks 0.35",
+            "  barrelglow    = 0.0, 14, 1.1",
+            "  barrelglowcolor = 140, 185, 255",
+            "  barrelshimmer = 2.8, 0.5",
+            "  exposure      = 0.35, 90",
+            "  hearing       = 0.30, 90",
+            "  tail          = rsb/tail/smg, 0.5",
+            "end",
+            "",
+            "recoil ww2_bluemp40   # the MP40 numbers, because it is an MP40",
+            "  climb   = %.2f" % mp["climb"],
+            "  drift   = %.2f, 5" % mp["drift"],
+            "  recover = %d, 6" % mp["recover"],
+            "  max     = %d, %d" % (mp["max"], max(2, mp["max"] // 2)),
+            "  bloom   = %.2f" % mp["bloom"],
+            "  brace   = 0.6, 0.85",
+            "  view    = %.1f, %d, 1, %d" % (1.0 + 1.2 * (mp["climb"] / 2.6), 4 + int(4 * (mp["climb"] / 2.6)), 6),
+            "end",
+            ""]
+    return out
+
+
+# ============================================================================ LIGHT -> EXTREME
+# THE OWNER ASKED FOR THE WHOLE RANGE ON EVERY GUN. The effects ladder already covers light-to-heavy on
+# its own -- it scales counts, light, size and smoke, and it scales an authored profile too
+# (flash.zs, "a profile written for a level is scaled by it too"). So plain and heavy need nothing
+# written, and EXTREME is the only rung worth authoring, because it is the only one where the answer is
+# not "the same thing, more of it".
+#
+# THIS IS A TRANSFORMER, NOT A SECOND SET OF RECIPES, and that is the whole design. It takes the flash
+# blocks this file already generated and rewrites them, so an @extreme can never drift away from the gun
+# it belongs to. Change the Kar98k and its extreme changes with it. The alternative -- writing thirty
+# more profiles by hand -- is thirty more things to forget to update, and the WW2 set has already been
+# rebuilt once under numbers that moved.
+#
+# WHAT EXTREME ACTUALLY ADDS is structure the ladder cannot: bursts that are not in the base recipe at
+# all, chances pushed toward certainty, a longer cone, and a shockwave on anything big enough to earn
+# one. It does NOT simply multiply the numbers, because the ladder is already doing that underneath.
+EXTREME_ADD_BURSTS = ["flash_embers", "spk_embers_heavy"]
+
+
+def _nums(v):
+    """Values, each tagged with whether it was written as a whole number -- a TIC COUNT IS NOT A FLOAT,
+    and rewriting `3` as `3.90` turns three tics into three, silently, while reading like a rounding
+    detail. Anything integral in the base stays integral here."""
+    out = []
+    for t in v.split(","):
+        t = t.strip()
+        try:
+            out.append((float(t), "." not in t))
+        except ValueError:
+            out.append((t, False))
+    return out
+
+
+def _fmt(vals):
+    out = []
+    for v, whole in vals:
+        if not isinstance(v, float):
+            out.append(str(v))
+        elif whole:
+            out.append("%d" % round(v))
+        else:
+            out.append("%.2f" % v)
+    return ", ".join(out)
+
+
+def _scale(vals, i, mul):
+    """Scale one value in place, keeping its integer-ness."""
+    if i < len(vals) and isinstance(vals[i][0], float):
+        vals[i] = (vals[i][0] * mul, vals[i][1])
+
+
+def extreme_blocks(body):
+    """Every `flash` block in `body`, again as its @extreme variant."""
+    out = []
+    block = None
+    for line in body:
+        st = line.strip()
+        if st.startswith("flash ") and "=" not in st:
+            block = [line]
+            continue
+        if block is not None:
+            block.append(line)
+            if st == "end":
+                out += _extreme_one(block)
+                block = None
+    return out
+
+
+def _extreme_one(block):
+    head = block[0].strip()
+    name = head.split("#")[0].strip().split()[1]
+    note = head.split("#", 1)[1].strip() if "#" in head else ""
+    body = block[1:-1]
+
+    # A SUPPRESSED GUN AT EXTREME IS STILL SUPPRESSED. It gets more gas and a stronger glow at the can
+    # and NOTHING ELSE -- no cone, no embers, no shockwave. An extreme setting is the player asking for
+    # more of what the gun is, not for it to become a different gun.
+    quiet = any("sup_gas_puff" in l for l in body)
+
+    out = ["flash %s@extreme   # %s%s" % (name, note, " -- AT EXTREME" if note else "AT EXTREME")]
+    has_shock = any(l.strip().startswith("shockwave") for l in body)
+    big = False
+    for line in body:
+        st = line.strip()
+        if not st or st.startswith("#") or "=" not in st:
+            out.append(line)
+            continue
+        key = st.split("=")[0].strip()
+        val = st.split("=", 1)[1]
+        pad = " " * (len(line) - len(line.lstrip()))
+
+        if key == "light":
+            v = _nums(val)
+            if v and isinstance(v[0][0], float):
+                big = v[0][0] >= 200
+                v[0] = (min(420.0, v[0][0] * 1.15), v[0][1])
+            out.append("%s%-13s = %s" % (pad, key, _fmt(v)))
+            continue
+        if key == "cone" and not quiet:
+            # LONGER IN SPACE. Deliberately NOT longer in time -- see conetics below.
+            v = _nums(val)
+            _scale(v, 2, 1.35)
+            out.append("%s%-13s = %s" % (pad, key, _fmt(v)))
+            continue
+        # `conetics` IS NOT TOUCHED AT ANY EFFECTS LEVEL, and the first version of this transformer
+        # added a tic to it, which would have put the Thompson and the PPSh back exactly where the
+        # owner found them: a flash that outlives the gap between shots, overlapping its successor and
+        # reading as a lamp bolted to the muzzle. Extreme means MORE, never LONGER. The base recipe
+        # already caps this at firetics - 1 and nothing above it gets to undo that.
+        if key == "bursts":
+            extra = "" if quiet else (", " + ", ".join(EXTREME_ADD_BURSTS))
+            out.append("%s%-13s =%s%s" % (pad, key, val.rstrip(), extra))
+            continue
+        if key == "maybe":
+            parts = []
+            for t in val.split(","):
+                t = t.strip()
+                bits = t.rsplit(" ", 1)
+                if len(bits) == 2:
+                    try:
+                        parts.append("%s %.2f" % (bits[0], min(0.95, float(bits[1]) * 1.4)))
+                        continue
+                    except ValueError:
+                        pass
+                parts.append(t)
+            if not quiet:
+                parts.append("flash_tongue 0.45")
+            out.append("%s%-13s = %s" % (pad, key, ", ".join(parts)))
+            continue
+        if key == "powderburn":
+            v = _nums(val)          # `radius, tics, soot`
+            _scale(v, 0, 1.4)
+            if len(v) > 1 and isinstance(v[1][0], float):
+                v[1] = (v[1][0] + 4, v[1][1])
+            out.append("%s%-13s = %s" % (pad, key, _fmt(v)))
+            continue
+        if key == "blastkick":
+            # `blastkick = <impact>, radius, tics`. ONLY THE RADIUS. Scaling everything numeric turned
+            # 3 tics into 3.90 -- which the parser reads as 3, so it looked harmless and was not.
+            v = _nums(val)
+            _scale(v, 1, 1.3)
+            out.append("%s%-13s = %s" % (pad, key, _fmt(v)))
+            continue
+        if key == "barrelsmoke":
+            v = _nums(val)          # `<particle>, puffs a tic` -- bounded 0-8, and the Venom hits it
+            _scale(v, 1, 1.3)
+            if len(v) > 1 and isinstance(v[1][0], float):
+                v[1] = (min(7.8, v[1][0]), v[1][1])
+            out.append("%s%-13s = %s" % (pad, key, _fmt(v)))
+            continue
+        out.append(line)
+
+    # A SHOCKWAVE ON ANYTHING BIG ENOUGH TO EARN ONE, and only at extreme. The air bending behind a
+    # muzzle is the single most expensive thing in the flash, so it is the last rung, not the first.
+    if big and not has_shock and not quiet:
+        out.append("  shockwave     = 46, 1.3, 5")
+    out.append("end")
+    out.append("")
     return out
 
 
@@ -629,8 +1004,17 @@ def main():
             ""]
     body += cartridge_blocks(nl)
     body += impact_blocks(nl)
-    body += gun_blocks(nl)
-    body += ordnance_blocks()
+    guns = gun_blocks(nl) + ordnance_blocks() + fantasy_blocks()
+    body += guns
+    # LIGHT -> EXTREME ON EVERY GUN (owner). Derived from the blocks above rather than written beside
+    # them, so an extreme variant cannot drift from the gun it belongs to.
+    body += ["", "# ---- EVERY FLASH ABOVE, AGAIN, AT THE EXTREME EFFECTS LEVEL.",
+             "# Generated from the base blocks by a transformer, never hand-written: see extreme_blocks().",
+             "# The ladder already scales counts, light, size and smoke (including for an authored profile),",
+             "# so these add STRUCTURE the ladder cannot -- bursts that are not in the base recipe, chances",
+             "# pushed toward certainty, a longer cone, and a shockwave on anything big enough to earn one.",
+             ""]
+    body += extreme_blocks(guns)
     body += ["flame ww2_flame   # THE FLAMMENWERFER: a fat wet gout, not a modern jet -- slower, shorter, and it clings",
              "  reach       = 420",
              "  speed       = 700",
