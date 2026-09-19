@@ -14073,3 +14073,368 @@ recoil ae_pulserifle_grenade   # a 30mm lobbed from under the barrel: a shove up
 end
 
 # ---- END ALIENS
+
+# ---- BEGIN NEW SETS (tools/gen_newsets_profiles.py)
+# THE REST OF ALIENS ERADICATION, AND ALL OF COLA 3. DO NOT EDIT BY HAND:
+# change tools/gen_newsets_profiles.py and run it again.
+#
+# Two briefs. The Aliens guns are ones people know from the film and each gets a signature
+# drawn from what it IS. The Cola guns get one real distinguishing fact each and an honest
+# recipe otherwise -- unique, not reverent, which is the owner's own division.
+
+flash ae_m37a2   # THE M37A2: an Ithaca 37, the shotgun from the film. Its spread is 5.6 HORIZONTAL and 0 VERTICAL -- it fans sideways and does not rise, which is the weapons lane's number and not my taste. A slow, deliberate, enormous boom
+  # pump, 2.9 a second (rate ASSUMED: the sheet states no firetics), spread 5.6,0 -- 24.1 ft-lb of free recoil (Vg 14.89 fps)
+  light         = 248, 4.9, 3
+  lightcolor    = 255, 216, 164
+  cone          = 29, 70, 160, 8
+  conetics      = 5
+  bursts        = flash_core, flash_petals, spk_streaks_wide
+  flame         = 0.21
+  smoke         = 1, 0.042, 0.61
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 44, 6, 0.6
+  powdervary    = 0.55
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 87, 3
+  exposure      = 0.59, 184
+  hearing       = 0.65, 206
+  barrelheat    = 0.38, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 3.4
+  tail          = rsb/tail/shotgun, 0.9
+end
+
+recoil ae_m37a2   # 24.1 ft-lb a shot, pump -- spread 5.6,0
+  climb   = 3.19
+  drift   = 0.61, 5
+  recover = 30, 6
+  max     = 9.0, 3.8
+  bloom   = 0.11
+  brace   = 0.75, 0.90
+  view    = 2.5, 8, 1, 7
+end
+
+flash ae_m4a3   # THE M4A3 SERVICE PISTOL: in a set with a Smartgun and an incinerator, the sidearm's whole character is that it is ORDINARY. Tight, clean, small, over quickly -- and it should feel like the thing you reach for when the good guns are empty
+  # semi, 5.8 a second (rate ASSUMED: the sheet states no firetics), spread 1,1 -- 3.2 ft-lb of free recoil (Vg 9.53 fps)
+  light         = 120, 3.5, 3
+  lightcolor    = 255, 216, 164
+  cone          = 20, 56, 78, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.13
+  smoke         = 1, 0.020, 0.30
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 24, 6, 0.6
+  powdervary    = 0.42
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 69, 3
+  exposure      = 0.36, 110
+  hearing       = 0.39, 124
+  barrelheat    = 0.19, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 1.6
+  tail          = rsb/tail/pistol, 0.9
+end
+
+recoil ae_m4a3   # 3.2 ft-lb a shot, semi -- spread 1,1
+  climb   = 1.62
+  drift   = 0.41, 5
+  recover = 26, 6
+  max     = 6.6, 2.0
+  bloom   = 0.04
+  brace   = 0.75, 0.90
+  view    = 1.7, 6, 1, 7
+end
+
+flash cl_ks23   # THE KS-23: a 23mm BORE built on an aircraft cannon barrel, and rifled. The largest shotgun bore in the world by a distance -- the widest flash and the hardest shotgun kick we ship, and it earns both by arithmetic
+  # pump, 2.9 a second (rate ASSUMED: the sheet states no firetics), spread 5.6,0 -- 89.3 ft-lb of free recoil (Vg 26.15 fps)
+  light         = 302, 5.4, 3
+  lightcolor    = 255, 216, 164
+  cone          = 32, 77, 195, 8
+  conetics      = 5
+  bursts        = flash_core, flash_petals, spk_streaks_wide
+  flame         = 0.24
+  smoke         = 1, 0.051, 0.74
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 52, 6, 0.6
+  powdervary    = 0.55
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 94, 3
+  exposure      = 0.69, 215
+  hearing       = 0.76, 241
+  barrelheat    = 0.47, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 4.1
+  tail          = rsb/tail/shotgun, 0.9
+end
+
+recoil cl_ks23   # 89.3 ft-lb a shot, pump -- spread 5.6,0
+  climb   = 4.20
+  drift   = 0.61, 5
+  recover = 30, 6
+  max     = 9.0, 3.8
+  bloom   = 0.11
+  brace   = 0.75, 0.90
+  view    = 2.9, 10, 1, 7
+end
+
+flash cl_jackhammer   # THE JACKHAMMER: a bullpup auto shotgun fed from a REVOLVING CYLINDER, so it leaks gas at the cylinder gap exactly as a revolver does -- a side vent nothing else in the game has
+  # auto, 4.4 a second, spread 6.5,0 -- 16.2 ft-lb of free recoil (Vg 10.02 fps)
+  light         = 209, 4.5, 3
+  lightcolor    = 255, 216, 164
+  cone          = 26, 66, 135, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_wide
+  flame         = 0.18
+  smoke         = 1, 0.035, 0.51
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 38, 6, 0.6
+  powdervary    = 0.58
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 81, 3
+  exposure      = 0.52, 161
+  hearing       = 0.57, 181
+  barrelheat    = 0.32, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.8
+  barrels       = 2, 4.5   # the cylinder gap: gas leaks off-axis, as it does on a revolver
+  tail          = rsb/tail/shotgun, 0.9
+end
+
+recoil cl_jackhammer   # 16.2 ft-lb a shot, auto -- spread 6.5,0
+  climb   = 1.26
+  drift   = 0.66, 5
+  recover = 30, 6
+  max     = 5.8, 4.2
+  bloom   = 0.13
+  brace   = 0.75, 0.90
+  view    = 1.6, 5, 1, 7
+end
+
+flash cl_sidewinder   # THE SIDEWINDER: an ordinary 30-round 5.56 select-fire rifle, and it should read as the dependable one in a set full of oddities
+  # semi, 5.8 a second, spread 3,3 -- 3.8 ft-lb of free recoil (Vg 5.57 fps)
+  light         = 151, 3.9, 3
+  lightcolor    = 255, 216, 164
+  cone          = 22, 59, 98, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.15
+  smoke         = 1, 0.025, 0.37
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 29, 6, 0.6
+  powdervary    = 0.56
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 73, 3
+  exposure      = 0.41, 128
+  hearing       = 0.45, 144
+  barrelheat    = 0.24, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.1
+  tail          = rsb/tail/ar, 0.9
+end
+
+recoil cl_sidewinder   # 3.8 ft-lb a shot, semi -- spread 3,3
+  climb   = 0.95
+  drift   = 0.63, 5
+  recover = 26, 6
+  max     = 5.1, 2.5
+  bloom   = 0.12
+  brace   = 0.75, 0.90
+  view    = 1.4, 5, 1, 7
+end
+
+flash cl_plasmagun   # THE PLASMA GUN: it throws a BALL you can see coming and can sidestep. Twelve a second, so the muzzle stays small and the bolts do the work
+  light         = 172, 4.4, 2
+  lightcolor    = 140, 190, 255
+  cone          = 16, 52, 75, 8
+  conetics      = 2
+  bursts        = plasma_glow_small, plasma_crackle_muzzle
+  maybe         = plasma_ozone 0.45, spk_specks 0.2
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 18, 1.2
+  barrelglowcolor = 140, 190, 255
+  barrelshimmer = 2.8, 0.5
+  exposure      = 0.35, 92
+  hearing       = 0.30, 92
+  tail          = rsb/tail/smg, 0.5
+end
+
+recoil cl_plasmagun   # an emitter: no cartridge to derive from, so this is stated -- a light fast shudder and no bloom, because a bolt carries no spread to grow
+  climb   = 0.34
+  drift   = 0.42, 5
+  recover = 13, 6
+  max     = 3.7, 2
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.2, 4, 1, 6
+end
+
+flame ae_flamer   # THE M260B INCINERATOR: not a 1940s Flammenwerfer. A shorter, hotter, tighter gout with BLUE AT THE ROOT where the fuel is still burning clean, going orange as it tumbles and starves. Corridor work
+  reach       = 360
+  speed       = 820
+  spread      = 1.7
+  stream      = flame_core, flame_body, flame_tip, flame_embers
+  landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke, flame_lick
+  cling       = 0.38
+  tube        = 5, 1.0, 3, 0.45
+  tubelook    = 1.5, 2.8, 0.45
+  tubecolors  = 190, 220, 255, 255, 240, 200, 255, 180, 70, 255, 96, 24, 120, 28, 8
+  tubelicks   = 0.6, 0.08, 2.6
+  heat        = 5, 18, 1.4, 0.10, 30
+  heatland    = 28, 1.6
+  landingtics = 2
+  scorch      = pool, 11, 120
+  scorchcolor = 255, 110, 30
+  scorchtics  = 9
+  light       = 240, 3.0, 0.40
+  lightcolor  = 255, 158, 66
+  landlight   = 170, 2.5
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+  sputter     = 0.18, rsb/flame/hiss
+  flameout    = flame_out_puff
+  smokevolume = 18, 0.6, 1.9, 0.8
+  damage      = scorch, 13, 0, 0.06, 0
+end
+
+recoil ae_flamer   # a pressurised tank shoves rather than snaps, and keeps shoving while the trigger is down
+  climb   = 0.16
+  drift   = 0.90, 5
+  recover = 22, 6
+  max     = 5, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.1, 4, 1, 6
+end
+
+# THE PARTICLE GUN. Not a laser, not a plasma bolt, and the difference is physical.
+#
+# A PARTICLE BEAM IS MATTER, NOT LIGHT. It fires charged particles at a fraction of light
+# speed. In vacuum you would see NOTHING -- there is no beam to look at. What you see in air
+# is THE AIR ITSELF: the particles strip electrons off everything they pass through and the
+# ionised channel glows. So the visible line is not the weapon, it is the damage the weapon
+# is doing to the atmosphere on its way past. That single fact drives every number below.
+#
+# IT FRAYS. A beam of like-charged particles pushes itself apart, and every metre of air
+# scatters it further -- real accelerators call it blooming and it is why particle weapons
+# are a short-range idea. So the licks START TIGHT AND END LOOSE: a clean aperture and a
+# ragged far end, the exact opposite of the rail gun's clean slug and of the Tesla's
+# uniformly jagged arc.
+#
+# IT DEPOSITS ALONG ITS WHOLE LENGTH, not at the end. The heat is the longest and strongest
+# of any beam we ship, because the air is being cooked the entire way rather than at a point.
+#
+# AND THE CHANNEL STAYS CONDUCTIVE for a moment after. Ionised air is a path for current, so
+# arcs jump along and off it once the beam itself is gone -- which is why the helix is arcs
+# rather than motes, and why the line outlives the shot by a few tics.
+#
+# LAID BY THE GUN, one line per shot, the same as the rail and the Tesla:
+#     RSB_Trail.Lay("cl_particlegun", shooter, muzzlePos, hitPos);
+# Its shotclass must stop being RSB_PlasmaBall -- there is no projectile, and a ball you can
+# sidestep is the one thing this weapon is not.
+trail cl_particlegun   # the air torn open along a line: white where it is worst, violet where it fades, fraying as it goes and still crackling after
+  line         = 0.9, 7.0, 3.2, 4
+  linecolor    = 240, 248, 255
+  linecolorend = 122, 58, 255
+  linelook     = 1.2, 4.4
+  # TIGHT AT THE APERTURE, RAGGED AT THE FAR END: atmospheric blooming, and the one thing
+  # that makes this read as particles rather than as light.
+  licks        = 0.12, 0.95, 0.07, 1.6
+  linepulse    = 3, 0.42, 2.0
+  # ARCS, NOT MOTES. The channel is still conductive when the beam has gone.
+  helix        = rsb_arc, 3.5, 5.5, 14.0
+  helixmotion  = 11, 2.2, 0.8
+  helixcolor   = 190, 150, 255
+  helixmax     = 700
+  beamlight    = 150, 2.6, 4, 0.55
+  lightcolor   = 225, 210, 255
+  beamcolorend = 110, 50, 235
+  # THE LONGEST, STRONGEST HEAT OF ANY BEAM HERE: the air is cooked the whole way, not at a point.
+  heat         = 9, 1.0, 30
+end
+
+flash cl_particlegun   # the aperture letting go: a hard violet-white crack and a smell of ozone. No powder, no smoke, no cone worth the name -- nothing is burning here
+  light         = 220, 4.6, 2
+  lightcolor    = 216, 198, 255
+  cone          = 13, 38, 46, 6
+  conetics      = 2
+  bursts        = energy_sparks_rail, plasma_ozone, arcs_electric
+  maybe         = spk_stars 0.35, wisp_electric 0.4
+  flame         = 0.00
+  vary          = light 0.3, sparks 0.35
+  barrelglow    = 0.0, 22, 1.5
+  barrelglowcolor = 190, 170, 255
+  barrelshimmer = 3.6, 0.65
+  shockwave     = 34, 0.9, 4, 0, 0.45
+  exposure      = 0.55, 130
+  hearing       = 0.35, 100
+  tail          = rsb/tail/rail, 0.8
+end
+
+recoil cl_particlegun   # a stream of particles has almost no mass to push back with. What you feel is the machine, not the shot: a hard electrical SNAP rather than a shove
+  climb   = 0.55
+  drift   = 0.30, 5
+  recover = 12, 6
+  max     = 4.2, 2
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.3, 5, 1, 6
+end
+
+impact cl_particlegun
+  bursts    = arcs_electric, energy_sparks_rail, melt_embers, melt_smoke_rise
+  sound     = rsb/impact/electric
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+  damage    = pit, 8.0, 0.35, 0.4, 0.9
+end
+
+impact cl_particlegun.metal
+  bursts    = arcs_electric, spark_metal, melt_slag_splash, melt_embers
+  sound     = rsb/impact/metal
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+  damage    = pit, 7.0, 0.4, 0.45, 1.0
+end
+
+impact cl_particlegun.wood
+  bursts    = arcs_electric, melt_smoke_rise, splinter_wood
+  sound     = rsb/impact/wood
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+  damage    = scorch, 9.0, 0.3, 0.55, 0.8
+end
+
+impact cl_particlegun.dirt
+  bursts    = clods_dirt, dust_dirt, melt_smoke_rise
+  sound     = none
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+  damage    = scorch, 10.0, 0.35, 0.3, 0.5
+end
+
+impact cl_particlegun.glass
+  bursts    = glint_glass, arc_electric_one
+  sound     = rsb/glass
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+  damage    = crack, 10.0, 0.3, 0.1, 0.3
+end
+
+impact cl_particlegun.liquid
+  bursts    = splash_liquid, arcs_electric
+  sound     = none
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+end
+
+impact cl_particlegun.tech
+  bursts    = arcs_electric, arc_electric_one, bits_wire, bits_board
+  sound     = rsb/impact/metal
+  light     = 120, 2.4, 3
+  lightcolor = 216, 198, 255
+  damage    = pit, 9.0, 0.35, 0.5, 1.0
+end
+
+# ---- END NEW SETS
