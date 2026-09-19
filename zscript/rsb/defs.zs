@@ -491,6 +491,21 @@ class RSB_TrailDef : RSB_Def
 	double beamIntensity;
 	int    beamTics;
 	double beamEnd;         // brightness at the far end as a share of the near end; 1 = even
+	// THE ARC IS NOT A TUBE (`beamjag`, `beamcolorend`). A capsule is straight, and one straight capsule
+	// is right for a rail slug and WRONG for lightning: a bolt is a jagged thing, and the light it
+	// throws is jagged with it. So the beam can be laid as a CHAIN of capsules, each one pushed off the
+	// axis, and the room is lit by the shape of the bolt rather than by a cylinder through it.
+	//
+	// Chaining buys the colour too, and that is the better half. One capsule takes one colour; a chain
+	// takes one PER LINK, so the arc runs white-hot at the muzzle and violet by the time it lands --
+	// which is what electricity actually does and what no single light could show.
+	//
+	// Still far cheaper than it sounds: six links is six lights against the sixteen `lights` beads at
+	// its cap, and unlike the beads there are no gaps between them at any range.
+	int    beamSegments;    // 1 = one straight capsule (the default, and right for a rail beam)
+	double beamJag;         // map units a link may wander off the axis
+	Color  beamColorEnd;    // colour at the far end; defaults to lightColor
+	bool   beamColorEndSet;
 	int    lightCount;
 	double lightRadius;
 	double lightIntensity;

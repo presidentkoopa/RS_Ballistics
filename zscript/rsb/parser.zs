@@ -2060,6 +2060,22 @@ class RSB_Parser
 			return (tr.beamRadius >= 0 && tr.beamIntensity >= 0 && tr.beamTics >= 1 && tr.beamEnd >= 0 && tr.beamEnd <= 1) ? ""
 				: "beamlight is radius, intensity, tics (1 or more)[, far-end brightness 0..1]";
 		}
+		if (key == "beamjag")
+		{
+			// A CHAIN OF CAPSULES INSTEAD OF ONE, wandering off the axis: see RSB_TrailDef.beamSegments.
+			why = Nums(v, 2); if (why != "") return why;
+			tr.beamSegments = v[0].ToInt();
+			tr.beamJag = v[1].ToDouble();
+			return (tr.beamSegments >= 1 && tr.beamSegments <= 12 && tr.beamJag >= 0 && tr.beamJag <= 96) ? ""
+				: "beamjag is links (1-12), wander off the axis (0-96 map units)";
+		}
+		if (key == "beamcolorend")
+		{
+			why = ReadColor(v, c); if (why != "") return why;
+			tr.beamColorEnd = c;
+			tr.beamColorEndSet = true;
+			return "";
+		}
 		if (key == "lights")
 		{
 			why = Nums(v, 4); if (why != "") return why;
@@ -2074,6 +2090,10 @@ class RSB_Parser
 		{
 			why = ReadColor(v, c); if (why != "") return why;
 			tr.lightColor = c;
+			// THE BEAM RUNS FROM THIS COLOUR TO beamColorEnd. Unless the profile states an end colour,
+			// both are this one and the arc is a single hue -- so a trail that never heard of
+			// `beamcolorend` behaves exactly as it always did.
+			if (!tr.beamColorEndSet) tr.beamColorEnd = c;
 			return "";
 		}
 		if (key == "heat")

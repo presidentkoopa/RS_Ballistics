@@ -641,7 +641,10 @@ def fantasy_blocks():
             # LICKS ARE THE JAG. Lightning is not a straight line, and a straight one reads as a laser;
             # these throw the arc off its own axis and back again.
             "  licks       = 0.45, 1.85, 0.22, 3.0",
-            "  helix       = rsb_arc, 9.0, 7.0, 1.6",
+            # THE VISIBLE BOLT IS HAND-DRAWN LIGHTNING strung along the path, not procedural noise. A
+            # twenty-five frame discharge playing ONCE means no two shots are ever the same frame at the
+            # same time, which is the thing procedural jitter never quite sells.
+            "  helix       = rsb_lightning, 2.0, 10.0, 46.0",
             "  helixmotion = 14, 2.6, 0.9",
             "  helixcolor  = 170, 200, 255",
             "  helixmax    = 900",
@@ -651,7 +654,11 @@ def fantasy_blocks():
             # the shape they were invented for. Falls off slightly toward the far end, because a bolt
             # is brightest where it leaves the coils.
             "  beamlight   = 170, 3.6, 3, 0.75",
-            "  lightcolor  = 180, 205, 255",
+            # SIX LINKS, WANDERING, WHITE-HOT TO VIOLET. The whole point of the weapon in one place: the
+            # room is lit by the SHAPE of the bolt, and the colour runs along it the way electricity does.
+            "  beamjag     = 6, 26",
+            "  lightcolor  = 235, 245, 255",
+            "  beamcolorend = 150, 120, 255",
             "  heat        = 9, 0.8, 26",
             "end",
             "",
@@ -660,8 +667,8 @@ def fantasy_blocks():
             "  lightcolor    = 190, 215, 255",
             "  cone          = 20, 70, 90, 6",
             "  conetics      = 2",
-            "  bursts        = arcs_electric, wisp_electric, energy_sparks_rail, plasma_ozone",
-            "  maybe         = arc_electric_one 0.8, spk_stars 0.45",
+            "  bursts        = lightning_coils, lightning_specks, wisp_electric, energy_sparks_rail, plasma_ozone",
+            "  maybe         = lightning_forks 0.85, arc_electric_one 0.8, spk_stars 0.45",
             "  flame         = 0.00",
             "  vary          = light 0.35, sparks 0.4",
             "  barrelglow    = 0.0, 26, 1.6",
@@ -686,14 +693,16 @@ def fantasy_blocks():
     # THE STRIKE. Arcs crawl on what it hit and keep crawling after the bolt is gone -- the one thing
     # this weapon leaves behind, and it is a burn rather than a hole.
     for mat, bursts, dmg, snd in [
-            ("", "arcs_electric, energy_sparks_rail, spark_spray", "scorch, 7.0, 0.1, 0.45, 0.8", "rsb/impact/concrete"),
-            (".metal", "arcs_electric, arc_electric_one, spark_metal, ember_metal", "pit, 6.0, 0.25, 0.4, 0.95", "rsb/impact/metal"),
-            (".wood", "arcs_electric, splinter_wood, melt_smoke_rise", "scorch, 8.0, 0.2, 0.5, 0.7", "rsb/impact/wood"),
-            (".dirt", "arcs_electric, clods_dirt, dust_dirt", "scorch, 9.0, 0.3, 0.3, 0.5", "none"),
-            (".glass", "glint_glass, arc_electric_one", "crack, 9.0, 0.3, 0.1, 0.3", "rsb/glass"),
-            (".liquid", "splash_liquid, arcs_electric", "none", "none"),
-            (".tech", "arcs_electric, arc_electric_one, bits_wire, bits_board", "pit, 8.0, 0.3, 0.5, 1.0", "rsb/impact/metal"),
-            (".screen", "arc_electric_one, bits_board", "crack, 10.0, 0.3, 0.2, 0.6", "rsb/glass")]:
+            ("", "lightning_crawl, lightning_specks, energy_sparks_rail, spark_spray", "scorch, 7.0, 0.1, 0.45, 0.8", "rsb/impact/concrete"),
+            (".metal", "lightning_crawl, lightning_specks, spark_metal, ember_metal", "pit, 6.0, 0.25, 0.4, 0.95", "rsb/impact/metal"),
+            (".wood", "lightning_crawl, splinter_wood, melt_smoke_rise", "scorch, 8.0, 0.2, 0.5, 0.7", "rsb/impact/wood"),
+            (".dirt", "lightning_crawl, clods_dirt, dust_dirt", "scorch, 9.0, 0.3, 0.3, 0.5", "none"),
+            (".glass", "glint_glass, lightning_crawl", "crack, 9.0, 0.3, 0.1, 0.3", "rsb/glass"),
+            (".liquid", "splash_liquid, lightning_crawl", "none", "none"),
+            # A SHOT-OUT PANEL IS THE BEST THING THIS WEAPON DOES: the arcs keep crawling over the tech
+            # after the bolt is long gone, lighting the wall they are on.
+            (".tech", "lightning_crawl, lightning_forks, bits_wire, bits_board", "pit, 8.0, 0.3, 0.5, 1.0", "rsb/impact/metal"),
+            (".screen", "lightning_crawl, bits_board", "crack, 10.0, 0.3, 0.2, 0.6", "rsb/glass")]:
         out += ["impact ww2_tesla%s" % mat,
                 "  bursts    = %s" % bursts,
                 "  sound     = %s" % snd,
@@ -773,6 +782,10 @@ def fantasy_blocks():
     # The MP40 rate firing plasma instead of 9mm. Its A_FireBullets line is commented out in the source:
     # it is a projectile weapon wearing an SMG body, which is exactly how it should read -- the MP40
     # rhythm, none of the MP40 dirt. Its recoil IS the MP40 recoil, derived like every other gun here.
+    # NOT DERIVED FROM THE MP40 ROW, and it was until the weapons lane caught it. BWII comments OUT this
+    # gun\'s A_FireBullets and fires a Plasma_Ball instead: same body, different weapon. A hitscan SMG\'s
+    # recoil row says nothing about what a plasma emitter does to your wrists, so this is a CHOICE and is
+    # written as one -- a light, fast shudder with no bloom, because a projectile carries no spread to grow.
     mp = derive("mp40")
     out += ["flash ww2_bluemp40   # THE BLUE MP40: the MP40 rhythm with none of its dirt -- a cold blue crack nine times a second and not one grain of powder",
             "  light         = 150, 3.4, 3",
@@ -791,14 +804,14 @@ def fantasy_blocks():
             "  tail          = rsb/tail/smg, 0.5",
             "end",
             "",
-            "recoil ww2_bluemp40   # the MP40 numbers, because it is an MP40",
-            "  climb   = %.2f" % mp["climb"],
-            "  drift   = %.2f, 5" % mp["drift"],
+            "recoil ww2_bluemp40   # an emitter, not a cartridge: a light fast shudder at the MP40 rhythm, and no bloom because a bolt carries no spread to grow",
+            "  climb   = 0.22",
+            "  drift   = 0.45, 5",
             "  recover = %d, 6" % mp["recover"],
-            "  max     = %d, %d" % (mp["max"], max(2, mp["max"] // 2)),
-            "  bloom   = %.2f" % mp["bloom"],
+            "  max     = 3, 2",
+            "  bloom   = 0.00",
             "  brace   = 0.6, 0.85",
-            "  view    = %.1f, %d, 1, %d" % (1.0 + 1.2 * (mp["climb"] / 2.6), 4 + int(4 * (mp["climb"] / 2.6)), 6),
+            "  view    = 1.1, 4, 1, 6",
             "end",
             ""]
     return out

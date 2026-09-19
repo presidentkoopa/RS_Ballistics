@@ -228,6 +228,94 @@ particle rsb_arc
 	spin     = -180, 180
 }
 
+// ---------------------------------------------------------------- LIGHTNING
+// REAL LIGHTNING, from RS_Main's combat effects (sprites/combatfx/lightning, RS-prefixed and ours).
+// Five hand-drawn discharges, copied in rather than referenced because RS_Ballistics has to stand on
+// its own -- other mods reach into this package and RS_Main is not in the load order.
+//
+// WHY SPRITES AND NOT ONLY A DRAWN LINE. The drawn line is a clean hot core and it is the right shape
+// for a rail slug, but a Tesla arc is not clean -- it forks, it flickers, it does not repeat. A
+// twenty-five frame hand-drawn discharge does in one flipbook what no amount of procedural noise gets
+// right, and it plays ONCE rather than looping, so no two shots are the same frame at the same time.
+//
+// `lit = 0` on every one: lightning is not lit by the room, it IS the light. Anything else makes a
+// bright arc go grey in a dark corridor, which is precisely backwards.
+
+// THE MAIN DISCHARGE: twenty-five frames, big, the one the Tesla fires.
+particle rsb_lightning
+{
+	size     = 70 @0, 96 @1
+	color    = 235 245 255 @0, 180 200 255 @0.5, 140 120 255 @1
+	alpha    = 1 @0, 1 @0.75, 0 @1
+	emissive = 4.0 @0, 2.2 @0.5, 0 @1
+	lit      = 0
+	maxsize  = 128
+	soft     = 2
+	texture  = "RSL1A0", 25, 45, once
+	orient   = billboard
+	spin     = -20, 20
+}
+
+// A FORK off the main bolt: eleven frames, smaller, thrown at an angle.
+particle rsb_lightning_fork
+{
+	size     = 40 @0, 62 @1
+	color    = 220 235 255 @0, 150 130 255 @1
+	alpha    = 1 @0, 1 @0.6, 0 @1
+	emissive = 3.0 @0, 1.4 @0.5, 0 @1
+	lit      = 0
+	maxsize  = 84
+	soft     = 2
+	texture  = "RSL0A0", 11, 40, once
+	orient   = billboard
+	spin     = -180, 180
+}
+
+// CRAWLING ON WHAT IT STRUCK: thirteen small frames, the arc that keeps going after the bolt is gone.
+particle rsb_lightning_crawl
+{
+	size     = 16 @0, 26 @1
+	color    = 235 245 255 @0, 170 190 255 @0.6, 120 110 255 @1
+	alpha    = 1 @0, 1 @0.7, 0 @1
+	emissive = 2.6 @0, 1.0 @0.6, 0 @1
+	lit      = 0
+	maxsize  = 40
+	soft     = 2
+	texture  = "RSL2A0", 13, 26, once
+	orient   = billboard
+	spin     = -180, 180
+}
+
+// THE COILS: five frames at the muzzle, the charge letting go.
+particle rsb_lightning_coil
+{
+	size     = 22 @0, 34 @1
+	color    = 255 255 255 @0, 200 220 255 @1
+	alpha    = 1 @0, 1 @0.6, 0 @1
+	emissive = 4.5 @0, 2.0 @0.5, 0 @1
+	lit      = 0
+	maxsize  = 52
+	soft     = 2
+	texture  = "RSL4A0", 5, 30, once
+	orient   = billboard
+	spin     = -180, 180
+}
+
+// A SINGLE FLASH of discharge, one frame, for scattering thickly and cheaply.
+particle rsb_lightning_spark
+{
+	size     = 10 @0, 18 @1
+	color    = 255 255 255 @0, 165 185 255 @1
+	alpha    = 1 @0, 0 @1
+	emissive = 3.2 @0, 0 @1
+	lit      = 0
+	maxsize  = 28
+	soft     = 2
+	texture  = "RSL3A0"
+	orient   = billboard
+	spin     = -180, 180
+}
+
 // ---------------------------------------------------------------- GUNSMOKE
 // Barrel smoke: pale grey, thin, drifts up and hangs; catches the muzzle flash.
 // No `collide`: a muzzle is no surface.

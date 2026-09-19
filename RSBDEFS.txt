@@ -667,6 +667,50 @@ burst rl_exhaust_back      # the Rocket Launcher's exhaust rolling back over the
   particle = rsb_smoke_rocket
 end
 
+burst lightning_bolt       # the discharge itself: hand-drawn lightning, thrown along the shot
+  count    = 1
+  cone     = 0
+  speed    = 0, 0
+  life     = 0.5, 0.15
+  aim      = along
+  particle = rsb_lightning
+end
+
+burst lightning_forks      # forks off the main bolt, thrown wide and short-lived
+  count    = 4
+  cone     = 55
+  speed    = 120, 0.6
+  life     = 0.26, 0.4
+  aim      = along
+  particle = rsb_lightning_fork
+end
+
+burst lightning_coils      # the coils at the muzzle letting go
+  count    = 3
+  cone     = 40
+  speed    = 40, 0.5
+  life     = 0.16, 0.35
+  particle = rsb_lightning_coil
+end
+
+burst lightning_crawl      # arcs crawling over what it struck, after the bolt is gone
+  count    = 5
+  cone     = 80
+  speed    = 26, 0.6
+  life     = 0.5, 0.4
+  offset   = 2
+  particle = rsb_lightning_crawl
+end
+
+burst lightning_specks     # a thick cheap scatter of discharge
+  count    = 12
+  cone     = 70
+  speed    = 150, 0.7
+  life     = 0.22, 0.5
+  offset   = 2
+  particle = rsb_lightning_spark
+end
+
 burst backblast_fire   # ANY recoilless weapon's backblast: a gout of fire out of the rear of the tube (rsb_muzzle_plume). No offset of its own -- the firing profile's `backblast` says where its rear is, so one burst serves every launcher.
   count    = 16
   cone     = 18
@@ -11986,12 +12030,14 @@ trail ww2_tesla   # THE TESLA GUN: a white-hot arc in a violet halo that lights 
   linecolorend = 150, 120, 255
   linelook    = 0.9, 4.5
   licks       = 0.45, 1.85, 0.22, 3.0
-  helix       = rsb_arc, 9.0, 7.0, 1.6
+  helix       = rsb_lightning, 2.0, 10.0, 46.0
   helixmotion = 14, 2.6, 0.9
   helixcolor  = 170, 200, 255
   helixmax    = 900
   beamlight   = 170, 3.6, 3, 0.75
-  lightcolor  = 180, 205, 255
+  beamjag     = 6, 26
+  lightcolor  = 235, 245, 255
+  beamcolorend = 150, 120, 255
   heat        = 9, 0.8, 26
 end
 
@@ -12000,8 +12046,8 @@ flash ww2_tesla   # the coils letting go: a hard blue-white crack at the muzzle,
   lightcolor    = 190, 215, 255
   cone          = 20, 70, 90, 6
   conetics      = 2
-  bursts        = arcs_electric, wisp_electric, energy_sparks_rail, plasma_ozone
-  maybe         = arc_electric_one 0.8, spk_stars 0.45
+  bursts        = lightning_coils, lightning_specks, wisp_electric, energy_sparks_rail, plasma_ozone
+  maybe         = lightning_forks 0.85, arc_electric_one 0.8, spk_stars 0.45
   flame         = 0.00
   vary          = light 0.35, sparks 0.4
   barrelglow    = 0.0, 26, 1.6
@@ -12024,7 +12070,7 @@ recoil ww2_tesla   # a coil gun has nothing to push back with: it SHUDDERS rathe
 end
 
 impact ww2_tesla
-  bursts    = arcs_electric, energy_sparks_rail, spark_spray
+  bursts    = lightning_crawl, lightning_specks, energy_sparks_rail, spark_spray
   sound     = rsb/impact/concrete
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12032,7 +12078,7 @@ impact ww2_tesla
 end
 
 impact ww2_tesla.metal
-  bursts    = arcs_electric, arc_electric_one, spark_metal, ember_metal
+  bursts    = lightning_crawl, lightning_specks, spark_metal, ember_metal
   sound     = rsb/impact/metal
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12040,7 +12086,7 @@ impact ww2_tesla.metal
 end
 
 impact ww2_tesla.wood
-  bursts    = arcs_electric, splinter_wood, melt_smoke_rise
+  bursts    = lightning_crawl, splinter_wood, melt_smoke_rise
   sound     = rsb/impact/wood
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12048,7 +12094,7 @@ impact ww2_tesla.wood
 end
 
 impact ww2_tesla.dirt
-  bursts    = arcs_electric, clods_dirt, dust_dirt
+  bursts    = lightning_crawl, clods_dirt, dust_dirt
   sound     = none
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12056,7 +12102,7 @@ impact ww2_tesla.dirt
 end
 
 impact ww2_tesla.glass
-  bursts    = glint_glass, arc_electric_one
+  bursts    = glint_glass, lightning_crawl
   sound     = rsb/glass
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12064,7 +12110,7 @@ impact ww2_tesla.glass
 end
 
 impact ww2_tesla.liquid
-  bursts    = splash_liquid, arcs_electric
+  bursts    = splash_liquid, lightning_crawl
   sound     = none
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12072,7 +12118,7 @@ impact ww2_tesla.liquid
 end
 
 impact ww2_tesla.tech
-  bursts    = arcs_electric, arc_electric_one, bits_wire, bits_board
+  bursts    = lightning_crawl, lightning_forks, bits_wire, bits_board
   sound     = rsb/impact/metal
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12080,7 +12126,7 @@ impact ww2_tesla.tech
 end
 
 impact ww2_tesla.screen
-  bursts    = arc_electric_one, bits_board
+  bursts    = lightning_crawl, bits_board
   sound     = rsb/glass
   light     = 110, 2.2, 3
   lightcolor = 180, 205, 255
@@ -12181,14 +12227,14 @@ flash ww2_bluemp40   # THE BLUE MP40: the MP40 rhythm with none of its dirt -- a
   tail          = rsb/tail/smg, 0.5
 end
 
-recoil ww2_bluemp40   # the MP40 numbers, because it is an MP40
-  climb   = 0.38
-  drift   = 0.63, 5
+recoil ww2_bluemp40   # an emitter, not a cartridge: a light fast shudder at the MP40 rhythm, and no bloom because a bolt carries no spread to grow
+  climb   = 0.22
+  drift   = 0.45, 5
   recover = 21, 6
-  max     = 4, 2
-  bloom   = 0.12
+  max     = 3, 2
+  bloom   = 0.00
   brace   = 0.6, 0.85
-  view    = 1.2, 4, 1, 6
+  view    = 1.1, 4, 1, 6
 end
 
 
@@ -12856,8 +12902,8 @@ flash ww2_tesla@extreme   # the coils letting go: a hard blue-white crack at the
   lightcolor    = 190, 215, 255
   cone          = 20, 70, 122, 6
   conetics      = 2
-  bursts        = arcs_electric, wisp_electric, energy_sparks_rail, plasma_ozone, flash_embers, spk_embers_heavy
-  maybe         = arc_electric_one 0.95, spk_stars 0.63, flash_tongue 0.45
+  bursts        = lightning_coils, lightning_specks, wisp_electric, energy_sparks_rail, plasma_ozone, flash_embers, spk_embers_heavy
+  maybe         = lightning_forks 0.95, arc_electric_one 0.95, spk_stars 0.63, flash_tongue 0.45
   flame         = 0.00
   vary          = light 0.35, sparks 0.4
   barrelglow    = 0.0, 26, 1.6

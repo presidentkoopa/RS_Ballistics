@@ -74,14 +74,53 @@ class RSB_Trail play
 			}
 		}
 
-		// ONE CAPSULE LIGHT DOWN THE WHOLE BEAM. The engine's segment light: a start, an end, and every
-		// wall between them lit as one shape. No beads, and one light where `lights` would spend sixteen.
+		// THE BEAM LIGHTS THE ROOM IT CROSSES. The engine's segment light: a start, an end, and every
+		// wall between them lit as one shape -- no beads, and one light where `lights` would spend
+		// sixteen. With `beamjag` it is a CHAIN of them following the bolt's own wander, so the room is
+		// lit by the shape of the arc instead of by a cylinder through it, and each link carries its own
+		// colour: white-hot at the muzzle, violet where it lands.
 		if (td.beamRadius > 0 && td.beamIntensity > 0 && RSB_Settings.ImpactLights())
 		{
 			double life = td.beamTics / 35.0;
-			level.SpawnEffectLight(from, td.lightColor, td.beamRadius,
-				td.beamIntensity * RSB_Settings.ImpactLight() * RSB_Tier.LightScale(tier),
-				life, (0, 0, 0), from + u * len, 0.0, EFL_IMPORTANT, 0.0, 0.0, life, 0.0, 0.0, td.beamEnd);
+			double bright = td.beamIntensity * RSB_Settings.ImpactLight() * RSB_Tier.LightScale(tier);
+			int segs = clamp(td.beamSegments, 1, 12);
+			// A PERPENDICULAR PAIR to push the links off the axis, built the same way the helix builds
+			// its own so a bolt and its motes wander in the same space.
+			Vector3 p1 = (abs(u.z) < 0.9) ? (u cross (0, 0, 1)) : (u cross (1, 0, 0));
+			p1 = p1.Unit();
+			Vector3 p2 = u cross p1;
+			int posSeed = RSB_Hash.OfPos(from);
+			Vector3 prev = from;
+			double prevShare = 1.0;
+			for (int i = 1; i <= segs; i++)
+			{
+				double t = double(i) / double(segs);
+				Vector3 at = from + u * (len * t);
+				// The LAST point is where the bolt actually landed, so it never wanders: an arc that
+				// misses what it struck reads as a bug however pretty the rest of it is.
+				if (i < segs && td.beamJag > 0)
+				{
+					double a = RSB_Hash.Between(0.0, 360.0, level.maptime, 100 + i, posSeed);
+					double r = RSB_Hash.Between(0.3, 1.0, level.maptime, 200 + i, posSeed) * td.beamJag;
+					at += (p1 * cos(a) + p2 * sin(a)) * r;
+				}
+				double share = 1.0 - (1.0 - td.beamEnd) * t;
+				Color c = td.lightColor;
+				if (segs > 1)
+				{
+					// Each link takes the colour at its own midpoint, so the gradient is along the arc.
+					double m = (t + (i - 1.0) / double(segs)) * 0.5;
+					c = Color(255,
+						int(td.lightColor.r + (td.beamColorEnd.r - td.lightColor.r) * m),
+						int(td.lightColor.g + (td.beamColorEnd.g - td.lightColor.g) * m),
+						int(td.lightColor.b + (td.beamColorEnd.b - td.lightColor.b) * m));
+				}
+				level.SpawnEffectLight(prev, c, td.beamRadius, bright * prevShare, life, (0, 0, 0),
+					at, 0.0, EFL_IMPORTANT, 0.0, 0.0, life, 0.0, 0.0,
+					(prevShare > 0.001) ? clamp(share / prevShare, 0.0, 1.0) : 1.0);
+				prev = at;
+				prevShare = share;
+			}
 		}
 
 		// LIGHTS along the path, brief.
