@@ -4148,106 +4148,106 @@ end
 # Plasma, BFG and chainsaws have none (the owner).
 
 recoil pistol_9mm          # the Pistolet: snappy; aimed fire is dead on, only a mag dump climbs
-  climb   = 1.2
+  climb   = 1.62
   drift   = 0.3, 4
   recover = 12, 6
-  max     = 5, 2
+  max     = 6.6, 2
   bloom   = 0.05
   brace   = 0.7, 0.85
   view    = 1.2, 6, 1.5, 7
 end
 
 recoil pistol_45           # the M4A3: a bigger push; fast follow-ups walk up
-  climb   = 1.8
+  climb   = 1.93
   drift   = 0.4, 4
   recover = 12, 6
-  max     = 6, 2.5
+  max     = 7.2, 2.5
   bloom   = 0.06
   brace   = 0.7, 0.85
   view    = 1.6, 9, 2, 9
 end
 
 recoil shotgun_m37         # fired as fast as it pumps it climbs; paced, never
-  climb   = 4
+  climb   = 3.44
   drift   = 0.8, 3
   recover = 6, 4
-  max     = 8, 3
+  max     = 9.0, 3
   bloom   = 0.1
   brace   = 0.75, 0.9
   view    = 3.5, 14, 3, 14
 end
 
 recoil shotgun_doom        # heavier than the M37
-  climb   = 4.5
+  climb   = 3.19
   drift   = 1.0, 3
   recover = 6, 4
-  max     = 9, 3
+  max     = 9.0, 3
   bloom   = 0.1
   brace   = 0.75, 0.9
   view    = 3.8, 15, 4, 15
 end
 
 recoil shotgun_ssg         # the train wreck: a huge kick, recovered by the time it is reloaded
-  climb   = 7
+  climb   = 4.20
   drift   = 1.2, 3
   recover = 8, 6
-  max     = 10, 4
+  max     = 9.0, 4
   bloom   = 0.12
   brace   = 0.7, 0.9
   view    = 5.5, 22, 5, 18
 end
 
 recoil shotgun_bullpup     # magazine-fed and fast: it climbs if rushed
-  climb   = 5
+  climb   = 4.20
   drift   = 1.0, 3
   recover = 8, 4
-  max     = 10, 3.5
+  max     = 9.0, 3.5
   bloom   = 0.1
   brace   = 0.75, 0.9
   view    = 3, 11, 2, 12
 end
 
 recoil chaingun_556        # caps in about 13 shots (1.5 s); held, it sits there -- pull down to stay on
-  climb   = 0.35
+  climb   = 0.08
   drift   = 0.25, 6
   recover = 4, 6
-  max     = 4.5, 1.5
+  max     = 3.2, 1.5
   bloom   = 0.15
   brace   = 0.65, 0.85
   view    = 0.6, 1.5, 0.8, 4
 end
 
 recoil machinegun_762      # a heavier walk than the chaingun; bracing matters more
-  climb   = 0.55
+  climb   = 0.24
   drift   = 0.4, 5
   recover = 4, 6
-  max     = 6, 2
+  max     = 3.5, 2
   bloom   = 0.2
   brace   = 0.6, 0.85
   view    = 1.0, 2.5, 1.2, 5
 end
 
 recoil launcher_40mm       # the machine gun's grenade: a thump, recovered before the next
-  climb   = 3
+  climb   = 3.41
   recover = 8, 6
-  max     = 5, 0
+  max     = 9.0, 0
   brace   = 0.8, 0.9
   view    = 2.5, 8, 1, 12
 end
 
 recoil rocket_launcher     # mostly the look: its rate recovers every shot
-  climb   = 3
+  climb   = 1.10
   drift   = 0.3, 3
   recover = 8, 4
-  max     = 5, 1
+  max     = 5.4, 1
   brace   = 0.8, 0.9
   view    = 3, 7, 1, 16
 end
 
 recoil rocket_rpg          # recoilless: the backblast cancels the kick
-  climb   = 1
+  climb   = 1.00
   recover = 8, 4
-  max     = 3, 0
+  max     = 5.2, 0
   view    = 1.5, 3, 0.5, 12
 end
 
@@ -6975,80 +6975,80 @@ ejecta benelli_m4   # the Benelli's 12-gauge hulls
 end
 
 recoil glock17   # the Glock 17: snappy; aimed fire is dead on, only a mag dump climbs
-  climb   = 1.2
+  climb   = 1.98
   drift   = 0.3, 4
   recover = 12, 6
-  max     = 5, 2
+  max     = 7.3, 2
   bloom   = 0.05
   brace   = 0.7, 0.85
   view    = 1.2, 6, 1.5, 7
 end
 
 recoil glock17_sup   # the suppressed Glock: the can's weight softens the snap
-  climb   = 1.0
+  climb   = 1.28
   drift   = 0.3, 4
   recover = 12, 6
-  max     = 5, 2
+  max     = 5.8, 2
   bloom   = 0.05
   brace   = 0.7, 0.85
   view    = 1.0, 5, 1.2, 7
 end
 
 recoil kimber1911   # the 1911: a bigger push; fast follow-ups walk up
-  climb   = 1.8
+  climb   = 1.93
   drift   = 0.4, 4
   recover = 12, 6
-  max     = 6, 2.5
+  max     = 7.2, 2.5
   bloom   = 0.06
   brace   = 0.7, 0.85
   view    = 1.6, 9, 2, 9
 end
 
 recoil mk18   # the MK18: a short 5.56 carbine -- a sharp push, full auto walks up
-  climb   = 0.8
+  climb   = 0.78
   drift   = 0.35, 5
   recover = 10, 5
-  max     = 5, 2
+  max     = 4.7, 2
   bloom   = 0.1
   brace   = 0.65, 0.85
   view    = 1.2, 4, 1, 6
 end
 
 recoil mk18_sup   # the suppressed MK18: the can tames the push a little
-  climb   = 0.7
+  climb   = 0.66
   drift   = 0.35, 5
   recover = 10, 5
-  max     = 5, 2
+  max     = 4.4, 2
   bloom   = 0.1
   brace   = 0.65, 0.85
   view    = 1.0, 3.5, 0.9, 6
 end
 
 recoil hk416_sup   # the suppressed HK416: a heavier gun, a smoother push
-  climb   = 0.65
+  climb   = 0.60
   drift   = 0.35, 5
   recover = 10, 5
-  max     = 5, 2
+  max     = 4.3, 2
   bloom   = 0.1
   brace   = 0.65, 0.85
   view    = 1.0, 3.5, 0.9, 6
 end
 
 recoil mcx_sup   # the suppressed MCX: the softest shooter
-  climb   = 0.6
+  climb   = 0.41
   drift   = 0.35, 5
   recover = 10, 5
-  max     = 5, 2
+  max     = 3.9, 2
   bloom   = 0.1
   brace   = 0.65, 0.85
   view    = 1.0, 3.5, 0.9, 6
 end
 
 recoil g36c_sup   # the suppressed G36C
-  climb   = 0.7
+  climb   = 0.63
   drift   = 0.35, 5
   recover = 10, 5
-  max     = 5, 2
+  max     = 4.4, 2
   bloom   = 0.1
   brace   = 0.65, 0.85
   view    = 1.0, 3.5, 0.9, 6
@@ -7058,17 +7058,17 @@ recoil mp5   # the MP5: a 9mm SMG -- a low, even push, controllable in bursts
   climb   = 0.45
   drift   = 0.2, 5
   recover = 10, 5
-  max     = 3.5, 1.5
+  max     = 4.0, 1.5
   bloom   = 0.08
   brace   = 0.65, 0.85
   view    = 0.8, 3, 0.8, 5
 end
 
 recoil benelli_m4   # the Benelli M4: a semi-auto 12-gauge -- it climbs if rushed
-  climb   = 4.5
+  climb   = 2.11
   drift   = 1.0, 3
   recover = 8, 4
-  max     = 10, 3.5
+  max     = 7.6, 3.5
   bloom   = 0.1
   brace   = 0.75, 0.9
   view    = 3, 12, 2.5, 12
