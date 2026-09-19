@@ -772,13 +772,13 @@ burst rpg_ignition_fire    # an RPG's sustainer lighting mid-flight: a burst of 
   particle = rsb_muzzle_plume
 end
 
-burst unmaker_core         # the Unmaker's muzzle: a white-hot core bleeding red, every tic
-  count   = 3
+burst unmaker_core         # the Unmaker's muzzle: a core bleeding red. ONE, not three -- at thirty-five shots a second three was a hundred and five glowing streaks a second, which is a wall rather than a weapon
+  count   = 1
   cone    = 10
   speed   = 120, 0.3
   life    = 0.05, 0.3
-  color   = 255, 150, 120
-  glow    = 5.0
+  color   = 255, 120, 90
+  glow    = 2.6
   size    = 1.6, 0.4
   orient  = streak
   stretch = 0.02
@@ -4703,15 +4703,24 @@ flash rpg_ignition         # an RPG's sustainer lighting a few metres out: a fla
   hearing    = 0.4, 128
 end
 
-flash unmaker              # THE UNMAKER, firing every tic: one hellish red glow throbbing on the beam's beat, not a strobe -- a white-hot core bleeding red, blood-red arcs crawling at the muzzle, red lit air; no powder, no smoke; the skull runs red-hot (barrel glow and shimmer)
-  light      = 200, 3.4, 2
+flash unmaker              # THE UNMAKER, THIRTY-FIVE SHOTS A SECOND. The owner, looking at the old one: "right now it is eye-assault" -- and it was, because every number here was written as if you fired it once.
+                           #
+                           # A 200-unit light for TWO tics at 35 shots a second never goes out: shot two arrives
+                           # before shot one has faded, so what should be a strobe is a solid red glare welded to
+                           # the screen. A 110-unit lit cone the same. Three glowing streaks a shot is a hundred
+                           # and five a second.
+                           #
+                           # So the muzzle is now almost nothing and the BEAM is the weapon: one tic of light, a
+                           # stub of a cone, one core streak. The skull still runs red-hot, because the barrel glow
+                           # is steady rather than per-shot and was never part of the problem.
+  light      = 84, 2.2, 1
   lightcolor = 255, 44, 26
-  cone       = 18, 52, 110, 7
-  conetics   = 2
+  cone       = 12, 34, 44, 7
+  conetics   = 1
   bursts     = unmaker_core
-  maybe      = unmaker_arcs 0.45, laser_spray 0.1
+  maybe      = unmaker_arcs 0.18, laser_spray 0.05
   flame      = 0
-  throb      = 5, 0.5
+  throb      = 7, 0.35
   vary       = light 0.08, cone 0.08, sparks 0.4
   barrelheat = 0.03, 0.4, 0.1
   barrelshimmer = 4, 0.6
@@ -13577,3 +13586,191 @@ ejecta vp_tec9   # a pistol case
 end
 
 # ---- END VANILLA+ EXTRAS
+
+# THE UNMAKER'S BEAM, to the owner's own description: "a red and black pulsating cylindrical laser
+# where it looks like the two are fighting for dominance, some smoke down the laser beam, some sparks
+# or fog".
+#
+# CYLINDRICAL MEANS STRAIGHT, so the licks are almost nothing -- a jagged beam is lightning and this is
+# not lightning. The fight is between the ends rather than along a jag: hellish red at the muzzle
+# bleeding to near-black at the far end, and `linepulse` trading them -- as the red core dims, the dark
+# end's halo swells to take the space. Seven tics is a slow enough beat to read as breathing rather
+# than flicker at thirty-five shots a second.
+#
+# THE SMOKE IS DOWN THE BEAM, not at the muzzle: a loose helix of soot hugging it, barely turning, so
+# it reads as the air itself burning along the line rather than as a corkscrew.
+#
+# LAID BY THE GUN, one line per shot, the same as the rail and the Tesla:
+#     RSB_Trail.Lay("unmaker", shooter, muzzlePos, hitPos);
+trail unmaker
+  line         = 2.2, 6.0, 2.6, 3
+  linecolor    = 255, 38, 22
+  linecolorend = 26, 6, 8
+  linelook     = 0.8, 5.0
+  licks        = 0.08, 0.16, 0.05, 0.6
+  linepulse    = 7, 0.55, 2.4
+  helix        = rsb_smoke_soot_gun, 0.4, 4.0, 26.0
+  helixmotion  = 6, 1.6, 0.7
+  helixcolor   = 90, 30, 26
+  helixmax     = 400
+  beamlight    = 120, 1.6, 3, 0.35
+  lightcolor   = 255, 60, 34
+  beamcolorend = 60, 12, 10
+  heat         = 7, 0.6, 20
+end
+
+# ---- BEGIN HEAVY VANILLA (tools/gen_heavy_profiles.py)
+# THE EIGHT HEAVY VANILLA GUNS. DO NOT EDIT BY HAND: change tools/gen_heavy_profiles.py.
+#
+# They have shared the house recipe since they were built -- an Unmaker and a Bolter fired with
+# the same muzzle flash -- and Vanilla+ has just grown a copy of each. MOST OF THEIR FLASHES
+# ALREADY EXISTED AND WERE NEVER WIRED (unmaker, bfg_9000, chainsaw_heavy, plasma_carbine,
+# rocket_launcher, chaingun_556); building second ones would have been the easy mistake.
+#
+# What was genuinely missing is RECOIL. No energy weapon and no saw in this package has ever had
+# a recoil profile, and for those there is no cartridge to derive one from -- so those numbers
+# are STATED and each says what it reasons from. Inventing a cartridge for a BFG so the formula
+# would run is false precision, not rigour.
+
+flash bolter   # THE BOLTER: a rocket-propelled slug leaving under its own power. A big dirty launch flash and a lot of smoke, once every eighteen tics
+  light         = 210, 4.2, 3
+  lightcolor    = 255, 200, 140
+  cone          = 20, 60, 130, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.18
+  smoke         = 1, 0.055, 0.70
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  barrelheat    = 0.28, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.2
+  tail          = rsb/tail/br, 0.9
+end
+
+flash shotgun_assault   # THE ASSAULT SHOTGUN: seven pellets out of a gas gun, and the gas system means a longer, dirtier flash than a pump
+  light         = 240, 4.6, 3
+  lightcolor    = 255, 206, 150
+  cone          = 24, 66, 150, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_wide
+  flame         = 0.20
+  smoke         = 1, 0.060, 0.72
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  barrelheat    = 0.28, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.2
+  tail          = rsb/tail/br, 0.9
+end
+
+flash rotary_gun   # THE ROTARY GUN: the Chaingun's recipe fired from a REVOLVING CLUSTER -- each shot leaves a different barrel, which is the whole visual difference between the two and is not a difference I invented
+  light         = 150, 3.0, 2
+  lightcolor    = 255, 210, 150
+  cone          = 16, 48, 80, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_chaingun
+  flame         = 0.12
+  smoke         = 1, 0.030, 0.45
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  barrels       = 6, 3.5
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  barrelheat    = 0.28, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.2
+  tail          = rsb/tail/br, 0.9
+end
+
+flash rotary_launcher   # THE ROTARY LAUNCHER: rockets out of a revolving drum. Six tubes, and enough vents backward to be worth showing
+  light         = 320, 5.2, 4
+  lightcolor    = 255, 196, 124
+  cone          = 24, 64, 140, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, backblast_fire, backblast_smoke
+  flame         = 0.10
+  smoke         = 2, 0.050, 0.66
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  barrels       = 6, 6.0
+  backblast     = 30, 0.70
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  barrelheat    = 0.28, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.2
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil shotgun_assault   # a gas-operated assault shotgun -- a Saiga or an AA-12, heavy enough that the gas system eats a good share of it -- 19.6 ft-lb, Vg 12.12 fps, derived
+  climb   = 2.06
+  drift   = 0.55, 4
+  recover = 16, 6
+  max     = 7.5, 3
+  bloom   = 0.08
+  brace   = 0.75, 0.90
+  view    = 2.0, 7, 1, 8
+end
+
+recoil unmaker   # THIRTY-FIVE SHOTS A SECOND. Anything you can feel per shot becomes unusable thirty-five times over, so this is a hum rather than a kick -- it accumulates into a real climb and recovers almost instantly
+  climb   = 0.06
+  drift   = 0.20, 5
+  recover = 8, 6
+  max     = 3.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.0, 4, 1, 8
+end
+
+recoil bfg_9000   # one enormous discharge every thirty tics: a deep shove you have to come back from, and all the time in the world to do it
+  climb   = 2.80
+  drift   = 0.35, 5
+  recover = 26, 6
+  max     = 8.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 2.3, 8, 1, 8
+end
+
+recoil chainsaw_heavy   # A SAW DOES NOT KICK, IT WANDERS. Almost no climb and the widest drift in the package -- the blade pulls the gun around rather than back, which is why bloom stays zero: it fires nothing to scatter
+  climb   = 0.15
+  drift   = 1.30, 5
+  recover = 10, 6
+  max     = 4.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.1, 4, 1, 8
+end
+
+recoil plasma_carbine   # an emitter at twelve a second: a light fast shudder, no cartridge to scatter, so no bloom
+  climb   = 0.35
+  drift   = 0.40, 5
+  recover = 14, 6
+  max     = 4.5, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.2, 4, 1, 8
+end
+
+recoil bolter   # a heavy self-propelled bolt every eighteen tics -- it leaves under its own power, so the push is the launch rather than a recoil impulse, and it is slow enough to be felt as one shove
+  climb   = 1.80
+  drift   = 0.45, 5
+  recover = 20, 6
+  max     = 7.0, 3
+  bloom   = 0.06
+  brace   = 0.75, 0.90
+  view    = 1.8, 6, 1, 8
+end
+
+recoil rotary_launcher   # rockets out of a revolving tube: the same recoilless shove as the launcher it borrows from, with the drum's own wander on top
+  climb   = 1.10
+  drift   = 0.50, 5
+  recover = 12, 6
+  max     = 5.4, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.5, 5, 1, 8
+end
+
+# ---- END HEAVY VANILLA

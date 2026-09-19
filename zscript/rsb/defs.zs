@@ -516,6 +516,17 @@ class RSB_TrailDef : RSB_Def
 	//
 	// Still far cheaper than it sounds: six links is six lights against the sixteen `lights` beads at
 	// its cap, and unlike the beads there are no gaps between them at any range.
+	// A BEAM THAT BREATHES (`linepulse`): period in tics and depth 0..1. The core's brightness rides a
+	// sine, and as it dims the FAR END'S HALO SWELLS to fill what the core gave up.
+	//
+	// That second half is what makes it read as two colours FIGHTING rather than one colour blinking.
+	// The gradient's own third value is halo swell, not a colour mix, so the near colour and the far
+	// colour cannot be cross-faded directly -- but pushing brightness into the core and reach into the
+	// far halo, in antiphase, trades dominance between them along the beam, which is the same thing to
+	// look at and costs nothing.
+	int    pulseTics;       // 0 = steady
+	double pulseDepth;      // how much of the core's brightness the beat takes, 0..1
+	double pulseSwell;      // how far the far halo blooms as the core dims
 	int    beamSegments;    // 1 = one straight capsule (the default, and right for a rail beam)
 	double beamJag;         // map units a link may wander off the axis
 	Color  beamColorEnd;    // colour at the far end; defaults to lightColor

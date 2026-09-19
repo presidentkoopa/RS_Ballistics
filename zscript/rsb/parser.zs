@@ -2098,6 +2098,17 @@ class RSB_Parser
 			return (tr.beamRadius >= 0 && tr.beamIntensity >= 0 && tr.beamTics >= 1 && tr.beamEnd >= 0 && tr.beamEnd <= 1) ? ""
 				: "beamlight is radius, intensity, tics (1 or more)[, far-end brightness 0..1]";
 		}
+		if (key == "linepulse")
+		{
+			// See RSB_TrailDef.pulseTics: a beam that breathes instead of a beam that blinks.
+			if (v.Size() < 2 || v.Size() > 3) return "linepulse is period (tics), depth (0..1)[, far-halo swell]";
+			why = Nums(v, v.Size()); if (why != "") return why;
+			tr.pulseTics = v[0].ToInt();
+			tr.pulseDepth = v[1].ToDouble();
+			tr.pulseSwell = (v.Size() == 3) ? v[2].ToDouble() : 1.0;
+			return (tr.pulseTics >= 0 && tr.pulseTics <= 70 && tr.pulseDepth >= 0 && tr.pulseDepth <= 1
+				&& tr.pulseSwell >= 0 && tr.pulseSwell <= 8) ? "" : "linepulse is period (0-70 tics), depth (0..1)[, far-halo swell (0-8)]";
+		}
 		if (key == "beamjag")
 		{
 			// A CHAIN OF CAPSULES INSTEAD OF ONE, wandering off the axis: see RSB_TrailDef.beamSegments.

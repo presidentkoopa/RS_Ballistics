@@ -218,10 +218,21 @@ class RSB_TrailLine : Actor
 		let td = trailDef;
 		double f = double(age) / fadeTics;
 		double k = (1.0 - f) * (1.0 - f);
+		// THE BEAT (`linepulse`), on the MAP clock so a held beam breathes steadily rather than
+		// restarting with every shot -- at thirty-five shots a second an age-based beat would just be
+		// noise. As the core dims the far halo swells to take its place, so the near colour and the far
+		// one trade dominance down the beam instead of the whole thing blinking.
+		double beat = 1.0, swell = 1.0;
+		if (td.pulseTics > 0)
+		{
+			double phase = 0.5 + 0.5 * sin(360.0 * double(level.maptime % td.pulseTics) / double(td.pulseTics));
+			beat = (1.0 - td.pulseDepth) + td.pulseDepth * phase;
+			swell = 1.0 + td.pulseSwell * (1.0 - phase);
+		}
 		level.SetDrawnLine(slot, startAt, endAt, td.lineThick * (1.0 - 0.6 * f), td.lineSoft * (1.0 + td.lineSwell * f),
-			td.lineColor, td.lineIntensity * k);
+			td.lineColor, td.lineIntensity * k * beat);
 		level.SetDrawnLineLook(slot, 1.0, td.lineHalo, 0.0, 0.0, 0.0, 0.0);
-		if (td.lineColorEndSet) level.SetDrawnLineGradient(slot, td.lineColorEnd, 1.0);
+		if (td.lineColorEndSet) level.SetDrawnLineGradient(slot, td.lineColorEnd, swell);
 		double lick = td.licksStart + (td.licksEnd - td.licksStart) * f;
 		if (lick > 0) level.SetDrawnLineTurbulence(slot, lick, td.lickScale, td.lickSpeed);
 	}
