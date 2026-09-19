@@ -664,4 +664,9 @@ def main():
     print("the fire: bl_burn rides for ~%.0f s, bl_burn_small for ~%.0f s" % (1.60 / 0.11, 1.00 / 0.14))
 
 
-main()
+# IMPORTING A GENERATOR MUST NOT RUN IT. Bare `main()` here meant that reading this file's
+# tables -- or borrowing one function from it -- REWROTE RSBDEFS.txt as a side effect. It
+# silently reverted eleven round looks mid-edit once, and ran a second time when another
+# generator imported this one for its extreme transformer.
+if __name__ == "__main__":
+    main()

@@ -251,4 +251,9 @@ def main():
     print("reused and not rebuilt: unmaker, bfg_9000, chainsaw_heavy, plasma_carbine, chaingun_556, rocket_launcher, hull_12ga, brass_556, buckshot")
 
 
-main()
+# IMPORTING A GENERATOR MUST NOT RUN IT. Bare `main()` here meant that reading this file's
+# tables -- or borrowing one function from it -- REWROTE RSBDEFS.txt as a side effect. It
+# silently reverted eleven round looks mid-edit once, and ran a second time when another
+# generator imported this one for its extreme transformer.
+if __name__ == "__main__":
+    main()

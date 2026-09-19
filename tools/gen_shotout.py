@@ -289,4 +289,9 @@ def main():
     print("%d written, %d already there; ASSETS.md updated, no TEXTURES lump needed" % (wrote, skipped))
 
 
-main()
+# IMPORTING A GENERATOR MUST NOT RUN IT. Bare `main()` here meant that reading this file's
+# tables -- or borrowing one function from it -- REWROTE RSBDEFS.txt as a side effect. It
+# silently reverted eleven round looks mid-edit once, and ran a second time when another
+# generator imported this one for its extreme transformer.
+if __name__ == "__main__":
+    main()
