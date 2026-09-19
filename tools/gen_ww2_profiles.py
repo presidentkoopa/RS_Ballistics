@@ -677,7 +677,7 @@ def fantasy_blocks():
             "  shockwave     = 40, 1.1, 4, 0, 0.35",
             "  exposure      = 0.80, 150",
             "  hearing       = 0.45, 120",
-            "  tail          = rsb/tail/rail, 0.9",
+            "  tail          = rsb/tail/ar, 0.9",
             "end",
             "",
             "recoil ww2_tesla   # a coil gun has nothing to push back with: it SHUDDERS rather than kicks",

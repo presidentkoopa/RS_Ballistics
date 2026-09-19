@@ -54,6 +54,69 @@ EXEMPT = {
 KINDS = ("flash", "recoil", "ejecta", "round")
 
 
+def declared_sounds(path):
+    """Every sound name SNDINFO defines: plain rows, and the $random / $alias / $playersound groups.
+
+    THE GROUPS ARE THE POINT. Most of this package's sounds are defined as `$random rsb/impact/concrete
+    { ... }` -- eleven takes behind one name -- and a check that only reads plain rows reports 26 of 28
+    names as missing. That is the standard's "a check that cries wolf is worse than no check", and it
+    happened here on the first attempt.
+    """
+    have = set()
+    for line in io.open(path, encoding="utf-8", errors="replace"):
+        s = line.split("//")[0].strip()
+        if not s:
+            continue
+        for kw in ("$random", "$alias", "$playersound", "$limit", "$pitchset", "$volume"):
+            if s.lower().startswith(kw):
+                s = s[len(kw):].strip()
+                break
+        m = re.match(r"^([A-Za-z0-9_/\-]+)", s)
+        if m:
+            have.add(m.group(1).lower())
+    return have
+
+
+# WHAT A SOUND KEY NAMES. Most name a sound outright. `tail` names a PREFIX: RSB_Tail plays
+# <name>/int under a ceiling and <name>/ext under open sky, so `rsb/tail/ar` is never itself a sound
+# and looking for it finds nothing. A checker that does not know this reports ten false positives --
+# which it did, on the second attempt, and cost another pass.
+SOUND_KEYS = ("sound", "tail", "whiz", "sounds", "glance", "sputter")
+PREFIX_KEYS = ("tail",)
+
+
+def check_sounds(defs_path, sndinfo_path):
+    """Every sound a profile names, against what SNDINFO actually declares."""
+    have = declared_sounds(sndinfo_path)
+    bad = []
+    used = 0
+    where = "?"
+    for n, line in enumerate(io.open(defs_path, encoding="utf-8", errors="replace"), 1):
+        s = line.split("#")[0].strip()
+        if "=" not in s:
+            m = re.match(r"^([a-z]+)\s+([^\s#]+)", s)
+            if m:
+                where = s
+            continue
+        key = s.split("=")[0].strip().lower()
+        if key not in SOUND_KEYS:
+            continue
+        for tok in s.split("=", 1)[1].split(","):
+            tok = tok.strip().lower()
+            if not tok.startswith("rsb/"):
+                continue
+            used += 1
+            ok = tok in have
+            if not ok and key in PREFIX_KEYS:
+                ok = (tok + "/int") in have or (tok + "/ext") in have
+            if not ok:
+                bad.append("  RSBDEFS line %d (%s): %s = %s IS NOT DECLARED IN SNDINFO" % (n, where, key, tok))
+    print("sounds: %d names used, %d declared in SNDINFO" % (used, len(have)))
+    for b in bad:
+        print(b)
+    return 1 if bad else 0
+
+
 def defined_profiles(path):
     """Every profile in RSBDEFS, by kind, base name only (variants resolve back to their base)."""
     have = {k: set() for k in ("flash", "recoil", "ejecta", "round", "ballistics", "roundlook",
@@ -131,7 +194,7 @@ def main():
                   if f.upper().startswith("WMSHEET")]
     if not sheets:
         sys.exit("no WMSHEET files found")
-    rc = 0
+    rc = check_sounds(DEFS, os.path.join(PKG, "SNDINFO.txt"))
     for s in sheets:
         rc |= check(s, have)
     print("\nCOVERAGE %s" % ("INCOMPLETE -- see above" if rc else "COMPLETE"))
