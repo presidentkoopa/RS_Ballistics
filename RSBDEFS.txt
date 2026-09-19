@@ -10311,6 +10311,7 @@ end
 
 ballistics ww2_9mm   # 9x19 Parabellum: light, fast, clean-ish for the period
   speed  = 330
+  roundmass = 190   # one loaded round, grains (7000 = 1 lb)
   radius = 1.5
   damage = none
 end
@@ -10332,6 +10333,7 @@ end
 
 ballistics ww2_45   # .45 ACP: heavy, slow, a big soft hole
   speed  = 250
+  roundmass = 324   # one loaded round, grains (7000 = 1 lb)
   radius = 2.0
   damage = none
 end
@@ -10353,6 +10355,7 @@ end
 
 ballistics ww2_762tok   # 7.62x25 Tokarev: a bottlenecked pistol round, fast and spiteful
   speed  = 430
+  roundmass = 167   # one loaded round, grains (7000 = 1 lb)
   radius = 1.4
   damage = none
 end
@@ -10374,6 +10377,7 @@ end
 
 ballistics ww2_792kurz   # 7.92x33 Kurz: a short rifle round, the first of its kind
   speed  = 470
+  roundmass = 259   # one loaded round, grains (7000 = 1 lb)
   radius = 1.7
   damage = none
 end
@@ -10395,6 +10399,7 @@ end
 
 ballistics ww2_792   # 7.92x57 Mauser: a full rifle cartridge, and it shows
   speed  = 620
+  roundmass = 409   # one loaded round, grains (7000 = 1 lb)
   radius = 2.0
   damage = none
 end
@@ -10416,6 +10421,7 @@ end
 
 ballistics ww2_3006   # .30-06 Springfield: the American full-power round
   speed  = 600
+  roundmass = 401   # one loaded round, grains (7000 = 1 lb)
   radius = 2.0
   damage = none
 end
@@ -10437,6 +10443,7 @@ end
 
 ballistics ww2_12ga   # 12 gauge buckshot: seven pellets of it
   speed  = 300
+  roundmass = 694   # one loaded round, grains (7000 = 1 lb)
   radius = 2.2
   damage = none
 end
@@ -10458,6 +10465,7 @@ end
 
 ballistics ww2_22lr   # .22 LR: the OSS's answer, and a charge small enough to be half the reason it is quiet
   speed  = 290
+  roundmass = 56   # one loaded round, grains (7000 = 1 lb)
   radius = 0.9
   damage = none
 end
@@ -10479,6 +10487,7 @@ end
 
 ballistics ww2_357   # .357 class: a big slow hole and far more flash than a handgun has any right to
   speed  = 380
+  roundmass = 278   # one loaded round, grains (7000 = 1 lb)
   radius = 2.1
   damage = none
 end
@@ -10500,6 +10509,7 @@ end
 
 ballistics ww2_93x74r   # 9.3x74R: the drilling's rifle barrel, a boar round, the biggest hole in the set
   speed  = 640
+  roundmass = 540   # one loaded round, grains (7000 = 1 lb)
   radius = 2.1
   damage = none
 end
@@ -10521,6 +10531,7 @@ end
 
 ballistics ww2_762x54r   # 7.62x54R: rimmed, Russian, and still in service longer than anything else here
   speed  = 600
+  roundmass = 386   # one loaded round, grains (7000 = 1 lb)
   radius = 2.0
   damage = none
 end

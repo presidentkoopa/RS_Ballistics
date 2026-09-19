@@ -60,9 +60,15 @@ shared about delivery.
     python tools/gen_ww2_profiles.py --check    # print it, write nothing
     python tools/gen_ww2_profiles.py --table    # print the derived numbers per gun and stop
 """
-import argparse
+import argparse
 import io
 import os
+import sys
+
+# THE ONE CANONICAL CARTRIDGE TABLE. Imported, never copied -- and importable at all only because
+# every generator now guards main(), which this file learned the hard way too.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cartridges import LOAD as CART_LOAD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.dirname(HERE)
@@ -451,8 +457,15 @@ def cartridge_blocks(nl):
     for cid in CARTRIDGE:
         speed, radius, brass, hole, charge, dirt, kick, what = CARTRIDGE[cid]
         p = "ww2_" + cid
+        # WHAT ONE ROUND WEIGHS, from tools/cartridges.py, WHICH HOLDS THE ONLY COPY.
+        #
+        # It was written into these blocks once by a one-off script, and every re-run of this
+        # generator silently erased it again -- ten of eighteen gone, and nothing said so until a gun
+        # asked for it in a live level. A GENERATOR OWNS ITS BLOCKS: any line it does not emit is a
+        # line it deletes. Exactly the two-sources-of-truth defect this package is built against.
         out += ["ballistics %s   # %s" % (p, what),
                 "  speed  = %d" % speed,
+                "  roundmass = %g   # one loaded round, grains (7000 = 1 lb)" % CART_LOAD[p][3],
                 "  radius = %.1f" % radius,
                 # `damage = none` IS THE POINT OF THIS LINE, not an omission. The weapons sheet has no
                 # look-only key -- naming a `roundprofile` brings the ballistics def and its damage with

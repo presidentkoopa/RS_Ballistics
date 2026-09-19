@@ -165,7 +165,18 @@ class RSB_Recoil play
 			double live = LiveWeightLb(rd, shooter, hand);
 			double made = AuthoredLb(rd);
 			if (live > 0.05 && made > 0.05)
-				climb = rd.climb * clamp(made / live, 0.4, 2.5);
+			{
+				double scale = clamp(made / live, 0.4, 2.5);
+				climb = rd.climb * scale;
+				// IT SAYS SO, ONCE PER PROFILE PER MAP. This feature is INVISIBLE when it works: the
+				// difference is a few per cent of climb on a gun you are already fighting. So the first
+				// time it actually applies it states what it found -- which gun, both weights, and the
+				// scale -- because "silently did nothing" and "silently worked" look identical, and this
+				// package has paid for that confusion often enough.
+				RSB_Log.Once(RSB_Log.LV_INFO, "recoil:weight:" .. rd.id, String.Format(
+					"%s kicks by its LIVE weight: authored at %.2f lb, holding %.2f lb -- climb %.2f x %.2f = %.2f",
+					rd.id, made, live, rd.climb, scale, climb));
+			}
 		}
 		kickPitch = min(rd.maxPitch, kickPitch + climb * brace);
 		if (rd.drift > 0 && rd.driftPeriod > 0)
