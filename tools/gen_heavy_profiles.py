@@ -61,16 +61,43 @@ WIRING = {
 # Two of the eight fire a real cartridge, so they get the same free-recoil arithmetic as every other
 # set here: Vg = (grains * fps + 4700 * charge) / (7000 * lb), climb = Vg * 0.148 * action.
 CLIMB_PER_FPS = 0.148
-ACTION = {"semi": 1.15, "belt": 0.45}
+# The same ladder as every other set here, so all five stay on one scale.
+ACTION = {"bolt": 1.55, "break": 1.50, "pump": 1.45, "revolver": 1.20, "semi": 1.15, "auto": 0.85, "belt": 0.45}
 DERIVED = {
     # profile: bullet grains, muzzle fps, charge grains, loaded lb, action, twin
     "shotgun_assault": (437, 1325, 32, 8.6, "semi",
                         "a gas-operated assault shotgun -- a Saiga or an AA-12, heavy enough that the gas system eats a good share of it"),
+    # ---- THE REMAINING VANILLA FLASH NAMES THAT HAD NO RECOIL TWIN. Thirty-four guns name a flash and
+    # not one names a recoil, so every one of them is on the house kick. A gun should KICK LIKE WHAT IT
+    # LOOKS LIKE, and the cheapest way to get there is a recoil profile carrying the same name as the
+    # flash -- then one line in the reload lane makes every gun in Vanilla self-tuning with no edit to
+    # Vanilla itself. These are the twelve that were missing.
+    "revolver":  (158, 1250, 14.0, 2.60, "revolver", "a .357 service revolver"),
+    "rifle":     ( 62, 3000, 26.0, 8.00, "semi",     "a 5.56 service rifle, full length"),
+    "shotgun":   (437, 1325, 32.0, 7.00, "pump",     "a generic 12 gauge riot pump"),
+    "shotgun_doublebarrel": (874, 1325, 64.0, 7.20, "break",
+                             "both barrels of a double at once -- the same brutal arithmetic as the Super Shotgun"),
+    "smg":       (115, 1250,  5.5, 7.00, "auto",     "a 9mm submachine gun, heavy for the round"),
 }
 
 # ---------------------------------------------------------------- recoil that is STATED
 # No cartridge, so no arithmetic. Each number is a judgement and says what it is reasoning from.
 STATED = {
+    # ---- the rest of the missing Vanilla twins: energy weapons and saws, no cartridge to derive from
+    "bfg":          (2.40, 0.35, 24, 7.0, 0.00,
+                     "the BFG: one enormous discharge and a long walk back from it"),
+    "bfg_heavy":    (3.00, 0.40, 28, 8.0, 0.00,
+                     "the heavy BFG, and it should be the hardest energy shove in the game"),
+    "plasma":       (0.30, 0.40, 12, 4.0, 0.00,
+                     "a plasma emitter: a light fast shudder and no cartridge to scatter, so no bloom"),
+    "plasma_rifle": (0.32, 0.40, 12, 4.2, 0.00,
+                     "the plasma rifle, a shade heavier in the hands than the bare emitter"),
+    "rail":         (2.20, 0.30, 22, 7.0, 0.00,
+                     "a rail slug leaves at a speed nothing else here approaches -- a single hard shove, dead straight, nothing to scatter"),
+    "rocket":       (1.10, 0.50, 12, 5.4, 0.00,
+                     "a shoulder tube that vents most of it backward -- the same recoilless shove as the launcher"),
+    "chainsaw":     (0.10, 1.10, 10, 3.5, 0.00,
+                     "A SAW DOES NOT KICK, IT WANDERS. The lighter of the two: almost no climb, a wide pull, and zero bloom because it fires nothing"),
     "unmaker": (0.06, 0.20, 8, 3.0, 0.00,
                 "THIRTY-FIVE SHOTS A SECOND. Anything you can feel per shot becomes unusable thirty-five times over, so this is a hum rather than a kick -- it accumulates into a real climb and recovers almost instantly"),
     "bfg_9000": (2.80, 0.35, 26, 8.0, 0.00,

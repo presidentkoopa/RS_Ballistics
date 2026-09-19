@@ -13713,6 +13713,126 @@ recoil shotgun_assault   # a gas-operated assault shotgun -- a Saiga or an AA-12
   view    = 2.0, 7, 1, 8
 end
 
+recoil revolver   # a .357 service revolver -- 8.5 ft-lb, Vg 14.47 fps, derived
+  climb   = 2.57
+  drift   = 0.55, 4
+  recover = 16, 6
+  max     = 8.7, 3
+  bloom   = 0.08
+  brace   = 0.75, 0.90
+  view    = 2.2, 7, 1, 8
+end
+
+recoil rifle   # a 5.56 service rifle, full length -- 3.8 ft-lb, Vg 5.50 fps, derived
+  climb   = 0.94
+  drift   = 0.55, 4
+  recover = 16, 6
+  max     = 5.1, 3
+  bloom   = 0.08
+  brace   = 0.75, 0.90
+  view    = 1.4, 5, 1, 8
+end
+
+recoil shotgun   # a generic 12 gauge riot pump -- 24.1 ft-lb, Vg 14.89 fps, derived
+  climb   = 3.19
+  drift   = 0.55, 4
+  recover = 16, 6
+  max     = 9.0, 3
+  bloom   = 0.08
+  brace   = 0.75, 0.90
+  view    = 2.5, 8, 1, 8
+end
+
+recoil shotgun_doublebarrel   # both barrels of a double at once -- the same brutal arithmetic as the Super Shotgun -- 93.7 ft-lb, Vg 28.95 fps, derived
+  climb   = 6.43
+  drift   = 0.55, 4
+  recover = 16, 6
+  max     = 9.0, 3
+  bloom   = 0.08
+  brace   = 0.75, 0.90
+  view    = 4.0, 13, 1, 8
+end
+
+recoil smg   # a 9mm submachine gun, heavy for the round -- 1.3 ft-lb, Vg 3.46 fps, derived
+  climb   = 0.44
+  drift   = 0.55, 4
+  recover = 16, 6
+  max     = 4.0, 3
+  bloom   = 0.08
+  brace   = 0.75, 0.90
+  view    = 1.2, 4, 1, 8
+end
+
+recoil bfg   # the BFG: one enormous discharge and a long walk back from it
+  climb   = 2.40
+  drift   = 0.35, 5
+  recover = 24, 6
+  max     = 7.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 2.1, 7, 1, 8
+end
+
+recoil bfg_heavy   # the heavy BFG, and it should be the hardest energy shove in the game
+  climb   = 3.00
+  drift   = 0.40, 5
+  recover = 28, 6
+  max     = 8.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 2.4, 8, 1, 8
+end
+
+recoil plasma   # a plasma emitter: a light fast shudder and no cartridge to scatter, so no bloom
+  climb   = 0.30
+  drift   = 0.40, 5
+  recover = 12, 6
+  max     = 4.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.1, 4, 1, 8
+end
+
+recoil plasma_rifle   # the plasma rifle, a shade heavier in the hands than the bare emitter
+  climb   = 0.32
+  drift   = 0.40, 5
+  recover = 12, 6
+  max     = 4.2, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.1, 4, 1, 8
+end
+
+recoil rail   # a rail slug leaves at a speed nothing else here approaches -- a single hard shove, dead straight, nothing to scatter
+  climb   = 2.20
+  drift   = 0.30, 5
+  recover = 22, 6
+  max     = 7.0, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 2.0, 7, 1, 8
+end
+
+recoil rocket   # a shoulder tube that vents most of it backward -- the same recoilless shove as the launcher
+  climb   = 1.10
+  drift   = 0.50, 5
+  recover = 12, 6
+  max     = 5.4, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.5, 5, 1, 8
+end
+
+recoil chainsaw   # A SAW DOES NOT KICK, IT WANDERS. The lighter of the two: almost no climb, a wide pull, and zero bloom because it fires nothing
+  climb   = 0.10
+  drift   = 1.10, 5
+  recover = 10, 6
+  max     = 3.5, 3
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 1.0, 4, 1, 8
+end
+
 recoil unmaker   # THIRTY-FIVE SHOTS A SECOND. Anything you can feel per shot becomes unusable thirty-five times over, so this is a hum rather than a kick -- it accumulates into a real climb and recovers almost instantly
   climb   = 0.06
   drift   = 0.20, 5
