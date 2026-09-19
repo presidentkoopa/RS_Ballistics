@@ -15114,6 +15114,17 @@ impact hx_cryo.liquid     # water is the one that actually freezes
   sound      = rsb/impact/concrete
 end
 
+roundlook hx_cryogun      # the cryo bolt in flight: a pale cold streak that bends no air
+  look       = none
+  glide      = yes
+  impact     = hx_cryo
+  wake       = none
+  light      = 72, 1.2
+  lightcolor = 198, 232, 255
+  lightlook  = streak
+  carve      = 6, 0.6
+end
+
 # THE COMPENSATOR IS THE GUN. Ports on top and the sides of a barrel longer than the frame:
 # the gas leaves UP and OUT rather than forward, so this is a WIDE FLAT flare with a short
 # cone and a ring, not a plume. Seventeen rounds a second out of two and a half pounds, and it

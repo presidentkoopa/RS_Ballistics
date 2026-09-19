@@ -207,6 +207,32 @@ def cold_blocks():
         "  sound      = rsb/impact/concrete",
         "end",
         "",
+
+        # AND THE ROUTE TO ALL THREE, WHICH WAS MISSING (the weapons lane, 09-19). The three impacts
+        # above were written and NOTHING NAMED THEM. A gun's `roundprofile` picks a roundlook only
+        # for an RSB_Bullet -- RS_VR_Reload's WM_Gun.LaunchRound leaves every other projectile "as
+        # its class made it" -- so a bolt's impact family comes from the roundlook its CLASS names,
+        # and the Cryogun was firing a plain RSB_PlasmaBall, which names `plasma_ball`, which lands
+        # `impact plasma`. Three cold impact profiles, and a burning-hot mark on the wall.
+        #
+        # Exactly the shape of the sixty-eight dead rtcw_ names, one boundary further along:
+        # everything was DEFINED, and the last hop was never made. RSB_CryoBolt names this look;
+        # this look names those impacts.
+        #
+        # COLD ALL THE WAY DOWN: no `heat` key at all, which is what "bends no air" means here --
+        # the only round in the package with none. `wake = none` rather than an invented name; the
+        # bolt shows as its own pale light instead, the way ww2_tesla's does.
+        "roundlook hx_cryogun      # the cryo bolt in flight: a pale cold streak that bends no air",
+        "  look       = none",
+        "  glide      = yes",
+        "  impact     = hx_cryo",
+        "  wake       = none",
+        "  light      = 72, 1.2",
+        "  lightcolor = 198, 232, 255",
+        "  lightlook  = streak",
+        "  carve      = 6, 0.6",
+        "end",
+        "",
     ]
 
 

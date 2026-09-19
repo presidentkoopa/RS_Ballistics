@@ -166,6 +166,21 @@ class RSB_PlasmaBallCarbine : RSB_PlasmaBall
 	}
 }
 
+// HACX'S CRYOGUN BOLT: the same plasma ball to the game; to the eye a pale cold streak that bends
+// no air, and its hits are `hx_cryo` -- frost, brittle metal, water that actually freezes.
+//
+// WHY A CLASS AND NOT A SHEET KEY. A gun's `roundprofile` picks a roundlook for an RSB_Bullet and
+// for nothing else: RS_VR_Reload's WM_Gun.LaunchRound leaves every other projectile "as its class
+// made it". So the ONLY way a bolt reaches an impact family is the roundlook its class names, and
+// the three `impact hx_cryo` profiles sat unreachable behind a gun firing a plain RSB_PlasmaBall.
+class RSB_CryoBolt : RSB_PlasmaBall
+{
+	override String FlightLook()
+	{
+		return "hx_cryogun";
+	}
+}
+
 class RSB_Rocket : Rocket
 {
 	// NO LAUNCH SOUND of its own: the gun's card plays the fire sound (the owner's
