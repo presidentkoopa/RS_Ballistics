@@ -166,6 +166,28 @@ class RSB_Recoil play
 	// THE PER-SHOT JOLT the arm and the prop show (render only): back (map units), rise and
 	// roll (degrees), and the tics it takes -- times the player's "Recoil kick (visual)". The
 	// server's switch is ALL recoil (the owner): off, no jolt either.
+	// ============================================================================================
+	// THESE TWO MOVE THE GUN. THEY MUST NEVER MOVE THE CAMERA.
+	//
+	// The names say "view" and they are a trap: what comes back is the kick the DRAWN GUN carries,
+	// and the only consumer applies it to the prop's FollowHandOfs -- the gun slides back in the
+	// hand. Nothing here has ever reached the player's pitch and nothing may.
+	//
+	// THE OWNER RULED ON THIS DIRECTLY: "is doing torso recoil going to fuck up my pov? i dont need
+	// to get sick." In VR the camera IS the headset, so a jolt we compute fights his inner ear --
+	// the one failure in this whole system that can physically hurt him, and no amount of
+	// correctness in the recoil model buys it back. The engine already agrees: A_Recoil carries the
+	// comment "We don't want to adjust the player's camera - that could make them sick", and
+	// vr_recoil defaults to false.
+	//
+	// So recoil is a TORQUE and it is spent on things he LOOKS AT, never on the thing he looks
+	// THROUGH: the gun's aim about the grip (climb), the shoulder and torso load, the drawn spine.
+	// There is no double count between this and the body lane's torso recoil, because the view's
+	// share is zero rather than small.
+	//
+	// A flatscreen mode could want a real view kick one day. That is a NEW function, gated on VR
+	// being off, with its own cvar defaulting off. It is not this one relaxed.
+	// ============================================================================================
 	clearscope static double, double, double, int ViewJolt(String profile)
 	{
 		let rd = Enabled() ? Profile(profile) : null;

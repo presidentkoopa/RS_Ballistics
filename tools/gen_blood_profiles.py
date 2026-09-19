@@ -155,6 +155,291 @@ def blocks():
         "",
     ]
 
+    # ------------------------------------------------------------ THE LAST FIVE
+    # Two of them fire a real cartridge and are derived like everything else. Three fire nothing that
+    # has a load -- burning tar, stolen life, and whatever a Sigil is -- so their kick is STATED, which
+    # is a decision rather than an omission and is the same hatch the BFG and the chainsaw already use.
+    tommy_lb = 7.00 + 20 * (324 / 7000.0)      # baseweight + a 20-round stick of .45
+    sg_lb = 7.00 + 2 * (694 / 7000.0)          # baseweight + two 12 gauge shells
+    t_vg, t_e, t_imp = free_recoil(230, 920, 5.0, tommy_lb)
+    s_vg, s_e, s_imp = free_recoil(437, 1325, 32.0, sg_lb)
+    t_climb = t_vg * CLIMB_PER_FPS * 0.85      # auto
+    s_climb = s_vg * CLIMB_PER_FPS * 1.50      # break
+    out += [
+        "# THE TOMMY GUN. A long barrel gives the .45 920 fps rather than the 1911's 830, and an",
+        "# automatic action eats most of what comes back -- so it is a heavy round that arrives as a",
+        "# rumble rather than a punch. Derived, not chosen.",
+        "flash bl_tommygun         # a broad dirty bloom, ten a second",
+        "  light      = 170, 2.4, 2",
+        "  lightcolor = 255, 208, 150",
+        "  cone       = 20, 54, 100, 5",
+        "  conetics   = 2",
+        "  bursts     = flash_core, flash_petals, flash_powder",
+        "  maybe      = spk_specks 0.4, flash_soot 0.3, powder_clump 0.3",
+        "  flame      = 0.09",
+        "  smoke      = 3, 0.04, 0.42",
+        "  smokeparticle = rsb_smoke_gun",
+        "  tail       = rsb/tail/smg, 0.85",
+        "end",
+        "",
+        "recoil bl_tommygun        # %.1f ft-lb, Vg %.2f fps, impulse %.3f lb-s -- derived" % (t_e, t_vg, t_imp),
+        "  climb   = %.2f" % t_climb,
+        "  shot    = %.2f, %.1f, %.3f" % (t_vg, t_e, t_imp),
+        "  drift   = 0.28, 7",
+        "  recover = 14, 5",
+        "  max     = %.1f, 3" % max(3.0, min(10.0, 3.0 + 2.2 * t_climb)),
+        "  bloom   = 0.03",
+        "  brace   = 0.55, 0.8",
+        "  view    = 1.5, 4, 1, 5",
+        "end",
+        "",
+        "# BLOOD'S SAWN-OFF. One barrel at a time, and the arithmetic says it is the second hardest",
+        "# thing in the set after the flare -- a break action hands nearly all of it back to you.",
+        "flash bl_shotgun          # a wide flat gout, and a lot of it",
+        "  light      = 240, 3.2, 3",
+        "  lightcolor = 255, 214, 158",
+        "  cone       = 30, 76, 140, 6",
+        "  conetics   = 3",
+        "  bursts     = flash_core, flash_petals_wide, flash_plume_wide, flash_powder",
+        "  maybe      = flash_embers 0.5, flash_soot 0.45, spk_specks_wide 0.4",
+        "  flame      = 0.2",
+        "  smoke      = 5, 0.06, 0.6",
+        "  smokeparticle = rsb_smoke_gun",
+        "  tail       = rsb/tail/shotgun, 1.0",
+        "end",
+        "",
+        "recoil bl_shotgun         # %.1f ft-lb, Vg %.2f fps, impulse %.3f lb-s -- derived" % (s_e, s_vg, s_imp),
+        "  climb   = %.2f" % s_climb,
+        "  shot    = %.2f, %.1f, %.3f" % (s_vg, s_e, s_imp),
+        "  drift   = 0.34, 4",
+        "  recover = 26, 7",
+        "  max     = %.1f, 4" % max(3.0, min(10.0, 3.0 + 2.2 * s_climb)),
+        "  bloom   = 0.00",
+        "  brace   = 0.6, 0.85",
+        "  view    = 3.4, 9, 2, 9",
+        "end",
+        "",
+        "# THE NAPALM LAUNCHER, and it is the one gun in the set whose whole point is what happens",
+        "# AFTER. It lobs burning tar: the burst where it lands is almost incidental next to the pool",
+        "# that stays there. Same `ride` fire as the flare, bigger and longer, and it catches whoever",
+        "# is standing in it rather than the floor they are standing on.",
+        "hotspot bl_napalm_pool    # what a can of burning tar leaves behind",
+        "  ride       = yes",
+        "  merge      = 56",
+        "  heat       = 2.20, 0.10, 2.20",
+        "  bursts     = flame_body 20, flame_core 13, flame_licks 10, flame_tip 7, flame_embers 6, flame_smoke 10",
+        "  light      = 170, 2.8",
+        "  lightcolor = 255, 132, 44",
+        "  throb      = 8, 0.26",
+        "  mark       = pool, 8, 30, 10, 90",
+        "  markcolor  = 32, 24, 20",
+        "  shimmer    = 30, 1.5",
+        "  sound      = rsb/flame/loop, 0.9",
+        "  smokevolume = 30, 1.2",
+        "  damage     = scorch, 8, 26, 0.45, 0.7, 0.35",
+        "end",
+        "",
+        "impact bl_napalm          # it bursts, and then it sits there burning",
+        "  bursts     = flame_splash, flame_sheet, flame_embers, flame_smoke, flame_licks",
+        "  light      = 190, 3.0, 12",
+        "  lightcolor = 255, 138, 46",
+        "  sound      = rsb/flame/start",
+        "  hotspot    = bl_napalm_pool",
+        "end",
+        "",
+        "impact bl_napalm.flesh    # on a man, which is the same thing except he runs",
+        "  bursts     = flame_splash, flame_licks, flame_core, flame_embers",
+        "  light      = 180, 2.8, 12",
+        "  lightcolor = 255, 138, 46",
+        "  sound      = rsb/flame/start",
+        "  hotspot    = bl_napalm_pool",
+        "end",
+        "",
+        "impact bl_napalm.liquid   # into water: it goes out, loudly",
+        "  bursts     = splash_liquid, flame_out_puff, flame_smoke",
+        "  light      = 70, 1.1, 8",
+        "  lightcolor = 255, 138, 46",
+        "  sound      = rsb/flame/stop",
+        "end",
+        "",
+        "flash bl_napalm           # a wet orange cough out of a home-made tube",
+        "  light      = 220, 2.8, 3",
+        "  lightcolor = 255, 156, 62",
+        "  cone       = 24, 60, 110, 5",
+        "  conetics   = 3",
+        "  bursts     = flash_core, flash_plume_dirty, flash_embers, flash_soot",
+        "  maybe      = flame_licks 0.5, flash_launcher_puff 0.4",
+        "  flame      = 0.3",
+        "  smoke      = 6, 0.08, 0.7",
+        "  smokeparticle = rsb_smoke_rocket",
+        "  tail       = rsb/tail/rpg, 0.9   # the only launcher-class tail SNDINFO declares",
+        "end",
+        "",
+        "# STATED, NOT DERIVED: burning tar has no bullet weight and no powder charge, and inventing a",
+        "# cartridge so the arithmetic would run is the false precision this package keeps refusing.",
+        "recoil bl_napalm          # a heavy wet shove, slow to settle",
+        "  climb   = 2.40",
+        "  drift   = 0.40, 5",
+        "  recover = 20, 7",
+        "  max     = 8.0, 4",
+        "  bloom   = 0.00",
+        "  brace   = 0.6, 0.85",
+        "  view    = 3.0, 8, 2, 10",
+        "end",
+        "",
+        "# THE LIFE LEECH: a staff that fires stolen life. It is the only thing in the package that",
+        "# should look ORGANIC rather than energetic -- dark red, low, wet, and wrong. Everything else",
+        "# we ship that glows is clean; this one should not be.",
+        "flash bl_lifeleech        # a dull red pulse, more meat than light",
+        "  light      = 120, 1.8, 3",
+        "  lightcolor = 190, 26, 34",
+        "  cone       = 12, 30, 58, 6",
+        "  conetics   = 4",
+        "  bursts     = plasma_glow_small, plasma_motes",
+        "  maybe      = flesh_char_flecks 0.5, plasma_crackle_muzzle 0.3",
+        "  flame      = 0.0",
+        "  smoke      = 2, 0.03, 0.3",
+        "  smokeparticle = rsb_smoke_gun",
+        "  tail       = rsb/tail/br, 0.7",
+        "end",
+        "",
+        "recoil bl_lifeleech       # stated: a staff drawing life has nothing to push against",
+        "  climb   = 0.42",
+        "  drift   = 0.18, 9",
+        "  recover = 10, 4",
+        "  max     = 3.4, 2",
+        "  bloom   = 0.01",
+        "  brace   = 0.7, 0.9",
+        "  view    = 0.8, 3, 1, 4",
+        "end",
+        "",
+        "# THE SIGIL. Blood's last weapon, and it should feel like the room disapproves. Slow, enormous,",
+        "# and lit from somewhere other than the muzzle.",
+        "flash bl_sigil            # a held breath and then a wave",
+        "  light      = 320, 4.2, 4",
+        "  lightcolor = 236, 84, 42",
+        "  cone       = 40, 96, 170, 7",
+        "  conetics   = 4",
+        "  bursts     = bfg_glow_heavy, bfg_wave_heavy, bfg_ozone, flash_embers",
+        "  maybe      = bfg_arcs 0.6, flame_embers_rise 0.5",
+        "  flame      = 0.24",
+        "  smoke      = 7, 0.08, 0.75",
+        "  smokeparticle = rsb_smoke_flame",
+        "  chargebursts = bfg_charge_motes 14, bfg_charge_arcs 8, bfg_charge_core 5",
+        "  chargelight = 150, 2.0",
+        "  chargelightcolor = 236, 84, 42",
+        "  tail       = rsb/tail/rpg, 1.0",
+        "end",
+        "",
+        "recoil bl_sigil           # stated: it does not recoil so much as object",
+        "  climb   = 1.90",
+        "  drift   = 0.22, 3",
+        "  recover = 24, 10",
+        "  max     = 6.5, 3",
+        "  bloom   = 0.00",
+        "  brace   = 0.7, 0.9",
+        "  view    = 3.6, 12, 2, 14",
+        "end",
+        "",
+    ]
+
+    # ------------------------------------------------------------ THE SPRAY CAN: TWO JETS, ONE NOZZLE
+    # The owner: "i want our blood vr weapons to have the can by itself, firing inert gas. the lighter
+    # has to be in the offhand, lit, and in front of the can while it is discharging."
+    #
+    # That is not a flamethrower with a switch. It is two different things out of one nozzle, and the
+    # FIRST of them is the one this package has never had: a jet that is not fire. No light, no heat,
+    # no scorch, no sound of its own -- an aerosol is a cold wet nothing that wets what it lands on and
+    # hangs in the air. Everything the flame system does is about fire, so almost every key here is
+    # deliberately ABSENT rather than turned down.
+    #
+    # WHICH JET FIRES IS THE GUN'S DECISION, not mine: the can names bl_spray_inert normally and
+    # bl_spray_lit while a lit lighter is in front of it. Two named profiles, one switch, and the
+    # off-hand lighter stays the hands lane's problem exactly as the main lane ruled.
+    out += [
+        "# COLD AEROSOL: fine propellant, mostly invisible, faintly grey where it is dense. It travels",
+        "# far less than a flame because nothing is driving it but can pressure, and it FALLS -- gravity",
+        "# on the droplets is what makes it read as a liquid rather than a gas.",
+        "burst spray_mist          # the jet itself: a fine cold fan of propellant",
+        "  count    = 4",
+        "  cone     = 13",
+        "  speed    = 120, 0.45",
+        "  life     = 0.55, 0.35",
+        "  size     = 0.8, 0.4",
+        "  gravity  = 0.25",
+        "  drag     = 0.14",
+        "  color    = 214, 216, 218",
+        "  particle = rsb_smoke_gun",
+        "end",
+        "",
+        "burst spray_haze          # what hangs behind it: slower, wider, and it lingers",
+        "  count    = 2",
+        "  cone     = 34",
+        "  speed    = 34, 0.6",
+        "  life     = 1.9, 0.4",
+        "  size     = 1.7, 0.5",
+        "  gravity  = 0.05",
+        "  drag     = 0.3",
+        "  color    = 206, 209, 212",
+        "  particle = rsb_smoke_gun",
+        "end",
+        "",
+        "burst spray_wet           # where it lands: it wets the surface and creeps a moment",
+        "  count    = 3",
+        "  cone     = 62",
+        "  speed    = 46, 0.5",
+        "  life     = 1.1, 0.3",
+        "  size     = 1.1, 0.4",
+        "  gravity  = 0.4",
+        "  drag     = 0.22",
+        "  color    = 200, 204, 208",
+        "  particle = rsb_smoke_gun",
+        "end",
+        "",
+        "# THE CAN ON ITS OWN. No light, no heat, no scorch and no sound: the gun's own firesound is the",
+        "# hiss, and a loop here would double it. `cling` is the only thing it shares with a flame --",
+        "# propellant does run down a wall. Everything else fire does is simply not stated.",
+        "flame bl_spray_inert      # an aerosol can, discharging: cold, wet, and harmless",
+        "  reach       = 150",
+        "  speed       = 420",
+        "  spread      = 3.4",
+        "  stream      = spray_mist, spray_haze",
+        "  landing     = spray_wet, spray_haze",
+        "  landingtics = 3",
+        "  cling       = 0.22",
+        "  sounds      = none, none, none",
+        "end",
+        "",
+        "# AND THE SAME CAN WITH A LIT ZIPPO IN FRONT OF IT. Shorter than the Flammenwerfer and thinner",
+        "# -- a spray can is not a military flamethrower and should never read like one -- but it is the",
+        "# same cold jet with the fire riding on it, so the mist bursts stay in the stream: the unburnt",
+        "# propellant at the edges is what makes an improvised flamethrower look improvised.",
+        "flame bl_spray_lit        # the can and the lighter, which is the whole joke of the weapon",
+        "  reach       = 210",
+        "  speed       = 460",
+        "  spread      = 3.0",
+        "  stream      = flame_core, flame_body, flame_tip, spray_mist",
+        "  landing     = flame_splash, flame_lick, flame_smoke, spray_wet",
+        "  landingtics = 2",
+        "  cling       = 0.26",
+        "  tube        = 5, 0.85, 3, 0.45",
+        "  tubelook    = 1.4, 2.6, 0.55",
+        "  tubecolors  = 255, 244, 214, 255, 198, 104, 255, 124, 34, 182, 52, 10, 96, 20, 5",
+        "  tubelicks   = 0.62, 0.08, 2.0",
+        "  heat        = 4, 15, 1.0, 0.08, 26",
+        "  heatland    = 24, 1.15",
+        "  scorch      = pool, 9, 95",
+        "  scorchcolor = 255, 92, 20",
+        "  scorchtics  = 10",
+        "  light       = 190, 2.2, 0.42",
+        "  lightcolor  = 255, 148, 58",
+        "  landlight   = 130, 1.9",
+        "  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop",
+        "  sputter     = 0.3, rsb/flame/hiss",
+        "end",
+        "",
+    ]
+
     # ------------------------------------------------------------ THE FLARE IN FLIGHT
     out += [
         "ballistics bl_flare        # a 26.5 mm star: heavy, slow, and you watch it go",
@@ -261,6 +546,34 @@ SHEET = [
         ("recoilprofile", "bl_flaregun", "was `pistol_45`; this one is derived from the flare itself"),
         ("roundprofile", "bl_flare", "the star in flight, and what it does where it lands"),
     ]),
+    ("BL_TommyGun", [
+        ("flashprofile", "bl_tommygun", "was the generic `smg`"),
+        ("recoilprofile", "bl_tommygun", "derived: a .45 at 920 fps out of your 7.00 lb, auto action"),
+    ]),
+    ("BL_Shotgun", [
+        ("flashprofile", "bl_shotgun", "was `shotgun_doublebarrel`"),
+        ("recoilprofile", "bl_shotgun", "derived: one barrel, break action -- the hardest kick in the set after the flare"),
+    ]),
+    ("BL_Napalm", [
+        ("flashprofile", "bl_napalm", "was `rocket_launcher`"),
+        ("recoilprofile", "bl_napalm", "stated: burning tar has no load to derive from"),
+        ("roundprofile", "bl_napalm", "NOTE: as with the lighter, whatever the Rocket class lands as "
+                                      "must name the impact `bl_napalm` -- it leaves a burning pool "
+                                      "that RIDES whoever is standing in it"),
+    ]),
+    ("BL_LifeLeech", [
+        ("flashprofile", "bl_lifeleech", "was `plasma_rifle`; this one is organic, not energetic"),
+        ("recoilprofile", "bl_lifeleech", "stated"),
+    ]),
+    ("BL_Sigil", [
+        ("flashprofile", "bl_sigil", "was the generic `bfg`"),
+        ("recoilprofile", "bl_sigil", "stated"),
+    ]),
+    ("BL_SprayCan", [
+        ("flameprofile", "bl_spray_inert", "the can ON ITS OWN: an inert jet, no fire, no light. "
+                                           "SWITCH to bl_spray_lit while a lit lighter is in front "
+                                           "of the nozzle -- two profiles, the gun picks"),
+    ]),
     ("BL_Lighter", [
         ("roundprofile", "bl_lighter", "NOTE: it is thrown, so whatever BL_ThrownLighter calls on "
                                        "landing must name the impact `bl_lighter`; if the class does "
@@ -270,7 +583,7 @@ SHEET = [
 
 
 def print_sheet():
-    print("SHEET KEYS FOR THE WEAPONS LANE -- Blood, pass 1 of 3")
+    print("SHEET KEYS FOR THE WEAPONS LANE -- Blood")
     print()
     for gun, keys in SHEET:
         print('gun "%s"' % gun)
@@ -278,9 +591,10 @@ def print_sheet():
             print('  %-20s = "%s"' % (k, v))
             print('  %s# %s' % (" " * 20, why))
         print()
-    print("Still borrowed and coming in the next two passes: BL_SprayCan (two jets, one nozzle --")
-    print("inert gas and ignited), then BL_TommyGun, BL_Shotgun, BL_Napalm, BL_LifeLeech, BL_Sigil.")
+    print("BL_TommyGun and BL_Shotgun keep their EJECTA as they are: brass_45 and hull_12ga are")
+    print("exactly what those guns throw, so that was never borrowing, it was correct reuse.")
     print("BL_TeslaGun keeps ww2_tesla on purpose: two tesla weapons should look the same.")
+    print("Nothing in Blood is borrowed after this.")
 
 
 def main():
@@ -301,7 +615,7 @@ def main():
             raise SystemExit("no anchor to insert before")
         text = text.replace(anchor, block + anchor, 1)
     io.open(DEFS, "w", encoding="utf-8", newline="").write(text)
-    n = len([l for l in body if re.match(r"^(hotspot|impact|flash|recoil|ballistics|roundlook|round) ", l)])
+    n = len([l for l in body if re.match(r"^(hotspot|impact|flash|recoil|ballistics|roundlook|round|burst|flame) ", l)])
     print("%d Blood profiles written." % n)
     print("flare gun: Vg %.2f fps, %.1f ft-lb, impulse %.3f lb-s -> climb %.2f" % (vg, energy, impulse, climb))
     print("the fire: bl_burn rides for ~%.0f s, bl_burn_small for ~%.0f s" % (1.60 / 0.11, 1.00 / 0.14))
