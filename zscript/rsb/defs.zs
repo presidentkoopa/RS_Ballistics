@@ -681,6 +681,15 @@ class RSB_HotspotDef : RSB_Def
 	double damageHeat;
 	double damageWet;
 	int    damageAlong;        // RSB_Impact.DAMAGE_ALONG_*; travel = along the way the spot is swept
+	// IT RIDES WHAT IT WAS SET ALIGHT ON (`ride`). A hotspot is a place: a beam heats one spot on a
+	// wall and the spot stays on the wall, which is right for a saw and wrong for a fire. With this,
+	// a spot fed by an impact that landed on a THING follows that thing instead -- a burning man
+	// burns while he runs, and he carries his own light with him.
+	//
+	// It is one key rather than a fire feature because nothing about it is fire: anything a hotspot
+	// can do (light, bursts, shimmer, smoke, scorch) now happens on a moving target as easily as a
+	// static one. Off by default, so every existing spot behaves exactly as it did.
+	bool   ride;
 }
 
 // RECOIL (GAMEPLAY, recoil.zs): how a gun's kick turns where its rounds go, and how the kick

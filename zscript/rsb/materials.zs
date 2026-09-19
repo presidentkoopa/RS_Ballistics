@@ -35,6 +35,13 @@ class RSB_Surface
 	int     lineSide;   // 0 front, 1 back; -1 for a flat
 	int     linePart;   // 0 upper, 1 middle, 2 lower; -1 for a flat
 	int     plane;      // for a flat: 0 floor, 1 ceiling; -1 for a wall
+	// WHAT IT LANDED ON, when that was a THING rather than a wall (null otherwise).
+	//
+	// Presentation has never needed this -- a spark does not care whose shoulder it came off -- but
+	// SETTING SOMETHING ALIGHT does: a fire started on a man has to go with him, and a fire is the
+	// first effect in this package whose work outlives the moment it was made. impact.zs already knew
+	// the actor (it reads BlockingMobj to choose the flesh variant) and then dropped it on the floor.
+	Actor   onActor;
 }
 
 class RSB_Materials play

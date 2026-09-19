@@ -290,6 +290,8 @@ class RSB_Impact play
 			// no mark. Only a missile: a corpse's stale BlockingMobj must not hide its floor.
 			surf = RSB_Materials.InAir(mo.pos, travel);
 			if (!mo.BlockingMobj.bNOBLOOD) surf.material = "flesh";
+			// AND WHO IT WAS. Carried so a hotspot that `ride`s can follow him; ignored by everything else.
+			surf.onActor = mo.BlockingMobj;
 		}
 		else
 		{

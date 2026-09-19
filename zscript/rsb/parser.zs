@@ -2306,6 +2306,15 @@ class RSB_Parser
 			hs.damageSoot = ds; hs.damageHeat = dh; hs.damageWet = dw; hs.damageAlong = da;
 			return "";
 		}
+		if (key == "ride")
+		{
+			// A spot that follows what it was started on, instead of staying where it was made.
+			if (v.Size() != 1) return "ride is yes or no";
+			int yn = YesNo(v[0]);
+			if (yn < 0) return String.Format("ride \"%s\" is not yes or no", v[0]);
+			hs.ride = (yn == 1);
+			return "";
+		}
 		return String.Format("unknown hotspot key \"%s\"", key);
 	}
 

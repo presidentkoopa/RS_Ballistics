@@ -35,6 +35,11 @@ class RSB_Hotspot : Actor
 
 	String  spotId;
 	Vector3 surfNormal;
+	// WHO IT IS BURNING ON (`ride`), and where on him it caught. Null for the ordinary case: a spot
+	// on a wall. While he lives the spot is moved to him every tic; when he is gone it stays where it
+	// last was and burns out there, which is what a fire does when the man it was on stops existing.
+	Actor   rider;
+	Vector3 riderOfs;
 	private double heat;
 	private Vector3 sweep;       // which way it has been dragged (a unit-ish average; its sign kept steady)
 	private int    heatTic;
@@ -53,11 +58,17 @@ class RSB_Hotspot : Actor
 	// within its merge radius, or starts one there (past MAX_SPOTS the oldest goes out).
 	static void Feed(String whichSpot, RSB_Surface surf)
 	{
-		if (!surf || surf.air || surf.sky || whichSpot.Length() == 0) return;
+		if (!surf || surf.sky || whichSpot.Length() == 0) return;
 		let reg = RSB_Registry.Get();
 		if (!reg) return;
 		let hs = reg.ResolveHotspot(whichSpot, RSB_Tier.Name(RSB_Tier.Current()));
 		if (!hs) return;
+		// `air` MEANS NO SURFACE, which is exactly the case a rider needs. A round that lands on a man
+		// gets an air surface with no mark -- so the old guard, which ran before the profile was even
+		// resolved, made it impossible to set a monster alight no matter what any profile asked for.
+		// A spot that does not ride still refuses air: there is nothing there to be hot.
+		Actor on = (hs.ride && surf.onActor && !surf.onActor.bDESTROYED) ? surf.onActor : null;
+		if (surf.air && !on) return;
 
 		RSB_Hotspot spot = null;
 		for (int i = reg.hotspots.Size() - 1; i >= 0; i--)
@@ -68,7 +79,11 @@ class RSB_Hotspot : Actor
 				reg.hotspots.Delete(i);
 				continue;
 			}
-			if (s.spotId ~== whichSpot && (s.pos - surf.at).Length() <= hs.mergeRadius)
+			// A RIDING SPOT MERGES BY WHO, not by where. Two flares into one man make one fire that
+			// burns hotter, and they do it however far he has run between them -- distance is the wrong
+			// question once the thing being burnt can move.
+			bool match = on ? (s.rider == on) : (s.rider == null && (s.pos - surf.at).Length() <= hs.mergeRadius);
+			if (s.spotId ~== whichSpot && match)
 			{
 				spot = s;
 				break;
@@ -82,10 +97,15 @@ class RSB_Hotspot : Actor
 				reg.hotspots.Delete(0);
 				if (oldest) oldest.GoOut();
 			}
-			spot = RSB_Hotspot(Actor.SpawnClientSide("RSB_Hotspot", surf.at + surf.normal, NO_REPLACE));
+			// ON HIM AND FACING UP: fire rises, so a spot riding a man emits along +Z rather than back
+			// along the shot. On a wall nothing changes -- it still faces out of the surface it is on.
+			Vector3 where = on ? (on.pos + (0, 0, on.height * 0.5)) : (surf.at + surf.normal);
+			spot = RSB_Hotspot(Actor.SpawnClientSide("RSB_Hotspot", where, NO_REPLACE));
 			if (!spot) return;
 			spot.spotId = whichSpot;
-			spot.surfNormal = surf.normal;
+			spot.surfNormal = on ? (0, 0, 1) : surf.normal;
+			spot.rider = on;
+			if (on) spot.riderOfs = (0, 0, on.height * 0.5);
 			spot.heatTic = level.maptime;
 			reg.hotspots.Push(spot);
 		}
@@ -120,6 +140,13 @@ class RSB_Hotspot : Actor
 				GoOut();
 				return;
 			}
+		}
+		// IT GOES WHERE HE GOES. Presentation only and client-side already, so this moves nothing the
+		// playsim can see; when he is gone the spot simply stops being moved and burns out in place.
+		if (rider)
+		{
+			if (rider.bDESTROYED) rider = null;
+			else SetOrigin(rider.pos + riderOfs, true);
 		}
 		let hs = spotDef;
 		Cool();
