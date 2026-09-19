@@ -32,9 +32,30 @@ class RSB_Recoil play
 	// A recoil profile by its base name; null for none, "" or one no RSBDEFS defines.
 	clearscope static RSB_RecoilDef Profile(String name)
 	{
-		if (name.Length() == 0 || name ~== "none") return null;
+		// A GUN THAT NAMES NO RECOIL PROFILE HAS NO KICK AT ALL, and seventeen across the Vanilla and
+		// Vanilla+ sets are in exactly that state. `recoil default` is the house recipe for them.
+		//
+		// BEHIND A SERVER CVAR, AND OFF, because switching it on gives those seventeen a kick they do
+		// not have today -- including four BFGs and four plasma rifles -- in sets the owner has called
+		// fine while he is playing them. That is not a fix arriving, it is his weapons handling
+		// differently with no warning. Server-scope so every machine agrees: this decides where bullets
+		// go, and a per-player answer to that is a desync.
+		//
+		// `none` still means none. A profile that deliberately says so is not an omission and does not
+		// get the house recipe.
+		if (name ~== "none") return null;
 		let reg = RSB_Registry.Get();
 		if (!reg || !reg.defs) return null;
+		if (name.Length() == 0)
+		{
+			// READ THE SERVER CVAR DIRECTLY, the way Enabled() above does. This function is clearscope --
+			// ViewJolt and View are clearscope and call it -- and RSB_Settings' accessors are play, so
+			// going through one is a compile error. FindCVar with no player asks the SERVER's value,
+			// which is the right question anyway: this decides where bullets go and cannot be per-player.
+			let c = CVar.FindCVar("sv_rsb_recoil_default");
+			if (!c || !c.GetBool()) return null;
+			return RSB_RecoilDef(reg.defs.Find("recoil", "default"));
+		}
 		return RSB_RecoilDef(reg.defs.Find("recoil", name));
 	}
 

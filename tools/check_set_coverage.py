@@ -77,6 +77,23 @@ EXEMPT = {
 
 KINDS = ("flash", "recoil", "ejecta", "round")
 
+# A `default` THAT EXISTS IS NOT THE SAME AS A `default` THAT IS REACHED, and this tool would have
+# started lying the moment `recoil default` was written.
+#
+# GENERIC means "states none, and the house recipe catches it". For flash, ejecta and round that is
+# true automatically: RS_VR_Reload resolves an unstated name to the literal "default". For RECOIL it is
+# not -- the weapon passes recoilProfileName straight through, and the fallback added in
+# RSB_Recoil.Profile sits behind sv_rsb_recoil_default, which is OFF because turning it on changes how
+# seventeen of the owner's guns handle.
+#
+# So a recoil profile existing at "default" must NOT quietly move those seventeen from NONE to GENERIC.
+# They still have no kick. Remove a kind from here only when its default is genuinely reached by
+# default -- and then this tool starts passing them on its own, which is the correct signal that the
+# work actually landed.
+UNREACHED_DEFAULTS = {
+    "recoil": "the weapon passes recoilProfileName raw, and the fallback is behind sv_rsb_recoil_default, which is off",
+}
+
 
 # THE FILE THE GAME LOADS IS THE PK3, NOT THE SOURCE TREE, AND THEY ARE NOT THE SAME STATEMENT.
 #
@@ -252,13 +269,16 @@ def check(sheet, have, guns=None, label=None):
         want = [k for k in KINDS if not (k in EXEMPT and EXEMPT[k].search(gun))]
         # NONE is the only defect: the sheet says nothing AND the kind has no house recipe to fall
         # back on, so the gun fires with nothing at all.
-        nothing = [k for k in want if k not in named and "default" not in have.get(k, ())]
+        nothing = [k for k in want if k not in named
+                   and ("default" not in have.get(k, ()) or k in UNREACHED_DEFAULTS)]
         # GENERIC is fine, and saying otherwise is what got this tool corrected by the owner.
         onhouse = [k for k in want if k not in named and "default" in have.get(k, ())]
         dangling = ["%s -> %s" % (k, v) for k, v in named.items() if v not in have.get(k, ())]
         if nothing:
-            bad.append("  %-22s NOTHING HAPPENS: states no %s, and that kind has no `default` to fall back on"
-                       % (gun, ", ".join(k + "profile" for k in nothing)))
+            why = []
+            for k in nothing:
+                why.append("%sprofile (%s)" % (k, UNREACHED_DEFAULTS.get(k, "that kind has no `default` to fall back on")))
+            bad.append("  %-22s NOTHING HAPPENS: states no %s" % (gun, "; ".join(why)))
         if dangling:
             bad.append("  %-22s NAMES A PROFILE THAT DOES NOT EXIST: %s" % (gun, "; ".join(dangling)))
         if nothing or dangling:

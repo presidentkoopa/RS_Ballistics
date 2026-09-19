@@ -167,6 +167,10 @@ CARTRIDGE = {
     "22lr":    (290, 0.9, "tiny",   0.5,  0.22, 0.35, 0.08, ".22 LR: the OSS's answer, and a charge small enough to be half the reason it is quiet"),
     "357":     (380, 2.1, "medium", 1.35, 1.05, 1.30, 1.15, ".357 class: a big slow hole and far more flash than a handgun has any right to"),
     "93x74r":  (640, 2.1, "rifle",  1.50, 1.40, 1.70, 1.80, "9.3x74R: the drilling's rifle barrel, a boar round, the biggest hole in the set"),
+    # THE MOSIN'S OWN. It was borrowing the Kar98k's 7.92x57 -- same job, same class, openly stated in
+    # a comment -- because nothing here described a rimmed Russian round. It does now: slightly slower
+    # and fatter than the Mauser, and a rimmed case that tumbles differently out of the port.
+    "762x54r": (600, 2.0, "rifle",  1.50, 1.30, 1.75, 1.65, "7.62x54R: rimmed, Russian, and still in service longer than anything else here"),
 }
 
 # A GUN WHOSE SUPPRESSOR MAKES IT DIFFERENT IN KIND RATHER THAN QUIETER (owner's framing, and the
@@ -254,6 +258,8 @@ GUN = {
                   "THE GOLDEN LUGER: a hundred damage out of a 9mm at two shots a second. The SLOWEST thing in the set, slower even than the Trench Gun, so it can afford the biggest flash any pistol gets"),
     "tt33":      ("762tok",   30, 1,  7, (1, 1), "semi",
                   "THE TT-33 TOKAREV: the PPSh's cartridge fired deliberately instead of hosed -- fast, spiteful, and a sharp little flash"),
+    "mosin":     ("762x54r", 100, 1, 12, (0, 0), "bolt",
+                  "THE MOSIN-NAGANT: the Kar98k's opposite number and not its twin -- a longer, rougher, slower rifle firing a rimmed round, one shot every twelve tics with no spread at all"),
     "hdm":       ("22lr",     25, 1,  6, (1, 1), "semi",
                   "THE HIGH STANDARD HDM: the OSS's suppressed .22, and the quietest thing anyone built. NO FLASH, NO CONE, NO REPORT -- gas out of the ports, a glow at the can, and the action working"),
     "revolver":  ("357",      60, 1,  9, (2, 3), "revolver",
@@ -332,6 +338,7 @@ RECOIL_DATA = {
     "g43":       (198, 2493, 47,   9.7),
     "fg42":      (198, 2493, 47,   9.9),
     "marksman":  (198, 2493, 47,   9.0),
+    "mosin":     (148, 2838, 48,   8.8),   # 7.62x54R light ball out of a 91/30
     "mg42":      (198, 2493, 47,  25.5),
     "venom":     (198, 2493, 47,  25.0),   # ESTIMATE: fantasy rotary, weight assumed MG42 class
     "garand":    (150, 2800, 50,  10.5),
