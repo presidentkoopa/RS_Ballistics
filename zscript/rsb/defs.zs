@@ -379,6 +379,12 @@ class RSB_FlashDef : RSB_Def
 	int    barrelCount;
 	double barrelRadius;
 	// POWDER VARIETY (`powdervary`): how far a shot's light swings redder or whiter, 0..1.
+	// HOW LONG THE SMOKE WAITS (`smokedelay`, tics). -1 = not stated, and then it waits for the flash's
+	// own light to finish -- which is the right answer for every gun and the reason it is the default
+	// rather than an opt-in. See RSB_Flash.LaySmoke: a cloud born on the shot tic, six units from the
+	// muzzle, sits inside a 150-330 radius light at ~98% of full brightness, an arm's length from the
+	// player's eyes. 0 restores the old behaviour for anything that genuinely wants it.
+	int    smokeDelay;
 	double powderVary;
 	// A SHOCKWAVE (`shockwave`): a bubble of bent air growing to `radius` over `tics`, fading as it grows.
 	double shockRadius;

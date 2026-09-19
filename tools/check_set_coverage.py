@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+"""
+check_set_coverage.py -- does every gun in a weapon set actually have ballistics?
+
+WHY THIS EXISTS. The RealRTCW set shipped and installed with SEVENTEEN GUNS carrying ZERO ballistics
+profiles -- no flash, no recoil, no ejecta, no round -- and it reached the owner's New Game screen
+firing with nothing on it. Nobody noticed because nothing fails: a gun with no flashprofile does not
+error, it is just silent and dark, and a gun with a flashprofile naming a profile that does not exist
+logs one line into a four-thousand-line boot log.
+
+Both failures are invisible in play unless you are looking straight at the gun in a dark room. So they
+have to be caught here instead, by reading the sheets and the definitions and comparing them.
+
+    python tools/check_set_coverage.py                  # every WMSHEET.* next to RS_VR_Weapons
+    python tools/check_set_coverage.py <sheet> [...]    # only these
+
+Exit code 1 if any gun is missing a profile or names one that does not exist.
+
+WHAT COUNTS AS COVERED. A gun needs a flash, a recoil, an ejecta and a round, minus whatever it is
+exempt from -- and every exemption is a NAMED list below rather than a rule inferred from the data, so
+a gun that quietly loses its profiles cannot hide behind one. Nothing is exempt from `recoil`.
+"""
+import io
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+PKG = os.path.dirname(HERE)
+DEFS = os.path.join(PKG, "RSBDEFS.txt")
+SHEETS = os.path.join(os.path.dirname(PKG), "RS_VR_Weapons")
+
+# WHAT A GUN IS EXEMPT FROM, AND WHY. Every exemption is a named list rather than a rule inferred from
+# the data, so a gun that quietly loses its profiles cannot hide behind one.
+#
+# Nothing fires, so there is nothing to look like.
+NO_BALLISTICS = re.compile(r"(knife|axe|grenade|melee|bayonet|kick|fist|shield|saw|chainsaw)", re.I)
+EXEMPT = {
+    # Ejects nothing WHILE FIRING: a revolver holds its brass in the cylinder, a break action holds
+    # its until you open it, and an energy weapon or a launcher has no case at all.
+    "ejecta": re.compile(r"(revolver|drilling|m30|flame|tesla|leichenfaust|panzer|nebelwerfer|faust|"
+                         r"schreck|plasma|bfg|rail|laser|rocket|rpg|launcher|unmaker|moonlight)", re.I),
+    # Fires its own projectile actor rather than a round this package describes, so `roundprofile`
+    # would have nothing to say. This is the same boundary `damage = none` polices from the other side.
+    "round": re.compile(r"(flame|tesla|leichenfaust|panzer|nebelwerfer|faust|schreck|plasma|bfg|rail|"
+                        r"rocket|rpg|launcher|unmaker)", re.I),
+    # A flamethrower's `flame` profile already owns its light; a flash on top would double it.
+    "flash": re.compile(r"(flame)", re.I),
+    # NOTHING IS EXEMPT FROM `recoil`. Even a flamethrower and a plasma rifle shove, and a gun that
+    # states no recoil profile is a gun that does not move in your hands, which in VR is the single
+    # most obvious way for a weapon to feel fake.
+}
+
+KINDS = ("flash", "recoil", "ejecta", "round")
+
+
+def defined_profiles(path):
+    """Every profile in RSBDEFS, by kind, base name only (variants resolve back to their base)."""
+    have = {k: set() for k in ("flash", "recoil", "ejecta", "round", "ballistics", "roundlook",
+                               "impact", "burst", "wake", "trail", "flame", "hotspot", "style", "fixture")}
+    for line in io.open(path, encoding="utf-8", errors="replace"):
+        m = re.match(r"^([a-z]+)\s+([^\s#]+)", line)
+        if not m:
+            continue
+        kind, name = m.group(1), m.group(2)
+        if kind not in have:
+            continue
+        have[kind].add(name.split("~")[0].split("@")[0].split(".")[0].lower())
+    return have
+
+
+def guns_in(path):
+    """gun name -> {kind: profile name}, read out of a WMSHEET."""
+    out = {}
+    cur = None
+    for line in io.open(path, encoding="utf-8", errors="replace"):
+        s = line.split("#")[0].strip()
+        m = re.match(r'^gun\s+"([^"]+)"', s)
+        if m:
+            cur = m.group(1)
+            out[cur] = {}
+            continue
+        if cur is None:
+            continue
+        m = re.match(r'^(flash|recoil|ejecta|round)profile\s*=\s*"?([^"\s]+)"?', s)
+        if m:
+            out[cur][m.group(1)] = m.group(2).lower()
+    return out
+
+
+def check(sheet, have):
+    guns = guns_in(sheet)
+    name = os.path.basename(sheet)
+    if not guns:
+        print("%s: NO GUNS FOUND -- is this a sheet?" % name)
+        return 1
+    bad = []
+    covered = 0
+    for gun in sorted(guns):
+        named = guns[gun]
+        if NO_BALLISTICS.search(gun):
+            continue
+        want = [k for k in KINDS if not (k in EXEMPT and EXEMPT[k].search(gun))]
+        missing = [k for k in want if k not in named]
+        dangling = ["%s -> %s" % (k, v) for k, v in named.items() if v not in have.get(k, ())]
+        if missing:
+            bad.append("  %-22s STATES NO %s" % (gun, ", ".join(p + "profile" for p in missing)))
+        if dangling:
+            bad.append("  %-22s NAMES A PROFILE THAT DOES NOT EXIST: %s" % (gun, "; ".join(dangling)))
+        if not missing and not dangling:
+            covered += 1
+    total = len([g for g in guns if not NO_BALLISTICS.search(g)])
+    print("%s: %d/%d guns covered (%d melee or thrown, skipped)"
+          % (name, covered, total, len(guns) - total))
+    for b in bad:
+        print(b)
+    return 1 if bad else 0
+
+
+def main():
+    if not os.path.exists(DEFS):
+        sys.exit("no RSBDEFS at %s" % DEFS)
+    have = defined_profiles(DEFS)
+    print("RSBDEFS: %d flash, %d recoil, %d ejecta, %d round"
+          % (len(have["flash"]), len(have["recoil"]), len(have["ejecta"]), len(have["round"])))
+    sheets = sys.argv[1:]
+    if not sheets:
+        if not os.path.isdir(SHEETS):
+            sys.exit("no %s -- pass sheet paths instead" % SHEETS)
+        sheets = [os.path.join(SHEETS, f) for f in sorted(os.listdir(SHEETS))
+                  if f.upper().startswith("WMSHEET")]
+    if not sheets:
+        sys.exit("no WMSHEET files found")
+    rc = 0
+    for s in sheets:
+        rc |= check(s, have)
+    print("\nCOVERAGE %s" % ("INCOMPLETE -- see above" if rc else "COMPLETE"))
+    sys.exit(rc)
+
+
+main()

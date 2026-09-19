@@ -263,6 +263,10 @@ class RSB_Parser
 		if (kind == "flash")
 		{
 			let d = new("RSB_FlashDef");
+			// -1 IS NOT STATED, and then the smoke waits for the flash's own light to finish. Fields
+			// start at zero, so without this every profile would read as smokedelay 0 -- which is the
+			// old behaviour and the thing being fixed.
+			d.smokeDelay = -1;
 			d.lightRadius = 0;
 			d.lightPunch = 0;
 			d.lightTics = 0;
@@ -1557,14 +1561,23 @@ class RSB_Parser
 			}
 			return "";
 		}
+		// POWDER BURNS ONLY HAPPEN AT CONTACT RANGE, AND THE REACH IS CAPPED TO SAY SO.
+		//
+		// Profiles were stating reaches up to 106 map units -- getting on for three metres -- so every
+		// shot fired anywhere near a wall painted soot on it. That is the owner's "not a fan of the
+		// visual on walls and flats": not the mark itself, but that it was everywhere.
+		//
+		// Unburnt powder marks what it can reach, and that is measured in inches. 48 units is about a
+		// metre and is already generous; past that there is nothing to see in life either. Capped at
+		// the parser rather than in the generator so no OTHER package can reintroduce it.
 		if (key == "powderburn")
 		{
 			why = Nums(v, 3); if (why != "") return why;
-			f.powderReach = v[0].ToDouble();
+			f.powderReach = min(48.0, v[0].ToDouble());   // CAPPED -- see above; profiles were stating 106
 			f.powderRadius = v[1].ToDouble();
 			f.powderSoot = v[2].ToDouble();
 			return (f.powderReach >= 0 && f.powderRadius >= 0.5 && f.powderRadius <= 64 && f.powderSoot >= 0 && f.powderSoot <= 1) ? ""
-				: "powderburn is reach, radius (0.5..64), soot (0..1)";
+				: "powderburn is reach (capped at 48: a powder burn is a contact mark), radius (0.5..64), soot (0..1)";
 		}
 		if (key == "blastkick")
 		{
@@ -1585,6 +1598,12 @@ class RSB_Parser
 			f.barrelCount = v[0].ToInt();
 			f.barrelRadius = v[1].ToDouble();
 			return (f.barrelCount >= 1 && f.barrelCount <= 16 && f.barrelRadius >= 0) ? "" : "barrels is count (1..16), radius";
+		}
+		if (key == "smokedelay")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			f.smokeDelay = v[0].ToInt();
+			return (f.smokeDelay >= 0 && f.smokeDelay <= 35) ? "" : "smokedelay is tics to wait before the muzzle smoke is laid (0-35); leave it out to wait for the flash";
 		}
 		if (key == "powdervary")
 		{

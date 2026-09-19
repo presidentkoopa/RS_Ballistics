@@ -54,6 +54,11 @@ class RSB_Flash : Actor
 	private double densityMul;
 	private double coneMul;
 	private Color  shotColor;      // this shot's light colour (`powdervary`)
+	private int    smokePuffs;     // counted at the shot, laid once the flash is done (see LaySmoke)
+	private int    smokeDelay;
+	// THE TIC THE SHOT HAPPENED ON. LaySmoke runs several tics later and hashes from this rather than
+	// from `level.maptime`, so a given shot always makes the same smoke however long it waited.
+	private int    smokeTic;
 	int            shooterPlayer;  // who fired (-1 = no one): a volume follows that player
 	int            shooterHand;    // 0 main hand, 1 off hand, 2 head
 
@@ -266,10 +271,12 @@ class RSB_Flash : Actor
 				//   shot fired near a wall is what made it read as decal spam rather than as powder.
 				// Note it is also 2.5x longer-lived at Extreme than at Heavy (the mark ladder), which is
 				// the tier and not this -- but it is why the marks built up the way they did.
+				// ONE MARK. The stipple is gone entirely -- softening it was not the answer, because TWO
+				// decals a shot is what made this read as decal spam rather than as a powder burn, and
+				// the owner said they like the IDEA and dislike the VISUAL. A powder burn is a soot
+				// smudge; it is not patterned, and there is only ever one of it.
 				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "scorch", fd.powderRadius * (0.55 + 0.35 * closeness),
-					0.0, fd.powderSoot * closeness * closeness * 0.65, 0.0, 0.0);
-				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "stipple", fd.powderRadius * 1.05,
-					0.08 * closeness, fd.powderSoot * closeness * closeness * 0.5, 0.0, 0.0);
+					0.0, fd.powderSoot * closeness * closeness * closeness * 0.7, 0.0, 0.0);
 			}
 		}
 		// THE BLAST HITTING WHAT IS NEAR (`blastkick`): walls beside and a ceiling above shed dust; casings are thrown.
@@ -316,31 +323,23 @@ class RSB_Flash : Actor
 
 		int puffs = int(fd.smokeCount * countScale * RSB_Settings.FlashSmoke() * vSmoke + 0.5);
 		if (seen == RSB_Settings.VIEW_BEHIND) puffs = 0;
-		// GPU SMOKE (stage 2d: lit, alpha-blended, soft) when the profile names a
-		// definition: puffs drifting out of the bore, rising and hanging. The handle
-		// is a hash of the name, the same everywhere, so it is cached, never tested.
-		if (fd.smokeParticle.Length() > 0)
-		{
-			if (puffs > 0)
-			{
-				if (fd.smokeHandle == 0) fd.smokeHandle = level.ParticleDefinition(fd.smokeParticle);
-				// SMOKE COST (owner 2026-09-15: "that smoke shit lags like hell"): one puff per counted puff, not two, and
-				// born 6 units out of the bore -- big soft lit quads an arm's length from the eyes are the costliest pixels.
-				level.SpawnParticles(fd.smokeHandle, pos + dir * 6.0, dir, puffs, 30.0, 14.0, 0.6,
-					1.8, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(shotTic, 77, posSeed));
-			}
-			puffs = 0;   // no sprite puffs as well
-		}
-		for (int i = 0; i < puffs; i++)
-		{
-			let s = Actor.SpawnClientSide("RSB_Smoke", pos + dir * 0.5, ALLOW_REPLACE);
-			if (!s) continue;
-			s.A_SetScale(fd.smokeScale);
-			s.Alpha = fd.smokeAlpha;
-			Vector3 drift = (RSB_Hash.Between(-0.15, 0.15, shotTic, i, posSeed),
-				RSB_Hash.Between(-0.15, 0.15, shotTic, i + 31, posSeed), 0.15);
-			s.Vel = dir * 0.5 + drift + carrierVel * 0.5;
-		}
+		// THE SMOKE IS HELD BACK UNTIL THE FLASH HAS GONE (owner, in the headset: "when it lights up the
+		// barrel smoke sometimes i can't see shit"). Counted here, laid in Tick a few tics later.
+		//
+		// I damped the smoke's `lit` first and that was treating the symptom. The cause is TIMING. This
+		// cloud was born SIX UNITS out of the bore on the SAME TIC as a light of radius 150 to 330 --
+		// and that light attenuates linearly, so at six units it is at about 98% of full. A bright,
+		// soft, view-filling quad at arm's length, lit as hard as the engine can light it, is exactly
+		// what the owner described, and no amount of `lit` tuning fixes a cloud that should not be
+		// there yet: AT THE INSTANT OF A MUZZLE FLASH THERE IS A GAS JET, NOT A CLOUD. Smoke takes
+		// about a tenth of a second to become smoke.
+		//
+		// Waiting also puts it where it belongs. By the time it is laid the gun has moved, so the cloud
+		// is left hanging in the air behind the muzzle instead of riding it -- which is what real smoke
+		// does and what we were faking badly with drift.
+		smokePuffs = puffs;
+		smokeTic = shotTic;
+		smokeDelay = fd.smokeDelay >= 0 ? fd.smokeDelay : max(1, fd.lightTics);
 
 		RSB_Log.Once(RSB_Log.LV_INFO, "flash:first:" .. fd.id, String.Format(
 			"first flash this map using %s: light %d x%.2f, punch %.2f x%.2f, %d tics; cone %s; %d burst(s); %d smoke",
@@ -474,6 +473,36 @@ class RSB_Flash : Actor
 			3.0, 0.5, 0.05, 0.6, slot);
 	}
 
+	// THE SMOKE, LAID LATE. Called from Tick once the flash's own light is done, never on the shot tic.
+	private void LaySmoke(RSB_FlashDef fd)
+	{
+		int puffs = smokePuffs;
+		smokePuffs = 0;
+		if (puffs <= 0) return;
+		int posSeed = RSB_Hash.OfPos(pos);
+		if (fd.smokeParticle.Length() > 0)
+		{
+			if (fd.smokeHandle == 0) fd.smokeHandle = level.ParticleDefinition(fd.smokeParticle);
+			// SMOKE COST (owner 2026-09-15: "that smoke shit lags like hell"): one puff per counted
+			// puff, not two. Born further out than it was, because a cloud forms AHEAD of a muzzle
+			// rather than on it, and because the costliest pixels in the game are big soft lit quads
+			// an arm's length from the eyes.
+			level.SpawnParticles(fd.smokeHandle, pos + dir * 14.0, dir, puffs, 30.0, 14.0, 0.6,
+				1.8, 0.35, Color(255, 255, 255, 255), 1.0, 1.0, RSB_Hash.Seed(smokeTic, 77, posSeed));
+			return;
+		}
+		for (int i = 0; i < puffs; i++)
+		{
+			let s = Actor.SpawnClientSide("RSB_Smoke", pos + dir * 8.0, ALLOW_REPLACE);
+			if (!s) continue;
+			s.A_SetScale(fd.smokeScale);
+			s.Alpha = fd.smokeAlpha;
+			Vector3 wander = (RSB_Hash.Between(-0.15, 0.15, smokeTic, i, posSeed),
+				RSB_Hash.Between(-0.15, 0.15, smokeTic, i + 31, posSeed), 0.15);
+			s.Vel = dir * 0.5 + wander;
+		}
+	}
+
 	override void Tick()
 	{
 		let fd = flashDef;
@@ -483,6 +512,7 @@ class RSB_Flash : Actor
 			return;
 		}
 		age++;
+		if (smokePuffs > 0 && age >= smokeDelay) LaySmoke(fd);
 
 		// THE FLASH DIES AS IT AGES INSTEAD OF HOLDING (owner, in the headset: "some of the
 		// muzzleflashes seem like they last a while for being a barrel flash"). The states run
