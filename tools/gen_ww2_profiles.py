@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-gen_ww2_profiles.py -- effect recipes for the WW2 set: twelve guns, seven cartridges, nothing reused.
+gen_ww2_profiles.py -- effect recipes for the WW2 set: twenty-six guns, ten cartridges, nothing reused.
 
 THE OWNER'S INSTRUCTION was ALL NEW EFFECTS, NO REUSING EXISTING PROFILES -- not a WW2 rifle pointed at
 `rifle_762`. So every profile here is its own, and the modern set is untouched.
@@ -50,7 +50,7 @@ cartridge carrying `damage`, which this set already cured with `damage = none`. 
 derived from the sheet's own `shotspread`: a gun that is already sloppy gets sloppier under fire, and
 THE KAR98K'S ZERO SPREAD STAYS ZERO ALL THE WAY THROUGH.
 
-SEVEN CARTRIDGES, NOT TWELVE GUNS, for everything the cartridge decides: how fast the round flies, how
+TEN CARTRIDGES, NOT TWENTY-SIX GUNS, for everything the cartridge decides: how fast the round flies, how
 big the brass is, what the hole looks like, how much powder burns. A gun's own character -- flash length,
 recoil, sloppiness -- is per gun, because the MG42 and the Kar98k are the SAME 7.92x57 and could not be
 further apart: 40 damage belt-fed at 11.7/s against 100 bolt-action at 3.2/s. Same cartridge, nothing
@@ -139,6 +139,38 @@ CARTRIDGE = {
     "792":     (620, 2.0, "rifle",  1.45, 1.35, 1.75, 1.70, "7.92x57 Mauser: a full rifle cartridge, and it shows"),
     "3006":    (600, 2.0, "rifle",  1.4,  1.30, 1.65, 1.60, ".30-06 Springfield: the American full-power round"),
     "12ga":    (300, 2.2, "hull",   1.0,  1.20, 1.90, 1.55, "12 gauge buckshot: seven pellets of it"),
+    # THE SECOND WAVE'S CARTRIDGES. The .22 is the interesting one: a tiny charge is HALF OF WHY A
+    # SUPPRESSED GUN IS QUIET, the can being the other half, so it gets a charge a quarter of the 9mm's
+    # rather than a 9mm recipe turned down.
+    "22lr":    (290, 0.9, "tiny",   0.5,  0.22, 0.35, 0.08, ".22 LR: the OSS's answer, and a charge small enough to be half the reason it is quiet"),
+    "357":     (380, 2.1, "medium", 1.35, 1.05, 1.30, 1.15, ".357 class: a big slow hole and far more flash than a handgun has any right to"),
+    "93x74r":  (640, 2.1, "rifle",  1.50, 1.40, 1.70, 1.80, "9.3x74R: the drilling's rifle barrel, a boar round, the biggest hole in the set"),
+}
+
+# A GUN WHOSE SUPPRESSOR MAKES IT DIFFERENT IN KIND RATHER THAN QUIETER (owner's framing, and the
+# weapons lane confirmed the HDM is genuinely suppressed in the source rather than only named that way:
+# RealRTCW's soundRange is 1 for the HDM against 64 for a silenced Luger and 2000 for a Mosin).
+#
+# It gets NO CONE, NO FLAME, NO POWDER BURN, NO EXPOSURE AND NO HEARING DAMAGE -- not smaller versions of
+# them. What is left is gas leaving the ports, a faint glow at the can and a tail that is the action
+# working rather than the shot. This follows glock17_sup / mk18_sup, which is our own established shape
+# for this; it is not a new one invented for the HDM.
+SUPPRESSED = {"hdm"}
+
+# HOW WELL THE GUN IS MADE. LOOK ONLY -- it scales smoke and powder spray and NOTHING ELSE, never a
+# number deciding where a bullet goes or what it does. Default 1.0, so a gun not listed is untouched.
+#
+# THIS EXISTS BECAUSE THE SHEET CANNOT SEPARATE THEM. The MP40, the Sten and the MP34 are the same
+# cartridge at the same rate with the same spread, so every derivation below gives all three identical
+# numbers and the player would meet three guns that look like one. But they are NOT the same gun: the
+# Sten is a stamped pipe that leaks gas out of every seam and the MP34 is a Steyr machined like a watch.
+# That difference is real, it is visible, and it is MINE to decide -- it is a look, which is this
+# package's job, and it touches nothing the weapons lane owns.
+FINISH = {
+    "sten":      1.25,   # stamped, loose, gassy -- the crudest gun of the war and it should read that way
+    "mp34":      0.82,   # the Sten's exact opposite carrying the Sten's exact numbers, which is the joke
+    "m30":       0.85,   # a sporting drilling, built for a customer rather than for a quartermaster
+    "goldluger": 0.80,   # gold-plated, and presumably never fired in anger
 }
 
 # HOW MUCH OF THE CARTRIDGE'S KICK REACHES THE SHOOTER. A bolt gun is fired deliberately from the
@@ -146,6 +178,8 @@ CARTRIDGE = {
 # automatic is being held down through the burst.
 ACTION = {
     "bolt": 1.55,
+    "break": 1.50,
+    "revolver": 1.20,
     "pump": 1.45,
     "semi": 1.15,
     "auto": 0.85,
@@ -160,8 +194,12 @@ GUN = {
                   "THE KAR98K: the set in one gun. One hundred damage, ZERO spread, one shot every eleven tics -- the biggest flash and the biggest single cloud in the game, because nothing else gets this much time to spend"),
     "mg42":      ("792",      40, 1,  3, (6, 4), "belt",
                   "THE MG42: the same cartridge as the Kar98k and nothing else in common. Small per shot because there are twelve a second, but the standing smoke is the thickest in the set and never gets a chance to clear"),
-    "heavymg":   ("792",      40, 1,  4, (8, 6), "belt",
-                  "THE CHAINGUN: the sloppiest thing in the set at an 8,6 spread, and it should look it -- the widest powder spray and the most bloom of the lot"),
+    # .30-06, NOT 7.92, ON THE WEAPONS LANE'S CALL AND I AGREE: it is a Browning M1919, which is a .30-06
+    # gun, even though Brutal Wolfenstein feeds it out of the MG42's 7.92 pool. The real cartridge beats
+    # the donor's plumbing, and this has to match the `roundprofile` they wired or the brass and the hole
+    # would disagree with the round.
+    "heavymg":   ("3006",     40, 1,  4, (8, 6), "belt",
+                  "THE CHAINGUN: a Browning M1919 and the sloppiest thing in the set at an 8,6 spread, and it should look it -- the widest powder spray and the most bloom of the lot"),
     "garand":    ("3006",    100, 1,  8, (3, 3), "semi",
                   "THE M1 GARAND: a hundred damage of full-power round from a semi-auto -- a hard flash and a real push, eight times before the clip leaves"),
     "bar":       ("3006",    100, 1,  5, (5, 5), "auto",
@@ -180,6 +218,38 @@ GUN = {
                   "THE PPSH-41: the fast pole. Seventeen and a half a second out of a drum, so the smallest flash in the set and a cone that dies before the next shot -- a stream of brass and a wall of standing smoke"),
     "stg44":     ("792kurz",  40, 1,  5, (2, 2), "auto",
                   "THE STG 44: the first assault rifle, and at seven a second with a 2,2 spread it sits exactly between the rifles and the subguns, because that is what it was for"),
+
+    # ---- THE SECOND WAVE. Rows from the weapons lane, same three columns, same derivations. Five of
+    # these have no Brutal Wolfenstein class at all (HDM, Sten, MP34, TT33, Venom) and their numbers are
+    # RealRTCW's -- which is why the rows come from the lane that reads those files and not from me.
+    "p38":       ("9mm",      20, 1,  6, (1, 1), "semi",
+                  "THE WALTHER P38: the Luger's replacement and a plainer gun in every way -- the same 9mm at the same rate, and it should look ordinary next to it"),
+    "sten":      ("9mm",      20, 1,  4, (3, 3), "auto",
+                  "THE STEN: a pipe with a trigger. Same cartridge and rate as the MP40, and the crudeness has to come from the powder spray rather than from the numbers, which are identical"),
+    "mp34":      ("9mm",      20, 1,  4, (3, 3), "auto",
+                  "THE MP34: the Sten's opposite -- a beautifully made gun with exactly the Sten's numbers, which is the joke and worth showing in how clean its flash is"),
+    "goldluger": ("9mm",     100, 1, 16, (2, 2), "semi",
+                  "THE GOLDEN LUGER: a hundred damage out of a 9mm at two shots a second. The SLOWEST thing in the set, slower even than the Trench Gun, so it can afford the biggest flash any pistol gets"),
+    "tt33":      ("762tok",   30, 1,  7, (1, 1), "semi",
+                  "THE TT-33 TOKAREV: the PPSh's cartridge fired deliberately instead of hosed -- fast, spiteful, and a sharp little flash"),
+    "hdm":       ("22lr",     25, 1,  6, (1, 1), "semi",
+                  "THE HIGH STANDARD HDM: the OSS's suppressed .22, and the quietest thing anyone built. NO FLASH, NO CONE, NO REPORT -- gas out of the ports, a glow at the can, and the action working"),
+    "revolver":  ("357",      60, 1,  9, (2, 3), "revolver",
+                  "THE REVOLVER: a big slow cartridge and a cylinder gap, so far more flash than a handgun should have -- and no brass, because a revolver holds onto it"),
+    "g43":       ("792",      80, 1, 10, (3, 3), "semi",
+                  "THE G43: Germany's answer to the Garand. Full-power 7.92 from a semi-auto at three and a half a second -- nearly the Kar98k's flash without the wait"),
+    "fg42":      ("792",      40, 1,  3, (2, 2), "auto",
+                  "THE FG42: full-power rifle rounds on full auto at twelve a second out of a paratrooper's rifle, which is the least reasonable thing in the whole set"),
+    "marksman":  ("792",     100, 1,  5, (10, 8), "semi",
+                  "THE MARKSMAN: a hundred damage and a TEN DEGREE spread, which makes it the sloppiest gun in the game by a distance. Whatever it is, it is not a marksman rifle, and the powder should spray everywhere"),
+    "venom":     ("792",      60, 1,  2, (6, 4), "belt",
+                  "THE VENOM: full-power 7.92 seventeen and a half times a second. It ties the PPSh for rate while firing four times the cartridge, so it has the thickest standing smoke of anything here"),
+    "aa12":      ("12ga",     16, 10, 6, (4, 2), "auto",
+                  "THE AA-12: ten pellets six times a second. The only automatic shotgun, and the per-shot cloud has to come down hard or it is a fog machine"),
+    "auto5":     ("12ga",     16, 10, 11, (5, 3), "semi",
+                  "THE AUTO-5: Browning's humpback, ten pellets three times a second -- half the AA-12's rate and twice its cloud"),
+    "m30":       ("12ga",     13, 9,  7, (10, 1), "break",
+                  "THE M30 DRILLING: two shotgun barrels and a rifle one. A 10,1 spread is a flat horizontal fan, which is a strange and specific thing, and the break action means no brass leaves it while firing"),
 }
 
 BRASS = {
@@ -187,7 +257,18 @@ BRASS = {
     "medium": (1.05, "rsb/casing/medium", 12, "a fat pistol case"),
     "rifle":  (1.35, "rsb/debris/brass_rifle", 16, "a long rifle case, and it stays hot"),
     "hull":   (1.2, "rsb/casing/shell", 8, "a paper hull"),
+    "tiny":   (0.6, "rsb/casing/small", 6, "a .22 case, barely there"),
 }
+
+# ACTIONS THAT THROW NOTHING WHILE THEY FIRE. A revolver holds its brass in the cylinder until you dump
+# all six; a break-action drilling holds its until you open it. Both would look wrong spraying cases
+# every shot, so they get NO ejecta profile at all -- the weapons lane leaves `ejectaprofile` off those
+# cards, and the generated block says so where the profile would have been.
+#
+# WHAT KIND of case a gun throws is the CARTRIDGE'S (a .45 case is a .45 case in any gun). WHETHER it
+# throws one at all is the ACTION'S. Putting "none" in the cartridge table conflated those and would
+# have got it wrong the moment a second gun fired .357 from a self-loader.
+NO_EJECT = {"break", "revolver"}
 
 
 def derive(gid):
@@ -215,14 +296,16 @@ def derive(gid):
     d["brass"] = brass
     d["heavy"] = speed >= 470
     d["fsize"] = charge * budget             # per-shot flash
-    d["puff"] = dirt * budget                # per-shot smoke
+    fin = FINISH.get(gid, 1.0)               # build quality: look only, see FINISH
+    d["finish"] = fin
+    d["puff"] = dirt * budget * fin          # per-shot smoke
     d["haze"] = dirt * gather                # standing smoke, and barrel heat with it
     d["climb"] = kick * ACTION[action]
     d["drift"] = 0.30 + 0.055 * slop
     d["recover"] = int(round(min(30.0, max(8.0, 26.0 * (REF_RATE / rate) ** 0.5))))
     d["max"] = int(round(min(10.0, max(4.0, 3.0 + 2.2 * d["climb"]))))
     d["bloom"] = 0.02 * slop                 # READ from the sheet, never invented -- see the header
-    d["vary"] = unit(0.35 + 0.035 * slop)    # a sloppy gun sprays its powder wider
+    d["vary"] = unit((0.35 + 0.035 * slop) * fin)   # a sloppy OR badly made gun sprays powder wider
     # NOTHING OUTLIVES THE SHOT INTERVAL. This is the owner's headset note about flashes that "last a
     # while": one that overlaps the next shot stops reading as a flash.
     d["conetics"] = int(max(2, min(5, min(firetics - 1, round(3 + d["fsize"])))))
@@ -333,6 +416,30 @@ def gun_blocks(nl):
         # back into the gap.
         light = int(min(330.0, 150.0 * fsize + (60 if heavy else 0)))
         cone_len = 110 * fsize + (40 if heavy else 0)
+        if gid in SUPPRESSED:
+            # DIFFERENT IN KIND, NOT QUIETER. No cone, no flame, no powder burn, no exposure, no hearing
+            # -- those keys are ABSENT rather than small, which is the whole point. What a suppressed gun
+            # actually shows is gas leaving the ports, a faint glow at the can, and the action working.
+            out += ["flash %s   # %s" % (p, d["note"]),
+                    "  # %s, %d damage at %.1f a second (firetics %d), spread %d,%d -- SUPPRESSED"
+                    % (d["action"], d["dmg"], d["rate"], d["firetics"], d["spread"][0], d["spread"][1]),
+                    "  light         = %d, 0.8, 1" % int(max(30.0, min(90.0, 150.0 * fsize))),
+                    "  lightcolor    = 255, 214, 170",
+                    "  bursts        = sup_gas_puff",
+                    "  maybe         = spk_specks 0.10",
+                    "  smoke         = 1, %.3f, %.2f" % (0.020 * puff, unit(0.25 * puff)),
+                    "  smokeparticle = rsb_smoke_gun",
+                    "  vary          = light 0.3, smoke 0.4",
+                    "  powdervary    = %.2f" % d["vary"],
+                    "  barrelheat    = %.2f, 0.20, 0.35" % unit(0.20 * haze),
+                    "  barrelsmoke   = rsb_smoke_barrel, %.1f" % (2.2 * haze),
+                    "  barrelshimmer = 2.5, 0.4",
+                    "  smokevolume   = %d, %.1f, %.1f, %d, %d" % (int(10 * haze) + 4, 0.8 * haze, 0.3 * haze, 40, 8),
+                    "  tail          = rsb/tail/pistol, 0.2",
+                    "end",
+                    ""]
+            out += recoil_and_ejecta(p, d)
+            continue
         out += ["flash %s   # %s" % (p, d["note"]),
                 "  # %s, %d damage%s at %.1f a second (firetics %d), spread %d,%d"
                 % (d["action"], d["dmg"], (" x%d" % d["pellets"]) if d["pellets"] > 1 else "",
@@ -371,6 +478,15 @@ def gun_blocks(nl):
                 "  tail          = %s, %.1f" % ("rsb/tail/br" if heavy else "rsb/tail/smg", 0.9 if heavy else 0.7),
                 "end",
                 ""]
+        out += recoil_and_ejecta(p, d)
+    return out
+
+
+def recoil_and_ejecta(p, d):
+    """Shared by the ordinary and suppressed paths: a can changes the FLASH, not the kick or the brass."""
+    out = []
+    heavy = d["heavy"]
+    if True:
         # RECOIL IS PER GUN because it is the gun, not the cartridge: the MG42 and the Kar98k fire the
         # same 7.92x57 and one of them is braced on a bipod.
         out += ["recoil %s   # %s at %.1f a second, spread %d,%d" % (p, d["action"], d["rate"], d["spread"][0], d["spread"][1]),
@@ -387,6 +503,12 @@ def gun_blocks(nl):
                 "end",
                 ""]
         sc, snd, hot, what = BRASS[d["brass"]]
+        if d["action"] in NO_EJECT:
+            # NO EJECTA PROFILE AT ALL. See BRASS["none"]: a revolver and a break-action hold their cases
+            # until you open them, and an empty-but-present profile would still be a thing to wire.
+            out += ["# no `ejecta %s`: a %s action throws nothing while it fires -- leave ejectaprofile"
+                    % (p, d["action"]), "# off this card. The %s is still its brass, it just stays in the gun." % what, ""]
+            return out
         out += ["ejecta %s   # %s" % (p, what),
                 "  look    = model, RSB_Casing9mm",
                 "  scale   = %.2f" % sc,
@@ -398,6 +520,71 @@ def gun_blocks(nl):
                 "  life    = 2100",
                 "  portsmoke = rsb_smoke_port, %d" % (3 if heavy else 2),
                 "  wisp    = rsb_casing_wisp, %d" % (18 if heavy else 12),
+                "end",
+                ""]
+    return out
+
+
+# THE ORDNANCE. tube length (map units behind the muzzle), backblast strength, front flash size, note.
+#
+# ONE LINE OF BACKBLAST EACH, which is the whole point of building it as a capability first: before
+# `backblast` existed, each of these would have restated its tube length in FIVE keys with three of them
+# negative, and the failure mode is a backblast out of the FRONT with no error anywhere.
+#
+# THESE ARE NOT HITSCAN and have no sheet row -- they fire projectiles (Panzerfaust 750 damage,
+# Panzerschreck 750, Nebelwerfer undug), so there is no rate, spread or cartridge to derive from and
+# nothing here pretends otherwise. What a launcher needs from this package is a flash and a recoil, and
+# both are stated rather than derived.
+ORDNANCE = {
+    "panzerfaust": (39, 0.85, 1.5, 0,
+                    "THE PANZERFAUST: a disposable tube with a warhead on a stick. Fired once and thrown away, so it gets the dirtiest, least controlled blast of the three -- and being the shortest tube, the backblast lands nearest the shooter"),
+    "panzerschreck": (64, 1.15, 1.7, 1,
+                      "THE PANZERSCHRECK: a real rocket launcher with a blast shield, because the backblast will take your face off. The longest tube here, so the blast throws furthest behind"),
+    "nebelwerfer": (51, 1.4, 1.9, 1,
+                    "THE NEBELWERFER: a twin over-under tube, and the heaviest blast of the three. Two rockets are two separate moving parts -- that half is the reload lane's; this is what one tube does when it goes"),
+}
+
+
+def ordnance_blocks():
+    out = []
+    for gid in ORDNANCE:
+        tube, blast, fsize, braced, note = ORDNANCE[gid]
+        p = "ww2_" + gid
+        out += ["flash %s   # %s" % (p, note),
+                "  light      = %d, %.1f, 4" % (int(360 * fsize), 3.0 + 1.6 * fsize),
+                "  lightcolor = 255, 196, 124",
+                "  cone       = %d, %d, %d, 10" % (int(16 * fsize), int(44 * fsize), int(90 * fsize)),
+                "  conetics   = 4",
+                "  bursts     = flash_core, flash_petals, backblast_fire, backblast_smoke, backblast_sparks",
+                "  backblast  = %d, %.2f" % (tube, blast),
+                "  maybe      = spk_stars 0.3, powder_clump 0.8",
+                "  flame      = %.2f" % unit(0.06 * fsize),
+                "  smoke      = 3, %.3f, %.2f" % (0.040 * fsize, unit(0.40 * fsize)),
+                "  smokeparticle = rsb_smoke_soot_gun",
+                "  vary       = light 0.2, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3",
+                "  surge      = 0.12, 1.3",
+                "  barrelheat = %.2f, 0.20, 0.40" % unit(0.45 * blast),
+                "  barrelsmoke = rsb_smoke_barrel_soot, %.1f" % (3.0 * blast),
+                "  barrelshimmer = 3.5, 0.5",
+                "  powderburn = %d, 12, 0.6" % int(40 * fsize),
+                "  powdervary = 0.45",
+                "  blastkick  = kick_blast, %d, 12" % int(96 * fsize),
+                "  shockwave  = %d, %.1f, 6" % (int(64 * blast), 1.8 * blast),
+                "  tail       = rsb/tail/rpg, 1",
+                "  exposure   = %.2f, %d" % (unit(0.95 * fsize), int(190 * fsize)),
+                "  hearing    = %.2f, %d" % (unit(0.95 * fsize), int(220 * fsize)),
+                "end",
+                "",
+                # RECOILLESS MEANS RECOILLESS. The blast out of the back cancels the push, so these barely
+                # move -- which is the single most surprising thing about firing one and worth getting right.
+                "recoil %s   # recoilless: the backblast cancels the kick, so it barely moves" % p,
+                "  climb   = %.2f" % (0.9 if braced else 1.2),
+                "  drift   = 0.40, 5",
+                "  recover = 8, 4",
+                "  max     = 3, 2",
+                "  bloom   = 0.00",
+                "  brace   = 0.6, 0.85",
+                "  view    = 1.5, 3, 1, 12",
                 "end",
                 ""]
     return out
@@ -428,7 +615,7 @@ def main():
     nl = "\r\n" if "\r\n" in text else "\n"
 
     body = [BEGIN,
-            "# THE WW2 SET. Twelve guns and a flamethrower, seven cartridges, NOTHING REUSED FROM THE",
+            "# THE WW2 SET. Twenty-six guns and a flamethrower, ten cartridges, NOTHING REUSED FROM THE",
             "# MODERN SET (owner). DO NOT EDIT BY HAND: change tools/gen_ww2_profiles.py and run it again.",
             "#",
             "# Every number is derived from WMSHEET.ww2's own damage, firetics and shotspread, which are",
@@ -443,6 +630,7 @@ def main():
     body += cartridge_blocks(nl)
     body += impact_blocks(nl)
     body += gun_blocks(nl)
+    body += ordnance_blocks()
     body += ["flame ww2_flame   # THE FLAMMENWERFER: a fat wet gout, not a modern jet -- slower, shorter, and it clings",
              "  reach       = 420",
              "  speed       = 700",

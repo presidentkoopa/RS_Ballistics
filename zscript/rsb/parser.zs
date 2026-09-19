@@ -308,7 +308,7 @@ class RSB_Parser
 			d.backHeatLength = 0;
 			d.backHeatStrength = 0;
 			d.backHeatTics = 0;
-			d.backHeatOffset = 0;
+			d.rearOffset = 0;
 			d.sizeCvar = "";
 			d.chargeLightRadius = 0;
 			d.chargeLightIntensity = 0;
@@ -1377,9 +1377,62 @@ class RSB_Parser
 			f.backHeatLength = v[1].ToDouble();
 			f.backHeatStrength = v[2].ToDouble();
 			f.backHeatTics = v[3].ToInt();
-			f.backHeatOffset = v[4].ToDouble();
+			f.rearOffset = v[4].ToDouble();
 			return (f.backHeatRadius >= 0 && f.backHeatLength >= 0 && f.backHeatStrength >= 0 && f.backHeatTics >= 0) ? ""
 				: "backheat is radius, length, strength, tics, offset behind the muzzle";
+		}
+		// A RECOILLESS WEAPON BLASTS OUT OF ITS OWN BACK, AND THAT IS ONE FACT, NOT SEVEN.
+		//
+		// `backblast = <tube length>, <strength>` -- where the rear of the tube is, and how hard it
+		// blows. Everything else follows: the hot air behind, the floor kicked up behind, the shove,
+		// the cloud, and the rear origin of any backblast burst that does not carry its own.
+		//
+		// WHY THIS EXISTS. The RPG that shipped states its tube length FIVE TIMES -- in `backheat`,
+		// `groundkick`, `push`, `smokevolume` and inside three burst defs -- and WITH INCONSISTENT
+		// SIGNS: `backheat` wants +51.5 and the code negates it, the other three want -51.5. Copying
+		// that for a second launcher means changing five numbers and getting three of them negative,
+		// and the failure mode is a backblast out of the FRONT with no error anywhere. Three launchers
+		// are coming (Panzerfaust, Panzerschreck, Nebelwerfer) and there will be more, so this is a
+		// capability rather than three careful copies.
+		//
+		// The constants are the shipped RPG's own, divided through by its 51.5 and 1.0, so
+		// `backblast = 51.5, 1` reproduces it exactly. Strength scales what blows out; the tube length
+		// only says where from -- a longer tube is not a bigger blast.
+		//
+		// It FILLS the four keys rather than bypassing them, so there is one draw path and not two, and
+		// a profile wanting to differ states that key AFTER this one and wins. Nothing is special-cased
+		// to any weapon, and a flash that never says `backblast` is untouched.
+		if (key == "backblast")
+		{
+			if (v.Size() == 1 && v[0] ~== "none")
+			{
+				f.rearOffset = 0; f.backHeatStrength = 0; f.kickImpact = ""; f.kickReach = 0;
+				f.pushRadius = 0; f.pushStrength = 0; f.smokeVolRadius = 0;
+				return "";
+			}
+			why = Nums(v, 2); if (why != "") return why;
+			double tube = v[0].ToDouble();
+			double blast = v[1].ToDouble();
+			if (tube <= 0 || tube > 512) return "backblast tube length must be above 0, up to 512 map units behind the muzzle";
+			if (blast <= 0 || blast > 8) return "backblast strength must be above 0, up to 8 (1 = the RPG's)";
+			f.rearOffset       = tube;
+			f.backHeatRadius   = 14.0 * blast;
+			f.backHeatLength   = 60.0 * blast;
+			f.backHeatStrength = 1.5 * blast;
+			f.backHeatTics     = 22;
+			f.kickImpact       = "kick_blast";
+			f.kickReach        = 72.0 * blast;
+			f.kickAlong        = -tube;
+			f.pushRadius       = 112.0 * blast;
+			f.pushStrength     = 450.0 * blast;
+			f.pushAlong        = -tube;
+			f.smokeVolRadius   = 36.0 * blast;
+			f.smokeVolAmount   = 1.6 * blast;
+			f.smokeVolHeat     = 1.6 * blast;
+			f.smokeVolSpeed    = 220.0;
+			f.smokeVolAlong    = -tube;
+			f.smokeVolSoot     = 0.6;
+			return "";
 		}
 		if (key == "throb")
 		{

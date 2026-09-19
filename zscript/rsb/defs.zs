@@ -317,13 +317,23 @@ class RSB_FlashDef : RSB_Def
 	String kickImpact;
 	double kickReach;
 	double kickAlong;      // map units along the level bore from the muzzle to the kick; negative = behind
+	// WHERE THE BACK OF THE WEAPON IS: map units behind the muzzle, positive. NOT a heat
+	// parameter, though `backheat` is what first set it and what it used to be named after.
+	//
+	// It is the one place a profile says how long its tube is, and three things read it: the
+	// hot air out of the rear, an emissive volume tagged `back`, and a rear-aimed burst that
+	// does not carry its own offset. Before it was named for what it is, the tube length was
+	// restated in FIVE keys of `flash rocket_rpg` -- and with INCONSISTENT SIGNS, because this
+	// field is positive and gets negated in code while `groundkick`, `push` and `smokevolume`
+	// all take it negative. A second launcher copying that recipe gets a backblast out of the
+	// FRONT and no error, which is why `backblast` now fills all of them from this one number.
+	double rearOffset;
 	// THE BACKBLAST'S HOT AIR (`backheat`): a column out of the rear of the tube, starting
-	// backHeatOffset behind the muzzle and running backHeatLength further back.
+	// rearOffset behind the muzzle and running backHeatLength further back.
 	double backHeatRadius;
 	double backHeatLength;
 	double backHeatStrength;
 	int    backHeatTics;
-	double backHeatOffset;
 	// A GUN'S SIZE (`sizecvar`): a cvar holding the gun's size slider; every offset along the
 	// bore -- burst offsets, the backheat, the ground kick -- is multiplied by it, so a
 	// backblast stays at the rear of a resized tube. "" = size 1.

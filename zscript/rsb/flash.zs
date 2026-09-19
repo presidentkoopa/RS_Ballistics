@@ -231,7 +231,7 @@ class RSB_Flash : Actor
 			RSB_Heat.Along(pos, dir, fd.heatLength, fd.heatRadius, fd.heatStrength * surge, fd.heatTics);
 		// THE BACKBLAST'S HOT AIR (`backheat`): a column out of the rear of the tube, behind.
 		if (fd.backHeatStrength > 0 && seen != RSB_Settings.VIEW_BEHIND)
-			RSB_Heat.Along(pos - dir * (fd.backHeatOffset * sizeMul), -dir, fd.backHeatLength * sizeMul, fd.backHeatRadius, fd.backHeatStrength * surge, fd.backHeatTics);
+			RSB_Heat.Along(pos - dir * (fd.rearOffset * sizeMul), -dir, fd.backHeatLength * sizeMul, fd.backHeatRadius, fd.backHeatStrength * surge, fd.backHeatTics);
 
 		// THE GROUND KICK (`groundkick`): a big gun's blast raises the floor under and just
 		// ahead of it -- dust rolling out, water thrown up -- the impact chosen by the
@@ -355,12 +355,21 @@ class RSB_Flash : Actor
 		double mix, int leanSeed, double sSpread, double sSpeed, double sSize, double sGlow, double sLife)
 	{
 		if (!bd) return;
+		// A REAR-AIMED BURST CARRYING NO OFFSET OF ITS OWN COMES OUT OF THE BACK OF THIS WEAPON.
+		// A burst def is SHARED, so one that bakes in a tube length can only ever serve the launcher it
+		// was written for -- which is why `rpg_backblast_fire` has -51.5 in it and a Panzerfaust cannot
+		// reuse it. Taking the length from the PROFILE instead lets one set of backblast bursts serve
+		// every launcher there will ever be. Additive and default-off: a burst that states its own
+		// offset is untouched, so the RPG that shipped with those numbers behaves exactly as before.
+		Vector3 from = pos;
+		if (bd.aim == RSB_BurstDef.AIM_BACK && bd.offset == 0 && fd.rearOffset > 0)
+			from = pos - dir * (fd.rearOffset * sizeMul);
 		if (!RSB_Burst.IsSpark(bd))
 		{
-			RSB_Burst.Fire(bd, pos, dir, dir, countScale, 1.0, seed, null, 1.0, sizeMul);
+			RSB_Burst.Fire(bd, from, dir, dir, countScale, 1.0, seed, null, 1.0, sizeMul);
 			return;
 		}
-		RSB_Burst.Fire(bd, pos, dir, dir, countScale * mix, sGlow, seed, null, sSize, sizeMul,
+		RSB_Burst.Fire(bd, from, dir, dir, countScale * mix, sGlow, seed, null, sSize, sizeMul,
 			sSpread, sSpeed, sLife, fd.sparkLean, leanSeed);
 	}
 
@@ -388,7 +397,7 @@ class RSB_Flash : Actor
 			int handle = fd.volumeHandles[i];
 			if (!LevelLocals.EmissiveVolumeEnabled(handle)) continue;
 			bool back = fd.volumeBack[i] != 0;
-			Vector3 at = back ? pos - dir * (fd.backHeatOffset * sizeMul) : pos;
+			Vector3 at = back ? pos - dir * (fd.rearOffset * sizeMul) : pos;
 			level.SpawnEmissiveVolume(handle, at, back ? -dir : dir, scale, bright, 1.0, Color(255, 255, 255, 255), carried, 0,
 				follow, shooterPlayer, 1.0, 1.0);
 			drew = true;
