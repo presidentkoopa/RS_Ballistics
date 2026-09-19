@@ -28,6 +28,12 @@ OVERRIDE, not the source. A COUNT OF MISSING KEYS IS NOT A COUNT OF MISSING BALL
 So this reports three states, and only the last is a defect:
 
   TUNED    the sheet names its own profile, and that profile is real
+  BORROWED the sheet names a REAL profile that belongs to a DIFFERENT SET -- Blood's flare gun on
+           the rocket launcher's flash, Robocop's Auto 9 on Doom's pistol. It fires, it looks like
+           something, and it is wearing someone else's clothes. This reported as TUNED for months,
+           because "the profile exists" was the only question being asked -- the same shape as every
+           other defect this package has: a thing that is missing looks exactly like a thing that is
+           fine. The weapons lane had to audit 144 guns by hand to find 23 of these.
   GENERIC  the sheet names none, and the kind has a `default` -- the gun fires, on the house recipe
   NONE     the sheet names none and the kind has NO `default`, so nothing happens at all
 
@@ -95,6 +101,36 @@ KINDS = ("flash", "recoil", "ejecta", "round")
 # it, and because a kind coming off this list is the honest signal that the work actually landed --
 # the guns start passing on their own rather than because someone decided they should.
 UNREACHED_DEFAULTS = {}
+
+# A SET THAT HAS ITS OWN NAMES, and the prefix they carry. A gun here naming a profile outside its
+# prefix is BORROWED. The Vanilla, Vanilla+ and Modern sheets are absent on purpose: their guns ARE
+# the unprefixed names, so there is nothing for them to borrow from.
+# SHARING ON PURPOSE IS NOT BORROWING. Two tesla guns SHOULD look the same; Cola's revolver is
+# literally the same gun as Vanilla+'s; Bloom is composed from Blood's cards and shares the guns it
+# is built from. Every one of these was a decision somebody made for a reason, and a checker that
+# reports them as defects teaches people to skim its output -- which is the same failure as a `none`
+# that logs, one layer up. Stated here with the reason, so the silence is chosen rather than missing.
+SHARED = {
+    "BL_TeslaGun": "two tesla weapons should look the same -- the main lane agreed",
+    "BM_TeslaGun": "same tesla",
+    "CL_Revolver": "literally the same gun as Vanilla+'s colarevolver",
+    "BM_Shotgun":  "Bloom is composed from Blood's cards; same gun",
+    "BM_TommyGun": "Bloom is composed from Blood's cards; same gun",
+    "BM_FlareGun": "Bloom is composed from Blood's cards; same gun",
+    "BM_LifeLeech": "Bloom is composed from Blood's cards; same gun",
+    "BM_Napalm":   "Bloom is composed from Blood's cards; same gun",
+}
+
+SET_PREFIX = {
+    "WMSHEET.ww2": "ww2_",
+    "WMSHEET.bwolf": "ww2_",        # Brutal Wolfenstein shares the WW2 cartridges by design
+    "WMSHEET.aliens": "ae_",
+    "WMSHEET.cola": "cl_",
+    "WMSHEET.blood": "bl_",
+    "WMSHEET.bloom": "bm_",
+    "WMSHEET.hacx": "hx_",
+    "WMSHEET.robocop": "rc_",
+}
 
 
 # THE FILE THE GAME LOADS IS THE PK3, NOT THE SOURCE TREE, AND THEY ARE NOT THE SAME STATEMENT.
@@ -262,7 +298,9 @@ def check(sheet, have, guns=None, label=None):
         print("%s: NO GUNS FOUND -- is this a sheet?" % name)
         return 1
     bad = []
-    tuned = generic = 0
+    tuned = generic = borrowed = 0
+    borrowed_guns = []
+    shared_guns = []
     generic_guns = []
     for gun in sorted(guns):
         named = guns[gun]
@@ -289,16 +327,46 @@ def check(sheet, have, guns=None, label=None):
             bad.append("  %-22s NAMES A PROFILE THAT DOES NOT EXIST: %s" % (gun, "; ".join(dangling)))
         if nothing or dangling:
             continue
-        if onhouse:
+        # WHOSE PROFILE IS IT? A set with its own prefix should be naming its own names. A gun in a
+        # prefixed set pointing at an unprefixed profile is wearing the house's or another set's
+        # clothes -- real, resolving, and not its own.
+        #
+        # ASKED BEFORE the house-recipe question, because that one was HIDING it: a gun naming
+        # another set's flash while leaving its round and ejecta unstated reported as "on the house
+        # recipe" and the borrowed flash never appeared. Every Robocop and HacX gun was in that state.
+        pre = SET_PREFIX.get(name)
+        away = []
+        if pre and gun not in SHARED:
+            for k, v in named.items():
+                # `none` AND `default` ARE NOT ANOTHER SET'S CLOTHES. They are the two stated
+                # house answers -- none means none, default is the house recipe -- and neither
+                # carries a prefix, so the naive test read both as borrowed. The spray can's
+                # `recoil = none`, which is the owner's own ruling, reported as a defect the
+                # moment this check was written. A checker that flags a correct decision is the
+                # cry-wolf failure again, and it caught itself here.
+                if v.lower() in ("none", "default"):
+                    continue
+                if k in ("flash", "recoil") and not v.lower().startswith(pre):
+                    away.append("%s -> %s" % (k, v))
+        if away:
+            borrowed += 1
+            borrowed_guns.append("%s (%s)" % (gun, ", ".join(away)))
+        elif onhouse:
             generic += 1
             generic_guns.append("%s (%s)" % (gun, ", ".join(onhouse)))
         else:
             tuned += 1
+            if gun in SHARED:
+                shared_guns.append("%s -- %s" % (gun, SHARED[gun]))
     # Counted the SAME WAY the loop skips, or the arithmetic goes negative the moment a melee
     # weapon names a profile -- which it did, and printed "-3 broken".
     total = len([g for g in guns if not (NO_BALLISTICS.search(g) and not guns[g])])
-    print("%s: %d tuned, %d on the house recipe, %d broken (%d melee or thrown, skipped)"
-          % (name, tuned, generic, total - tuned - generic, len(guns) - total))
+    print("%s: %d tuned, %d BORROWED, %d on the house recipe, %d broken (%d melee or thrown, skipped)"
+          % (name, tuned, borrowed, generic, total - tuned - borrowed - generic, len(guns) - total))
+    for g in borrowed_guns:
+        print("    borrowed: %s" % g)
+    for g in shared_guns:
+        print("    shares on purpose: %s" % g)
     for g in generic_guns:
         print("    generic: %s" % g)
     for b in bad:
