@@ -571,7 +571,15 @@ SHEET = [
         ("recoilprofile", "bl_sigil", "stated"),
     ]),
     ("BL_SprayCan", [
-        (None, None, "NO SHEET KEY, and no new one is needed. A flame gun does not name its profile "
+        ("recoilprofile", "none", "THE OWNER: \"im not sure the spraycan should kick at all\". It "
+                                  "does not. It is carrying `ww2_flame` today -- a Flammenwerfer's "
+                                  "kick on an aerosol can. A few PSI of propellant has nothing to "
+                                  "push back with, and lit changes nothing: the fire is the spray "
+                                  "burning, not a charge going off."),
+        (None, None, "STATE `none`, DO NOT DELETE THE KEY. A gun that names no recoil profile gets "
+                     "the house `default` recipe, which is a real kick -- so leaving the key off "
+                     "would give it one by accident. `none` means none and is a decision."),
+        (None, None, "NO SHEET KEY FOR THE FLAME, and no new one is needed. A flame gun does not name its profile "
                      "on the sheet at all -- WM_FlameGun.FlameProfile() is a VIRTUAL, which is why "
                      "`flameprofile` is absent from the reader: nothing has ever wanted it."),
         (None, None, "AND A SHEET KEY COULD NOT WORK HERE ANYWAY. A key states ONE name. The whole "
