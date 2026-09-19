@@ -252,7 +252,41 @@ def check_sounds(body):
                          "be silent:\n  " + "\n  ".join(sorted(set(bad))))
 
 
+# WHAT THE WEAPONS LANE PUTS ON THE SHEET. Printed rather than messaged, so the names come from the
+# same file that wrote the profiles and cannot drift from them -- a name typed into a chat window is
+# a second copy that nothing checks.
+SHEET = [
+    ("BL_FlareGun", [
+        ("flashprofile", "bl_flaregun", "was `rocket` -- a launcher's flash on a flare pistol"),
+        ("recoilprofile", "bl_flaregun", "was `pistol_45`; this one is derived from the flare itself"),
+        ("roundprofile", "bl_flare", "the star in flight, and what it does where it lands"),
+    ]),
+    ("BL_Lighter", [
+        ("roundprofile", "bl_lighter", "NOTE: it is thrown, so whatever BL_ThrownLighter calls on "
+                                       "landing must name the impact `bl_lighter`; if the class does "
+                                       "not read roundprofile, tell me and I will meet it where it is"),
+    ]),
+]
+
+
+def print_sheet():
+    print("SHEET KEYS FOR THE WEAPONS LANE -- Blood, pass 1 of 3")
+    print()
+    for gun, keys in SHEET:
+        print('gun "%s"' % gun)
+        for k, v, why in keys:
+            print('  %-20s = "%s"' % (k, v))
+            print('  %s# %s' % (" " * 20, why))
+        print()
+    print("Still borrowed and coming in the next two passes: BL_SprayCan (two jets, one nozzle --")
+    print("inert gas and ignited), then BL_TommyGun, BL_Shotgun, BL_Napalm, BL_LifeLeech, BL_Sigil.")
+    print("BL_TeslaGun keeps ww2_tesla on purpose: two tesla weapons should look the same.")
+
+
 def main():
+    if "--sheet" in sys.argv:
+        print_sheet()
+        return
     body, climb, vg, energy, impulse = blocks()
     check_sounds(body)
     text = io.open(DEFS, encoding="utf-8", newline="").read()
