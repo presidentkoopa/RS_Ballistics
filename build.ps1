@@ -31,6 +31,13 @@ $reloadPk3 = 'E:\DOOMWork\RS_VR_Reload\RS_VR_Reload.pk3'
 & python 'E:\DOOMWork\tools\menu_lint.py' $root --prefix rsb_
 if ($LASTEXITCODE -ne 0) { throw "menu lint failed -- a control would be dead. See above." }
 
+# AND THE ROUNDS ARE LINTED, before the pack exists. A round look naming a model frame that no
+# MODELDEF block binds, or that has no sprite lump to hang on, or that only the parent class carries,
+# parses clean, compiles clean and boots green -- and flies invisible. tools/model_lint.py refuses the
+# build instead. Its four checks are each proven to fire against a deliberately broken copy.
+& python (Join-Path $root 'tools/model_lint.py') $root
+if ($LASTEXITCODE -ne 0) { throw "model lint failed -- a round would fly invisible. See above." }
+
 $rootLumps = @('zscript.txt', 'RSBDEFS.txt', 'MAPINFO.txt', 'MODELDEF.txt', 'CVARINFO.txt', 'MENUDEF.txt', 'SNDINFO.txt', 'PARTICLEDEFS.txt', 'SURFACES.txt', 'KEYCONF.txt', 'DAMAGEDEFS.txt', 'VOLUMEDEFS.txt')
 $files = @()
 foreach ($l in $rootLumps) {
