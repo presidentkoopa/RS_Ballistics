@@ -42,6 +42,25 @@
 # GETS A `none` WHEN IT IS BORN, not after it ships. If the only thing a key can do is describe how
 # something looks, it needs no hatch. If it can change what happens, it does.
 #
+# AND THE SAME IS TRUE OF A WHOLE KIND, which took two years and two lanes to notice. `flash none`
+# has been legal since the first flamethrower and no other kind ever got its twin -- so the only
+# way a gun could say "this genuinely throws no brass" was to name NO ejecta profile, which is
+# byte-identical to forgetting one AND falls back to the house recipe besides. `recoil none`,
+# `ejecta none` and `trail none` exist now. ANY KIND A GUN CAN NAME GETS ITS `none` WHEN THE KIND
+# IS BORN.
+#
+# ABSENCE IS NOT A STATEMENT, and that is the whole of it. A missing recoilprofile is the house
+# default. A missing ejectaprofile is whatever the default throws. An empty card reads as finished
+# while a wrong card reads as wrong, which is exactly backwards -- the wrong one is the one you can
+# see. This bit three different keys in one day, in both directions: a lane deleted a key to mean
+# none on Tuesday and spent Friday explaining to me why deleting a key to mean none is wrong.
+#
+# A `none` THAT LOGS IS NOT A `none`. Naming `none` on an ejecta profile used to write an error
+# into the log every map, because the lookup failed like any typo. A log that cries wolf every map
+# is how you teach people to ignore the log -- the same failure as a check that cries wolf, only
+# slower. So each `none` is short-circuited in code BEFORE the registry is consulted, and the
+# block in this file exists so the NAME RESOLVES for a lint or a person grepping for it.
+#
 # OMITTING A KEY IS STILL AN ERROR. `none` is a stated intention; a missing line is a forgotten one;
 # the file has to be able to tell them apart, and the refusal message exists to catch the second.
 #
