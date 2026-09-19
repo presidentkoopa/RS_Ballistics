@@ -257,10 +257,19 @@ class RSB_Flash : Actor
 			if (ahead)
 			{
 				double closeness = 1.0 - clamp((ahead.at - pos).Length() / fd.powderReach, 0.0, 1.0);
-				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "scorch", fd.powderRadius * (0.6 + 0.4 * closeness),
-					0.0, fd.powderSoot * closeness * closeness, 0.0, 0.0);
-				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "stipple", fd.powderRadius * 1.6,
-					0.1 * closeness, fd.powderSoot * closeness, 0.0, 0.0);
+				// TIGHTER AND FAINTER THAN IT WAS (owner, in the headset: "i sorta like the idea of it
+				// but im not a fan of the visual on walls and flats"). They like the IDEA, so this is not
+				// switched off -- it is made subtle. Two changes, and the second was the ugly one:
+				//   the scorch loses about a third of its soot, so it reads as a mark rather than paint;
+				//   and the STIPPLE, which used to be painted at 1.6x the radius, is now 1.05x and falls
+				//   off with closeness SQUARED like the scorch does. A wide speckled halo round every
+				//   shot fired near a wall is what made it read as decal spam rather than as powder.
+				// Note it is also 2.5x longer-lived at Extreme than at Heavy (the mark ladder), which is
+				// the tier and not this -- but it is why the marks built up the way they did.
+				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "scorch", fd.powderRadius * (0.55 + 0.35 * closeness),
+					0.0, fd.powderSoot * closeness * closeness * 0.65, 0.0, 0.0);
+				RSB_Impact.PaintDamageAt(ahead.at, ahead.normal, (0, 0, 0), "stipple", fd.powderRadius * 1.05,
+					0.08 * closeness, fd.powderSoot * closeness * closeness * 0.5, 0.0, 0.0);
 			}
 		}
 		// THE BLAST HITTING WHAT IS NEAR (`blastkick`): walls beside and a ceiling above shed dust; casings are thrown.
@@ -465,6 +474,19 @@ class RSB_Flash : Actor
 			return;
 		}
 		age++;
+
+		// THE FLASH DIES AS IT AGES INSTEAD OF HOLDING (owner, in the headset: "some of the
+		// muzzleflashes seem like they last a while for being a barrel flash"). The states run
+		// B, C, D one tic each and then E -1 -- so anything whose `life` is longer than three tics,
+		// which is every big gun, sat on a FROZEN BRIGHT SPRITE for the rest of it. The light may
+		// honestly linger, because a real blast does light a room a moment longer; the flash itself
+		// may not. Fading from the last animated frame keeps the lingering light and kills the hang.
+		if (life > 3)
+		{
+			double left = double(life - age) / double(life - 3);
+			if (age > 3) A_SetRenderStyle(clamp(left, 0.0, 1.0), STYLE_Add);
+		}
+
 		if (age > life)
 		{
 			Destroy();
