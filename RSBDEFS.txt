@@ -13894,3 +13894,182 @@ recoil rotary_launcher   # rockets out of a revolving tube: the same recoilless 
 end
 
 # ---- END HEAVY VANILLA
+
+# ---- BEGIN ALIENS (tools/gen_aliens_profiles.py)
+# THE TWO ICONIC ALIENS GUNS. DO NOT EDIT BY HAND: change tools/gen_aliens_profiles.py.
+#
+# Both fire 10x28mm CASELESS and NEITHER HAS AN EJECTA PROFILE -- caseless throws no brass,
+# and that absence is deliberate. If one ever appears, someone has wired the wrong thing.
+#
+# Caseless also means the barrel keeps heat a brass case would have carried out of the gun.
+# That is what killed the real G11, and it is the Pulse Rifle's whole visual signature here.
+
+ballistics ae_10mm   # 10x28mm caseless: a heavy pistol-calibre round pushed hard, shared by both guns
+  speed  = 470
+  radius = 1.8
+  damage = none
+end
+
+roundlook ae_10mm
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = ae_10mm
+  whiz   = 68, rsb/whiz
+  heat   = 5, 0.4, 9
+  carve  = 7, 0.85
+end
+
+round ae_10mm
+  ballistics = ae_10mm
+  roundlook  = ae_10mm
+end
+
+impact ae_10mm
+  bursts    = chips_concrete, dust_concrete, spark_hot, dust_jet_concrete
+  sound     = rsb/impact/concrete
+  mark      = pool, 3.9, 60
+  markcolor = 60, 54, 48
+  light     = 44, 1.1, 2
+  lightcolor = 255, 210, 150
+  glance    = 24, rsb/ricochet, spark_hot
+  damage    = hole_punch, 1.95, 0.5, 0.2, 0.18
+end
+
+impact ae_10mm.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  sound     = rsb/impact/metal
+  damage    = pit, 1.69, 0.35, 0.25, 0.3
+end
+
+impact ae_10mm.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 2.21, 0.55, 0.12, 0
+end
+
+impact ae_10mm.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 2.60, 0.6, 0.1, 0
+end
+
+impact ae_10mm.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 3.38, 0.3, 0, 0
+end
+
+impact ae_10mm.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+flash ae_pulserifle   # THE M41A PULSE RIFLE: 10mm caseless, and caseless means two things at once -- no brass leaves this gun at all, and the barrel keeps the heat a case would have carried away. It runs hot fast and shows it
+  # auto, 11.7 a second, spread 3,3 -- 8.5 ft-lb of free recoil (Vg 7.10 fps)
+  light         = 178, 4.1, 2
+  lightcolor    = 255, 226, 186
+  cone          = 24, 62, 99, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.16
+  smoke         = 1, 0.027, 0.40
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 31, 6, 0.6
+  powdervary    = 0.56
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 75, 3
+  exposure      = 0.43, 134
+  hearing       = 0.48, 151
+  barrelheat    = 0.95, 0.14, 0.18
+  barrelglow    = 0.35, 30, 1.7
+  barrelglowcolor = 255, 96, 40
+  barrelshimmer = 4.2, 0.7
+  barrelsmoke   = rsb_smoke_barrel, 2.4
+  tail          = rsb/tail/ar, 0.9
+end
+
+recoil ae_pulserifle   # 8.5 ft-lb a shot through a auto -- climb 0.89, and the spread is 3,3
+  climb   = 0.89
+  drift   = 0.63, 5
+  recover = 18, 6
+  max     = 5.0, 2.5
+  bloom   = 0.12
+  brace   = 0.75, 0.90
+  view    = 1.4, 5, 1, 7
+end
+
+# NO `ejecta ae_pulserifle`: 10mm CASELESS throws nothing. If brass ever appears on this gun,
+# something has been wired to the wrong profile.
+
+flash ae_smartgun   # THE M56 SMARTGUN: thirty-nine pounds on a gyro harness, fired from the hip. The rig eats the recoil, so the biggest gun in the game has the LEAST kick of anything we ship -- and its spread is flat: it walks sideways and never rises
+  # harness, 11.7 a second, spread 5.6,0 -- 2.3 ft-lb of free recoil (Vg 1.97 fps)
+  light         = 221, 4.5, 2
+  lightcolor    = 255, 226, 186
+  cone          = 27, 67, 123, 8
+  conetics      = 2
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.18
+  smoke         = 1, 0.034, 0.49
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 37, 6, 0.6
+  powdervary    = 0.55
+  maybe         = spk_specks 0.3
+  blastkick     = kick_puff, 80, 3
+  exposure      = 0.50, 157
+  hearing       = 0.56, 176
+  barrelheat    = 0.55, 0.20, 0.30
+  barrelglow    = 0.55, 22, 1.2
+  barrelglowcolor = 255, 120, 60
+  barrelshimmer = 3.4, 0.6
+  barrelsmoke   = rsb_smoke_barrel, 2.8
+  smokevolume   = 26, 1.5, 1.1, 150, 10
+  tail          = rsb/tail/ar, 0.9
+end
+
+recoil ae_smartgun   # 2.3 ft-lb a shot through a harness -- climb 0.07, and the spread is 5.6,0
+  climb   = 0.07
+  drift   = 0.61, 5
+  recover = 18, 6
+  max     = 3.2, 3.8
+  bloom   = 0.11
+  brace   = 0.75, 0.90
+  view    = 1.0, 4, 1, 7
+end
+
+# NO `ejecta ae_smartgun`: 10mm CASELESS throws nothing. If brass ever appears on this gun,
+# something has been wired to the wrong profile.
+
+flash ae_pulserifle_grenade   # the M41A's underbarrel 30mm: a slow heavy lob, so a fat soft shove rather than a crack
+  light         = 260, 4.6, 3
+  lightcolor    = 255, 206, 150
+  cone          = 22, 62, 120, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, flash_launcher_puff
+  flame         = 0.16
+  smoke         = 2, 0.055, 0.7
+  smokeparticle = rsb_smoke_soot_gun
+  vary          = light 0.2, flame 0.2, cone 0.15, smoke 0.3
+  powderburn    = 30, 8, 0.55
+  powdervary    = 0.4
+  blastkick     = kick_puff, 74, 3
+  exposure      = 0.6, 140
+  hearing       = 0.7, 170
+  barrelheat    = 0.3, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.6
+  tail          = rsb/tail/rpg, 0.8
+end
+
+recoil ae_pulserifle_grenade   # a 30mm lobbed from under the barrel: a shove up and back, gone by the time you can fire again
+  climb   = 2.10
+  drift   = 0.40, 5
+  recover = 20, 6
+  max     = 7.0, 2
+  bloom   = 0.00
+  brace   = 0.75, 0.90
+  view    = 2.0, 7, 1, 10
+end
+
+# ---- END ALIENS
