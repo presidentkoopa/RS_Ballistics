@@ -266,7 +266,11 @@ def check(sheet, have, guns=None, label=None):
     generic_guns = []
     for gun in sorted(guns):
         named = guns[gun]
-        if NO_BALLISTICS.search(gun):
+        # SKIPPED ONLY IF IT NAMES NOTHING. A melee weapon that has gone and STATED a flash and a
+        # recoil plainly wants them, and skipping it by name would quietly stop checking a gun that
+        # is now wired -- which is how the Longbar Chainsaw vanished from this report the moment it
+        # was fixed. The name decides whether a gun NEEDS profiles; naming one decides that it has.
+        if NO_BALLISTICS.search(gun) and not named:
             continue
         want = [k for k in KINDS if not (k in EXEMPT and EXEMPT[k].search(gun))]
         # NONE is the only defect: the sheet says nothing AND the kind has no house recipe to fall
@@ -290,7 +294,9 @@ def check(sheet, have, guns=None, label=None):
             generic_guns.append("%s (%s)" % (gun, ", ".join(onhouse)))
         else:
             tuned += 1
-    total = len([g for g in guns if not NO_BALLISTICS.search(g)])
+    # Counted the SAME WAY the loop skips, or the arithmetic goes negative the moment a melee
+    # weapon names a profile -- which it did, and printed "-3 broken".
+    total = len([g for g in guns if not (NO_BALLISTICS.search(g) and not guns[g])])
     print("%s: %d tuned, %d on the house recipe, %d broken (%d melee or thrown, skipped)"
           % (name, tuned, generic, total - tuned - generic, len(guns) - total))
     for g in generic_guns:
