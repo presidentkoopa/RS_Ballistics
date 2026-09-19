@@ -318,10 +318,22 @@ def main():
     rc = check_sounds(defs_text, os.path.join(PKG, "SNDINFO.txt"))
     for s in sheets:
         rc |= check(s, have)
-    # AND EVERY SET THAT DECLARES ITS PROFILES IN ZSCRIPT INSTEAD OF A SHEET. RS_Modern is one, and it
-    # was invisible to this tool until the owner pointed out the set existed.
-    for pkg, sub_ in (("RS_Modern", "zscript"),):
-        root = os.path.join(os.path.dirname(PKG), pkg, sub_)
+    # AND EVERY PACKAGE THAT DECLARES PROFILES IN ZSCRIPT INSTEAD OF A SHEET -- ALL OF THEM, NOT A LIST.
+    #
+    # THIS BLIND SPOT HAS NOW COST TWO LANES A DAY APART. First it hid RS_Modern from me entirely, and
+    # I fixed that by naming RS_Modern. Then the weapons lane's own check hit the same wall from the
+    # other side: THIRTY-TWO VANILLA GUNS name their profiles as `WM_Gun.FlashProfile "unmaker"` class
+    # properties, their check read sheets, so a fully wired set read as a set that named nothing -- and
+    # I built duplicate profiles on the strength of it.
+    #
+    # Naming one package was fixing the instance. Walking every sibling package is fixing the class,
+    # and it is the same lesson as `unit()` and as reading the PACKED pk3: the second time a shape
+    # appears, stop patching the case.
+    parent = os.path.dirname(PKG)
+    for pkg in sorted(os.listdir(parent)):
+        if not pkg.startswith("RS_") or pkg.startswith("RS_Ballistics"):
+            continue
+        root = os.path.join(parent, pkg, "zscript")
         if not os.path.isdir(root):
             continue
         zguns = guns_in_zscript(root)
