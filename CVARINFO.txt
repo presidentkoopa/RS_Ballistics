@@ -70,11 +70,12 @@ user bool   rsb_flame_tube         = true;      // the drawn-line core of a flam
 // ---- recoil (recoil.zs). THE ONE GAMEPLAY CVAR: a server setting, the same rule for every
 // player in a netgame (the owner: "gameplay recoil but as a toggle ... for purists").
 server bool sv_rsb_recoil          = true;      // a gun's kick turns where its rounds go
-// OFF BY DESIGN. A gun that names no recoil profile has NO kick at all; on, it gets `recoil default`
-// instead. Seventeen guns across Vanilla and Vanilla+ are in that state, and turning this on changes
-// how all seventeen handle -- so it is the owner's call and not a quiet default. Server: this decides
-// where bullets go.
-server bool sv_rsb_recoil_default  = false;     // a gun with no recoil profile uses the house kick
+// ON. A gun that names no recoil profile would otherwise have NO kick at all -- not a small one, none
+// -- and seventeen across Vanilla and Vanilla+ were in exactly that state. They get `recoil default`
+// now: a FLOOR, so nothing is dead in the hands while each gun earns its own figures. Off restores the
+// old behaviour for anyone who wants it. Server, because this decides where bullets go and a
+// per-player answer to that is a desync.
+server bool sv_rsb_recoil_default  = true;      // a gun with no recoil profile uses the house kick
 server bool sv_rsb_decals          = false;     // our rounds leave vanilla decals too (off: the wall damage is the mark)
 server bool sv_rsb_enemy_rounds    = true;      // monsters' hitscans fly as RS_Ballistics rounds (enemyfire.zs)
 server float sv_rsb_enemy_round_speed = 80.0;   // map units a tic

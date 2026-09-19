@@ -10123,11 +10123,9 @@ end
 # own character still gets its own profile. It is deliberately modest -- about half a Pistolet -- so
 # that inheriting it is never mistaken for being tuned.
 #
-# IT IS NOT REACHED YET, ON PURPOSE. The owner: "vanilla and plus and breach are fine - be careful you
-# don't fuck up my guns". Giving seventeen guns a kick they do not have today, in sets he has just
-# called fine, while he is playing them, is not a fix arriving -- it is his weapons handling
-# differently mid-session. So the fallback sits behind `sv_rsb_recoil_default`, OFF, and turning it on
-# is one flag rather than a rebuild.
+# IT IS REACHED. Held back for one pass while the owner was playing, then he sent the decision back to
+# this lane -- "ballistics is on it" -- so the seventeen kick now. `sv_rsb_recoil_default` still exists
+# and still turns it off, because the old behaviour was somebody's normal for a long time.
 recoil default             # the house kick: enough that a gun moves in your hands, not enough to be mistaken for tuning
   climb   = 0.60
   drift   = 0.25, 5
@@ -12241,7 +12239,7 @@ flash ww2_nebelwerfer   # THE NEBELWERFER: a twin over-under tube, and the heavi
   cone       = 30, 83, 171, 10
   conetics   = 4
   bursts     = flash_core, flash_petals, backblast_fire, backblast_smoke, backblast_sparks
-  backblast  = 51, 1.40
+  backblast  = 42, 1.40
   maybe      = spk_stars 0.3, powder_clump 0.8
   flame      = 0.11
   smoke      = 3, 0.076, 0.76
@@ -13147,7 +13145,7 @@ flash ww2_nebelwerfer@extreme   # THE NEBELWERFER: a twin over-under tube, and t
   cone          = 30, 83, 231, 10
   conetics   = 4
   bursts        = flash_core, flash_petals, backblast_fire, backblast_smoke, backblast_sparks, flash_embers, spk_embers_heavy
-  backblast  = 51, 1.40
+  backblast  = 42, 1.40
   maybe         = spk_stars 0.42, powder_clump 0.95, flash_tongue 0.45
   flame      = 0.11
   smoke      = 3, 0.076, 0.76

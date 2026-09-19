@@ -35,11 +35,9 @@ class RSB_Recoil play
 		// A GUN THAT NAMES NO RECOIL PROFILE HAS NO KICK AT ALL, and seventeen across the Vanilla and
 		// Vanilla+ sets are in exactly that state. `recoil default` is the house recipe for them.
 		//
-		// BEHIND A SERVER CVAR, AND OFF, because switching it on gives those seventeen a kick they do
-		// not have today -- including four BFGs and four plasma rifles -- in sets the owner has called
-		// fine while he is playing them. That is not a fix arriving, it is his weapons handling
-		// differently with no warning. Server-scope so every machine agrees: this decides where bullets
-		// go, and a per-player answer to that is a desync.
+		// BEHIND A SERVER CVAR, NOW ON. It shipped off for one pass while the owner was playing those
+		// guns; he sent the decision back to this lane and it is open. Server-scope so every machine
+		// agrees: this decides where bullets go, and a per-player answer to that is a desync.
 		//
 		// `none` still means none. A profile that deliberately says so is not an omission and does not
 		// get the house recipe.

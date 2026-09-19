@@ -90,9 +90,11 @@ KINDS = ("flash", "recoil", "ejecta", "round")
 # They still have no kick. Remove a kind from here only when its default is genuinely reached by
 # default -- and then this tool starts passing them on its own, which is the correct signal that the
 # work actually landed.
-UNREACHED_DEFAULTS = {
-    "recoil": "the weapon passes recoilProfileName raw, and the fallback is behind sv_rsb_recoil_default, which is off",
-}
+# EMPTY, AND THAT IS THE POINT: `recoil` was in here while its fallback was gated off, and came out
+# when the gate opened. The mechanism stays because the NEXT kind added without a house recipe needs
+# it, and because a kind coming off this list is the honest signal that the work actually landed --
+# the guns start passing on their own rather than because someone decided they should.
+UNREACHED_DEFAULTS = {}
 
 
 # THE FILE THE GAME LOADS IS THE PK3, NOT THE SOURCE TREE, AND THEY ARE NOT THE SAME STATEMENT.

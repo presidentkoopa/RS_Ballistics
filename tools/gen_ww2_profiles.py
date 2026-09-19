@@ -666,7 +666,12 @@ ORDNANCE = {
                     "THE PANZERFAUST: a disposable tube with a warhead on a stick. Fired once and thrown away, so it gets the dirtiest, least controlled blast of the three -- and being the shortest tube, the backblast lands nearest the shooter"),
     "panzerschreck": (64, 1.15, 1.7, 1,
                       "THE PANZERSCHRECK: a real rocket launcher with a blast shield, because the backblast will take your face off. The longest tube here, so the blast throws furthest behind"),
-    "nebelwerfer": (51, 1.4, 1.9, 1,
+    # 42, NOT 51, AND NO LONGER A GUESS. Reload measured the owner's own mesh: the tube is 27.44 model
+    # units, 9.33 map units, against about a metre for the real thing -- so the model shipped at roughly
+    # a fifth of life size while every other WW2 gun sits at 1.15 to 1.27x. The owner has ruled it ships
+    # at ~4.5x, which puts the tube near 42. My 51 was close for the wrong reason: I guessed from the
+    # real weapon, not from the mesh, and the mesh was wrong.
+    "nebelwerfer": (42, 1.4, 1.9, 1,
                     "THE NEBELWERFER: a twin over-under tube, and the heaviest blast of the three. Two rockets are two separate moving parts -- that half is the reload lane's; this is what one tube does when it goes"),
 }
 
