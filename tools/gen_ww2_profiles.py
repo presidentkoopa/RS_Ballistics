@@ -293,6 +293,97 @@ BRASS = {
 NO_EJECT = {"break", "revolver"}
 
 
+# ============================================================================ REAL RECOIL
+# WHAT THE GUN ACTUALLY DOES TO YOUR SHOULDER, from published figures rather than from numbers I liked.
+# The owner: "PER-GUN, USE REAL-WORLD EQUIVALENTS."
+#
+# Four sourced numbers per gun -- bullet weight in grains, muzzle velocity in fps, powder charge in
+# grains, and the gun's loaded weight in pounds -- and the physics does the rest. These are checkable
+# against any reloading manual or armoury table, which is the whole point: the standard says damage and
+# rate of fire must be sourced and never invented, and there is no reason recoil should be the exception.
+#
+# THE FORMULA is free recoil, the standard one:
+#     Vg = (bullet_grains * muzzle_fps + 4700 * charge_grains) / (7000 * gun_lb)     [fps]
+#     E  = gun_lb * Vg^2 / 64.348                                                    [ft-lb]
+# 4700 fps is the conventional effective velocity of the propellant gas leaving the muzzle.
+#
+# WHAT IT FOUND, and it is why the old hand-picked numbers felt flat. Per shot the set spans
+# THIRTY-TWO TIMES, from the Trench Gun at 22.5 ft-lb to the PPSh at 0.7. My invented values spanned
+# about four. The real world is far more dramatic than I guessed and the set was the poorer for it.
+#
+# AND PER SECOND THE HEAVY GUNS CONVERGE -- Kar98k 58, Garand 57, BAR 60, MG42 74 ft-lb a second. They
+# deliver nearly the same energy and package it completely differently: one hammer blow against a
+# continuous shove. The subguns sit an entire tier below at 9 to 23. That axis is free from real data
+# and no amount of tuning by feel would have found it.
+#
+# ALSO TRUE AND WORTH KEEPING: the M1911 kicks harder PER SHOT than the StG 44. A .45 pistol against an
+# assault rifle. It is the kind of fact that makes a set feel observed rather than balanced.
+#
+# WHAT DRIVES CLIMB IS Vg, THE GUN'S REARWARD VELOCITY, not the energy. Energy is what the shoulder
+# absorbs; velocity is how fast the thing actually moves, which is what a muzzle rising is. Using energy
+# directly would make the Trench Gun absurd.
+#
+# ESTIMATES ARE MARKED. Where a figure is a fantasy gun or a weapon whose real loading is not settled,
+# the comment says so rather than presenting a guess as a reading.
+#
+# gun -> bullet grains, muzzle fps, charge grains, loaded lb
+RECOIL_DATA = {
+    "kar98k":    (198, 2493, 47,   8.9),
+    "g43":       (198, 2493, 47,   9.7),
+    "fg42":      (198, 2493, 47,   9.9),
+    "marksman":  (198, 2493, 47,   9.0),
+    "mg42":      (198, 2493, 47,  25.5),
+    "venom":     (198, 2493, 47,  25.0),   # ESTIMATE: fantasy rotary, weight assumed MG42 class
+    "garand":    (150, 2800, 50,  10.5),
+    "bar":       (150, 2800, 50,  16.0),
+    "heavymg":   (150, 2800, 50,  31.0),   # Browning M1919, .30-06, on its tripod
+    "stg44":     (125, 2250, 25,  10.2),
+    "trench":    (437, 1325, 32,   7.5),   # 12ga 00 buck, nine pellets, total shot weight
+    "aa12":      (437, 1325, 32,  12.0),
+    "auto5":     (437, 1325, 32,   9.0),
+    "m30":       (437, 1325, 32,   7.0),
+    "thompson":  (230,  920,  5.0, 10.8),
+    "m1911":     (230,  830,  5.0,  2.44),
+    "mp40":      (115, 1250,  6.0,  8.75),
+    "sten":      (115, 1200,  6.0,  7.1),
+    "mp34":      (115, 1250,  6.0,  9.4),
+    "luger":     (115, 1150,  5.0,  1.92),
+    "p38":       (115, 1150,  5.0,  1.8),
+    "goldluger": (115, 1150,  5.0,  1.92),
+    "ppsh":      ( 86, 1600,  5.5, 12.0),
+    "tt33":      ( 86, 1390,  5.5,  1.9),
+    "hdm":       ( 40, 1050,  1.5,  2.75),  # .22 LR through an integral suppressor
+    "revolver":  (158, 1250, 14.0,  2.6),
+}
+
+# TURNING THE GUN'S REARWARD VELOCITY INTO DEGREES OF MUZZLE RISE. Calibrated so the Kar98k lands where
+# it already was, which keeps every other gun a RELATIVE change with a real reason rather than a reshuffle.
+CLIMB_PER_FPS = 0.148
+
+
+def free_recoil(gid):
+    """Gun recoil velocity (fps) and free recoil energy (ft-lb), or None where there is no data."""
+    if gid not in RECOIL_DATA:
+        return None, None
+    wb, vb, wc, wg = RECOIL_DATA[gid]
+    vg = (wb * vb + 4700.0 * wc) / (7000.0 * wg)
+    return vg, wg * vg * vg / 64.348
+
+
+def print_recoil():
+    print("%-10s %6s %7s %8s %9s  %6s" % ("gun", "Vg", "ft-lb", "ft-lb/s", "vs MP40", "climb"))
+    base = free_recoil("mp40")[1]
+    rows = []
+    for gid in GUN:
+        vg, e = free_recoil(gid)
+        if vg is None:
+            continue
+        d = derive(gid)
+        rows.append((gid, vg, e, e * d["rate"], e / base, d["climb"]))
+    for r in sorted(rows, key=lambda x: -x[2]):
+        print("%-10s %6.2f %7.1f %8.1f %8.1fx  %6.2f" % r)
+
+
 def derive(gid):
     """Every per-gun number this file emits, out of the sheet's own data. One place, so --table and the
     profiles can never disagree about what a gun is."""
@@ -322,7 +413,13 @@ def derive(gid):
     d["finish"] = fin
     d["puff"] = dirt * budget * fin          # per-shot smoke
     d["haze"] = dirt * gather                # standing smoke, and barrel heat with it
-    d["climb"] = kick * ACTION[action]
+    # CLIMB FROM THE REAL GUN. Vg is what the thing actually does; ACTION is how much of it reaches
+    # your aim rather than the floor or a bipod. A gun with no published figures falls back to the old
+    # per-cartridge estimate, and says so in --recoil by being absent from it.
+    vg, energy = free_recoil(gid)
+    d["vg"] = vg if vg else 0.0
+    d["energy"] = energy if energy else 0.0
+    d["climb"] = (vg * CLIMB_PER_FPS * ACTION[action]) if vg else (kick * ACTION[action])
     d["drift"] = 0.30 + 0.055 * slop
     d["recover"] = int(round(min(30.0, max(8.0, 26.0 * (REF_RATE / rate) ** 0.5))))
     d["max"] = int(round(min(10.0, max(4.0, 3.0 + 2.2 * d["climb"]))))
@@ -993,10 +1090,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--table", action="store_true")
+    ap.add_argument("--recoil", action="store_true")
     args = ap.parse_args()
 
     if args.table:
         print_table()
+        return
+    if args.recoil:
+        print_recoil()
         return
 
     text = io.open(DEFS, encoding="utf-8", newline="").read()

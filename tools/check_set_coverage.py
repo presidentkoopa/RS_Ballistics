@@ -174,9 +174,40 @@ def guns_in(path):
     return out
 
 
-def check(sheet, have):
-    guns = guns_in(sheet)
-    name = os.path.basename(sheet)
+def guns_in_zscript(root):
+    """gun class -> {kind: profile name}, read out of ZScript class properties.
+
+    A SHEET IS NOT THE ONLY WAY A GUN NAMES A PROFILE, and assuming it was made this tool blind to an
+    entire set. RS_Modern (the Breach guns) declares them as class properties instead:
+
+        WM_Gun.RoundProfile  "glock17";
+        WM_Gun.FlashProfile  "glock17";
+
+    That is a perfectly good way to do it and it is what a package with no sheet uses. A checker that
+    only reads WMSHEETs reports such a set as not existing rather than as unchecked, which is the worse
+    of the two failures -- it is absence rendering as plausible, the same disease it was built to catch.
+    """
+    out = {}
+    cur = None
+    for dirpath, _dirs, files in os.walk(root):
+        for f in sorted(files):
+            if not f.lower().endswith(".zs"):
+                continue
+            for line in io.open(os.path.join(dirpath, f), encoding="utf-8", errors="replace"):
+                t = line.split("//")[0].strip()
+                m = re.match(r"^class\s+([A-Za-z0-9_]+)", t)
+                if m:
+                    cur = m.group(1)
+                    continue
+                m = re.match(r'^WM_Gun\.(Round|Flash|Recoil|Ejecta)Profile\s+"([^"]+)"', t, re.I)
+                if m and cur:
+                    out.setdefault(cur, {})[m.group(1).lower()] = m.group(2).lower()
+    return out
+
+
+def check(sheet, have, guns=None, label=None):
+    guns = guns_in(sheet) if guns is None else guns
+    name = label or os.path.basename(sheet)
     if not guns:
         print("%s: NO GUNS FOUND -- is this a sheet?" % name)
         return 1
@@ -233,6 +264,15 @@ def main():
     rc = check_sounds(DEFS, os.path.join(PKG, "SNDINFO.txt"))
     for s in sheets:
         rc |= check(s, have)
+    # AND EVERY SET THAT DECLARES ITS PROFILES IN ZSCRIPT INSTEAD OF A SHEET. RS_Modern is one, and it
+    # was invisible to this tool until the owner pointed out the set existed.
+    for pkg, sub_ in (("RS_Modern", "zscript"),):
+        root = os.path.join(os.path.dirname(PKG), pkg, sub_)
+        if not os.path.isdir(root):
+            continue
+        zguns = guns_in_zscript(root)
+        if zguns:
+            rc |= check(None, have, guns=zguns, label="%s (zscript)" % pkg)
     print("\nCOVERAGE %s" % ("INCOMPLETE -- see above" if rc else "COMPLETE"))
     sys.exit(rc)
 

@@ -10860,13 +10860,13 @@ flash ww2_mg42   # THE MG42: the same cartridge as the Kar98k and nothing else i
 end
 
 recoil ww2_mg42   # belt at 11.7 a second, spread 6,4
-  climb   = 0.77
+  climb   = 0.27
   drift   = 0.85, 5
   recover = 18, 6
-  max     = 5, 2
+  max     = 4, 2
   bloom   = 0.20
   brace   = 0.6, 0.85
-  view    = 1.4, 5, 1, 6
+  view    = 1.1, 4, 1, 6
 end
 
 ejecta ww2_mg42   # a long rifle case, and it stays hot
@@ -10905,13 +10905,13 @@ flash ww2_heavymg   # THE CHAINGUN: a Browning M1919 and the sloppiest thing in 
 end
 
 recoil ww2_heavymg   # belt at 8.8 a second, spread 8,6
-  climb   = 0.72
+  climb   = 0.20
   drift   = 1.07, 5
   recover = 21, 6
-  max     = 5, 2
+  max     = 4, 2
   bloom   = 0.28
   brace   = 0.6, 0.85
-  view    = 1.3, 5, 1, 6
+  view    = 1.1, 4, 1, 6
 end
 
 ejecta ww2_heavymg   # a long rifle case, and it stays hot
@@ -10950,13 +10950,13 @@ flash ww2_garand   # THE M1 GARAND: a hundred damage of full-power round from a 
 end
 
 recoil ww2_garand   # semi at 4.4 a second, spread 3,3
-  climb   = 1.84
+  climb   = 1.52
   drift   = 0.63, 5
   recover = 30, 6
-  max     = 7, 3
+  max     = 6, 3
   bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 1.8, 6, 1, 6
+  view    = 1.7, 6, 1, 6
 end
 
 ejecta ww2_garand   # a long rifle case, and it stays hot
@@ -10995,13 +10995,13 @@ flash ww2_bar   # THE BAR: a hundred damage of rifle cartridge on full auto seve
 end
 
 recoil ww2_bar   # auto at 7.0 a second, spread 5,5
-  climb   = 1.36
+  climb   = 0.74
   drift   = 0.85, 5
   recover = 24, 6
-  max     = 6, 3
+  max     = 5, 2
   bloom   = 0.20
   brace   = 0.6, 0.85
-  view    = 1.6, 6, 1, 6
+  view    = 1.3, 5, 1, 6
 end
 
 ejecta ww2_bar   # a long rifle case, and it stays hot
@@ -11040,13 +11040,13 @@ flash ww2_trench   # THE TRENCH GUN: seven pellets and a cloud, once every twelv
 end
 
 recoil ww2_trench   # pump at 2.9 a second, spread 4,2
-  climb   = 2.25
+  climb   = 2.98
   drift   = 0.63, 5
   recover = 30, 6
-  max     = 8, 4
+  max     = 10, 5
   bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 2.0, 7, 1, 6
+  view    = 2.4, 8, 1, 6
 end
 
 ejecta ww2_trench   # a paper hull
@@ -11085,13 +11085,13 @@ flash ww2_m1911   # THE COLT M1911: a fat slow .45 at the reference rate, a soft
 end
 
 recoil ww2_m1911   # semi at 5.8 a second, spread 1,1
-  climb   = 0.80
+  climb   = 2.14
   drift   = 0.41, 5
   recover = 26, 6
-  max     = 5, 2
+  max     = 8, 4
   bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.4, 5, 1, 6
+  view    = 2.0, 7, 1, 6
 end
 
 ejecta ww2_m1911   # a fat pistol case
@@ -11130,13 +11130,13 @@ flash ww2_luger   # THE LUGER P08: small, sharp and tidy -- the cleanest thing h
 end
 
 recoil ww2_luger   # semi at 5.8 a second, spread 1,1
-  climb   = 0.52
+  climb   = 1.97
   drift   = 0.41, 5
   recover = 26, 6
-  max     = 4, 2
+  max     = 7, 3
   bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.2, 4, 1, 6
+  view    = 1.9, 7, 1, 6
 end
 
 ejecta ww2_luger   # a pistol case
@@ -11175,13 +11175,13 @@ flash ww2_thompson   # THE THOMPSON M1A1: .45 on full auto at twelve a second --
 end
 
 recoil ww2_thompson   # auto at 11.7 a second, spread 3,3
-  climb   = 0.59
+  climb   = 0.39
   drift   = 0.63, 5
   recover = 18, 6
   max     = 4, 2
   bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 1.3, 4, 1, 6
+  view    = 1.2, 4, 1, 6
 end
 
 ejecta ww2_thompson   # a fat pistol case
@@ -11220,7 +11220,7 @@ flash ww2_mp40   # THE MP40: NOT the hose it was carded as. Eight and a half a s
 end
 
 recoil ww2_mp40   # auto at 8.8 a second, spread 3,3
-  climb   = 0.38
+  climb   = 0.35
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11265,13 +11265,13 @@ flash ww2_ppsh   # THE PPSH-41: the fast pole. Seventeen and a half a second out
 end
 
 recoil ww2_ppsh   # auto at 17.5 a second, spread 4,5
-  climb   = 0.38
+  climb   = 0.24
   drift   = 0.79, 5
   recover = 15, 6
   max     = 4, 2
   bloom   = 0.18
   brace   = 0.6, 0.85
-  view    = 1.2, 4, 1, 6
+  view    = 1.1, 4, 1, 6
 end
 
 ejecta ww2_ppsh   # a pistol case
@@ -11310,10 +11310,10 @@ flash ww2_stg44   # THE STG 44: the first assault rifle, and at seven a second w
 end
 
 recoil ww2_stg44   # auto at 7.0 a second, spread 2,2
-  climb   = 0.68
+  climb   = 0.70
   drift   = 0.52, 5
   recover = 24, 6
-  max     = 4, 2
+  max     = 5, 2
   bloom   = 0.08
   brace   = 0.6, 0.85
   view    = 1.3, 5, 1, 6
@@ -11355,13 +11355,13 @@ flash ww2_p38   # THE WALTHER P38: the Luger's replacement and a plainer gun in 
 end
 
 recoil ww2_p38   # semi at 5.8 a second, spread 1,1
-  climb   = 0.52
+  climb   = 2.10
   drift   = 0.41, 5
   recover = 26, 6
-  max     = 4, 2
+  max     = 8, 4
   bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.2, 4, 1, 6
+  view    = 2.0, 7, 1, 6
 end
 
 ejecta ww2_p38   # a pistol case
@@ -11400,7 +11400,7 @@ flash ww2_sten   # THE STEN: a pipe with a trigger. Same cartridge and rate as t
 end
 
 recoil ww2_sten   # auto at 8.8 a second, spread 3,3
-  climb   = 0.38
+  climb   = 0.42
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11445,7 +11445,7 @@ flash ww2_mp34   # THE MP34: the Sten's opposite -- a beautifully made gun with 
 end
 
 recoil ww2_mp34   # auto at 8.8 a second, spread 3,3
-  climb   = 0.38
+  climb   = 0.33
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11490,13 +11490,13 @@ flash ww2_goldluger   # THE GOLDEN LUGER: a hundred damage out of a 9mm at two s
 end
 
 recoil ww2_goldluger   # semi at 2.2 a second, spread 2,2
-  climb   = 0.52
+  climb   = 1.97
   drift   = 0.52, 5
   recover = 30, 6
-  max     = 4, 2
+  max     = 7, 3
   bloom   = 0.08
   brace   = 0.6, 0.85
-  view    = 1.2, 4, 1, 6
+  view    = 1.9, 7, 1, 6
 end
 
 ejecta ww2_goldluger   # a pistol case
@@ -11535,13 +11535,13 @@ flash ww2_tt33   # THE TT-33 TOKAREV: the PPSh's cartridge fired deliberately in
 end
 
 recoil ww2_tt33   # semi at 5.0 a second, spread 1,1
-  climb   = 0.52
+  climb   = 1.86
   drift   = 0.41, 5
   recover = 28, 6
-  max     = 4, 2
+  max     = 7, 3
   bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.2, 4, 1, 6
+  view    = 1.9, 6, 1, 6
 end
 
 ejecta ww2_tt33   # a pistol case
@@ -11575,13 +11575,13 @@ flash ww2_hdm   # THE HIGH STANDARD HDM: the OSS's suppressed .22, and the quiet
 end
 
 recoil ww2_hdm   # semi at 5.8 a second, spread 1,1
-  climb   = 0.09
+  climb   = 0.43
   drift   = 0.41, 5
   recover = 26, 6
   max     = 4, 2
   bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.0, 4, 1, 6
+  view    = 1.2, 4, 1, 6
 end
 
 ejecta ww2_hdm   # a .22 case, barely there
@@ -11620,13 +11620,13 @@ flash ww2_revolver   # THE REVOLVER: a big slow cartridge and a cylinder gap, so
 end
 
 recoil ww2_revolver   # revolver at 3.9 a second, spread 2,3
-  climb   = 1.38
+  climb   = 2.57
   drift   = 0.57, 5
   recover = 30, 6
-  max     = 6, 3
+  max     = 9, 4
   bloom   = 0.10
   brace   = 0.6, 0.85
-  view    = 1.6, 6, 1, 6
+  view    = 2.2, 7, 1, 6
 end
 
 # no `ejecta ww2_revolver`: a revolver action throws nothing while it fires -- leave ejectaprofile
@@ -11655,13 +11655,13 @@ flash ww2_g43   # THE G43: Germany's answer to the Garand. Full-power 7.92 from 
 end
 
 recoil ww2_g43   # semi at 3.5 a second, spread 3,3
-  climb   = 1.95
+  climb   = 1.79
   drift   = 0.63, 5
   recover = 30, 6
   max     = 7, 3
   bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 1.9, 7, 1, 6
+  view    = 1.8, 6, 1, 6
 end
 
 ejecta ww2_g43   # a long rifle case, and it stays hot
@@ -11700,13 +11700,13 @@ flash ww2_fg42   # THE FG42: full-power rifle rounds on full auto at twelve a se
 end
 
 recoil ww2_fg42   # auto at 11.7 a second, spread 2,2
-  climb   = 1.44
+  climb   = 1.30
   drift   = 0.52, 5
   recover = 18, 6
   max     = 6, 3
   bloom   = 0.08
   brace   = 0.6, 0.85
-  view    = 1.7, 6, 1, 6
+  view    = 1.6, 5, 1, 6
 end
 
 ejecta ww2_fg42   # a long rifle case, and it stays hot
@@ -11745,13 +11745,13 @@ flash ww2_marksman   # THE MARKSMAN: a hundred damage and a TEN DEGREE spread, w
 end
 
 recoil ww2_marksman   # semi at 7.0 a second, spread 10,8
-  climb   = 1.95
+  climb   = 1.93
   drift   = 1.29, 5
   recover = 24, 6
   max     = 7, 3
   bloom   = 0.36
   brace   = 0.6, 0.85
-  view    = 1.9, 7, 1, 6
+  view    = 1.9, 6, 1, 6
 end
 
 ejecta ww2_marksman   # a long rifle case, and it stays hot
@@ -11790,13 +11790,13 @@ flash ww2_venom   # THE VENOM: full-power 7.92 seventeen and a half times a seco
 end
 
 recoil ww2_venom   # belt at 17.5 a second, spread 6,4
-  climb   = 0.77
+  climb   = 0.27
   drift   = 0.85, 5
   recover = 15, 6
-  max     = 5, 2
+  max     = 4, 2
   bloom   = 0.20
   brace   = 0.6, 0.85
-  view    = 1.4, 5, 1, 6
+  view    = 1.1, 4, 1, 6
 end
 
 ejecta ww2_venom   # a long rifle case, and it stays hot
@@ -11835,13 +11835,13 @@ flash ww2_aa12   # THE AA-12: ten pellets six times a second. The only automatic
 end
 
 recoil ww2_aa12   # auto at 5.8 a second, spread 4,2
-  climb   = 1.32
+  climb   = 1.09
   drift   = 0.63, 5
   recover = 26, 6
-  max     = 6, 3
+  max     = 5, 2
   bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 1.6, 6, 1, 6
+  view    = 1.5, 5, 1, 6
 end
 
 ejecta ww2_aa12   # a paper hull
@@ -11880,13 +11880,13 @@ flash ww2_auto5   # THE AUTO-5: Browning's humpback, ten pellets three times a s
 end
 
 recoil ww2_auto5   # semi at 3.2 a second, spread 5,3
-  climb   = 1.78
+  climb   = 1.97
   drift   = 0.74, 5
   recover = 30, 6
   max     = 7, 3
   bloom   = 0.16
   brace   = 0.6, 0.85
-  view    = 1.8, 6, 1, 6
+  view    = 1.9, 7, 1, 6
 end
 
 ejecta ww2_auto5   # a paper hull
@@ -11925,13 +11925,13 @@ flash ww2_m30   # THE M30 DRILLING: two shotgun barrels and a rifle one. A 10,1 
 end
 
 recoil ww2_m30   # break at 5.0 a second, spread 10,1
-  climb   = 2.33
+  climb   = 3.30
   drift   = 0.91, 5
   recover = 28, 6
-  max     = 8, 4
+  max     = 10, 5
   bloom   = 0.22
   brace   = 0.6, 0.85
-  view    = 2.1, 7, 1, 6
+  view    = 2.5, 9, 1, 6
 end
 
 # no `ejecta ww2_m30`: a break action throws nothing while it fires -- leave ejectaprofile
