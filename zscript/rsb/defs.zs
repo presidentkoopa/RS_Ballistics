@@ -61,6 +61,22 @@ class RSB_BallisticsDef : RSB_Def
 	double height;       // -1 = not stated, so the radius is used
 	int    damageBase;
 	int    damageDice;   // damage = damageBase x 1d(damageDice), unless the shooter sets damageMin/Max
+	// WHAT ONE LOADED ROUND WEIGHS, in grains (7000 to the pound). 0 = not stated.
+	//
+	// The only cartridge-level figure a shot actually needs, and it is here rather than with the gun
+	// because it is the one thing that IS a property of the round. A gun's current weight is
+	// baseweight + rounds x this, so a PPSh with 71 rounds of 7.62x25 in the drum is a seventh
+	// heavier than an empty one, and gets lighter and kickier as it empties -- sag and climb both,
+	// off one number, with no second system.
+	//
+	// MUZZLE VELOCITY IS DELIBERATELY NOT HERE. It is not a property of a cartridge: the same 9x19
+	// leaves an MP40 at 1250 fps and a suppressed Glock at 1050, and this package already holds
+	// twenty-nine distinct loads across thirteen cartridges. The per-gun `shot` line on the recoil
+	// profile states impulse, which already has bullet, charge AND barrel inside it -- so nothing at
+	// the shot has to ask a cartridge how fast it goes. See tools/cartridges.py.
+	//
+	// ZERO MEANS NO DATA, NOT A WEIGHTLESS ROUND. A BFG cell and a Tesla arc state nothing.
+	double roundGrains;
 }
 
 // A ROUND LOOK: what a PLAYER sees and hears of a round. Presentation only,

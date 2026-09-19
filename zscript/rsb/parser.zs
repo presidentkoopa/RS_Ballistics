@@ -600,7 +600,16 @@ class RSB_Parser
 			bl.damageDice = v[1].ToInt();
 			return (bl.damageBase >= 0 && bl.damageDice >= 1) ? "" : "damage is base (0 or more), dice (1 or more)";
 		}
-		return String.Format("unknown ballistics key \"%s\" -- speed, radius or damage (damage may be `none`: the gun supplies it)", key);
+		if (key == "roundmass")
+		{
+			// GRAINS, not pounds, because that is how ammunition is published and a conversion in the
+			// data file is a conversion nobody can check. 7000 grains = 1 lb; the reader converts.
+			if (v.Size() != 1) return "roundmass is one number: what one loaded round weighs, in grains";
+			bl.roundGrains = v[0].ToDouble();
+			if (bl.roundGrains < 0) return "roundmass cannot be negative";
+			return "";
+		}
+		return String.Format("unknown ballistics key \"%s\" -- speed, radius, damage or roundmass (damage may be `none`: the gun supplies it)", key);
 	}
 
 	// ------------------------------------------------------------ ROUNDLOOK

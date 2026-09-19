@@ -16,6 +16,7 @@
 //   GetString("profiles")                      every profile, by kind, one line
 //   GetInt("count", kind)                      how many profiles of that kind
 //   GetInt("has", name, 0, 0, null, 'kind')    1 if that profile exists
+//   GetDouble("cartridge.roundlb", name)       what ONE loaded round weighs, lb (x ammo = the load)
 //   GetDouble("recoil.impulse", name)          lb-s a shot puts into the gun -- what pushes an arm
 //   GetDouble("recoil.energy", name)           ft-lb -- what stops it
 //   GetDouble("recoil.vg", name)               fps the gun goes backwards
@@ -84,6 +85,15 @@ class RSB_Service : Service
 	// so again is "Attempt to change scope for virtual function".
 	override double GetDouble(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
+		// WHAT ONE ROUND WEIGHS, so a caller can work out a gun's CURRENT weight and watch it fall.
+		//   GetDouble("cartridge.roundlb", "ww2_762tok") x 71  is the PPSh's drum, and it is 1.7 lb.
+		if (request ~== "cartridge.roundlb")
+		{
+			let reg = RSB_Registry.Get();
+			if (!reg || !reg.defs) return 0.0;
+			let bl = RSB_BallisticsDef(reg.defs.Find("ballistics", stringArg));
+			return bl ? bl.roundGrains / 7000.0 : 0.0;
+		}
 		if (request ~== "recoil.vg")      return RecoilNumber(stringArg, 0);
 		if (request ~== "recoil.energy")  return RecoilNumber(stringArg, 1);
 		if (request ~== "recoil.impulse") return RecoilNumber(stringArg, 2);
