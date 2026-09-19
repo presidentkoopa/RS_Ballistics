@@ -10052,3 +10052,1038 @@ impact saw_heavy.slime@extreme   # nukage and slime: the same hit as water, thro
 end
 
 # ---- END liquid variants
+
+# ---- BEGIN WW2 (tools/gen_ww2_profiles.py)
+# THE WW2 SET. Sixteen guns, six cartridges, NOTHING REUSED FROM THE MODERN SET (owner).
+# DO NOT EDIT BY HAND: change tools/gen_ww2_profiles.py and run it again.
+#
+# The two poles the whole set is built between: the Kar98k, 40 damage at 3.9 a second, one shot
+# that matters -- and the MP40, 12 at 17.5, a hose. If they read as one family at two rates,
+# this failed.
+
+ballistics ww2_9mm   # 9x19 Parabellum: light, fast, clean-ish for the period
+  speed  = 330
+  radius = 1.5
+  damage = 5, 3
+end
+
+roundlook ww2_9mm
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = pistol_vapour
+  impact = ww2_9mm
+  whiz   = 64, rsb/whiz
+  heat   = 4, 0.4, 8
+  carve  = 6, 0.85
+end
+
+round ww2_9mm
+  ballistics = ww2_9mm
+  roundlook  = ww2_9mm
+end
+
+ballistics ww2_45   # .45 ACP: heavy, slow, a big soft hole
+  speed  = 250
+  radius = 2.0
+  damage = 5, 3
+end
+
+roundlook ww2_45
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = pistol_vapour
+  impact = ww2_45
+  whiz   = 64, rsb/whiz
+  heat   = 4, 0.4, 8
+  carve  = 6, 0.85
+end
+
+round ww2_45
+  ballistics = ww2_45
+  roundlook  = ww2_45
+end
+
+ballistics ww2_762tok   # 7.62x25 Tokarev: a bottlenecked pistol round, fast and spiteful
+  speed  = 430
+  radius = 1.4
+  damage = 5, 3
+end
+
+roundlook ww2_762tok
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = pistol_vapour
+  impact = ww2_762tok
+  whiz   = 64, rsb/whiz
+  heat   = 4, 0.4, 8
+  carve  = 6, 0.85
+end
+
+round ww2_762tok
+  ballistics = ww2_762tok
+  roundlook  = ww2_762tok
+end
+
+ballistics ww2_792kurz   # 7.92x33 Kurz: a short rifle round, the first of its kind
+  speed  = 470
+  radius = 1.7
+  damage = 5, 3
+end
+
+roundlook ww2_792kurz
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = ww2_792kurz
+  whiz   = 72, rsb/whiz
+  heat   = 6, 0.4, 10
+  carve  = 8, 0.85
+end
+
+round ww2_792kurz
+  ballistics = ww2_792kurz
+  roundlook  = ww2_792kurz
+end
+
+ballistics ww2_792   # 7.92x57 Mauser: a full rifle cartridge, and it shows
+  speed  = 620
+  radius = 2.0
+  damage = 5, 3
+end
+
+roundlook ww2_792
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = ww2_792
+  whiz   = 72, rsb/whiz
+  heat   = 6, 0.4, 10
+  carve  = 8, 0.85
+end
+
+round ww2_792
+  ballistics = ww2_792
+  roundlook  = ww2_792
+end
+
+ballistics ww2_3006   # .30-06 Springfield: the American full-power round
+  speed  = 600
+  radius = 2.0
+  damage = 5, 3
+end
+
+roundlook ww2_3006
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = rifle_vapour
+  impact = ww2_3006
+  whiz   = 72, rsb/whiz
+  heat   = 6, 0.4, 10
+  carve  = 8, 0.85
+end
+
+round ww2_3006
+  ballistics = ww2_3006
+  roundlook  = ww2_3006
+end
+
+ballistics ww2_12ga   # 12 gauge buckshot: ten pellets of it
+  speed  = 300
+  radius = 2.2
+  damage = 5, 3
+end
+
+roundlook ww2_12ga
+  look   = sprite, RSBT
+  glide  = yes
+  wake   = pellet_vapour
+  impact = ww2_12ga
+  whiz   = 64, rsb/whiz
+  heat   = 4, 0.4, 8
+  carve  = 6, 0.85
+end
+
+round ww2_12ga
+  ballistics = ww2_12ga
+  roundlook  = ww2_12ga
+end
+
+impact ww2_9mm   # 9x19 Parabellum: light, fast, clean-ish for the period
+  bursts    = chips_tight_concrete, dust_concrete, spark_hot
+  mark      = pool, 2.7, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 36, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 1.35, 0.5, 0.2, 0.18
+  glancedamage = gouge, 2.16, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_9mm.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 2.2, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 48, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.17, 0.35, 0.25, 0.3
+end
+
+impact ww2_9mm.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 1.53, 0.55, 0.12, 0
+end
+
+impact ww2_9mm.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 1.80, 0.6, 0.1, 0
+end
+
+impact ww2_9mm.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 2.34, 0.3, 0, 0
+end
+
+impact ww2_9mm.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact ww2_45   # .45 ACP: heavy, slow, a big soft hole
+  bursts    = chips_tight_concrete, dust_concrete, spark_hot
+  mark      = pool, 3.6, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 36, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 1.80, 0.5, 0.2, 0.18
+  glancedamage = gouge, 2.88, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_45.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 2.9, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 48, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.56, 0.35, 0.25, 0.3
+end
+
+impact ww2_45.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 2.04, 0.55, 0.12, 0
+end
+
+impact ww2_45.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 2.40, 0.6, 0.1, 0
+end
+
+impact ww2_45.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 3.12, 0.3, 0, 0
+end
+
+impact ww2_45.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact ww2_762tok   # 7.62x25 Tokarev: a bottlenecked pistol round, fast and spiteful
+  bursts    = chips_tight_concrete, dust_concrete, spark_hot
+  mark      = pool, 2.8, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 36, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 1.42, 0.5, 0.2, 0.18
+  glancedamage = gouge, 2.28, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_762tok.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 2.3, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 48, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.23, 0.35, 0.25, 0.3
+end
+
+impact ww2_762tok.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 1.61, 0.55, 0.12, 0
+end
+
+impact ww2_762tok.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 1.90, 0.6, 0.1, 0
+end
+
+impact ww2_762tok.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 2.47, 0.3, 0, 0
+end
+
+impact ww2_762tok.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact ww2_792kurz   # 7.92x33 Kurz: a short rifle round, the first of its kind
+  bursts    = chips_concrete, dust_concrete, spark_hot, dust_jet_concrete
+  mark      = pool, 3.4, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 48, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 1.72, 0.5, 0.2, 0.18
+  glancedamage = gouge, 2.76, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_792kurz.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 2.8, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 64, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.49, 0.35, 0.25, 0.3
+end
+
+impact ww2_792kurz.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 1.95, 0.55, 0.12, 0
+end
+
+impact ww2_792kurz.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 2.30, 0.6, 0.1, 0
+end
+
+impact ww2_792kurz.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 2.99, 0.3, 0, 0
+end
+
+impact ww2_792kurz.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact ww2_792   # 7.92x57 Mauser: a full rifle cartridge, and it shows
+  bursts    = chips_concrete, dust_concrete, spark_hot, dust_jet_concrete
+  mark      = pool, 4.3, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 48, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 2.17, 0.5, 0.2, 0.18
+  glancedamage = gouge, 3.48, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_792.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 3.5, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 64, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.89, 0.35, 0.25, 0.3
+end
+
+impact ww2_792.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 2.46, 0.55, 0.12, 0
+end
+
+impact ww2_792.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 2.90, 0.6, 0.1, 0
+end
+
+impact ww2_792.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 3.77, 0.3, 0, 0
+end
+
+impact ww2_792.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact ww2_3006   # .30-06 Springfield: the American full-power round
+  bursts    = chips_concrete, dust_concrete, spark_hot, dust_jet_concrete
+  mark      = pool, 4.2, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 48, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 2.10, 0.5, 0.2, 0.18
+  glancedamage = gouge, 3.36, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_3006.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 3.4, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 64, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.82, 0.35, 0.25, 0.3
+end
+
+impact ww2_3006.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 2.38, 0.55, 0.12, 0
+end
+
+impact ww2_3006.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 2.80, 0.6, 0.1, 0
+end
+
+impact ww2_3006.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 3.64, 0.3, 0, 0
+end
+
+impact ww2_3006.liquid
+  bursts    = splash_liquid
+  sound     = none
+end
+
+impact ww2_12ga   # 12 gauge buckshot: ten pellets of it
+  bursts    = chips_tight_concrete, dust_concrete, spark_hot
+  mark      = pool, 3.0, 60
+  markcolor = 60, 54, 48
+  sound     = rsb/impact/concrete
+  light     = 36, 1.1, 2
+  lightcolor = 255, 200, 140
+  glance    = 22, rsb/ricochet, spark_hot
+  damage    = hole_punch, 1.50, 0.5, 0.2, 0.18
+  glancedamage = gouge, 2.40, 0.25, 0.15, 0.15, travel
+end
+
+impact ww2_12ga.metal
+  bursts    = spark_metal, ember_metal, spark_spray
+  mark      = pool, 2.4, 45
+  markcolor = 255, 190, 110
+  sound     = rsb/impact/metal
+  light     = 48, 1.6, 3
+  lightcolor = 255, 200, 140
+  glance    = 28, rsb/ricochet, spark_metal
+  damage    = pit, 1.30, 0.35, 0.25, 0.3
+end
+
+impact ww2_12ga.wood
+  bursts    = splinter_wood, dust_wood
+  sound     = rsb/impact/wood
+  damage    = hole_splinter, 1.70, 0.55, 0.12, 0
+end
+
+impact ww2_12ga.dirt
+  bursts    = clods_dirt, dust_dirt
+  sound     = none
+  damage    = pit, 2.00, 0.6, 0.1, 0
+end
+
+impact ww2_12ga.glass
+  bursts    = glint_glass
+  sound     = rsb/glass
+  damage    = crack, 2.60, 0.3, 0, 0
+end
+
+impact ww2_12ga.liquid
+  bursts    = splash_slime
+  sound     = none
+end
+
+flash ww2_kar98k   # THE KAR98K: the set in one gun. A full rifle cartridge fired four times a second -- a huge dirty flash, smoke that hangs in the doorway, and a push you have to come back from
+  light         = 292, 4.7, 3
+  lightcolor    = 255, 200, 130
+  cone          = 27, 67, 210, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.21
+  smoke         = 1, 0.057, 0.85
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 54, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.95, flash_soot 0.76, spk_specks 0.3
+  blastkick     = kick_puff, 93, 3
+  exposure      = 0.61, 179
+  hearing       = 0.69, 205
+  smokevolume   = 32, 2.1, 1.5, 150, 10
+  barrelheat    = 0.57, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.9
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil ww2_kar98k   # bolt at 3.9 a second
+  climb   = 2.60
+  drift   = 0.50, 5
+  recover = 26, 6
+  max     = 9, 4
+  bloom   = 0.14
+  brace   = 0.6, 0.85
+  view    = 2.2, 8, 1, 6
+end
+
+ejecta ww2_kar98k   # a long rifle case, and it stays hot
+  look    = model, RSB_Casing9mm
+  scale   = 1.35
+  speed   = 1.3, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/debris/brass_rifle
+  hot     = 16
+  life    = 2100
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 18
+end
+
+flash ww2_mg42   # THE MG42: the same cartridge as the Kar98k and nothing else in common. Small per shot because there are twelve a second, but the smoke never gets a chance to clear
+  light         = 187, 3.6, 2
+  lightcolor    = 255, 200, 130
+  cone          = 20, 55, 133, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.14
+  smoke         = 1, 0.041, 0.61
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 33, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.74, flash_soot 0.54, spk_specks 0.3
+  blastkick     = kick_puff, 76, 3
+  exposure      = 0.41, 116
+  hearing       = 0.45, 135
+  smokevolume   = 24, 1.5, 1.1, 150, 10
+  barrelheat    = 0.41, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.5
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil ww2_mg42   # belt at 11.7 a second
+  climb   = 0.55
+  drift   = 0.50, 5
+  recover = 9, 6
+  max     = 7, 3
+  bloom   = 0.14
+  brace   = 0.6, 0.85
+  view    = 1.3, 4, 1, 6
+end
+
+ejecta ww2_mg42   # a long rifle case, and it stays hot
+  look    = model, RSB_Casing9mm
+  scale   = 1.35
+  speed   = 1.3, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/debris/brass_rifle
+  hot     = 16
+  life    = 2100
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 18
+end
+
+flash ww2_heavymg   # THE HEAVY MG: the sloppiest thing in the set at a 5,4 spread, and it should look it -- the widest, dirtiest flash of the lot
+  light         = 225, 4.0, 3
+  lightcolor    = 255, 200, 130
+  cone          = 23, 59, 161, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.16
+  smoke         = 1, 0.045, 0.68
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 41, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.83, flash_soot 0.60, spk_specks 0.3
+  blastkick     = kick_puff, 82, 3
+  exposure      = 0.48, 139
+  hearing       = 0.54, 160
+  smokevolume   = 27, 1.7, 1.2, 150, 10
+  barrelheat    = 0.45, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.9
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil ww2_heavymg   # belt at 8.8 a second
+  climb   = 0.80
+  drift   = 0.70, 5
+  recover = 11, 6
+  max     = 8, 4
+  bloom   = 0.14
+  brace   = 0.6, 0.85
+  view    = 1.4, 5, 1, 6
+end
+
+ejecta ww2_heavymg   # a long rifle case, and it stays hot
+  look    = model, RSB_Casing9mm
+  scale   = 1.35
+  speed   = 1.3, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/debris/brass_rifle
+  hot     = 16
+  life    = 2100
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 18
+end
+
+flash ww2_garand   # THE M1 GARAND: a full-power round from a semi-auto -- a hard flash and a real push, eight times before the clip leaves
+  light         = 262, 4.4, 3
+  lightcolor    = 255, 200, 130
+  cone          = 25, 64, 188, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.18
+  smoke         = 1, 0.048, 0.72
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 48, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.88, flash_soot 0.64, spk_specks 0.3
+  blastkick     = kick_puff, 88, 3
+  exposure      = 0.56, 161
+  hearing       = 0.62, 185
+  smokevolume   = 28, 1.8, 1.3, 150, 10
+  barrelheat    = 0.48, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.2
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil ww2_garand   # semi at 4.4 a second
+  climb   = 1.90
+  drift   = 0.45, 5
+  recover = 20, 6
+  max     = 8, 4
+  bloom   = 0.14
+  brace   = 0.6, 0.85
+  view    = 1.9, 6, 1, 6
+end
+
+ejecta ww2_garand   # a long rifle case, and it stays hot
+  look    = model, RSB_Casing9mm
+  scale   = 1.35
+  speed   = 1.3, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/debris/brass_rifle
+  hot     = 16
+  life    = 2100
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 18
+end
+
+flash ww2_bar   # THE BAR: a rifle cartridge on full auto, which is as unreasonable as it sounds
+  light         = 255, 4.3, 3
+  lightcolor    = 255, 200, 130
+  cone          = 25, 63, 183, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.18
+  smoke         = 1, 0.048, 0.72
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 47, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.88, flash_soot 0.64, spk_specks 0.3
+  blastkick     = kick_puff, 87, 3
+  exposure      = 0.54, 157
+  hearing       = 0.60, 180
+  smokevolume   = 28, 1.8, 1.3, 150, 10
+  barrelheat    = 0.48, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.2
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil ww2_bar   # auto at 5.0 a second
+  climb   = 1.70
+  drift   = 0.60, 5
+  recover = 18, 6
+  max     = 9, 4
+  bloom   = 0.14
+  brace   = 0.6, 0.85
+  view    = 1.8, 6, 1, 6
+end
+
+ejecta ww2_bar   # a long rifle case, and it stays hot
+  look    = model, RSB_Casing9mm
+  scale   = 1.35
+  speed   = 1.3, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/debris/brass_rifle
+  hot     = 16
+  life    = 2100
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 18
+end
+
+flash ww2_trench   # THE TRENCH GUN: ten pellets and a cloud. The only pellet gun in the set
+  light         = 240, 4.8, 3
+  lightcolor    = 255, 200, 130
+  cone          = 28, 68, 176, 8
+  conetics      = 4
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.21
+  smoke         = 1, 0.060, 0.90
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 56, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.95, flash_soot 0.80, spk_specks 0.3
+  blastkick     = kick_puff, 94, 3
+  exposure      = 0.63, 184
+  hearing       = 0.71, 210
+  smokevolume   = 34, 2.2, 1.6, 150, 10
+  barrelheat    = 0.60, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.2
+  tail          = rsb/tail/smg, 0.7
+end
+
+recoil ww2_trench   # pump at 5.0 a second
+  climb   = 2.30
+  drift   = 0.40, 5
+  recover = 22, 6
+  max     = 9, 4
+  bloom   = 0.08
+  brace   = 0.6, 0.85
+  view    = 2.1, 7, 1, 6
+end
+
+ejecta ww2_trench   # a paper hull
+  look    = model, RSB_Casing9mm
+  scale   = 1.20
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/shell
+  hot     = 8
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash ww2_m1911   # THE COLT M1911: a fat slow .45, a soft yellow flash and a lazy push
+  light         = 127, 3.6, 2
+  lightcolor    = 255, 200, 130
+  cone          = 20, 55, 93, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.14
+  smoke         = 1, 0.033, 0.50
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 33, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.61, flash_soot 0.44, spk_specks 0.3
+  blastkick     = kick_puff, 76, 3
+  exposure      = 0.41, 116
+  hearing       = 0.45, 135
+  smokevolume   = 21, 1.2, 0.9, 150, 10
+  barrelheat    = 0.33, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.9
+  tail          = rsb/tail/smg, 0.7
+end
+
+recoil ww2_m1911   # semi at 11.7 a second
+  climb   = 1.00
+  drift   = 0.40, 5
+  recover = 12, 6
+  max     = 5, 2
+  bloom   = 0.08
+  brace   = 0.6, 0.85
+  view    = 1.5, 5, 1, 6
+end
+
+ejecta ww2_m1911   # a fat pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 1.05
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/medium
+  hot     = 12
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash ww2_luger   # THE LUGER P08: small, sharp and tidy -- the cleanest thing here, which is not saying much
+  light         = 105, 3.3, 2
+  lightcolor    = 255, 200, 130
+  cone          = 19, 52, 77, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.12
+  smoke         = 1, 0.028, 0.43
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 29, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.52, flash_soot 0.38, spk_specks 0.3
+  blastkick     = kick_puff, 72, 3
+  exposure      = 0.36, 102
+  hearing       = 0.39, 120
+  smokevolume   = 19, 1.0, 0.8, 150, 10
+  barrelheat    = 0.28, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.5
+  tail          = rsb/tail/smg, 0.7
+end
+
+recoil ww2_luger   # semi at 11.7 a second
+  climb   = 0.80
+  drift   = 0.35, 5
+  recover = 11, 6
+  max     = 4, 2
+  bloom   = 0.08
+  brace   = 0.6, 0.85
+  view    = 1.4, 5, 1, 6
+end
+
+ejecta ww2_luger   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash ww2_thompson   # THE THOMPSON M1A1: .45 on full auto -- fat rounds, a fat flash, and it climbs
+  light         = 135, 3.6, 2
+  lightcolor    = 255, 200, 130
+  cone          = 21, 56, 99, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.14
+  smoke         = 1, 0.037, 0.56
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 35, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.69, flash_soot 0.50, spk_specks 0.3
+  blastkick     = kick_puff, 77, 3
+  exposure      = 0.42, 121
+  hearing       = 0.46, 140
+  smokevolume   = 23, 1.4, 1.0, 150, 10
+  barrelheat    = 0.38, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.2
+  tail          = rsb/tail/smg, 0.7
+end
+
+recoil ww2_thompson   # auto at 11.7 a second
+  climb   = 1.05
+  drift   = 0.65, 5
+  recover = 12, 6
+  max     = 7, 3
+  bloom   = 0.08
+  brace   = 0.6, 0.85
+  view    = 1.5, 5, 1, 6
+end
+
+ejecta ww2_thompson   # a fat pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 1.05
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/medium
+  hot     = 12
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash ww2_mp40   # THE MP40: the other pole. Twelve damage seventeen times a second -- a small sooty flash and a gun you hose with
+  light         = 90, 3.2, 2
+  lightcolor    = 255, 200, 130
+  cone          = 18, 50, 66, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.11
+  smoke         = 1, 0.030, 0.45
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 26, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.55, flash_soot 0.40, spk_specks 0.3
+  blastkick     = kick_puff, 70, 3
+  exposure      = 0.33, 94
+  hearing       = 0.36, 110
+  smokevolume   = 20, 1.1, 0.8, 150, 10
+  barrelheat    = 0.30, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.6
+  tail          = rsb/tail/smg, 0.7
+end
+
+recoil ww2_mp40   # auto at 17.5 a second
+  climb   = 0.50
+  drift   = 0.50, 5
+  recover = 8, 6
+  max     = 6, 3
+  bloom   = 0.08
+  brace   = 0.6, 0.85
+  view    = 1.2, 4, 1, 6
+end
+
+ejecta ww2_mp40   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash ww2_ppsh   # THE PPSH-41: seventeen a second out of a drum -- a fast spiteful little flash and a stream of brass
+  light         = 97, 3.2, 2
+  lightcolor    = 255, 200, 130
+  cone          = 18, 51, 71, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.12
+  smoke         = 1, 0.032, 0.47
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 27, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.58, flash_soot 0.42, spk_specks 0.3
+  blastkick     = kick_puff, 71, 3
+  exposure      = 0.34, 98
+  hearing       = 0.38, 115
+  smokevolume   = 20, 1.2, 0.8, 150, 10
+  barrelheat    = 0.32, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.7
+  tail          = rsb/tail/smg, 0.7
+end
+
+recoil ww2_ppsh   # auto at 17.5 a second
+  climb   = 0.50
+  drift   = 0.55, 5
+  recover = 8, 6
+  max     = 6, 3
+  bloom   = 0.08
+  brace   = 0.6, 0.85
+  view    = 1.2, 4, 1, 6
+end
+
+ejecta ww2_ppsh   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash ww2_stg44   # THE STG 44: the first assault rifle, and it sits exactly between the rifles and the subguns because that is what it was for
+  light         = 180, 3.5, 2
+  lightcolor    = 255, 200, 130
+  cone          = 20, 54, 128, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_heavy_streaks
+  flame         = 0.13
+  smoke         = 1, 0.036, 0.54
+  smokeparticle = rsb_smoke_soot_gun
+  powderburn    = 32, 7, 0.75
+  powdervary    = 0.45
+  maybe         = powder_clump 0.66, flash_soot 0.48, spk_specks 0.3
+  blastkick     = kick_puff, 75, 3
+  exposure      = 0.39, 112
+  hearing       = 0.43, 130
+  smokevolume   = 22, 1.3, 1.0, 150, 10
+  barrelheat    = 0.36, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.1
+  tail          = rsb/tail/br, 0.9
+end
+
+recoil ww2_stg44   # auto at 17.5 a second
+  climb   = 0.75
+  drift   = 0.45, 5
+  recover = 10, 6
+  max     = 6, 3
+  bloom   = 0.14
+  brace   = 0.6, 0.85
+  view    = 1.3, 5, 1, 6
+end
+
+ejecta ww2_stg44   # a fat pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 1.05
+  speed   = 1.3, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/medium
+  hot     = 12
+  life    = 2100
+  portsmoke = rsb_smoke_port, 3
+  wisp    = rsb_casing_wisp, 18
+end
+
+flame ww2_flame   # THE FLAMMENWERFER: a fat wet gout, not a modern jet -- slower, shorter, and it clings
+  reach       = 420
+  speed       = 700
+  spread      = 2.2
+  stream      = flame_core, flame_body, flame_tip, flame_embers
+  landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke, flame_lick
+  cling       = 0.32
+  tube        = 6, 1.0, 3, 0.5
+  tubelook    = 1.8, 3.2, 0.5
+  tubecolors  = 255, 246, 220, 255, 205, 110, 255, 130, 36, 190, 55, 10, 100, 22, 5
+  tubelicks   = 0.7, 0.07, 2.2
+  heat        = 5, 20, 1.3, 0.09, 34
+  heatland    = 32, 1.5
+  landingtics = 2
+  scorch      = pool, 12, 120
+  scorchcolor = 255, 95, 20
+  scorchtics  = 9
+  light       = 260, 2.8, 0.38
+  lightcolor  = 255, 140, 50
+  landlight   = 180, 2.4
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+  sputter     = 0.2, rsb/flame/hiss
+  flameout    = flame_out_puff
+  smokevolume = 20, 0.6, 1.8, 0.85
+  damage      = scorch, 14, 0, 0.06, 0
+end
+
+# ---- END WW2
