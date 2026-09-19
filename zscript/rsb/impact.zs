@@ -485,6 +485,14 @@ class RSB_Impact play
 			PaintDamage(surf, travel, im.damageBrush, im.damageRadius, im.damageDepth, im.damageSoot,
 				im.damageHeat, im.damageWet * wetMul, im.damageAlong);
 
+		// A BLAST RIPPLE (`ripple`): the air bending in a ring where it went off. Anchored to the WORLD,
+		// not to a hand -- it happened out there. Look only, so it is called straight from here on
+		// whichever machines see it, with no network event: nothing in the game reads it back.
+		if (im.rippleRadius > 0 && RSB_Settings.FlashShockwave())
+			level.SpawnShockwave(surf.at + surf.normal * 6.0, im.rippleRadius,
+				im.rippleStrength * RSB_Tier.HeatScale(tier), im.rippleTics,
+				im.rippleThickness, im.rippleChroma, 0, null);
+
 		// EMISSIVE VOLUMES (engine #15, `volume`): a blast as glowing gas where it lands, in the world.
 		if (im.volumeNames.Size() > 0) SpawnVolumes(im, surf.at + surf.normal * 8.0, surf.normal, tier, hitTic, posSeed);
 

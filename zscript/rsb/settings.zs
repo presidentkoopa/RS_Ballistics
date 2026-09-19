@@ -169,6 +169,8 @@ class RSB_Settings play
 	// than the look: a darkened room is level state, it is saved, and in co-op it is darker for everyone.
 	// So it is deliberately a plain on/off with a floor, and it defaults ON at a conservative drop.
 	static bool ShootOutLights() { return SrvB("rsb_shootlights", true); }
+	// Does a dying lamp gutter, or does the room just drop? Playsim, so server.
+	static bool LightStutter() { return SrvB("rsb_shootlights_stutter", true); }
 	// LIT DECORATIONS: torches, tech lamps, burning barrels. Separate from the texture half because
 	// this one makes scenery SHOOTABLE, which changes what the player can interact with.
 	static bool ShootOutLamps() { return SrvB("rsb_shootlamps", true); }

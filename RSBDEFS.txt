@@ -2279,6 +2279,7 @@ impact rocket
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 # THE BFG'S BLAST: a shockwave racing across the surface, lit ozone hanging, chunks by surface;
@@ -2297,6 +2298,7 @@ impact bfg
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.metal
@@ -2313,6 +2315,7 @@ impact bfg.metal
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.wood
@@ -2329,6 +2332,7 @@ impact bfg.wood
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.dirt
@@ -2345,6 +2349,7 @@ impact bfg.dirt
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.glass
@@ -2361,6 +2366,7 @@ impact bfg.glass
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.liquid
@@ -2375,6 +2381,7 @@ impact bfg.liquid
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy
@@ -2392,6 +2399,7 @@ impact bfg_heavy
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.metal
@@ -2409,6 +2417,7 @@ impact bfg_heavy.metal
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.wood
@@ -2426,6 +2435,7 @@ impact bfg_heavy.wood
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.dirt
@@ -2443,6 +2453,7 @@ impact bfg_heavy.dirt
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.glass
@@ -2460,6 +2471,7 @@ impact bfg_heavy.glass
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.liquid
@@ -2475,6 +2487,7 @@ impact bfg_heavy.liquid
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_spray           # where a BFG ray strikes (on Doom's BFE2 flash): a green flare, arcs, a brief light
@@ -2756,6 +2769,7 @@ impact rocket.metal
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.wood
@@ -2772,6 +2786,7 @@ impact rocket.wood
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.dirt
@@ -2788,6 +2803,7 @@ impact rocket.dirt
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.glass
@@ -2804,6 +2820,7 @@ impact rocket.glass
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.liquid
@@ -2817,6 +2834,7 @@ impact rocket.liquid
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 # THE RPG's WARHEAD: the rocket's blasts, hitting harder -- more of everything, a wider heat.
@@ -2835,6 +2853,7 @@ impact rocket_rpg
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.metal
@@ -2852,6 +2871,7 @@ impact rocket_rpg.metal
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.wood
@@ -2869,6 +2889,7 @@ impact rocket_rpg.wood
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.dirt
@@ -2886,6 +2907,7 @@ impact rocket_rpg.dirt
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.glass
@@ -2903,6 +2925,7 @@ impact rocket_rpg.glass
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.liquid
@@ -2917,6 +2940,7 @@ impact rocket_rpg.liquid
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 
@@ -7005,6 +7029,7 @@ impact flashbang   # A FLASHBANG going off: a blinding white flash, a bang that 
   exposure    = 6, 192, 1.5
   hearing     = 4, 256, 1.5
   tail        = rsb/blast/roll, 0.7
+  ripple      = 110, 0.8, 11, 0, 0.05
 end
 
 impact c4   # C4: a heavy charge -- the RPG's blast, bigger: a wider fireball, a deeper crater, a harder shove
@@ -7023,6 +7048,7 @@ impact c4   # C4: a heavy charge -- the RPG's blast, bigger: a wider fireball, a
   exposure    = 3.5, 512
   hearing     = 3.5, 448
   tail        = rsb/blast/roll, 1.0
+  ripple      = 260, 1.5, 18, 0, 0.18
 end
 # ---------------------------------------------------------------- END BREACH
 
@@ -7049,6 +7075,7 @@ impact frag
   damage      = crater, 26, 0.6, 0.9, 0
   exposure    = 2.5, 416
   hearing     = 2.2, 384
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact frag.metal   # metal: the plate rings, sparks off it, torn shards, a shallower dish
@@ -7064,6 +7091,7 @@ impact frag.metal   # metal: the plate rings, sparks off it, torn shards, a shal
   damage      = crater, 20, 0.35, 0.8, 0.6
   exposure    = 2.5, 416
   hearing     = 2.2, 384
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact frag.wood   # wood: splinters and planks, dust off the grain, a deeper bite
@@ -7079,6 +7107,7 @@ impact frag.wood   # wood: splinters and planks, dust off the grain, a deeper bi
   damage      = crater, 24, 0.55, 1, 0
   exposure    = 2.5, 416
   hearing     = 2.2, 384
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact frag.dirt   # dirt: clods thrown, a rolling cloud, the deepest hole and the dullest sound
@@ -7094,6 +7123,7 @@ impact frag.dirt   # dirt: clods thrown, a rolling cloud, the deepest hole and t
   damage      = crater, 28, 0.7, 0.6, 0
   exposure    = 2.5, 416
   hearing     = 2.2, 384
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact frag.glass   # glass: it goes through -- a glittering spray and a crack, no crater
@@ -7109,6 +7139,7 @@ impact frag.glass   # glass: it goes through -- a glittering spray and a crack, 
   damage      = crack, 30, 0.4, 0.3, 0
   exposure    = 2.5, 416
   hearing     = 2.2, 384
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact frag.liquid   # water: a column thrown up, nothing left behind, the bang gone flat
@@ -7120,6 +7151,7 @@ impact frag.liquid   # water: a column thrown up, nothing left behind, the bang 
   push        = 300, 760
   exposure    = 2.2, 384
   hearing     = 2.0, 352
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 # ---------------------------------------------------------------- EXTREME: THE VANILLA ROSTER
@@ -8280,6 +8312,7 @@ impact rocket@extreme   # a rocket's blast at extreme: a starburst, a dust ring 
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.metal@extreme
@@ -8296,6 +8329,7 @@ impact rocket.metal@extreme
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.wood@extreme
@@ -8312,6 +8346,7 @@ impact rocket.wood@extreme
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.dirt@extreme
@@ -8328,6 +8363,7 @@ impact rocket.dirt@extreme
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.glass@extreme
@@ -8344,6 +8380,7 @@ impact rocket.glass@extreme
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket.liquid@extreme
@@ -8357,6 +8394,7 @@ impact rocket.liquid@extreme
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ring rolling across the surface, a bigger scorch, a harder shove
@@ -8374,6 +8412,7 @@ impact rocket_rpg@extreme   # the RPG's blast at extreme: a starburst, a dust ri
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.metal@extreme
@@ -8391,6 +8430,7 @@ impact rocket_rpg.metal@extreme
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.wood@extreme
@@ -8408,6 +8448,7 @@ impact rocket_rpg.wood@extreme
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.dirt@extreme
@@ -8425,6 +8466,7 @@ impact rocket_rpg.dirt@extreme
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.glass@extreme
@@ -8442,6 +8484,7 @@ impact rocket_rpg.glass@extreme
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rocket_rpg.liquid@extreme
@@ -8456,6 +8499,7 @@ impact rocket_rpg.liquid@extreme
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starburst, a bigger hex ring, a longer light
@@ -8472,6 +8516,7 @@ impact bfg@extreme   # the BFG's blast at extreme: the heavy shockwave, a starbu
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.metal@extreme
@@ -8488,6 +8533,7 @@ impact bfg.metal@extreme
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.wood@extreme
@@ -8504,6 +8550,7 @@ impact bfg.wood@extreme
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.dirt@extreme
@@ -8520,6 +8567,7 @@ impact bfg.dirt@extreme
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.glass@extreme
@@ -8536,6 +8584,7 @@ impact bfg.glass@extreme
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg.liquid@extreme
@@ -8549,6 +8598,7 @@ impact bfg.liquid@extreme
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a storm of energy sparks, a bigger hex ring, the room lit longer
@@ -8566,6 +8616,7 @@ impact bfg_heavy@extreme   # the Heavy BFG's blast at extreme: a starburst and a
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.metal@extreme
@@ -8583,6 +8634,7 @@ impact bfg_heavy.metal@extreme
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.wood@extreme
@@ -8600,6 +8652,7 @@ impact bfg_heavy.wood@extreme
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.dirt@extreme
@@ -8617,6 +8670,7 @@ impact bfg_heavy.dirt@extreme
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.glass@extreme
@@ -8634,6 +8688,7 @@ impact bfg_heavy.glass@extreme
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_heavy.liquid@extreme
@@ -8648,6 +8703,7 @@ impact bfg_heavy.liquid@extreme
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact bfg_spray@extreme   # where a BFG ray strikes at extreme: a starburst in the flare, a longer light
@@ -8953,6 +9009,7 @@ impact bfg.lava   # bfg into molten rock: lumps thrown and cooling, spit, embers
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy.lava   # bfg heavy into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -8968,6 +9025,7 @@ impact bfg_heavy.lava   # bfg heavy into molten rock: lumps thrown and cooling, 
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact saw.lava   # saw into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9025,6 +9083,7 @@ impact rocket.lava   # rocket into molten rock: lumps thrown and cooling, spit, 
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg.lava   # rocket rpg into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9040,6 +9099,7 @@ impact rocket_rpg.lava   # rocket rpg into molten rock: lumps thrown and cooling
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rail.lava   # rail into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9083,6 +9143,7 @@ impact frag.lava   # frag into molten rock: lumps thrown and cooling, spit, embe
   push        = 300, 760
   exposure    = 2.2, 384
   hearing     = 2.0, 352
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact pistol_45.lava@extreme   # pistol 45 into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9167,6 +9228,7 @@ impact rocket.lava@extreme   # rocket into molten rock: lumps thrown and cooling
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg.lava@extreme   # rocket rpg into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9182,6 +9244,7 @@ impact rocket_rpg.lava@extreme   # rocket rpg into molten rock: lumps thrown and
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact bfg.lava@extreme   # bfg into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9196,6 +9259,7 @@ impact bfg.lava@extreme   # bfg into molten rock: lumps thrown and cooling, spit
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy.lava@extreme   # bfg heavy into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9211,6 +9275,7 @@ impact bfg_heavy.lava@extreme   # bfg heavy into molten rock: lumps thrown and c
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact rail.lava@extreme   # rail into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9351,6 +9416,7 @@ impact bfg.lava   # bfg into molten rock: lumps thrown and cooling, spit, embers
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy.lava   # bfg heavy into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9366,6 +9432,7 @@ impact bfg_heavy.lava   # bfg heavy into molten rock: lumps thrown and cooling, 
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact saw.lava   # saw into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9423,6 +9490,7 @@ impact rocket.lava   # rocket into molten rock: lumps thrown and cooling, spit, 
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg.lava   # rocket rpg into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9438,6 +9506,7 @@ impact rocket_rpg.lava   # rocket rpg into molten rock: lumps thrown and cooling
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rail.lava   # rail into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9481,6 +9550,7 @@ impact frag.lava   # frag into molten rock: lumps thrown and cooling, spit, embe
   push        = 300, 760
   exposure    = 2.2, 384
   hearing     = 2.0, 352
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact pistol_45.lava@extreme   # pistol 45 into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9565,6 +9635,7 @@ impact rocket.lava@extreme   # rocket into molten rock: lumps thrown and cooling
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg.lava@extreme   # rocket rpg into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9580,6 +9651,7 @@ impact rocket_rpg.lava@extreme   # rocket rpg into molten rock: lumps thrown and
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact bfg.lava@extreme   # bfg into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9594,6 +9666,7 @@ impact bfg.lava@extreme   # bfg into molten rock: lumps thrown and cooling, spit
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy.lava@extreme   # bfg heavy into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9609,6 +9682,7 @@ impact bfg_heavy.lava@extreme   # bfg heavy into molten rock: lumps thrown and c
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact rail.lava@extreme   # rail into molten rock: lumps thrown and cooling, spit, embers lifting, the air burning
@@ -9721,6 +9795,7 @@ impact bfg.slime   # nukage and slime: the same hit as water, thrown up thicker,
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy.slime   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9736,6 +9811,7 @@ impact bfg_heavy.slime   # nukage and slime: the same hit as water, thrown up th
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact saw.slime   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9784,6 +9860,7 @@ impact rocket.slime   # nukage and slime: the same hit as water, thrown up thick
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg.slime   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9798,6 +9875,7 @@ impact rocket_rpg.slime   # nukage and slime: the same hit as water, thrown up t
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact rail.slime   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9835,6 +9913,7 @@ impact frag.slime   # nukage and slime: the same hit as water, thrown up thicker
   push        = 300, 760
   exposure    = 2.2, 384
   hearing     = 2.0, 352
+  ripple      = 130, 0.9, 13, 0, 0.1
 end
 
 impact pistol_45.slime@extreme   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9906,6 +9985,7 @@ impact rocket.slime@extreme   # nukage and slime: the same hit as water, thrown 
   exposure   = 2.5, 384
   hearing    = 2, 320
   tail        = rsb/blast/roll, 0.8
+  ripple      = 150, 1.0, 14, 0, 0.12
 end
 
 impact rocket_rpg.slime@extreme   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9920,6 +10000,7 @@ impact rocket_rpg.slime@extreme   # nukage and slime: the same hit as water, thr
   exposure   = 3, 448
   hearing    = 2.4, 384
   tail        = rsb/blast/roll, 0.9
+  ripple      = 190, 1.2, 16, 0, 0.15
 end
 
 impact bfg.slime@extreme   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9933,6 +10014,7 @@ impact bfg.slime@extreme   # nukage and slime: the same hit as water, thrown up 
   exposure   = 4, 640, 1, 120, 255, 140
   hearing    = 2.5, 480
   tail        = rsb/blast/roll, 0.7
+  ripple      = 230, 1.3, 18, 0, 0.35
 end
 
 impact bfg_heavy.slime@extreme   # nukage and slime: the same hit as water, thrown up thicker, slower and green
@@ -9947,6 +10029,7 @@ impact bfg_heavy.slime@extreme   # nukage and slime: the same hit as water, thro
   exposure   = 5, 768, 1.2, 130, 255, 150
   hearing    = 3, 512
   tail        = rsb/blast/roll, 0.8
+  ripple      = 280, 1.5, 20, 0, 0.4
 end
 
 impact rail.slime@extreme   # nukage and slime: the same hit as water, thrown up thicker, slower and green

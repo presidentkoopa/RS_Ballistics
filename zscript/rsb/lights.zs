@@ -61,6 +61,13 @@ class RSB_Lights : Thinker
 	// Per sector, filled lazily the first time a fixture in it breaks. -1 = not counted yet.
 	private Array<int> tally;
 	private Array<int> dead;
+	// A ROOM IN THE ACT OF GOING DARK. A filament does not stop, it gutters: the room stutters
+	// between what it was and what it is becoming for a few tics and then settles. Playsim state,
+	// stepped on world tics from a fixed table -- no RNG, nothing per player, identical everywhere.
+	private Array<int> setSec;
+	private Array<double> setFrom;
+	private Array<double> setTo;
+	private Array<int> setAge;
 
 
 	const CELL = 256.0;        // a ceiling panel's grid, map units
@@ -259,6 +266,44 @@ class RSB_Lights : Thinker
 		return RSB_Settings.LightFloor();
 	}
 
+	// ---------------------------------------------------------------- guttering out
+	// HOW A LAMP DIES, one entry per world tic. 1 is all the way to the new darkness, 0 is the light
+	// it had. It fails, catches, fails harder, half comes back, and it is gone -- the shape of a tube
+	// letting go rather than a dimmer being turned. A fixed table and not a hash: this is playsim
+	// state written to a shared sector, so it must be the same on every machine, and "deterministic
+	// random" is a harder promise to keep than "no random at all".
+	static const double GUTTER[] = { 1.0, 0.15, 0.9, 0.0, 1.0, 0.45, 1.0, 0.8, 1.0, 1.0 };
+
+	private void Settle(int idx, double from, double to)
+	{
+		for (int i = 0; i < setSec.Size(); i++)
+			if (setSec[i] == idx)
+			{
+				// Already guttering: keep where it started from, aim at the deeper target.
+				setTo[i] = to;
+				return;
+			}
+		setSec.Push(idx); setFrom.Push(from); setTo.Push(to); setAge.Push(0);
+	}
+
+	override void Tick()
+	{
+		for (int i = setSec.Size() - 1; i >= 0; i--)
+		{
+			let sec = level.sectors[setSec[i]];
+			int age = setAge[i];
+			if (!sec || age >= GUTTER.Size())
+			{
+				if (sec) sec.SetLightTrim(setTo[i], 0);
+				setSec.Delete(i); setFrom.Delete(i); setTo.Delete(i); setAge.Delete(i);
+				continue;
+			}
+			double k = GUTTER[age];
+			sec.SetLightTrim(setFrom[i] + (setTo[i] - setFrom[i]) * k, 0);
+			setAge[i] = age + 1;
+		}
+	}
+
 	// ---------------------------------------------------------------- the break
 	// PLAYSIM, on the hit, on every machine alike. Returns true if this hit killed a fixture
 	// that was alive -- the caller uses that to play the break rather than the ordinary pop.
@@ -310,7 +355,12 @@ class RSB_Lights : Thinker
 			double most = 1.0 - double(floorLevel) / double(base);
 			dim = min(dim, max(0.0, most));
 		}
-		surf.sec.SetLightTrim(dim, 0);
+		// GUTTER INTO IT rather than snapping. The lamp is dead either way and the room ends at the
+		// same darkness; it just takes a beat to get there, which is the moment the shot earns.
+		if (RSB_Settings.LightStutter())
+			r.Settle(idx, surf.sec.GetLightTrimDim(), dim);
+		else
+			surf.sec.SetLightTrim(dim, 0);
 
 		r.Blacken(surf, idx);
 

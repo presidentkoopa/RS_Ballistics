@@ -92,6 +92,34 @@ OptionString "RSBPreviewFlamers"
 	"napalm",      "Napalm -- wide, sticks and burns"
 }
 
+OptionValue "RSBRippleLooks"
+{
+	0, "A clear ring"
+	1, "Subtle"
+	2, "Heavy lens"
+}
+
+OptionValue "RSBRippleNear"
+{
+	0, "Fade before they reach you"
+	1, "Feel it pass"
+	2, "Feel it pass strongly"
+}
+
+OptionValue "RSBRippleChroma"
+{
+	0, "None"
+	1, "Faint, on the big blasts"
+	2, "Strong, on every ripple"
+}
+
+OptionValue "RSBRippleTest"
+{
+	0, "Off"
+	1, "A ripple every 2 seconds ahead of you"
+	2, "The near-eye test"
+}
+
 OptionValue "RSBFlashClocks"
 {
 	1, "Snaps (real time)"
@@ -236,6 +264,7 @@ OptionMenu "RSB_ImpactMenu"
 	StaticText "gridded, so you walk your fire across it. THIS ONE CHANGES THE GAME, not just the look:", "DarkGray"
 	StaticText "the dark room is saved, and in co-op it is dark for everyone.", "DarkGray"
 	Option "Shoot out lights", "rsb_shootlights", "OnOff"
+	Option "Lamps gutter as they die", "rsb_shootlights_stutter", "OnOff"
 	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_share", 0.0, 1.0, 0.05, 2
 	Slider "Never darker than", "rsb_shootlights_floor", 0, 255, 8, 0
 	StaticText "A share of the room's own light, so a bright room loses more than a dim one. Rooms with", "DarkGray"
@@ -375,6 +404,20 @@ OptionMenu "RSB_HeatMenu"
 	Slider "Heat shimmer strength", "r_heatrefraction_scale", 0, 4, 0.25, 2
 	StaticText ""
 	Option "Test column ahead of you", "r_heatrefraction_test", "OnOff"
+	StaticText ""
+	StaticText "BLAST RIPPLES", "Gold"
+	StaticText "A ring of bent air racing out from a blast -- the muzzle of something heavy, or where a", "DarkGray"
+	StaticText "rocket, an RPG round, the BFG or a charge goes off. A ripple off YOUR gun rides your own", "DarkGray"
+	StaticText "hand; someone else's rides theirs. Look only: nothing in the game reads them, so these", "DarkGray"
+	StaticText "are your settings and turning them off is a preference, not a disadvantage.", "DarkGray"
+	Option "Blast ripples", "r_shockwave", "OnOff"
+	Slider "Ripple strength", "r_shockwave_scale", 0, 2, 0.05, 2
+	Option "Ripple look", "r_shockwave_look", "RSBRippleLooks"
+	Option "Ripples near your eyes", "r_shockwave_near", "RSBRippleNear"
+	Option "Colour fringe", "r_shockwave_chroma", "RSBRippleChroma"
+	Slider "Most ripples at once", "r_shockwave_max", 4, 32, 1, 0
+	StaticText ""
+	Option "Ripple test", "r_shockwave_test", "RSBRippleTest"
 }
 
 OptionMenu "RSB_LightMenu"
@@ -399,6 +442,7 @@ OptionMenu "RSB_LightMenu"
 	StaticText "Shoot a lamp and the room it lit gets darker by that lamp's share. This one changes the", "DarkGray"
 	StaticText "GAME, not just the look: the dark room is saved and in co-op it is dark for everyone.", "DarkGray"
 	Option "Shoot out lights", "rsb_shootlights", "OnOff"
+	Option "Lamps gutter as they die", "rsb_shootlights_stutter", "OnOff"
 	Slider "Light a room loses (all fixtures dead)", "rsb_shootlights_share", 0.0, 1.0, 0.05, 2
 	Slider "Never darker than", "rsb_shootlights_floor", 0, 255, 8, 0
 	StaticText ""

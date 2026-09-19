@@ -189,6 +189,13 @@ class RSB_ImpactDef : RSB_Def
 	// walls. A near listener hears crack then roll; a far one hears mostly roll, because the crack
 	// attenuates faster than the low rumble does -- distance changes an explosion shape, not just
 	// its volume, with no per-listener code. Blast profiles only: a bullet hit has nothing to roll.
+	// A BLAST RIPPLE where it lands (`ripple`): the air bending in a ring off an explosion. Look only,
+	// anchored to the world rather than to anyone's hand -- it happened out there, not at a muzzle.
+	double rippleRadius;   // 0 = none
+	double rippleStrength;
+	int    rippleTics;
+	double rippleThickness;
+	double rippleChroma;
 	String tailSound;      // "" = none
 	double tailVolume;     // x the Gunshot tails slider (the same room-answering knob)
 	double lightRadius;    // 0 = no light
@@ -365,6 +372,8 @@ class RSB_FlashDef : RSB_Def
 	double powderVary;
 	// A SHOCKWAVE (`shockwave`): a bubble of bent air growing to `radius` over `tics`, fading as it grows.
 	double shockRadius;
+	double shockThickness;   // 0 = the engine's own default ring thickness
+	double shockChroma;      // 0..1, how much this blast may split colour
 	double shockStrength;
 	int    shockTics;
 	// EMISSIVE VOLUMES (engine #15, `volume`): VOLUMEDEFS definitions spawned with the flash -- `back` ones out of the

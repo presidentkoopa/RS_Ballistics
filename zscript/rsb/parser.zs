@@ -243,6 +243,11 @@ class RSB_Parser
 			d.soundName = "none";
 			d.tailSound = "";
 			d.tailVolume = 1.0;
+			d.rippleRadius = 0;
+			d.rippleStrength = 1.0;
+			d.rippleTics = 12;
+			d.rippleThickness = 0;
+			d.rippleChroma = 0;
 			d.lightRadius = 0;
 			d.lightIntensity = 1;
 			d.lightTics = 3;
@@ -946,6 +951,20 @@ class RSB_Parser
 
 		// THE ROOM ANSWERING A BLAST: the roll that comes back off the walls after the crack. Its files
 		// carry their own head silence (rsb/blast/roll), so nothing here has to time it.
+		// A BLAST RIPPLE (`ripple`): radius, strength, tics, and optionally thickness and colour fringe.
+		// Look only -- it draws bent air and nothing in the game reads it.
+		if (key == "ripple")
+		{
+			if (v.Size() == 1 && v[0] ~== "none") { im.rippleRadius = 0; return ""; }
+			why = NumsBetween(v, 3, 5); if (why != "") return why;
+			im.rippleRadius = v[0].ToDouble();
+			im.rippleStrength = v[1].ToDouble();
+			im.rippleTics = v[2].ToInt();
+			im.rippleThickness = (v.Size() > 3) ? v[3].ToDouble() : 0.0;
+			im.rippleChroma = (v.Size() > 4) ? clamp(v[4].ToDouble(), 0.0, 1.0) : 0.0;
+			return (im.rippleRadius > 0 && im.rippleStrength >= 0 && im.rippleTics >= 1 && im.rippleTics <= 70)
+				? "" : "ripple is radius, strength, tics (1..70)[, thickness][, colour fringe 0..1] -- or none";
+		}
 		if (key == "tail")
 		{
 			if (v.Size() == 1 && v[0] ~== "none")
@@ -1508,11 +1527,13 @@ class RSB_Parser
 		}
 		if (key == "shockwave")
 		{
-			why = Nums(v, 3); if (why != "") return why;
+			why = NumsBetween(v, 3, 5); if (why != "") return why;
 			f.shockRadius = v[0].ToDouble();
 			f.shockStrength = v[1].ToDouble();
 			f.shockTics = v[2].ToInt();
-			return (f.shockRadius > 0 && f.shockStrength >= 0 && f.shockTics >= 1 && f.shockTics <= 35) ? "" : "shockwave is radius, strength, tics (1..35)";
+			f.shockThickness = (v.Size() > 3) ? v[3].ToDouble() : 0.0;
+			f.shockChroma = (v.Size() > 4) ? clamp(v[4].ToDouble(), 0.0, 1.0) : 0.0;
+			return (f.shockRadius > 0 && f.shockStrength >= 0 && f.shockTics >= 1 && f.shockTics <= 70) ? "" : "shockwave is radius, strength, tics (1..70)[, thickness][, colour fringe 0..1]";
 		}
 		if (key == "tail")
 		{

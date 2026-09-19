@@ -56,8 +56,7 @@ class RSB_Flash : Actor
 	private Color  shotColor;      // this shot's light colour (`powdervary`)
 	int            shooterPlayer;  // who fired (-1 = no one): a volume follows that player
 	int            shooterHand;    // 0 main hand, 1 off hand, 2 head
-	private int    shockSlot;      // the shockwave's heat slot, 0 = none
-	private int    shockAge;
+
 	transient RSB_FlashDef flashDef;
 
 	States
@@ -267,13 +266,36 @@ class RSB_Flash : Actor
 		// THE BLAST HITTING WHAT IS NEAR (`blastkick`): walls beside and a ceiling above shed dust; casings are thrown.
 		if (fd.blastImpact.Length() > 0 && fd.blastReach > 0 && RSB_Settings.FlashBlastKick())
 			BlastKick(fd, sizeMul);
-		// A SHOCKWAVE (`shockwave`): a bubble of bent air growing off the muzzle, laid again each tic in Tick.
+		// THE BLAST RIPPLE (`shockwave`): the air bending in a ring off the muzzle.
+		//
+		// THIS USED TO BE A HEAT BALL re-laid every tic from a claimed heat slot -- an approximation
+		// built before the engine had the real thing. `SpawnShockwave` is fire-and-forget: ONE call,
+		// and the engine owns the slot and animates the ring itself every frame. So the per-tic
+		// Shockwave() and the heat slot are gone, and a blast no longer holds a heat slot that a
+		// hotspot or a flamethrower could have used.
+		//
+		// PRESENTATION, and wired local deliberately (build lane, verified in the thunk): it moves no
+		// actor, deals no damage, spawns no thinker, draws no RNG and returns nothing an actor reads.
+		// Two machines may legitimately draw different ripples or none -- a player with them switched
+		// off is a preference, not a divergence -- so there is no network event and no applier.
+		//
+		// THE ANCHOR IS THE TRAP. The engine's own comment: without an owner it rides THE LOCAL
+		// PLAYER'S hand, "wrong in netplay for someone else's blast". We know who fired -- the same
+		// shooterPlayer the emissive volumes already follow -- so the owner is passed explicitly and
+		// someone else's muzzle blast rides THEIR hand.
 		if (fd.shockRadius > 0 && fd.shockStrength > 0 && fd.shockTics > 0 && RSB_Settings.FlashShockwave())
 		{
-			shockSlot = RSB_Heat.ClaimBlast();
-			shockAge = 0;
-			life = max(life, fd.shockTics + 1);
-			Shockwave(fd);
+			Actor owner = null;
+			int anchor = 0;   // 0 world, 1 main hand, 2 off hand
+			if (shooterPlayer >= 0 && playeringame[shooterPlayer])
+			{
+				owner = players[shooterPlayer].mo;
+				// ours: 0 main, 1 off, 2 head. The engine has no head anchor, so a head mount rides the world.
+				anchor = (shooterHand == 0) ? 1 : ((shooterHand == 1) ? 2 : 0);
+			}
+			level.SpawnShockwave(pos, fd.shockRadius,
+				fd.shockStrength * RSB_Tier.HeatScale(RSB_Tier.Current()),
+				fd.shockTics, fd.shockThickness, fd.shockChroma, anchor, owner);
 		}
 
 		// SMOKE INTO THE ROOM (engine 13b, `smokevolume`) and A SHOVE (`push`): muzzle haze that
@@ -413,15 +435,6 @@ class RSB_Flash : Actor
 			level.PushEffectImpulse(pos, reach, fd.blastShove * 40.0 * RSB_Tier.PushScale(RSB_Tier.Current()));
 	}
 
-	// ONE TIC OF THE SHOCKWAVE: the bubble grows fast off the muzzle and fades as it grows.
-	private void Shockwave(RSB_FlashDef fd)
-	{
-		double k = double(shockAge + 1) / double(fd.shockTics);
-		double r = fd.shockRadius * (0.25 + 0.75 * k);
-		double strength = fd.shockStrength * (1.0 - 0.85 * k) * RSB_Tier.HeatScale(RSB_Tier.Current());
-		Vector3 middle = pos + dir * (r * 0.35);
-		level.SetHeatSource(shockSlot, middle, middle, r * 0.9, r, strength, 0.14, 0.0, 3);
-	}
 
 	private void StrobeLight(double k)
 	{
@@ -483,11 +496,6 @@ class RSB_Flash : Actor
 			{
 				Beam(f * f * f);
 			}
-		}
-		if (shockSlot > 0 && shockAge + 1 < fd.shockTics)
-		{
-			shockAge++;
-			Shockwave(fd);
 		}
 		Super.Tick();
 	}
