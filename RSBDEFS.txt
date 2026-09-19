@@ -13278,3 +13278,302 @@ recoil ww2_flame
 end
 
 # ---- END WW2
+
+# ---- BEGIN VANILLA+ EXTRAS (tools/gen_extras_profiles.py)
+# THEIR OWN PROFILES FOR THE SEVEN VANILLA+ EXTRAS. DO NOT EDIT BY HAND: change
+# tools/gen_extras_profiles.py and run it again.
+#
+# These seven shared the HOUSE RECIPE for their looks as well as their kick, so a Tec-9 and an
+# M16 fired with the same muzzle flash and threw the same brass. Nothing was silent -- that is
+# what the fallback is for -- but two guns that look identical is not a finished set.
+#
+# Their cards carry no damage and no spread, only firetics and an alt mode, so the ACTION is all
+# the sheet gives and the action is what says what kind of gun it is. Twins are INFERRED and each
+# one is named on its own profile.
+
+flash vp_moonlight   # a .357 service revolver -- fan alt-fire and eight shots say revolver, and a long barrel says it is the tidier of the pair
+  # revolver, 5.8 a second, 8.5 ft-lb of free recoil (Vg 14.47 fps)
+  light         = 172, 4.0, 3
+  lightcolor    = 255, 214, 160
+  cone          = 23, 60, 120, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.16
+  smoke         = 1, 0.025, 0.37
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 31, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 71, 3
+  exposure      = 0.42, 128
+  hearing       = 0.46, 147
+  barrelheat    = 0.25, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.2
+  tail          = rsb/tail/pistol, 0.8
+end
+
+recoil vp_moonlight   # 8.5 ft-lb a shot, revolver
+  climb   = 2.57
+  drift   = 0.35, 5
+  recover = 26, 6
+  max     = 8.7, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 2.2, 7, 1, 6
+end
+
+# no `ejecta vp_moonlight`: a revolver holds its brass in the cylinder until you dump all six --
+# leave ejectaprofile off this card, the same as the WW2 revolver and the M30 drilling.
+
+flash vp_sunset   # the heavier twin: a .44 Magnum, so it hits harder and rises further than the Moonlight and reads as its opposite number
+  # revolver, 5.8 a second, 14.9 ft-lb of free recoil (Vg 17.60 fps)
+  light         = 202, 4.4, 3
+  lightcolor    = 255, 214, 160
+  cone          = 25, 64, 141, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.18
+  smoke         = 1, 0.030, 0.43
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 35, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 75, 3
+  exposure      = 0.47, 144
+  hearing       = 0.53, 165
+  barrelheat    = 0.30, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.6
+  tail          = rsb/tail/pistol, 0.8
+end
+
+recoil vp_sunset   # 14.9 ft-lb a shot, revolver
+  climb   = 3.13
+  drift   = 0.35, 5
+  recover = 26, 6
+  max     = 9.0, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 2.4, 8, 1, 6
+end
+
+# no `ejecta vp_sunset`: a revolver holds its brass in the cylinder until you dump all six --
+# leave ejectaprofile off this card, the same as the WW2 revolver and the M30 drilling.
+
+flash vp_colarevolver   # a short snub .357 -- lighter and cruder than either, which is the joke in the name
+  # revolver, 5.8 a second, 8.2 ft-lb of free recoil (Vg 15.46 fps)
+  light         = 157, 3.9, 3
+  lightcolor    = 255, 214, 160
+  cone          = 22, 58, 110, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.16
+  smoke         = 1, 0.023, 0.34
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 29, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 69, 3
+  exposure      = 0.39, 120
+  hearing       = 0.43, 138
+  barrelheat    = 0.23, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 2.0
+  tail          = rsb/tail/pistol, 0.8
+end
+
+recoil vp_colarevolver   # 8.2 ft-lb a shot, revolver
+  climb   = 2.75
+  drift   = 0.35, 5
+  recover = 26, 6
+  max     = 9.0, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 2.3, 8, 1, 6
+end
+
+# no `ejecta vp_colarevolver`: a revolver holds its brass in the cylinder until you dump all six --
+# leave ejectaprofile off this card, the same as the WW2 revolver and the M30 drilling.
+
+flash vp_rifle   # an M16A1: full-length 5.56, select fire, three-round burst exactly as the card says
+  # semi, 5.8 a second, 4.1 ft-lb of free recoil (Vg 5.77 fps)
+  light         = 150, 3.8, 3
+  lightcolor    = 255, 214, 160
+  cone          = 22, 58, 105, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.15
+  smoke         = 1, 0.022, 0.32
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 28, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 68, 3
+  exposure      = 0.38, 116
+  hearing       = 0.42, 134
+  barrelheat    = 0.22, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 1.9
+  tail          = rsb/tail/ar, 0.8
+end
+
+recoil vp_rifle   # 4.1 ft-lb a shot, semi
+  climb   = 0.98
+  drift   = 0.35, 5
+  recover = 26, 6
+  max     = 5.2, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 1.5, 5, 1, 6
+end
+
+ejecta vp_rifle   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash vp_m16   # an M16A4, heavier than the Rifle and a shade calmer for it
+  # semi, 5.8 a second, 3.7 ft-lb of free recoil (Vg 5.31 fps)
+  light         = 142, 3.7, 3
+  lightcolor    = 255, 214, 160
+  cone          = 21, 57, 99, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.15
+  smoke         = 1, 0.021, 0.30
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 26, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 67, 3
+  exposure      = 0.37, 112
+  hearing       = 0.40, 129
+  barrelheat    = 0.21, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 1.8
+  tail          = rsb/tail/ar, 0.8
+end
+
+recoil vp_m16   # 3.7 ft-lb a shot, semi
+  climb   = 0.90
+  drift   = 0.35, 5
+  recover = 26, 6
+  max     = 5.0, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 1.4, 5, 1, 6
+end
+
+ejecta vp_m16   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash vp_smg   # an Uzi-class 9mm: heavy for the round, so it is the steady one of the pair
+  # auto, 8.8 a second, 1.1 ft-lb of free recoil (Vg 3.04 fps)
+  light         = 105, 3.3, 3
+  lightcolor    = 255, 214, 160
+  cone          = 19, 52, 73, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.12
+  smoke         = 1, 0.015, 0.22
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 21, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 62, 3
+  exposure      = 0.30, 92
+  hearing       = 0.33, 106
+  barrelheat    = 0.15, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 1.3
+  tail          = rsb/tail/pistol, 0.8
+end
+
+recoil vp_smg   # 1.1 ft-lb a shot, auto
+  climb   = 0.38
+  drift   = 0.40, 5
+  recover = 21, 6
+  max     = 3.8, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 1.2, 4, 1, 6
+end
+
+ejecta vp_smg   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+flash vp_tec9   # a Tec-9, and it is LIGHT -- three and a half pounds of 9mm submachine gun, which is exactly why it has the reputation it has
+  # auto, 8.8 a second, 2.6 ft-lb of free recoil (Vg 6.92 fps)
+  light         = 120, 3.5, 3
+  lightcolor    = 255, 214, 160
+  cone          = 20, 54, 84, 8
+  conetics      = 3
+  bursts        = flash_core, flash_petals, spk_streaks_fine
+  flame         = 0.13
+  smoke         = 1, 0.018, 0.26
+  smokeparticle = rsb_smoke_gun
+  vary          = light 0.25, flame 0.2, cone 0.15, sparks 0.3, smoke 0.3
+  powderburn    = 23, 6, 0.55
+  powdervary    = 0.35
+  maybe         = spk_specks 0.25
+  blastkick     = kick_puff, 64, 3
+  exposure      = 0.33, 100
+  hearing       = 0.36, 116
+  barrelheat    = 0.18, 0.22, 0.32
+  barrelsmoke   = rsb_smoke_barrel, 1.5
+  tail          = rsb/tail/pistol, 0.8
+end
+
+recoil vp_tec9   # 2.6 ft-lb a shot, auto
+  climb   = 0.87
+  drift   = 0.40, 5
+  recover = 21, 6
+  max     = 4.9, 2
+  bloom   = 0.05
+  brace   = 0.70, 0.85
+  view    = 1.4, 5, 1, 6
+end
+
+ejecta vp_tec9   # a pistol case
+  look    = model, RSB_Casing9mm
+  scale   = 0.90
+  speed   = 1.0, 0.25
+  bounce  = 0.5, 0.35, 5
+  gravity = 0.6
+  sound   = rsb/casing/small
+  hot     = 10
+  life    = 2100
+  portsmoke = rsb_smoke_port, 2
+  wisp    = rsb_casing_wisp, 12
+end
+
+# ---- END VANILLA+ EXTRAS
