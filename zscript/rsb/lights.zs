@@ -62,12 +62,6 @@ class RSB_Lights : Thinker
 	private Array<int> tally;
 	private Array<int> dead;
 
-	// IS THERE A DARKNESS MOD, AND IS IT ON: 0 not asked yet, 1 no or off, 2 on. A Thinker's fields
-	// start at zero, so "not asked" has to BE zero -- a -1 sentinel would read as an answer on a fresh
-	// level and we would never ask at all. Caching this one is safe; the glow lane says "active" is
-	// stable for a level while "surviving" and "floorlight" are not, because RS_Sweeps pushes a live
-	// offset into the curve as a sweep crosses the map. So those two are asked every time.
-	private int darknessState;
 
 	const CELL = 256.0;        // a ceiling panel's grid, map units
 	const CELL_BIAS = 2048;    // so a negative cell packs positive
@@ -244,45 +238,25 @@ class RSB_Lights : Thinker
 	}
 
 	// ---------------------------------------------------------------- the floor
-	// HOW DARK A ROOM MAY GET, and why the setting alone is not the answer. A raw sector level of 48
-	// is a lit room with no darkness mod and pitch black under a Darkness preset -- the curve is not
-	// linear, so a room losing half its light does not get half as dark. RS_Darkness publishes a
-	// Service that answers for the player's CURRENT settings, so we ask instead of guessing.
+	// HOW DARK A ROOM MAY GET. A SERVER CVAR AND NOTHING ELSE, and that is a correction rather than a
+	// simplification -- the first version asked RS_Darkness, through their Service, what light survives
+	// THE PLAYER'S OWN darkness curve, and used the answer to clamp the trim.
 	//
-	// -1 BACK MEANS DO NOT DIM AT ALL. Under Blackout no sector level survives; under Ember the
-	// post-gain pins every level to the same handful of units, so no raw level reaches the guarantee
-	// either. Both answer -1, and the rule catches the second one without anybody having predicted it.
-	// A feature that quietly does nothing under Blackout is correct. One that dims a room to invisible
-	// because the curve could not reach the guarantee is not.
-	const MIN_EFFECTIVE = 20.0;   // light the player should still have after the curve
-
-	// Returns the floor to use, or -1 meaning leave this room alone entirely.
+	// THAT WAS A NETPLAY BUG AND IT SHIPPED. The darkness preset is per player: one machine running
+	// Blackout would have been told "no light survives, do not dim at all" while another with darkness
+	// off dimmed the room to 48 -- and the trim is a PLAYSIM WRITE to a shared sector. Two players would
+	// have disagreed about how dark a room is, from a difference in a menu neither of them thought was
+	// a gameplay setting. It is the crossplatform co-op rule exactly (Engine docs/CROSSPLATFORM_COOP_RULE.md):
+	// gameplay may depend only on the playsim, the usercmd and server cvars, and the error is asking a
+	// per-player question on a path every machine runs. Going through a Service hid it one step further.
+	//
+	// So the darkness-aware floor is GONE from the decision, and it cannot come back in any form that
+	// reads a player: a room's light is the same for everyone or it is broken. What survives is the menu
+	// saying in words that a Darkness preset deepens the floor past the number set here -- true, local,
+	// and it changes nothing the playsim does.
 	private int FloorNow()
 	{
-		int set = RSB_Settings.LightFloor();
-		if (darknessState == 1) return set;      // asked already: nothing to correct for
-
-		// ServiceIterator.Find MATCHES ON SUBSTRING, by its own documentation -- "services with names
-		// that match serviceName or have it as a part of their names". So a third mod shipping
-		// RSD_DarknessServiceExtra would be handed to this Find and could arrive first, and we would
-		// silently be asking the wrong thing how dark the room is. Take the first EXACT match only.
-		Service s = null;
-		let it = ServiceIterator.Find("RSD_DarknessService");
-		for (Service cand = it.Next(); cand; cand = it.Next())
-		{
-			if (cand.GetClassName() == 'RSD_DarknessService') { s = cand; break; }
-		}
-		if (!s)
-		{
-			darknessState = 1;       // no darkness mod in the load order: the raw number is the truth
-			return set;
-		}
-		if (darknessState == 0) darknessState = (s.GetDouble("active") > 0.5) ? 2 : 1;
-		if (darknessState == 1) return set;
-
-		double raw = s.GetDouble("floorlight", "", 0, MIN_EFFECTIVE);
-		if (raw < 0) return -1;      // the curve cannot reach it at any level: do not dim
-		return max(set, int(raw + 0.5));
+		return RSB_Settings.LightFloor();
 	}
 
 	// ---------------------------------------------------------------- the break

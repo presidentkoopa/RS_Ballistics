@@ -346,6 +346,16 @@ class RSB_Impact play
 	static void LandOn(Actor soundAt, RSB_Surface surf, String impactBase, Vector3 travel)
 	{
 		if (!soundAt || !surf || surf.sky) return;
+
+		// SHOOTING THE LIGHTS OUT (lights.zs) FIRST, ABOVE EVERYTHING, and that position is the whole
+		// point rather than tidiness. It is the only GAMEPLAY thing in this function: a darkened sector
+		// is level state, saved and shared, and it has to be decided identically on every machine.
+		// Everything below reads the local effects dial -- `RSB_Tier.Current()` is this player's
+		// `rsb_tier`, and which profile resolves depends on it -- so a break placed after any of it
+		// would be a gameplay decision standing on a per-player setting. It is not even gated by the
+		// impact profile existing: a lamp goes out whether or not anyone has effects turned on.
+		RSB_Lights.ShootOut(surf);
+
 		if (impactBase.Length() == 0 || impactBase ~== "none") return;
 		let reg = RSB_Registry.Get();
 		if (!reg) return;
@@ -358,11 +368,6 @@ class RSB_Impact play
 				"impact \"%s\" is not defined in any RSBDEFS, but something names it", impactBase));
 			return;
 		}
-		// SHOOTING THE LIGHTS OUT (lights.zs), FIRST and in the playsim -- before a single look is
-		// spawned. Everything below this line is client-side and is allowed to differ between machines;
-		// a darkened sector is not, so the break must never depend on it.
-		RSB_Lights.ShootOut(surf);
-
 		String surfName = (surf.material.Length() > 0) ? surf.material : "default";
 		RSB_Log.Once(RSB_Log.LV_INFO, "impact:first:" .. im.id, String.Format(
 			"first impact this map using %s (surface %s, effects %s)", im.id, surfName, RSB_Tier.Name(tier)));

@@ -148,22 +148,39 @@ class RSB_Settings play
 	// out, unlike a lamp, and a room that snapped dark would look worst exactly as it died down.
 	static double FireLightLinger() { return clamp(Cvf("rsb_firelight_linger", 3.5), 0.1, 30.0); }
 
+	// GAMEPLAY SETTINGS ASK ABOUT NO PLAYER AT ALL (crossplatform co-op rule, 2026-09-18). Every other
+	// reader in this file goes through Cvf/Cvb, which ask `players[consoleplayer]` -- correct for a look,
+	// because a look is allowed to differ per machine and SHOULD answer for whoever is watching. For a
+	// gameplay decision it is a trap: these are `server` cvars today, so the per-player answer happens to
+	// be the global one, but the day somebody changes a declaration to `user` the divergence would be
+	// silent and every machine would dim a different amount. Asking about nobody cannot rot that way.
+	private static double Srv(String n, double fallback)
+	{
+		let c = CVar.GetCVar(n);
+		return c ? c.GetFloat() : fallback;
+	}
+	private static bool SrvB(String n, bool fallback)
+	{
+		let c = CVar.GetCVar(n);
+		return c ? c.GetBool() : fallback;
+	}
+
 	// SHOOTING THE LIGHTS OUT (lights.zs). The ONLY setting in this package that changes the GAME rather
 	// than the look: a darkened room is level state, it is saved, and in co-op it is darker for everyone.
 	// So it is deliberately a plain on/off with a floor, and it defaults ON at a conservative drop.
-	static bool ShootOutLights() { return Cvb("rsb_shootlights", true); }
+	static bool ShootOutLights() { return SrvB("rsb_shootlights", true); }
 	// LIT DECORATIONS: torches, tech lamps, burning barrels. Separate from the texture half because
 	// this one makes scenery SHOOTABLE, which changes what the player can interact with.
-	static bool ShootOutLamps() { return Cvb("rsb_shootlamps", true); }
-	static int LampHealth() { return int(clamp(Cvf("rsb_shootlamps_health", 20.0), 1.0, 500.0)); }
+	static bool ShootOutLamps() { return SrvB("rsb_shootlamps", true); }
+	static int LampHealth() { return int(clamp(Srv("rsb_shootlamps_health", 20.0), 1.0, 500.0)); }
 	static Color DeadLampShade() { return Color(255, 26, 24, 22); }
 	// The SHARE of its own light a room loses when every one of its fixtures is dead; each break
 	// takes its part of that. A share rather than a count of light units, because that is what the
 	// engine's trim takes and because a bright room should lose more than a dim one.
-	static double LightShare() { return clamp(Cvf("rsb_shootlights_share", 0.8), 0.0, 1.0); }
+	static double LightShare() { return clamp(Srv("rsb_shootlights_share", 0.8), 0.0, 1.0); }
 	// How dark a room may get this way. Doom's monsters do not care about light, so darkness only ever
 	// costs the player -- and with a Darkness preset running, the room is deeper than this number looks.
-	static int LightFloor() { return int(clamp(Cvf("rsb_shootlights_floor", 48.0), 0.0, 255.0)); }
+	static int LightFloor() { return int(clamp(Srv("rsb_shootlights_floor", 48.0), 0.0, 255.0)); }
 
 	// LIQUIDS: water and coolant -- a round into standing water, or through a pipe. NOT blood, which is
 	// its own job and held by the owner. `Liquids` off leaves the hit itself alone (the hole is still
