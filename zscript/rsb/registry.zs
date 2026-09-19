@@ -229,9 +229,11 @@ class RSB_Registry : StaticEventHandler
 			let lk = RSB_RoundLookDef(defs.defs[i]);
 			if (bl)
 			{
-				if (bl.speed <= 0)
+				// BELOW ZERO IS NEVER STATED AND IS STILL REFUSED. Exactly zero is `none` -- a stated
+				// intention that the actor owns the value. See the hatch in ApplyBallistics.
+				if (bl.speed < 0)
 					why = "it never states `speed`";
-				else if (bl.radius <= 0)
+				else if (bl.radius < 0)
 					why = "it never states `radius`";
 				else if (bl.damageDice < 1)
 					why = "it never states `damage`";

@@ -119,10 +119,15 @@ class RSB_Bullet : FastProjectile
 				"a round was launched as \"%s\", which no RSBDEFS defines with its ballistics -- it flies at its default speed with no effects", whichRound));
 			return b;
 		}
-		double spd = clamp(bl.speed, 1.0, 1000.0);
-		if (b.Vel.Length() > 0.000001) b.Vel = b.Vel.Unit() * spd;
-		b.Speed = spd;
-		if (bl.radius != b.radius) b.A_SetSize(bl.radius, bl.radius);
+		// `speed = none` LEAVES THE ACTOR'S OWN ALONE. A mod subclassing RSB_Bullet with its own Speed
+		// used to lose it here, silently, after A_FireProjectile had already built the velocity from it.
+		if (bl.speed > 0)
+		{
+			double spd = clamp(bl.speed, 1.0, 1000.0);
+			if (b.Vel.Length() > 0.000001) b.Vel = b.Vel.Unit() * spd;
+			b.Speed = spd;
+		}
+		SetRoundSize(b, bl);
 		return b;
 	}
 
@@ -148,7 +153,7 @@ class RSB_Bullet : FastProjectile
 		if (b.Vel.Length() > 0.000001) b.Vel = b.Vel.Unit() * spd;
 		b.Speed = spd;
 		let bl = b.Ballistics();
-		if (bl && bl.radius != b.radius) b.A_SetSize(bl.radius, bl.radius);
+		if (bl) SetRoundSize(b, bl);
 		return b;
 	}
 
@@ -299,6 +304,17 @@ class RSB_Bullet : FastProjectile
 	// DAMAGE: the shooter's damageMin-damageMax when set; otherwise the ballistics
 	// profile's base x 1d(dice); without one, the vanilla pistol's 5 x 1d3. This
 	// runs after the engine's own missile roll, so the value returned replaces it.
+	// THE ROUND'S COLLISION SIZE -- literally what it can hit -- stated once for both launch paths.
+	// `radius = none` leaves the actor's own; `height` defaults to the radius, which is exactly what
+	// A_SetSize(radius, radius) was already doing without ever saying so.
+	private static void SetRoundSize(RSB_Bullet b, RSB_BallisticsDef bl)
+	{
+		if (bl.radius <= 0 && bl.height <= 0) return;
+		double r = (bl.radius > 0) ? bl.radius : b.radius;
+		double h = (bl.height > 0) ? bl.height : r;
+		if (r != b.radius || h != b.height) b.A_SetSize(r, h);
+	}
+
 	override int DoSpecialDamage(Actor victim, int damage, Name damagetype)
 	{
 		int dealt;

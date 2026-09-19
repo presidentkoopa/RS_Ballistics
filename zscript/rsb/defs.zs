@@ -49,8 +49,16 @@ class RSB_RoundDef : RSB_Def
 // no player setting reaches it.
 class RSB_BallisticsDef : RSB_Def
 {
-	double speed;        // map units per tic
-	double radius;       // map units
+	// 0 ON speed OR radius MEANS `none`: THE ACTOR OWNS IT. Below zero means never stated, which is
+	// still refused. See the hatch in RSB_Parser.ApplyBallistics -- a look package must always be able
+	// to say "the actor owns this", and this is the third key that has needed it.
+	double speed;        // map units per tic; 0 = the actor's own Speed stands
+	double radius;       // map units; 0 = the actor's own Radius stands
+	// THE ROUND'S HEIGHT, and it exists to make an accident DECLARED rather than to correct it.
+	// A_SetSize was being called as (radius, radius), so a round's radius silently set its height too
+	// and nothing said so. Defaulting this to the radius is bit-identical to that, and now anyone who
+	// wants a real ellipsoid can state one without a single existing round changing size.
+	double height;       // -1 = not stated, so the radius is used
 	int    damageBase;
 	int    damageDice;   // damage = damageBase x 1d(damageDice), unless the shooter sets damageMin/Max
 }
@@ -646,6 +654,17 @@ class RSB_RecoilDef : RSB_Def
 	double maxPitch;       // the kick's cap, up
 	double maxYaw;         // and sideways
 	double bloom;          // extra spread degrees per degree of kick
+	// `kick = none`: THE WEAPON OWNS WHERE ITS SHOTS GO, and this profile only shakes the view.
+	//
+	// The same hatch as `damage = none`, for the same reason, one layer down. climb, drift, max,
+	// recover and bloom do not nudge a view -- they feed RSB_Recoil.Turn, which rewrites the round's
+	// Vel, angle and pitch. So a weapon mod with its own kick model had no way to say so: the two
+	// composed silently and this one won the tie. A gun promising its first shots are dead on does not
+	// get them once this profile's climb has built.
+	//
+	// Stated, Step returns nothing and accumulates nothing. `view` and `viewjolt` still fire, because
+	// the visible shove of the prop is this package's job and never touches where a bullet goes.
+	bool   kickOwned;
 	double braceCrouch;    // the kick crouched, times
 	double braceStill;     // the kick standing still, times
 	double viewBack;       // THE LOOK (render only): map units back ...

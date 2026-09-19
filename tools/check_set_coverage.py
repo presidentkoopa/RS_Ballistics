@@ -16,9 +16,32 @@ have to be caught here instead, by reading the sheets and the definitions and co
 
 Exit code 1 if any gun is missing a profile or names one that does not exist.
 
-WHAT COUNTS AS COVERED. A gun needs a flash, a recoil, an ejecta and a round, minus whatever it is
-exempt from -- and every exemption is a NAMED list below rather than a rule inferred from the data, so
-a gun that quietly loses its profiles cannot hide behind one. Nothing is exempt from `recoil`.
+STATED IS NOT COVERED, AND THIS TOOL GOT THAT WRONG FIRST TIME. It counted guns that name no profile
+as having no ballistics, and reported nine guns in plus_extras that way. The owner read it and said
+"i routinely shoot those guns with ballistics" -- and they were right.
+
+RS_Ballistics APPLIES UNIVERSALLY. RS_VR_Reload falls back to the literal profile name "default" when a
+sheet states none (weapon.zs:394-397), and `flash default`, `ejecta default` and `round default` all
+exist. So an unstated gun still fires with a flash, brass and a round look. A named profile is an
+OVERRIDE, not the source. A COUNT OF MISSING KEYS IS NOT A COUNT OF MISSING BALLISTICS.
+
+So this reports three states, and only the last is a defect:
+
+  TUNED    the sheet names its own profile, and that profile is real
+  GENERIC  the sheet names none, and the kind has a `default` -- the gun fires, on the house recipe
+  NONE     the sheet names none and the kind has NO `default`, so nothing happens at all
+
+RECOIL IS `NONE` TODAY and is the reason this distinction had to exist: there is no
+RecoilProfileOrDefault and no `recoil default` profile, so a gun that states no recoilprofile gets
+RSB_Recoil.Step returning 0, 0, 0 -- "dead on, and the kick is forgotten". Nine guns are in that state
+right now. That is not untuned, it is absent.
+
+It also means this tool now catches a class it would have missed entirely: a KIND with no `default` at
+all. Add one tomorrow and every unstated gun silently gets nothing, and the old version called that
+covered.
+
+Exemptions are a NAMED list below rather than a rule inferred from the data, so a gun that quietly
+loses its profiles cannot hide behind one.
 """
 import io
 import os
@@ -158,23 +181,36 @@ def check(sheet, have):
         print("%s: NO GUNS FOUND -- is this a sheet?" % name)
         return 1
     bad = []
-    covered = 0
+    tuned = generic = 0
+    generic_guns = []
     for gun in sorted(guns):
         named = guns[gun]
         if NO_BALLISTICS.search(gun):
             continue
         want = [k for k in KINDS if not (k in EXEMPT and EXEMPT[k].search(gun))]
-        missing = [k for k in want if k not in named]
+        # NONE is the only defect: the sheet says nothing AND the kind has no house recipe to fall
+        # back on, so the gun fires with nothing at all.
+        nothing = [k for k in want if k not in named and "default" not in have.get(k, ())]
+        # GENERIC is fine, and saying otherwise is what got this tool corrected by the owner.
+        onhouse = [k for k in want if k not in named and "default" in have.get(k, ())]
         dangling = ["%s -> %s" % (k, v) for k, v in named.items() if v not in have.get(k, ())]
-        if missing:
-            bad.append("  %-22s STATES NO %s" % (gun, ", ".join(p + "profile" for p in missing)))
+        if nothing:
+            bad.append("  %-22s NOTHING HAPPENS: states no %s, and that kind has no `default` to fall back on"
+                       % (gun, ", ".join(k + "profile" for k in nothing)))
         if dangling:
             bad.append("  %-22s NAMES A PROFILE THAT DOES NOT EXIST: %s" % (gun, "; ".join(dangling)))
-        if not missing and not dangling:
-            covered += 1
+        if nothing or dangling:
+            continue
+        if onhouse:
+            generic += 1
+            generic_guns.append("%s (%s)" % (gun, ", ".join(onhouse)))
+        else:
+            tuned += 1
     total = len([g for g in guns if not NO_BALLISTICS.search(g)])
-    print("%s: %d/%d guns covered (%d melee or thrown, skipped)"
-          % (name, covered, total, len(guns) - total))
+    print("%s: %d tuned, %d on the house recipe, %d broken (%d melee or thrown, skipped)"
+          % (name, tuned, generic, total - tuned - generic, len(guns) - total))
+    for g in generic_guns:
+        print("    generic: %s" % g)
     for b in bad:
         print(b)
     return 1 if bad else 0

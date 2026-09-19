@@ -168,6 +168,7 @@ class RSB_Parser
 			d.radius = -1;
 			d.damageBase = -1;
 			d.damageDice = -1;
+			d.height = -1;
 			return d;
 		}
 		if (kind == "roundlook")
@@ -548,17 +549,35 @@ class RSB_Parser
 	private static String ApplyBallistics(RSB_BallisticsDef bl, String key, out Array<String> v)
 	{
 		String why;
+		// THE GENERAL HATCH: `speed = none`, `radius = none` and `damage = none` all mean THE ACTOR
+		// OWNS THIS ONE.
+		//
+		// Three keys have now needed the same cure, which makes it a property of the profile system
+		// rather than three accidents. A look package must always be able to stand aside on a value the
+		// thing it is dressing already owns -- otherwise naming a profile for its LOOK silently takes
+		// its gameplay too, and the mod that owns the actor loses a tie it never knew it was in.
+		//
+		// STATED, NEVER SILENT. Omitting a key is still refused. `none` is an intention, a forgotten
+		// line is a mistake, and the file should be able to tell them apart.
+		if (key == "height")
+		{
+			why = Nums(v, 1); if (why != "") return why;
+			bl.height = v[0].ToDouble();
+			return (bl.height > 0 && bl.height <= 64) ? "" : "height is the round's height in map units, above 0 up to 64 -- leave it out and the radius is used, which is what has always happened";
+		}
 		if (key == "speed")
 		{
+			if (v.Size() == 1 && v[0] ~== "none") { bl.speed = 0; return ""; }   // the actor's own Speed stands
 			why = Nums(v, 1); if (why != "") return why;
 			bl.speed = v[0].ToDouble();
 			return (bl.speed > 0) ? "" : "speed must be above 0";
 		}
 		if (key == "radius")
 		{
+			if (v.Size() == 1 && v[0] ~== "none") { bl.radius = 0; return ""; }   // the actor's own Radius stands
 			why = Nums(v, 1); if (why != "") return why;
 			bl.radius = v[0].ToDouble();
-			return (bl.radius > 0) ? "" : "radius must be above 0";
+			return (bl.radius > 0) ? "" : "radius must be above 0, or `none` so the actor's own stands";
 		}
 		if (key == "damage")
 		{
@@ -2287,6 +2306,12 @@ class RSB_Parser
 			rc.maxPitch = v[0].ToDouble();
 			rc.maxYaw = v[1].ToDouble();
 			return (rc.maxPitch >= 0 && rc.maxPitch <= 45 && rc.maxYaw >= 0 && rc.maxYaw <= 45) ? "" : "max is pitch degrees, yaw degrees -- each 0 to 45";
+		}
+		if (key == "kick")
+		{
+			// The only value is `none`, on purpose: this key says WHO decides, not how much.
+			if (v.Size() == 1 && v[0] ~== "none") { rc.kickOwned = true; return ""; }
+			return "kick is only `none`: the weapon owns where its shots go, and this profile only shakes the view";
 		}
 		if (key == "bloom")
 		{

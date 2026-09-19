@@ -57,6 +57,18 @@ class RSB_Recoil play
 			lastTic = now;
 			return 0, 0, 0;
 		}
+		// `kick = none`: the WEAPON owns where its shots go. Nothing is returned and nothing
+		// accumulates, so a weapon with its own kick model is not silently composed with this one. The
+		// view jolt is untouched -- ViewJolt reads the profile's own `view` and never comes through
+		// here, so the prop still shoves.
+		if (rd.kickOwned)
+		{
+			kickPitch = 0;
+			kickYaw = 0;
+			runShot = 0;
+			lastTic = now;
+			return 0, 0, 0;
+		}
 		Recover(rd, now, kickPitch, kickYaw, lastTic, runShot);
 		double shotYaw = kickYaw;
 		double shotPitch = kickPitch;

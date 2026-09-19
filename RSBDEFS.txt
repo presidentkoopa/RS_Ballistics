@@ -27,6 +27,24 @@
 #   flash     the muzzle: light, lit-air cone, bursts, flame, smoke
 #   ejecta    spent casings and hulls
 #
+# A LOOK PACKAGE MUST ALWAYS BE ABLE TO SAY: THE ACTOR OWNS THIS.
+#
+# `damage = none`, `speed = none`, `radius = none` on a ballistics profile, and `kick = none` on a
+# recoil profile. Each means the same thing: this profile is being named for its LOOK, and the value
+# belongs to the weapon or the actor, not here.
+#
+# FOUR KEYS HAVE NEEDED THIS CURE IN TWO DAYS, so it is a property of the format and not a run of
+# accidents. Without a hatch, naming a profile for how it LOOKS silently takes its gameplay too, and
+# the mod that owns the actor loses a tie it never knew it was in. That is how a cartridge came to
+# decide a gun's damage and a recoil profile came to decide where its bullets went.
+#
+# SO: ANY NEW KEY THAT REACHES THE SIMULATION -- damage, speed, size, spread, aim, range, count --
+# GETS A `none` WHEN IT IS BORN, not after it ships. If the only thing a key can do is describe how
+# something looks, it needs no hatch. If it can change what happens, it does.
+#
+# OMITTING A KEY IS STILL AN ERROR. `none` is a stated intention; a missing line is a forgotten one;
+# the file has to be able to tell them apart, and the refusal message exists to catch the second.
+#
 # VARIANT NAMES:  <base>[~style][.material][@tier]
 #   impact bullet                   the default
 #   impact bullet.metal             on metal
