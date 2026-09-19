@@ -29,6 +29,8 @@ class RSB_Trail play
 
 	static void Lay(String whichTrail, Actor shooter, Vector3 from, Vector3 to)
 	{
+		// A SHOT THAT DRAWS NO BEAM, stated. Same reason as the ejecta hatch above it.
+		if (whichTrail.Length() == 0 || whichTrail ~== "none") return;
 		let reg = RSB_Registry.Get();
 		if (!reg || !RSB_Settings.Trails()) return;
 		int tier = RSB_Tier.Current();

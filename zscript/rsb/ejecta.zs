@@ -88,6 +88,10 @@ class RSB_Ejecta : Actor
 	// gun card's own pick. "" keeps the profile's.
 	static Actor Throw(String whichEjecta, Vector3 at, Vector3 aim, Vector3 carrierVel, double throwSpeed, int seed, bool shared = false, String casingSound = "")
 	{
+		// A CASELESS GUN THROWS NOTHING, and says so. The Pulse Rifle's 10mm has no case at all; a
+		// revolver and a break action hold theirs until you open them. Before this the only way to
+		// mean it was to name no profile, which is indistinguishable from forgetting one.
+		if (whichEjecta.Length() == 0 || whichEjecta ~== "none") return null;
 		let reg = RSB_Registry.Get();
 		if (!reg) return null;
 		let ed = reg.FindEjecta(whichEjecta);   // the base profile: see `shared = true` above
@@ -249,6 +253,7 @@ class RSB_LocalEjecta : Actor
 
 	static RSB_LocalEjecta Toss(RSB_Registry reg, String whichEjecta, Vector3 at, Vector3 d, Vector3 carrierVel, double throwSpeed, int seed, String casingSound = "")
 	{
+		if (whichEjecta.Length() == 0 || whichEjecta ~== "none") return null;
 		if (!RSB_Settings.Casings()) return null;
 		let ed = reg.ResolveEjecta(whichEjecta, RSB_Tier.Name(RSB_Tier.Current()));
 		if (!ed) return null;

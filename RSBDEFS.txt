@@ -14946,4 +14946,48 @@ recoil bl_flaregun         # a slow heavy shove, not a snap
 end
 
 # ---- END BLOOD ----
+
+# ============================================================================================
+# `none` FOR EVERY KIND THAT CAN TAKE ONE.
+#
+# `flash none` has been legal since the first flamethrower and nothing else ever got its twin, so
+# for years the only way a gun could say "this genuinely throws no brass" was to name NO profile
+# -- which is byte-identical to forgetting one, and falls back to the house recipe besides. The
+# weapons lane hit the wall stating `recoilprofile = "none"` on a spray can, which the owner ruled
+# should not kick at all, and their lint was right to refuse a name nothing defined.
+#
+# THE CODE HATCH IS WHAT ACTUALLY DECIDES. Each of these is short-circuited in ZScript before the
+# registry is ever consulted (RSB_Recoil.Profile, RSB_Ejecta.Throw/Toss, RSB_Trail.Lay). These
+# blocks exist so the NAME RESOLVES -- so a lint, a coverage checker or a person grepping for it
+# finds a real definition and knows the silence was chosen. They are deliberately empty or zeroed,
+# and if one is ever consulted anyway it still does nothing.
+#
+# The rule going forward: any kind a gun can NAME gets its `none` when the kind is born, not when
+# somebody finally needs it.
+# ============================================================================================
+
+recoil none              # no kick at all: a spray can, a taser, anything with nothing to push back
+end
+
+# EMPTY ON PURPOSE, AND THE PARSER PROVED IT HAS TO BE. Zeroing these was the obvious first
+# attempt and was refused: `scale must be above 0`, `line wants 4 values`. The parser is right --
+# a casing of zero size is a broken casing, not an absent one, and it refuses to describe
+# nonsense. Absence is not a value of the thing; it is the absence of the thing, and it lives in
+# the CODE HATCH, which returns before the registry is ever consulted. These blocks carry the
+# ordinary defaults and are never read.
+ejecta none              # throws nothing: caseless ammunition, or a gun that keeps its brass
+end
+
+trail none               # draws no beam
+end
+
+# THERE IS NO `round none`, AND THAT IS A DECISION. The weapons lane asked for one alongside the
+# other three, for symmetry. A round is not like a kick or a casing: those are things a shot MAY
+# have, while the round IS the shot. The parser says so out loud -- `round none REFUSED -- it
+# never states ballistics` -- and it is right, because a round with no ballistics is broken rather
+# than quiet. A gun that fires nothing of ours simply does not name a roundprofile and does not
+# spawn an RSB_Bullet; there is no silence for this key to express. Symmetry is not a reason to
+# define something that would mean nothing, and a key nobody consults is the defect we keep
+# finding. If a real caller ever appears -- a round that flies on its actor's own speed with no
+# looks -- it gets built then, with that caller to check it against.
 # ---- END NEW SETS
