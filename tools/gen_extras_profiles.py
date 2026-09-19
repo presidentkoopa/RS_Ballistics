@@ -78,7 +78,7 @@ def derive(gid):
     climb = min(CLIMB_CEILING, vg * CLIMB_PER_FPS * ACTION[action])
     return {
         "round": rnd, "action": action, "brass": brass, "fsize": fsize, "rate": rate, "note": note,
-        "vg": vg, "energy": e, "climb": climb,
+        "vg": vg, "energy": e, "climb": climb, "impulse": wg * vg / 32.174,
         "max": max(3.0, min(9.0, 3.0 + 2.2 * climb)),
         "recover": int(round(min(30.0, max(8.0, 26.0 * (5.8333 / rate) ** 0.5)))),
         "conetics": 3 if rate < 11.0 else 2,
@@ -126,6 +126,7 @@ def blocks():
                 "",
                 "recoil %s   # %.1f ft-lb a shot, %s" % (p, d["energy"], d["action"]),
                 "  climb   = %.2f" % d["climb"],
+                "  shot    = %.2f, %.1f, %.3f" % (d["vg"], d["energy"], d["impulse"]),
                 "  drift   = %.2f, 5" % (0.30 + 0.05 * (2 if d["action"] == "auto" else 1)),
                 "  recover = %d, 6" % d["recover"],
                 "  max     = %.1f, 2" % d["max"],

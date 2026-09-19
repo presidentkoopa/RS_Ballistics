@@ -4149,6 +4149,7 @@ end
 
 recoil pistol_9mm          # the Pistolet: snappy; aimed fire is dead on, only a mag dump climbs
   climb   = 1.62
+  shot    = 9.53, 3.2, 0.681
   drift   = 0.3, 4
   recover = 12, 6
   max     = 6.6, 2
@@ -4159,6 +4160,7 @@ end
 
 recoil pistol_45           # the M4A3: a bigger push; fast follow-ups walk up
   climb   = 1.93
+  shot    = 11.34, 5.4, 0.952
   drift   = 0.4, 4
   recover = 12, 6
   max     = 7.2, 2.5
@@ -4169,6 +4171,7 @@ end
 
 recoil shotgun_m37         # fired as fast as it pumps it climbs; paced, never
   climb   = 3.44
+  shot    = 16.03, 26.0, 3.239
   drift   = 0.8, 3
   recover = 6, 4
   max     = 9.0, 3
@@ -4179,6 +4182,7 @@ end
 
 recoil shotgun_doom        # heavier than the M37
   climb   = 3.19
+  shot    = 14.89, 24.1, 3.239
   drift   = 1.0, 3
   recover = 6, 4
   max     = 9.0, 3
@@ -4189,6 +4193,7 @@ end
 
 recoil shotgun_ssg         # the train wreck: a huge kick, recovered by the time it is reloaded
   climb   = 4.20
+  shot    = 29.77, 96.4, 6.478
   drift   = 1.2, 3
   recover = 8, 6
   max     = 9.0, 4
@@ -4199,6 +4204,7 @@ end
 
 recoil shotgun_bullpup     # magazine-fed and fast: it climbs if rushed
   climb   = 4.20
+  shot    = 27.23, 96.8, 7.109
   drift   = 1.0, 3
   recover = 8, 4
   max     = 9.0, 3.5
@@ -4209,6 +4215,7 @@ end
 
 recoil chaingun_556        # caps in about 13 shots (1.5 s); held, it sits there -- pull down to stay on
   climb   = 0.08
+  shot    = 1.24, 0.8, 1.353
   drift   = 0.25, 6
   recover = 4, 6
   max     = 3.2, 1.5
@@ -4219,6 +4226,7 @@ end
 
 recoil machinegun_762      # a heavier walk than the chaingun; bracing matters more
   climb   = 0.24
+  shot    = 3.55, 4.9, 2.755
   drift   = 0.4, 5
   recover = 4, 6
   max     = 3.5, 2
@@ -4229,6 +4237,7 @@ end
 
 recoil launcher_40mm       # the machine gun's grenade: a thump, recovered before the next
   climb   = 3.41
+  shot    = 20.02, 40.5, 4.045
   recover = 8, 6
   max     = 9.0, 0
   brace   = 0.8, 0.9
@@ -4237,6 +4246,7 @@ end
 
 recoil rocket_launcher     # mostly the look: its rate recovers every shot
   climb   = 1.10
+  shot    = 0.00, 0.0, 0.000
   drift   = 0.3, 3
   recover = 8, 4
   max     = 5.4, 1
@@ -4246,6 +4256,7 @@ end
 
 recoil rocket_rpg          # recoilless: the backblast cancels the kick
   climb   = 1.00
+  shot    = 0.00, 0.0, 0.000
   recover = 8, 4
   max     = 5.2, 0
   view    = 1.5, 3, 0.5, 12
@@ -6985,6 +6996,7 @@ end
 
 recoil glock17   # the Glock 17: snappy; aimed fire is dead on, only a mag dump climbs
   climb   = 1.98
+  shot    = 11.61, 4.2, 0.722
   drift   = 0.3, 4
   recover = 12, 6
   max     = 7.3, 2
@@ -6995,6 +7007,7 @@ end
 
 recoil glock17_sup   # the suppressed Glock: the can's weight softens the snap
   climb   = 1.28
+  shot    = 7.51, 2.4, 0.630
   drift   = 0.3, 4
   recover = 12, 6
   max     = 5.8, 2
@@ -7005,6 +7018,7 @@ end
 
 recoil kimber1911   # the 1911: a bigger push; fast follow-ups walk up
   climb   = 1.93
+  shot    = 11.34, 5.4, 0.952
   drift   = 0.4, 4
   recover = 12, 6
   max     = 7.2, 2.5
@@ -7015,6 +7029,7 @@ end
 
 recoil mk18   # the MK18: a short 5.56 carbine -- a sharp push, full auto walks up
   climb   = 0.78
+  shot    = 6.19, 3.9, 1.251
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.7, 2
@@ -7025,6 +7040,7 @@ end
 
 recoil mk18_sup   # the suppressed MK18: the can tames the push a little
   climb   = 0.66
+  shot    = 5.24, 3.2, 1.237
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.4, 2
@@ -7035,6 +7051,7 @@ end
 
 recoil hk416_sup   # the suppressed HK416: a heavier gun, a smoother push
   climb   = 0.60
+  shot    = 4.77, 3.1, 1.320
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.3, 2
@@ -7045,6 +7062,7 @@ end
 
 recoil mcx_sup   # the suppressed MCX: the softest shooter
   climb   = 0.41
+  shot    = 3.24, 1.3, 0.805
   drift   = 0.35, 5
   recover = 10, 5
   max     = 3.9, 2
@@ -7055,6 +7073,7 @@ end
 
 recoil g36c_sup   # the suppressed G36C
   climb   = 0.63
+  shot    = 4.99, 3.1, 1.226
   drift   = 0.35, 5
   recover = 10, 5
   max     = 4.4, 2
@@ -7065,6 +7084,7 @@ end
 
 recoil mp5   # the MP5: a 9mm SMG -- a low, even push, controllable in bursts
   climb   = 0.45
+  shot    = 3.56, 1.3, 0.753
   drift   = 0.2, 5
   recover = 10, 5
   max     = 4.0, 1.5
@@ -7075,6 +7095,7 @@ end
 
 recoil benelli_m4   # the Benelli M4: a semi-auto 12-gauge -- it climbs if rushed
   climb   = 2.11
+  shot    = 12.41, 20.1, 3.239
   drift   = 1.0, 3
   recover = 8, 4
   max     = 7.6, 3.5
@@ -11006,6 +11027,7 @@ end
 
 recoil ww2_kar98k   # bolt at 3.2 a second, spread 0,0
   climb   = 2.63
+  shot    = 11.47, 18.2, 3.173
   drift   = 0.30, 5
   recover = 30, 6
   max     = 9, 4
@@ -11051,6 +11073,7 @@ end
 
 recoil ww2_mg42   # belt at 11.7 a second, spread 6,4
   climb   = 0.27
+  shot    = 4.00, 6.3, 3.173
   drift   = 0.85, 5
   recover = 18, 6
   max     = 4, 2
@@ -11096,6 +11119,7 @@ end
 
 recoil ww2_heavymg   # belt at 8.8 a second, spread 8,6
   climb   = 0.20
+  shot    = 3.02, 4.4, 2.908
   drift   = 1.07, 5
   recover = 21, 6
   max     = 4, 2
@@ -11141,6 +11165,7 @@ end
 
 recoil ww2_garand   # semi at 4.4 a second, spread 3,3
   climb   = 1.52
+  shot    = 8.91, 13.0, 2.908
   drift   = 0.63, 5
   recover = 30, 6
   max     = 6, 3
@@ -11186,6 +11211,7 @@ end
 
 recoil ww2_bar   # auto at 7.0 a second, spread 5,5
   climb   = 0.74
+  shot    = 5.85, 8.5, 2.908
   drift   = 0.85, 5
   recover = 24, 6
   max     = 5, 2
@@ -11231,6 +11257,7 @@ end
 
 recoil ww2_trench   # pump at 2.9 a second, spread 4,2
   climb   = 2.98
+  shot    = 13.89, 22.5, 3.239
   drift   = 0.63, 5
   recover = 30, 6
   max     = 10, 5
@@ -11276,6 +11303,7 @@ end
 
 recoil ww2_m1911   # semi at 5.8 a second, spread 1,1
   climb   = 2.14
+  shot    = 12.55, 6.0, 0.952
   drift   = 0.41, 5
   recover = 26, 6
   max     = 8, 4
@@ -11321,6 +11349,7 @@ end
 
 recoil ww2_luger   # semi at 5.8 a second, spread 1,1
   climb   = 1.97
+  shot    = 11.59, 4.0, 0.692
   drift   = 0.41, 5
   recover = 26, 6
   max     = 7, 3
@@ -11366,6 +11395,7 @@ end
 
 recoil ww2_thompson   # auto at 11.7 a second, spread 3,3
   climb   = 0.39
+  shot    = 3.11, 1.6, 1.044
   drift   = 0.63, 5
   recover = 18, 6
   max     = 4, 2
@@ -11411,6 +11441,7 @@ end
 
 recoil ww2_mp40   # auto at 8.8 a second, spread 3,3
   climb   = 0.35
+  shot    = 2.81, 1.1, 0.763
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11456,6 +11487,7 @@ end
 
 recoil ww2_ppsh   # auto at 17.5 a second, spread 4,5
   climb   = 0.24
+  shot    = 1.95, 0.7, 0.726
   drift   = 0.79, 5
   recover = 15, 6
   max     = 4, 2
@@ -11501,6 +11533,7 @@ end
 
 recoil ww2_stg44   # auto at 7.0 a second, spread 2,2
   climb   = 0.70
+  shot    = 5.58, 4.9, 1.771
   drift   = 0.52, 5
   recover = 24, 6
   max     = 5, 2
@@ -11546,6 +11579,7 @@ end
 
 recoil ww2_p38   # semi at 5.8 a second, spread 1,1
   climb   = 2.10
+  shot    = 12.36, 4.3, 0.692
   drift   = 0.41, 5
   recover = 26, 6
   max     = 8, 4
@@ -11591,6 +11625,7 @@ end
 
 recoil ww2_sten   # auto at 8.8 a second, spread 3,3
   climb   = 0.42
+  shot    = 3.34, 1.2, 0.738
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11636,6 +11671,7 @@ end
 
 recoil ww2_mp34   # auto at 8.8 a second, spread 3,3
   climb   = 0.33
+  shot    = 2.61, 1.0, 0.763
   drift   = 0.63, 5
   recover = 21, 6
   max     = 4, 2
@@ -11681,6 +11717,7 @@ end
 
 recoil ww2_goldluger   # semi at 2.2 a second, spread 2,2
   climb   = 1.97
+  shot    = 11.59, 4.0, 0.692
   drift   = 0.52, 5
   recover = 30, 6
   max     = 7, 3
@@ -11726,6 +11763,7 @@ end
 
 recoil ww2_tt33   # semi at 5.0 a second, spread 1,1
   climb   = 1.86
+  shot    = 10.93, 3.5, 0.646
   drift   = 0.41, 5
   recover = 28, 6
   max     = 7, 3
@@ -11771,6 +11809,7 @@ end
 
 recoil ww2_mosin   # bolt at 2.9 a second, spread 0,0
   climb   = 2.40
+  shot    = 10.48, 15.0, 2.867
   drift   = 0.30, 5
   recover = 30, 6
   max     = 8, 4
@@ -11811,6 +11850,7 @@ end
 
 recoil ww2_hdm   # semi at 5.8 a second, spread 1,1
   climb   = 0.43
+  shot    = 2.55, 0.3, 0.218
   drift   = 0.41, 5
   recover = 26, 6
   max     = 4, 2
@@ -11856,6 +11896,7 @@ end
 
 recoil ww2_revolver   # revolver at 3.9 a second, spread 2,3
   climb   = 2.57
+  shot    = 14.47, 8.5, 1.169
   drift   = 0.57, 5
   recover = 30, 6
   max     = 9, 4
@@ -11891,6 +11932,7 @@ end
 
 recoil ww2_g43   # semi at 3.5 a second, spread 3,3
   climb   = 1.79
+  shot    = 10.52, 16.7, 3.173
   drift   = 0.63, 5
   recover = 30, 6
   max     = 7, 3
@@ -11936,6 +11978,7 @@ end
 
 recoil ww2_fg42   # auto at 11.7 a second, spread 2,2
   climb   = 1.30
+  shot    = 10.31, 16.4, 3.173
   drift   = 0.52, 5
   recover = 18, 6
   max     = 6, 3
@@ -11981,6 +12024,7 @@ end
 
 recoil ww2_marksman   # semi at 7.0 a second, spread 10,8
   climb   = 1.93
+  shot    = 11.34, 18.0, 3.173
   drift   = 1.29, 5
   recover = 24, 6
   max     = 7, 3
@@ -12026,6 +12070,7 @@ end
 
 recoil ww2_venom   # belt at 17.5 a second, spread 6,4
   climb   = 0.27
+  shot    = 4.08, 6.5, 3.173
   drift   = 0.85, 5
   recover = 15, 6
   max     = 4, 2
@@ -12071,6 +12116,7 @@ end
 
 recoil ww2_aa12   # auto at 5.8 a second, spread 4,2
   climb   = 1.09
+  shot    = 8.68, 14.1, 3.239
   drift   = 0.63, 5
   recover = 26, 6
   max     = 5, 2
@@ -12116,6 +12162,7 @@ end
 
 recoil ww2_auto5   # semi at 3.2 a second, spread 5,3
   climb   = 1.97
+  shot    = 11.58, 18.7, 3.239
   drift   = 0.74, 5
   recover = 30, 6
   max     = 7, 3
@@ -12161,6 +12208,7 @@ end
 
 recoil ww2_m30   # break at 5.0 a second, spread 10,1
   climb   = 3.30
+  shot    = 14.89, 24.1, 3.239
   drift   = 0.91, 5
   recover = 28, 6
   max     = 10, 5
@@ -13324,6 +13372,7 @@ end
 
 recoil vp_moonlight   # 8.5 ft-lb a shot, revolver
   climb   = 2.57
+  shot    = 14.47, 8.5, 1.169
   drift   = 0.35, 5
   recover = 26, 6
   max     = 8.7, 2
@@ -13359,6 +13408,7 @@ end
 
 recoil vp_sunset   # 14.9 ft-lb a shot, revolver
   climb   = 3.13
+  shot    = 17.60, 14.9, 1.696
   drift   = 0.35, 5
   recover = 26, 6
   max     = 9.0, 2
@@ -13394,6 +13444,7 @@ end
 
 recoil vp_colarevolver   # 8.2 ft-lb a shot, revolver
   climb   = 2.75
+  shot    = 15.46, 8.2, 1.057
   drift   = 0.35, 5
   recover = 26, 6
   max     = 9.0, 2
@@ -13429,6 +13480,7 @@ end
 
 recoil vp_rifle   # 4.1 ft-lb a shot, semi
   climb   = 0.98
+  shot    = 5.77, 4.1, 1.417
   drift   = 0.35, 5
   recover = 26, 6
   max     = 5.2, 2
@@ -13474,6 +13526,7 @@ end
 
 recoil vp_m16   # 3.7 ft-lb a shot, semi
   climb   = 0.90
+  shot    = 5.31, 3.7, 1.403
   drift   = 0.35, 5
   recover = 26, 6
   max     = 5.0, 2
@@ -13519,6 +13572,7 @@ end
 
 recoil vp_smg   # 1.1 ft-lb a shot, auto
   climb   = 0.38
+  shot    = 3.04, 1.1, 0.728
   drift   = 0.40, 5
   recover = 21, 6
   max     = 3.8, 2
@@ -13564,6 +13618,7 @@ end
 
 recoil vp_tec9   # 2.6 ft-lb a shot, auto
   climb   = 0.87
+  shot    = 6.92, 2.6, 0.753
   drift   = 0.40, 5
   recover = 21, 6
   max     = 4.9, 2
@@ -13705,6 +13760,7 @@ end
 
 recoil shotgun_assault   # a gas-operated assault shotgun -- a Saiga or an AA-12, heavy enough that the gas system eats a good share of it -- 19.6 ft-lb, Vg 12.12 fps, derived
   climb   = 2.06
+  shot    = 12.12, 19.6, 3.239
   drift   = 0.55, 4
   recover = 16, 6
   max     = 7.5, 3
@@ -13715,6 +13771,7 @@ end
 
 recoil revolver   # a .357 service revolver -- 8.5 ft-lb, Vg 14.47 fps, derived
   climb   = 2.57
+  shot    = 14.47, 8.5, 1.169
   drift   = 0.55, 4
   recover = 16, 6
   max     = 8.7, 3
@@ -13725,6 +13782,7 @@ end
 
 recoil rifle   # a 5.56 service rifle, full length -- 3.8 ft-lb, Vg 5.50 fps, derived
   climb   = 0.94
+  shot    = 5.50, 3.8, 1.368
   drift   = 0.55, 4
   recover = 16, 6
   max     = 5.1, 3
@@ -13735,6 +13793,7 @@ end
 
 recoil shotgun   # a generic 12 gauge riot pump -- 24.1 ft-lb, Vg 14.89 fps, derived
   climb   = 3.19
+  shot    = 14.89, 24.1, 3.239
   drift   = 0.55, 4
   recover = 16, 6
   max     = 9.0, 3
@@ -13745,6 +13804,7 @@ end
 
 recoil shotgun_doublebarrel   # both barrels of a double at once -- the same brutal arithmetic as the Super Shotgun -- 93.7 ft-lb, Vg 28.95 fps, derived
   climb   = 6.43
+  shot    = 28.95, 93.7, 6.478
   drift   = 0.55, 4
   recover = 16, 6
   max     = 9.0, 3
@@ -13755,6 +13815,7 @@ end
 
 recoil smg   # a 9mm submachine gun, heavy for the round -- 1.3 ft-lb, Vg 3.46 fps, derived
   climb   = 0.44
+  shot    = 3.46, 1.3, 0.753
   drift   = 0.55, 4
   recover = 16, 6
   max     = 4.0, 3
@@ -13992,6 +14053,7 @@ end
 
 recoil ae_pulserifle   # 8.5 ft-lb a shot through a auto -- climb 0.89, and the spread is 3,3
   climb   = 0.89
+  shot    = 7.10, 8.5, 2.384
   drift   = 0.63, 5
   recover = 18, 6
   max     = 5.0, 2.5
@@ -14031,6 +14093,7 @@ end
 
 recoil ae_smartgun   # 2.3 ft-lb a shot through a harness -- climb 0.07, and the spread is 5.6,0
   climb   = 0.07
+  shot    = 1.97, 2.3, 2.384
   drift   = 0.61, 5
   recover = 18, 6
   max     = 3.2, 3.8
@@ -14106,6 +14169,7 @@ end
 
 recoil ae_m37a2   # 24.1 ft-lb a shot, pump -- spread 5.6,0
   climb   = 3.19
+  shot    = 14.89, 24.1, 3.239
   drift   = 0.61, 5
   recover = 30, 6
   max     = 9.0, 3.8
@@ -14138,6 +14202,7 @@ end
 
 recoil ae_m4a3   # 3.2 ft-lb a shot, semi -- spread 1,1
   climb   = 1.62
+  shot    = 9.53, 3.2, 0.681
   drift   = 0.41, 5
   recover = 26, 6
   max     = 6.6, 2.0
@@ -14170,6 +14235,7 @@ end
 
 recoil cl_ks23   # 89.3 ft-lb a shot, pump -- spread 5.6,0
   climb   = 4.20
+  shot    = 26.15, 89.3, 6.827
   drift   = 0.61, 5
   recover = 30, 6
   max     = 9.0, 3.8
@@ -14203,6 +14269,7 @@ end
 
 recoil cl_jackhammer   # 16.2 ft-lb a shot, auto -- spread 6.5,0
   climb   = 1.26
+  shot    = 10.02, 16.2, 3.239
   drift   = 0.66, 5
   recover = 30, 6
   max     = 5.8, 4.2
@@ -14235,6 +14302,7 @@ end
 
 recoil cl_sidewinder   # 3.8 ft-lb a shot, semi -- spread 3,3
   climb   = 0.95
+  shot    = 5.57, 3.8, 1.368
   drift   = 0.63, 5
   recover = 26, 6
   max     = 5.1, 2.5

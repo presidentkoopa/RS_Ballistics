@@ -125,7 +125,7 @@ def derive(gid):
     vg = (wb * vb + 4700.0 * wc) / (7000.0 * wg)
     e = wg * vg * vg / 64.348
     sx, sy = spread
-    return dict(vg=vg, energy=e, wg=wg, action=action, rate=rate, spread=spread, fsize=fsize,
+    return dict(vg=vg, energy=e, wg=wg, impulse=wg * vg / 32.174, action=action, rate=rate, spread=spread, fsize=fsize,
                 brass=brass, rnd=rnd, assumed=assumed, note=note,
                 climb=min(CLIMB_CEILING, vg * CLIMB_PER_FPS * ACTION[action]),
                 drift=0.30 + 0.055 * (sx + sy), bloom=0.02 * (sx + sy),
@@ -171,6 +171,7 @@ def gun_block(gid):
             "recoil %s   # %.1f ft-lb a shot, %s -- spread %g,%g"
             % (gid, d["energy"], d["action"], d["spread"][0], d["spread"][1]),
             "  climb   = %.2f" % d["climb"],
+            "  shot    = %.2f, %.1f, %.3f" % (d["vg"], d["energy"], d["impulse"]),
             "  drift   = %.2f, 5" % d["drift"],
             "  recover = %d, 6" % d["recover"],
             "  max     = %.1f, %.1f" % (max(3.0, min(9.0, 3.0 + 2.2 * d["climb"])),

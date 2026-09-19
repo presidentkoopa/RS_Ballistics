@@ -426,6 +426,10 @@ def derive(gid):
     vg, energy = free_recoil(gid)
     d["vg"] = vg if vg else 0.0
     d["energy"] = energy if energy else 0.0
+    # IMPULSE, lb-s: the momentum out of the muzzle, which is what pushes an arm. Gun weight cancels
+    # (vg already divided by it), so this is a fact about the CARTRIDGE -- the MG42 and the Kar98k
+    # share it exactly and are three times apart in energy. Zero where there is no cartridge.
+    d["impulse"] = (RECOIL_DATA[gid][3] * vg / 32.174) if vg and gid in RECOIL_DATA else 0.0
     d["climb"] = (vg * CLIMB_PER_FPS * ACTION[action]) if vg else (kick * ACTION[action])
     d["drift"] = 0.30 + 0.055 * slop
     d["recover"] = int(round(min(30.0, max(8.0, 26.0 * (REF_RATE / rate) ** 0.5))))
@@ -624,6 +628,9 @@ def recoil_and_ejecta(p, d):
         # same 7.92x57 and one of them is braced on a bipod.
         out += ["recoil %s   # %s at %.1f a second, spread %d,%d" % (p, d["action"], d["rate"], d["spread"][0], d["spread"][1]),
                 "  climb   = %.2f" % d["climb"],
+                # THE PHYSICS, STATED. climb above is derived from these; without them the only copy
+                # lives in this file and the Body IK lane has to be handed a stale table by hand.
+                "  shot    = %.2f, %.1f, %.3f" % (d["vg"], d["energy"], d["impulse"]),
                 "  drift   = %.2f, %d" % (d["drift"], 5),
                 "  recover = %d, %d" % (d["recover"], 6),
                 "  max     = %d, %d" % (d["max"], max(2, d["max"] // 2)),

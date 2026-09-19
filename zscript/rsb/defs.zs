@@ -692,6 +692,23 @@ class RSB_RecoilDef : RSB_Def
 	bool   kickOwned;
 	double braceCrouch;    // the kick crouched, times
 	double braceStill;     // the kick standing still, times
+	// THE PHYSICS OF THE SHOT (`shot`), which is NOT this package's to use and is published anyway.
+	//
+	// climb above is already derived from these three offline, in a Python table, which means the only
+	// copy of them lives outside the engine -- so the Body IK lane, which needs impulse to displace an
+	// arm, would have had to be handed a stale table by hand. A fact about a shot belongs on the shot.
+	//
+	//   vg        free recoil velocity, fps -- how fast the gun itself goes backwards. This is what
+	//             drives climb. Energy is what the shoulder absorbs; velocity is the muzzle rising.
+	//   energy    free recoil energy, ft-lb -- what STOPS the arm, not what moves it.
+	//   impulse   lb-s, the momentum leaving the muzzle: (grains x fps + 4700 x charge) / 7000 / 32.174.
+	//             INDEPENDENT OF GUN WEIGHT -- it is a cartridge fact. Weight decides how fast the gun
+	//             moves in answer to it, which is why an MG42 and a Kar98k share an impulse of 3.17 and
+	//             are three times apart in energy. This is the number that pushes an arm.
+	//
+	// Zero means not stated, and a consumer must treat zero as "no data", never as "no recoil": a BFG
+	// has no cartridge and inventing one to make the arithmetic run would be false precision.
+	double vg, energy, impulse;
 	double viewBack;       // THE LOOK (render only): map units back ...
 	double viewRise;       // ... degrees up ...
 	double viewRoll;       // ... degrees of roll ...

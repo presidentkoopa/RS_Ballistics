@@ -191,6 +191,7 @@ def blocks():
         vg, e, climb = derived_climb(p)
         out += ["recoil %s   # %s -- %.1f ft-lb, Vg %.2f fps, derived" % (p, note, e, vg),
                 "  climb   = %.2f" % climb,
+                "  shot    = %.2f, %.1f, %.3f" % (vg, e, DERIVED[p][3] * vg / 32.174),
                 "  drift   = 0.55, 4",
                 "  recover = 16, 6",
                 "  max     = %.1f, 3" % max(3.0, min(9.0, 3.0 + 2.2 * climb)),

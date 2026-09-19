@@ -2361,6 +2361,17 @@ class RSB_Parser
 			rc.viewTics = v[3].ToInt();
 			return (rc.viewBack >= 0 && rc.viewTics >= 0) ? "" : "view is back units, rise degrees, roll degrees, tics";
 		}
+		if (key == "shot")
+		{
+			// THE PHYSICS, not a tuning knob: free recoil velocity (fps), free recoil energy (ft-lb)
+			// and impulse (lb-s). Stated together because they come from one set of four real figures
+			// and are meaningless apart. See RSB_RecoilDef.
+			if (v.Size() != 3) return "shot is <vg fps>, <energy ft-lb>, <impulse lb-s>";
+			rc.vg = v[0].ToDouble();
+			rc.energy = v[1].ToDouble();
+			rc.impulse = v[2].ToDouble();
+			return "";
+		}
 		return String.Format("unknown recoil key \"%s\"", key);
 	}
 

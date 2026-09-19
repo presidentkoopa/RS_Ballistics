@@ -90,6 +90,9 @@ RECOILLESS = {
 }
 
 
+NL = "\n"   # set from the file in main(): an inserted line must match what is already there
+
+
 def free_recoil(row):
     wb, vb, wc, wg = row[0], row[1], row[2], row[3]
     vg = (wb * vb + 4700.0 * wc) / (7000.0 * wg)
@@ -103,24 +106,46 @@ def derived():
         vg, e = free_recoil(row)
         climb = vg * CLIMB_PER_FPS * ACTION[row[4]]
         climb = min(CLIMB_CEILING, climb)
-        out[p] = (climb, max(3.0, min(MAX_CEILING, 3.0 + 2.2 * climb)), vg, e, row[5])
+        # IMPULSE, lb-s -- the momentum out of the muzzle, which is what pushes an arm. Weight
+        # cancels (vg already divided by it), so two guns firing one cartridge share it exactly.
+        out[p] = (climb, max(3.0, min(MAX_CEILING, 3.0 + 2.2 * climb)), vg, e, row[5], row[3] * vg / 32.174)
     for p, (climb, note) in RECOILLESS.items():
-        out[p] = (climb, max(3.0, min(MAX_CEILING, 3.0 + 2.2 * climb)), 0.0, 0.0, note)
+        # A RECOILLESS WEAPON HAS A REAL IMPULSE OF ZERO -- the backblast cancels it -- which is not
+        # the same as "no data". It is stated as zero and reads as zero either way, and the climb
+        # beside it is what a consumer should use when there is no cartridge to derive from.
+        out[p] = (climb, max(3.0, min(MAX_CEILING, 3.0 + 2.2 * climb)), 0.0, 0.0, note, 0.0)
     return out
 
 
-def rewrite(text, name, climb, mx):
-    """Replace only `climb` and `max` inside one recoil block. Everything else is hand-authored feel."""
+def rewrite(text, name, climb, mx, vg=None, energy=None, impulse=None):
+    """Replace `climb`, `max` and `shot` inside one recoil block. Everything else is hand-authored feel.
+
+    `shot` is the physics climb was derived FROM. It is written here rather than left in this file
+    because the only other copy lives in Python, and a lane that needs impulse to move an arm cannot
+    read Python. A block that has no `shot` line gets one straight after `climb`; one that already has
+    it is overwritten, so re-running is idempotent.
+    """
     m = re.search(r"(?m)^recoil %s(?:\s|$).*?^end" % re.escape(name), text, re.S)
     if not m:
-        return text, False
+        return text, "absent"
     block = m.group(0)
     new = re.sub(r"(?m)^(\s*climb\s*=\s*)[-0-9.]+", lambda g: "%s%.2f" % (g.group(1), climb), block, count=1)
     # `max` is pitch, yaw -- only the pitch cap follows from the kick; the yaw cap is drift's business.
     new = re.sub(r"(?m)^(\s*max\s*=\s*)[-0-9.]+", lambda g: "%s%.1f" % (g.group(1), mx), new, count=1)
+    if vg is not None:
+        line = "  shot    = %.2f, %.1f, %.3f" % (vg, energy, impulse)
+        if re.search(r"(?m)^\s*shot\s*=", new):
+            new = re.sub(r"(?m)^[^\r\n]*shot\s*=[^\r\n]*", line, new, count=1)
+        else:
+            # after climb, where it belongs: climb is derived from it
+            new = re.sub(r"(?m)^(\s*climb\s*=[^\r\n]*)", lambda g: g.group(1) + NL + line, new, count=1)
+    # THE TWO WAYS NOTHING HAPPENS ARE NOT THE SAME THING. A block that is already correct and a
+    # block that does not exist both used to print under "NOT FOUND", so a settled generator reported
+    # twenty-one healthy profiles as missing every run -- and a checker that cries wolf about correct
+    # work gets ignored exactly as fast as one that stays quiet about broken work.
     if new == block:
-        return text, False
-    return text[:m.start()] + new + text[m.end():], True
+        return text, "same"
+    return text[:m.start()] + new + text[m.end():], "written"
 
 
 def main():
@@ -137,18 +162,23 @@ def main():
         return
 
     text = io.open(DEFS, encoding="utf-8", newline="").read()
-    done, missing = 0, []
+    global NL
+    NL = "\r\n" if "\r\n" in text else "\n"
+    done, same, absent = 0, 0, []
     for p in sorted(d):
-        climb, mx = d[p][0], d[p][1]
-        text, ok = rewrite(text, p, climb, mx)
-        if ok:
+        climb, mx, vg, e, _note, imp = d[p]
+        text, how = rewrite(text, p, climb, mx, vg, e, imp)
+        if how == "written":
             done += 1
+        elif how == "same":
+            same += 1
         else:
-            missing.append(p)
+            absent.append(p)
     io.open(DEFS, "w", encoding="utf-8", newline="").write(text)
-    print("%d recoil profiles given real-world figures" % done)
-    if missing:
-        print("NOT FOUND (no such recoil block, or nothing to change): %s" % ", ".join(missing))
+    print("%d recoil profiles rewritten, %d already correct" % (done, same))
+    if absent:
+        print("NO SUCH RECOIL BLOCK -- these guns have real-world figures here and nothing to put "
+              "them on: %s" % ", ".join(absent))
 
 
 main()

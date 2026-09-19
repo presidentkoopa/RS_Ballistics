@@ -73,7 +73,7 @@ def derive(gid):
     sx, sy = spread
     return {
         "wg": wg, "action": action, "rate": rate, "spread": spread, "fsize": fsize, "note": note,
-        "vg": vg, "energy": e,
+        "vg": vg, "energy": e, "impulse": wg * vg / 32.174,
         "climb": vg * CLIMB_PER_FPS * ACTION[action],
         "drift": 0.30 + 0.055 * (sx + sy),
         "bloom": 0.02 * (sx + sy),
@@ -188,6 +188,7 @@ def blocks():
                 "recoil %s   # %.1f ft-lb a shot through a %s -- climb %.2f, and the spread is %g,%g"
                 % (gid, d["energy"], d["action"], d["climb"], d["spread"][0], d["spread"][1]),
                 "  climb   = %.2f" % d["climb"],
+                "  shot    = %.2f, %.1f, %.3f" % (d["vg"], d["energy"], d["impulse"]),
                 "  drift   = %.2f, 5" % d["drift"],
                 "  recover = %d, 6" % d["recover"],
                 "  max     = %.1f, %.1f" % (max(3.0, min(9.0, 3.0 + 2.2 * d["climb"])),
