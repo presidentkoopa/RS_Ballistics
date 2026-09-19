@@ -10054,12 +10054,17 @@ end
 # ---- END liquid variants
 
 # ---- BEGIN WW2 (tools/gen_ww2_profiles.py)
-# THE WW2 SET. Sixteen guns, six cartridges, NOTHING REUSED FROM THE MODERN SET (owner).
-# DO NOT EDIT BY HAND: change tools/gen_ww2_profiles.py and run it again.
+# THE WW2 SET. Twelve guns and a flamethrower, seven cartridges, NOTHING REUSED FROM THE
+# MODERN SET (owner). DO NOT EDIT BY HAND: change tools/gen_ww2_profiles.py and run it again.
 #
-# The two poles the whole set is built between: the Kar98k, 40 damage at 3.9 a second, one shot
-# that matters -- and the MP40, 12 at 17.5, a hose. If they read as one family at two rates,
-# this failed.
+# Every number is derived from WMSHEET.ww2's own damage, firetics and shotspread, which are
+# Brutal Wolfenstein II v0.2.5's. NOT transcribed, NOT invented, and re-run rather than
+# re-tuned when the sheet moves -- it already moved once and took seven of twelve rates with it.
+#
+# The two poles the whole set is built between: the KAR98K, 100 damage and ZERO spread once
+# every eleven tics -- the biggest flash and the biggest single cloud in the game -- and the
+# PPSH-41, 20 damage seventeen and a half times a second, the smallest flash and a cone that
+# dies before the next shot. If they read as one family at two rates, this failed.
 
 ballistics ww2_9mm   # 9x19 Parabellum: light, fast, clean-ish for the period
   speed  = 330
@@ -10187,7 +10192,7 @@ round ww2_3006
   roundlook  = ww2_3006
 end
 
-ballistics ww2_12ga   # 12 gauge buckshot: ten pellets of it
+ballistics ww2_12ga   # 12 gauge buckshot: seven pellets of it
   speed  = 300
   radius = 2.2
   damage = none
@@ -10484,7 +10489,7 @@ impact ww2_3006.liquid
   sound     = none
 end
 
-impact ww2_12ga   # 12 gauge buckshot: ten pellets of it
+impact ww2_12ga   # 12 gauge buckshot: seven pellets of it
   bursts    = chips_tight_concrete, dust_concrete, spark_hot
   mark      = pool, 3.0, 60
   markcolor = 60, 54, 48
@@ -10530,33 +10535,34 @@ impact ww2_12ga.liquid
   sound     = none
 end
 
-flash ww2_kar98k   # THE KAR98K: the set in one gun. A full rifle cartridge fired four times a second -- a huge dirty flash, smoke that hangs in the doorway, and a push you have to come back from
-  light         = 292, 4.7, 3
+flash ww2_kar98k   # THE KAR98K: the set in one gun. One hundred damage, ZERO spread, one shot every eleven tics -- the biggest flash and the biggest single cloud in the game, because nothing else gets this much time to spend
+  # bolt, 100 damage at 3.2 a second (firetics 11), spread 0,0
+  light         = 326, 5.0, 3
   lightcolor    = 255, 200, 130
-  cone          = 27, 67, 210, 8
-  conetics      = 4
+  cone          = 29, 71, 235, 8
+  conetics      = 5
   bursts        = flash_core, flash_petals, spk_heavy_streaks
-  flame         = 0.21
-  smoke         = 1, 0.057, 0.85
+  flame         = 0.23
+  smoke         = 1, 0.075, 0.95
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 54, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.95, flash_soot 0.76, spk_specks 0.3
-  blastkick     = kick_puff, 93, 3
-  exposure      = 0.61, 179
-  hearing       = 0.69, 205
-  smokevolume   = 32, 2.1, 1.5, 150, 10
-  barrelheat    = 0.57, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 4.9
+  powderburn    = 61, 7, 0.75
+  powdervary    = 0.35
+  maybe         = powder_clump 0.95, flash_soot 0.90, spk_specks 0.3
+  blastkick     = kick_puff, 98, 3
+  exposure      = 0.68, 199
+  hearing       = 0.77, 227
+  smokevolume   = 25, 1.6, 1.1, 150, 10
+  barrelheat    = 0.42, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.7
   tail          = rsb/tail/br, 0.9
 end
 
-recoil ww2_kar98k   # bolt at 3.9 a second
-  climb   = 2.60
-  drift   = 0.50, 5
-  recover = 26, 6
+recoil ww2_kar98k   # bolt at 3.2 a second, spread 0,0
+  climb   = 2.63
+  drift   = 0.30, 5
+  recover = 30, 6
   max     = 9, 4
-  bloom   = 0.14
+  bloom   = 0.00
   brace   = 0.6, 0.85
   view    = 2.2, 8, 1, 6
 end
@@ -10574,35 +10580,36 @@ ejecta ww2_kar98k   # a long rifle case, and it stays hot
   wisp    = rsb_casing_wisp, 18
 end
 
-flash ww2_mg42   # THE MG42: the same cartridge as the Kar98k and nothing else in common. Small per shot because there are twelve a second, but the smoke never gets a chance to clear
-  light         = 187, 3.6, 2
+flash ww2_mg42   # THE MG42: the same cartridge as the Kar98k and nothing else in common. Small per shot because there are twelve a second, but the standing smoke is the thickest in the set and never gets a chance to clear
+  # belt, 40 damage at 11.7 a second (firetics 3), spread 6,4
+  light         = 208, 3.8, 2
   lightcolor    = 255, 200, 130
-  cone          = 20, 55, 133, 8
-  conetics      = 3
+  cone          = 21, 57, 148, 8
+  conetics      = 2
   bursts        = flash_core, flash_petals, spk_heavy_streaks
-  flame         = 0.14
-  smoke         = 1, 0.041, 0.61
+  flame         = 0.15
+  smoke         = 1, 0.038, 0.58
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 33, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.74, flash_soot 0.54, spk_specks 0.3
-  blastkick     = kick_puff, 76, 3
-  exposure      = 0.41, 116
-  hearing       = 0.45, 135
-  smokevolume   = 24, 1.5, 1.1, 150, 10
-  barrelheat    = 0.41, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 3.5
+  powderburn    = 37, 7, 0.75
+  powdervary    = 0.70
+  maybe         = powder_clump 0.70, flash_soot 0.51, spk_specks 0.3
+  blastkick     = kick_puff, 79, 3
+  exposure      = 0.45, 128
+  hearing       = 0.50, 148
+  smokevolume   = 37, 2.5, 1.8, 150, 10
+  barrelheat    = 0.67, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.8
   tail          = rsb/tail/br, 0.9
 end
 
-recoil ww2_mg42   # belt at 11.7 a second
-  climb   = 0.55
-  drift   = 0.50, 5
-  recover = 9, 6
-  max     = 7, 3
-  bloom   = 0.14
+recoil ww2_mg42   # belt at 11.7 a second, spread 6,4
+  climb   = 0.77
+  drift   = 0.85, 5
+  recover = 18, 6
+  max     = 5, 2
+  bloom   = 0.20
   brace   = 0.6, 0.85
-  view    = 1.3, 4, 1, 6
+  view    = 1.4, 5, 1, 6
 end
 
 ejecta ww2_mg42   # a long rifle case, and it stays hot
@@ -10618,33 +10625,34 @@ ejecta ww2_mg42   # a long rifle case, and it stays hot
   wisp    = rsb_casing_wisp, 18
 end
 
-flash ww2_heavymg   # THE HEAVY MG: the sloppiest thing in the set at a 5,4 spread, and it should look it -- the widest, dirtiest flash of the lot
-  light         = 225, 4.0, 3
+flash ww2_heavymg   # THE CHAINGUN: the sloppiest thing in the set at an 8,6 spread, and it should look it -- the widest powder spray and the most bloom of the lot
+  # belt, 40 damage at 8.8 a second (firetics 4), spread 8,6
+  light         = 228, 4.0, 3
   lightcolor    = 255, 200, 130
-  cone          = 23, 59, 161, 8
-  conetics      = 4
+  cone          = 23, 60, 163, 8
+  conetics      = 3
   bursts        = flash_core, flash_petals, spk_heavy_streaks
   flame         = 0.16
-  smoke         = 1, 0.045, 0.68
+  smoke         = 1, 0.044, 0.66
   smokeparticle = rsb_smoke_soot_gun
   powderburn    = 41, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.83, flash_soot 0.60, spk_specks 0.3
+  powdervary    = 0.84
+  maybe         = powder_clump 0.80, flash_soot 0.58, spk_specks 0.3
   blastkick     = kick_puff, 82, 3
-  exposure      = 0.48, 139
-  hearing       = 0.54, 160
-  smokevolume   = 27, 1.7, 1.2, 150, 10
-  barrelheat    = 0.45, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 3.9
+  exposure      = 0.49, 141
+  hearing       = 0.54, 162
+  smokevolume   = 34, 2.2, 1.6, 150, 10
+  barrelheat    = 0.61, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 5.2
   tail          = rsb/tail/br, 0.9
 end
 
-recoil ww2_heavymg   # belt at 8.8 a second
-  climb   = 0.80
-  drift   = 0.70, 5
-  recover = 11, 6
-  max     = 8, 4
-  bloom   = 0.14
+recoil ww2_heavymg   # belt at 8.8 a second, spread 8,6
+  climb   = 0.77
+  drift   = 1.07, 5
+  recover = 21, 6
+  max     = 5, 2
+  bloom   = 0.28
   brace   = 0.6, 0.85
   view    = 1.4, 5, 1, 6
 end
@@ -10662,35 +10670,36 @@ ejecta ww2_heavymg   # a long rifle case, and it stays hot
   wisp    = rsb_casing_wisp, 18
 end
 
-flash ww2_garand   # THE M1 GARAND: a full-power round from a semi-auto -- a hard flash and a real push, eight times before the clip leaves
-  light         = 262, 4.4, 3
+flash ww2_garand   # THE M1 GARAND: a hundred damage of full-power round from a semi-auto -- a hard flash and a real push, eight times before the clip leaves
+  # semi, 100 damage at 4.4 a second (firetics 8), spread 3,3
+  light         = 281, 4.6, 3
   lightcolor    = 255, 200, 130
-  cone          = 25, 64, 188, 8
+  cone          = 26, 66, 202, 8
   conetics      = 4
   bursts        = flash_core, flash_petals, spk_heavy_streaks
-  flame         = 0.18
-  smoke         = 1, 0.048, 0.72
+  flame         = 0.20
+  smoke         = 1, 0.056, 0.85
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 48, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.88, flash_soot 0.64, spk_specks 0.3
-  blastkick     = kick_puff, 88, 3
-  exposure      = 0.56, 161
-  hearing       = 0.62, 185
-  smokevolume   = 28, 1.8, 1.3, 150, 10
-  barrelheat    = 0.48, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 4.2
+  powderburn    = 52, 7, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.95, flash_soot 0.75, spk_specks 0.3
+  blastkick     = kick_puff, 91, 3
+  exposure      = 0.59, 173
+  hearing       = 0.67, 197
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.45, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.9
   tail          = rsb/tail/br, 0.9
 end
 
-recoil ww2_garand   # semi at 4.4 a second
-  climb   = 1.90
-  drift   = 0.45, 5
-  recover = 20, 6
-  max     = 8, 4
-  bloom   = 0.14
+recoil ww2_garand   # semi at 4.4 a second, spread 3,3
+  climb   = 1.84
+  drift   = 0.63, 5
+  recover = 30, 6
+  max     = 7, 3
+  bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 1.9, 6, 1, 6
+  view    = 1.8, 6, 1, 6
 end
 
 ejecta ww2_garand   # a long rifle case, and it stays hot
@@ -10706,35 +10715,36 @@ ejecta ww2_garand   # a long rifle case, and it stays hot
   wisp    = rsb_casing_wisp, 18
 end
 
-flash ww2_bar   # THE BAR: a rifle cartridge on full auto, which is as unreasonable as it sounds
-  light         = 255, 4.3, 3
+flash ww2_bar   # THE BAR: a hundred damage of rifle cartridge on full auto seven times a second, which is as unreasonable as it sounds and is the most lethal sustained thing in the set
+  # auto, 100 damage at 7.0 a second (firetics 5), spread 5,5
+  light         = 239, 4.1, 3
   lightcolor    = 255, 200, 130
-  cone          = 25, 63, 183, 8
+  cone          = 23, 61, 171, 8
   conetics      = 4
   bursts        = flash_core, flash_petals, spk_heavy_streaks
-  flame         = 0.18
-  smoke         = 1, 0.048, 0.72
+  flame         = 0.17
+  smoke         = 1, 0.046, 0.68
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 47, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.88, flash_soot 0.64, spk_specks 0.3
-  blastkick     = kick_puff, 87, 3
-  exposure      = 0.54, 157
-  hearing       = 0.60, 180
-  smokevolume   = 28, 1.8, 1.3, 150, 10
-  barrelheat    = 0.48, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 4.2
+  powderburn    = 43, 7, 0.75
+  powdervary    = 0.70
+  maybe         = powder_clump 0.84, flash_soot 0.61, spk_specks 0.3
+  blastkick     = kick_puff, 84, 3
+  exposure      = 0.51, 147
+  hearing       = 0.57, 169
+  smokevolume   = 30, 1.9, 1.4, 150, 10
+  barrelheat    = 0.53, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 4.6
   tail          = rsb/tail/br, 0.9
 end
 
-recoil ww2_bar   # auto at 5.0 a second
-  climb   = 1.70
-  drift   = 0.60, 5
-  recover = 18, 6
-  max     = 9, 4
-  bloom   = 0.14
+recoil ww2_bar   # auto at 7.0 a second, spread 5,5
+  climb   = 1.36
+  drift   = 0.85, 5
+  recover = 24, 6
+  max     = 6, 3
+  bloom   = 0.20
   brace   = 0.6, 0.85
-  view    = 1.8, 6, 1, 6
+  view    = 1.6, 6, 1, 6
 end
 
 ejecta ww2_bar   # a long rifle case, and it stays hot
@@ -10750,35 +10760,36 @@ ejecta ww2_bar   # a long rifle case, and it stays hot
   wisp    = rsb_casing_wisp, 18
 end
 
-flash ww2_trench   # THE TRENCH GUN: ten pellets and a cloud. The only pellet gun in the set
-  light         = 240, 4.8, 3
+flash ww2_trench   # THE TRENCH GUN: seven pellets and a cloud, once every twelve tics. The slowest gun in the set and the only pellet gun, so it gets the longest cone and the fattest smoke
+  # pump, 25 damage x7 at 2.9 a second (firetics 12), spread 4,2
+  light         = 245, 4.8, 3
   lightcolor    = 255, 200, 130
-  cone          = 28, 68, 176, 8
-  conetics      = 4
+  cone          = 28, 69, 180, 8
+  conetics      = 5
   bursts        = flash_core, flash_petals, spk_streaks_fine
   flame         = 0.21
-  smoke         = 1, 0.060, 0.90
+  smoke         = 1, 0.095, 0.95
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 56, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.95, flash_soot 0.80, spk_specks 0.3
-  blastkick     = kick_puff, 94, 3
-  exposure      = 0.63, 184
-  hearing       = 0.71, 210
-  smokevolume   = 34, 2.2, 1.6, 150, 10
-  barrelheat    = 0.60, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 5.2
+  powderburn    = 57, 7, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.95, flash_soot 0.90, spk_specks 0.3
+  blastkick     = kick_puff, 95, 3
+  exposure      = 0.64, 187
+  hearing       = 0.72, 213
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.45, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.9
   tail          = rsb/tail/smg, 0.7
 end
 
-recoil ww2_trench   # pump at 5.0 a second
-  climb   = 2.30
-  drift   = 0.40, 5
-  recover = 22, 6
-  max     = 9, 4
-  bloom   = 0.08
+recoil ww2_trench   # pump at 2.9 a second, spread 4,2
+  climb   = 2.25
+  drift   = 0.63, 5
+  recover = 30, 6
+  max     = 8, 4
+  bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 2.1, 7, 1, 6
+  view    = 2.0, 7, 1, 6
 end
 
 ejecta ww2_trench   # a paper hull
@@ -10794,35 +10805,36 @@ ejecta ww2_trench   # a paper hull
   wisp    = rsb_casing_wisp, 12
 end
 
-flash ww2_m1911   # THE COLT M1911: a fat slow .45, a soft yellow flash and a lazy push
-  light         = 127, 3.6, 2
+flash ww2_m1911   # THE COLT M1911: a fat slow .45 at the reference rate, a soft yellow flash and a lazy push
+  # semi, 30 damage at 5.8 a second (firetics 6), spread 1,1
+  light         = 135, 3.6, 3
   lightcolor    = 255, 200, 130
-  cone          = 20, 55, 93, 8
-  conetics      = 3
+  cone          = 21, 56, 99, 8
+  conetics      = 4
   bursts        = flash_core, flash_petals, spk_streaks_fine
   flame         = 0.14
-  smoke         = 1, 0.033, 0.50
+  smoke         = 1, 0.034, 0.52
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 33, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.61, flash_soot 0.44, spk_specks 0.3
-  blastkick     = kick_puff, 76, 3
-  exposure      = 0.41, 116
-  hearing       = 0.45, 135
-  smokevolume   = 21, 1.2, 0.9, 150, 10
-  barrelheat    = 0.33, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 2.9
+  powderburn    = 35, 7, 0.75
+  powdervary    = 0.42
+  maybe         = powder_clump 0.63, flash_soot 0.46, spk_specks 0.3
+  blastkick     = kick_puff, 77, 3
+  exposure      = 0.42, 121
+  hearing       = 0.46, 140
+  smokevolume   = 22, 1.3, 0.9, 150, 10
+  barrelheat    = 0.34, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.0
   tail          = rsb/tail/smg, 0.7
 end
 
-recoil ww2_m1911   # semi at 11.7 a second
-  climb   = 1.00
-  drift   = 0.40, 5
-  recover = 12, 6
+recoil ww2_m1911   # semi at 5.8 a second, spread 1,1
+  climb   = 0.80
+  drift   = 0.41, 5
+  recover = 26, 6
   max     = 5, 2
-  bloom   = 0.08
+  bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.5, 5, 1, 6
+  view    = 1.4, 5, 1, 6
 end
 
 ejecta ww2_m1911   # a fat pistol case
@@ -10839,34 +10851,35 @@ ejecta ww2_m1911   # a fat pistol case
 end
 
 flash ww2_luger   # THE LUGER P08: small, sharp and tidy -- the cleanest thing here, which is not saying much
-  light         = 105, 3.3, 2
+  # semi, 20 damage at 5.8 a second (firetics 6), spread 1,1
+  light         = 120, 3.5, 3
   lightcolor    = 255, 200, 130
-  cone          = 19, 52, 77, 8
-  conetics      = 3
+  cone          = 20, 54, 88, 8
+  conetics      = 4
   bursts        = flash_core, flash_petals, spk_streaks_fine
-  flame         = 0.12
-  smoke         = 1, 0.028, 0.43
+  flame         = 0.13
+  smoke         = 1, 0.030, 0.45
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 29, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.52, flash_soot 0.38, spk_specks 0.3
-  blastkick     = kick_puff, 72, 3
-  exposure      = 0.36, 102
-  hearing       = 0.39, 120
-  smokevolume   = 19, 1.0, 0.8, 150, 10
-  barrelheat    = 0.28, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 2.5
+  powderburn    = 32, 7, 0.75
+  powdervary    = 0.42
+  maybe         = powder_clump 0.55, flash_soot 0.40, spk_specks 0.3
+  blastkick     = kick_puff, 75, 3
+  exposure      = 0.39, 112
+  hearing       = 0.43, 130
+  smokevolume   = 20, 1.1, 0.8, 150, 10
+  barrelheat    = 0.30, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 2.6
   tail          = rsb/tail/smg, 0.7
 end
 
-recoil ww2_luger   # semi at 11.7 a second
-  climb   = 0.80
-  drift   = 0.35, 5
-  recover = 11, 6
+recoil ww2_luger   # semi at 5.8 a second, spread 1,1
+  climb   = 0.52
+  drift   = 0.41, 5
+  recover = 26, 6
   max     = 4, 2
-  bloom   = 0.08
+  bloom   = 0.04
   brace   = 0.6, 0.85
-  view    = 1.4, 5, 1, 6
+  view    = 1.2, 4, 1, 6
 end
 
 ejecta ww2_luger   # a pistol case
@@ -10882,35 +10895,36 @@ ejecta ww2_luger   # a pistol case
   wisp    = rsb_casing_wisp, 12
 end
 
-flash ww2_thompson   # THE THOMPSON M1A1: .45 on full auto -- fat rounds, a fat flash, and it climbs
-  light         = 135, 3.6, 2
+flash ww2_thompson   # THE THOMPSON M1A1: .45 on full auto at twelve a second -- fat rounds, a short fat flash, and it climbs
+  # auto, 30 damage at 11.7 a second (firetics 3), spread 3,3
+  light         = 98, 3.3, 2
   lightcolor    = 255, 200, 130
-  cone          = 21, 56, 99, 8
-  conetics      = 3
+  cone          = 18, 51, 72, 8
+  conetics      = 2
   bursts        = flash_core, flash_petals, spk_streaks_fine
-  flame         = 0.14
-  smoke         = 1, 0.037, 0.56
+  flame         = 0.12
+  smoke         = 1, 0.025, 0.38
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 35, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.69, flash_soot 0.50, spk_specks 0.3
-  blastkick     = kick_puff, 77, 3
-  exposure      = 0.42, 121
-  hearing       = 0.46, 140
-  smokevolume   = 23, 1.4, 1.0, 150, 10
-  barrelheat    = 0.38, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 3.2
+  powderburn    = 27, 7, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.46, flash_soot 0.34, spk_specks 0.3
+  blastkick     = kick_puff, 71, 3
+  exposure      = 0.35, 99
+  hearing       = 0.38, 115
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.44, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.8
   tail          = rsb/tail/smg, 0.7
 end
 
-recoil ww2_thompson   # auto at 11.7 a second
-  climb   = 1.05
-  drift   = 0.65, 5
-  recover = 12, 6
-  max     = 7, 3
-  bloom   = 0.08
+recoil ww2_thompson   # auto at 11.7 a second, spread 3,3
+  climb   = 0.59
+  drift   = 0.63, 5
+  recover = 18, 6
+  max     = 4, 2
+  bloom   = 0.12
   brace   = 0.6, 0.85
-  view    = 1.5, 5, 1, 6
+  view    = 1.3, 4, 1, 6
 end
 
 ejecta ww2_thompson   # a fat pistol case
@@ -10926,33 +10940,34 @@ ejecta ww2_thompson   # a fat pistol case
   wisp    = rsb_casing_wisp, 12
 end
 
-flash ww2_mp40   # THE MP40: the other pole. Twelve damage seventeen times a second -- a small sooty flash and a gun you hose with
-  light         = 90, 3.2, 2
+flash ww2_mp40   # THE MP40: NOT the hose it was carded as. Eight and a half a second, dead mid-pack, sharing its rate with the Chaingun -- a small sooty flash and a gun you can actually aim
+  # auto, 20 damage at 8.8 a second (firetics 4), spread 3,3
+  light         = 99, 3.3, 3
   lightcolor    = 255, 200, 130
-  cone          = 18, 50, 66, 8
+  cone          = 18, 51, 73, 8
   conetics      = 3
   bursts        = flash_core, flash_petals, spk_streaks_fine
-  flame         = 0.11
-  smoke         = 1, 0.030, 0.45
+  flame         = 0.12
+  smoke         = 1, 0.025, 0.37
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 26, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.55, flash_soot 0.40, spk_specks 0.3
-  blastkick     = kick_puff, 70, 3
-  exposure      = 0.33, 94
-  hearing       = 0.36, 110
-  smokevolume   = 20, 1.1, 0.8, 150, 10
-  barrelheat    = 0.30, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 2.6
+  powderburn    = 27, 7, 0.75
+  powdervary    = 0.56
+  maybe         = powder_clump 0.46, flash_soot 0.33, spk_specks 0.3
+  blastkick     = kick_puff, 71, 3
+  exposure      = 0.35, 99
+  hearing       = 0.38, 116
+  smokevolume   = 22, 1.3, 0.9, 150, 10
+  barrelheat    = 0.35, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.0
   tail          = rsb/tail/smg, 0.7
 end
 
-recoil ww2_mp40   # auto at 17.5 a second
-  climb   = 0.50
-  drift   = 0.50, 5
-  recover = 8, 6
-  max     = 6, 3
-  bloom   = 0.08
+recoil ww2_mp40   # auto at 8.8 a second, spread 3,3
+  climb   = 0.38
+  drift   = 0.63, 5
+  recover = 21, 6
+  max     = 4, 2
+  bloom   = 0.12
   brace   = 0.6, 0.85
   view    = 1.2, 4, 1, 6
 end
@@ -10970,33 +10985,34 @@ ejecta ww2_mp40   # a pistol case
   wisp    = rsb_casing_wisp, 12
 end
 
-flash ww2_ppsh   # THE PPSH-41: seventeen a second out of a drum -- a fast spiteful little flash and a stream of brass
-  light         = 97, 3.2, 2
+flash ww2_ppsh   # THE PPSH-41: the fast pole. Seventeen and a half a second out of a drum, so the smallest flash in the set and a cone that dies before the next shot -- a stream of brass and a wall of standing smoke
+  # auto, 20 damage at 17.5 a second (firetics 2), spread 4,5
+  light         = 77, 3.0, 1
   lightcolor    = 255, 200, 130
-  cone          = 18, 51, 71, 8
-  conetics      = 3
+  cone          = 17, 49, 57, 8
+  conetics      = 2
   bursts        = flash_core, flash_petals, spk_streaks_fine
-  flame         = 0.12
-  smoke         = 1, 0.032, 0.47
+  flame         = 0.10
+  smoke         = 1, 0.018, 0.27
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 27, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.58, flash_soot 0.42, spk_specks 0.3
-  blastkick     = kick_puff, 71, 3
-  exposure      = 0.34, 98
-  hearing       = 0.38, 115
-  smokevolume   = 20, 1.2, 0.8, 150, 10
-  barrelheat    = 0.32, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 2.7
+  powderburn    = 23, 7, 0.75
+  powdervary    = 0.67
+  maybe         = powder_clump 0.34, flash_soot 0.24, spk_specks 0.3
+  blastkick     = kick_puff, 68, 3
+  exposure      = 0.31, 86
+  hearing       = 0.33, 101
+  smokevolume   = 26, 1.6, 1.2, 150, 10
+  barrelheat    = 0.44, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.8
   tail          = rsb/tail/smg, 0.7
 end
 
-recoil ww2_ppsh   # auto at 17.5 a second
-  climb   = 0.50
-  drift   = 0.55, 5
-  recover = 8, 6
-  max     = 6, 3
-  bloom   = 0.08
+recoil ww2_ppsh   # auto at 17.5 a second, spread 4,5
+  climb   = 0.38
+  drift   = 0.79, 5
+  recover = 15, 6
+  max     = 4, 2
+  bloom   = 0.18
   brace   = 0.6, 0.85
   view    = 1.2, 4, 1, 6
 end
@@ -11014,33 +11030,34 @@ ejecta ww2_ppsh   # a pistol case
   wisp    = rsb_casing_wisp, 12
 end
 
-flash ww2_stg44   # THE STG 44: the first assault rifle, and it sits exactly between the rifles and the subguns because that is what it was for
-  light         = 180, 3.5, 2
+flash ww2_stg44   # THE STG 44: the first assault rifle, and at seven a second with a 2,2 spread it sits exactly between the rifles and the subguns, because that is what it was for
+  # auto, 40 damage at 7.0 a second (firetics 5), spread 2,2
+  light         = 205, 3.7, 3
   lightcolor    = 255, 200, 130
-  cone          = 20, 54, 128, 8
-  conetics      = 3
+  cone          = 21, 57, 146, 8
+  conetics      = 4
   bursts        = flash_core, flash_petals, spk_heavy_streaks
-  flame         = 0.13
-  smoke         = 1, 0.036, 0.54
+  flame         = 0.15
+  smoke         = 1, 0.035, 0.52
   smokeparticle = rsb_smoke_soot_gun
-  powderburn    = 32, 7, 0.75
-  powdervary    = 0.45
-  maybe         = powder_clump 0.66, flash_soot 0.48, spk_specks 0.3
-  blastkick     = kick_puff, 75, 3
-  exposure      = 0.39, 112
-  hearing       = 0.43, 130
-  smokevolume   = 22, 1.3, 1.0, 150, 10
-  barrelheat    = 0.36, 0.22, 0.30
-  barrelsmoke   = rsb_smoke_barrel_soot, 3.1
+  powderburn    = 37, 7, 0.75
+  powdervary    = 0.49
+  maybe         = powder_clump 0.63, flash_soot 0.46, spk_specks 0.3
+  blastkick     = kick_puff, 79, 3
+  exposure      = 0.44, 127
+  hearing       = 0.49, 146
+  smokevolume   = 24, 1.5, 1.1, 150, 10
+  barrelheat    = 0.40, 0.22, 0.30
+  barrelsmoke   = rsb_smoke_barrel_soot, 3.5
   tail          = rsb/tail/br, 0.9
 end
 
-recoil ww2_stg44   # auto at 17.5 a second
-  climb   = 0.75
-  drift   = 0.45, 5
-  recover = 10, 6
-  max     = 6, 3
-  bloom   = 0.14
+recoil ww2_stg44   # auto at 7.0 a second, spread 2,2
+  climb   = 0.68
+  drift   = 0.52, 5
+  recover = 24, 6
+  max     = 4, 2
+  bloom   = 0.08
   brace   = 0.6, 0.85
   view    = 1.3, 5, 1, 6
 end
@@ -11084,6 +11101,20 @@ flame ww2_flame   # THE FLAMMENWERFER: a fat wet gout, not a modern jet -- slowe
   flameout    = flame_out_puff
   smokevolume = 20, 0.6, 1.8, 0.85
   damage      = scorch, 14, 0, 0.06, 0
+end
+
+# THE FLAMMENWERFER'S RECOIL, and it is the only thing it takes from the gun side. A pressurised
+# tank does not snap -- it SHOVES, steadily, for as long as the trigger is down: almost no climb,
+# a wide slow wander, and a recovery long enough that it never fully settles mid-burst. Bloom is
+# zero because the stream is a projectile and carries no spread to grow (WMSHEET.ww2).
+recoil ww2_flame
+  climb   = 0.18
+  drift   = 0.95, 5
+  recover = 22, 6
+  max     = 5, 3
+  bloom   = 0.00
+  brace   = 0.6, 0.85
+  view    = 1.1, 4, 1, 6
 end
 
 # ---- END WW2
