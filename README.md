@@ -203,6 +203,13 @@ owner's `E:\DOOMWork` layout (the shared tools folder and the engine build).
   off and rescaled to a real case. Force Unleashed's own README credits Brutal Doom
   and Sketchfab authors for its assets.
 
+## Making a profile
+
+`MAKING_A_PROFILE.md` is the method: the free-recoil arithmetic and the five things that are easy to
+get wrong, why a generator owns its blocks, why absence has to be stated, what `@extreme` may and may
+not change, and which tool refuses what. Read it before writing a profile by hand -- and then do not
+write one by hand.
+
 ## Design docs
 
 The engine design documents live in the owner's `Engine docs` folder, not in this
