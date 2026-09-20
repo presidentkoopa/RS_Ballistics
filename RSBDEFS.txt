@@ -15739,4 +15739,625 @@ recoil flamer_heavy      # the bigger tank: the same shove, more of it, and it w
   brace   = 0.6, 0.85
   view    = 1.2, 5, 1, 7
 end
+# ---- BEGIN EXTREMES FOR TRAIL, FLAME AND HOTSPOT (tools/gen_extremes.py) ----
+
+hotspot unmaker_burn@extreme   # a wall under the Unmaker: a molten spot that grows, glows, throbs with the beam, drips slag, stacks smoke and sizzles -- AT EXTREME
+  merge      = 28
+  heat       = 0.05, 0.7, 1.6
+  bursts     = unmaker_spatter 12, unmaker_slag 7, unmaker_smoke 17, laser_spray 4
+  light      = 162, 4.050
+  lightcolor = 255, 50, 28
+  throb      = 5, 0.450
+  mark       = pool, 4, 18, 8, 56
+  markcolor  = 255, 70, 30
+  shimmer    = 22, 1.680
+  sound      = rsb/flame/pilot, 0.9
+  smokevolume = 22, 1.120
+  damage     = melt, 3, 12, 0.7, 0.06, 0.35
+end
+
+hotspot unmaker_burn_metal@extreme   # metal under the Unmaker: brighter and sparkier, the molten mark hotter and wider -- AT EXTREME
+  merge      = 28
+  heat       = 0.05, 0.6, 1.6
+  bursts     = unmaker_spatter 17, spark_metal 4, unmaker_slag 9, unmaker_smoke 12, laser_spray 6
+  light      = 176, 4.455
+  lightcolor = 255, 60, 30
+  throb      = 5, 0.450
+  mark       = pool, 4, 20, 8, 75
+  markcolor  = 255, 90, 40
+  shimmer    = 22, 1.820
+  sound      = rsb/flame/pilot, 1.0
+  smokevolume = 22, 1.120
+  damage     = melt, 3, 14, 0.6, 0.04, 0.45
+end
+
+hotspot unmaker_burn_wood@extreme   # wood under the Unmaker: it chars and smokes hard -- AT EXTREME
+  merge      = 28
+  heat       = 0.05, 0.8, 1.6
+  bursts     = unmaker_spatter 6, unmaker_smoke 26, dust_wood 4
+  light      = 148, 3.510
+  lightcolor = 255, 50, 25
+  throb      = 5, 0.450
+  mark       = pool, 4, 16, 8, 56
+  markcolor  = 255, 60, 25
+  shimmer    = 22, 1.540
+  sound      = rsb/flame/pilot, 0.8
+  smokevolume = 22, 1.120
+  damage     = melt, 3, 12, 0.6, 0.15, 0.2
+end
+
+hotspot unmaker_burn_dirt@extreme   # dirt and rock under the Unmaker: melting to glassy slag, dust and smoke -- AT EXTREME
+  merge      = 28
+  heat       = 0.05, 0.7, 1.6
+  bursts     = unmaker_spatter 7, unmaker_slag 6, unmaker_smoke 17, dust_dirt 3
+  light      = 155, 3.780
+  lightcolor = 255, 50, 26
+  throb      = 5, 0.450
+  mark       = pool, 4, 18, 8, 62
+  markcolor  = 255, 70, 28
+  shimmer    = 22, 1.680
+  sound      = rsb/flame/pilot, 0.85
+  smokevolume = 22, 1.120
+  damage     = melt, 3, 12, 0.8, 0.08, 0.35
+end
+
+hotspot unmaker_burn_glass@extreme   # glass under the Unmaker: shards and molten spatter, a small bright mark -- AT EXTREME
+  merge      = 28
+  heat       = 0.05, 0.8, 1.6
+  bursts     = unmaker_spatter 10, glint_glass 3, unmaker_smoke 9
+  light      = 162, 4.050
+  lightcolor = 255, 56, 30
+  throb      = 5, 0.450
+  mark       = pool, 2, 11, 8, 50
+  markcolor  = 255, 80, 36
+  shimmer    = 20, 1.400
+  sound      = rsb/flame/pilot, 0.8
+  smokevolume = 22, 1.120
+  damage     = melt, 2, 8, 0.4, 0.02, 0.4
+end
+
+hotspot unmaker_burn_liquid@extreme   # water under the Unmaker: boiling, steam pouring off, no mark -- AT EXTREME
+  merge      = 32
+  heat       = 0.05, 0.9, 1.6
+  bursts     = flesh_cook_steam 20, splash_liquid 4
+  light      = 122, 2.700
+  lightcolor = 255, 50, 30
+  throb      = 5, 0.450
+  shimmer    = 28, 2.100
+  sound      = rsb/flame/pilot, 1.0
+end
+
+hotspot saw_cut_stone@extreme   # a chain held on stone: grit sparks fanned along the cut, specks, dust blown along the wall, chips; no glow (stone is not hot) -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = saw_sparks_stone 20, saw_grit 9, saw_dust 17, chips_concrete 3
+  light      = 81, 1.890
+  lightcolor = 255, 190, 120
+  sound      = none
+  smokevolume = 20, 0.840
+  damage     = cut, 3, 6, 0.8, 0.03, 0, travel
+end
+
+hotspot saw_cut_metal@extreme   # a chain held on metal: a rooster tail raked along the face, white-hot steel flecks, a gouge that glows hot, burnt-oil smoke, the air bending over it -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = saw_sparks_metal 29, saw_sparkler_metal 4, spark_spray 9, ember_metal 6, saw_smoke_metal 4
+  light      = 108, 2.430
+  lightcolor = 255, 196, 130
+  mark       = gouge, 2, 9, 8, 50
+  markcolor  = 255, 140, 60
+  shimmer    = 11, 0.840
+  sound      = none
+  smokevolume = 14, 0.490, 0.350
+  damage     = cut, 2.5, 5, 0.7, 0.03, 0.15, travel
+end
+
+hotspot saw_cut_wood@extreme   # a chain held on wood: sawdust spraying, a fine dust cloud, splinters, friction smoke; no light -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = sawdust_spray 23, saw_dust_wood 12, splinter_wood 4, saw_smoke_wood 4
+  sound      = none
+  smokevolume = 17, 0.630, 0.630
+  damage     = cut, 3, 6.5, 0.9, 0.08, 0, travel
+end
+
+hotspot saw_cut_dirt@extreme   # a chain held in dirt and rock: clods, a rolling dust cloud, specks off the stones in it -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = clods_dirt 4, dust_dirt 12, saw_grit 6
+  sound      = none
+  smokevolume = 22, 0.980
+  damage     = cut, 3.5, 7, 0.6, 0.02, 0, travel
+end
+
+hotspot saw_cut_glass@extreme   # a chain held on glass: shards, fine glass dust, a few specks -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = glint_glass 6, saw_dust 6, saw_grit 3
+  sound      = none
+  smokevolume = 14, 0.420
+  damage     = crack, 4, 9, 0.4, 0, 0
+end
+
+hotspot saw_cut_liquid@extreme   # a chain in water: spray -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = splash_liquid 9
+  sound      = none
+end
+
+hotspot saw_cut_stone_heavy@extreme   # the Heavy Chainsaw on stone: longer streaks raked wide, glowing beads tumbling out, a dust storm along the wall, chips -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = hsaw_sparks_stone 26, hsaw_beads 7, saw_dust 26, chips_concrete 4
+  light      = 97, 2.268
+  lightcolor = 255, 190, 120
+  sound      = none
+  smokevolume = 25, 1.120
+  damage     = cut, 4, 8, 0.9, 0.04, 0, travel
+end
+
+hotspot saw_cut_metal_heavy@extreme   # the Heavy Chainsaw on metal: a violent rooster tail, flashing stars, white-hot steel flecks, a glowing gouge, burnt-oil smoke -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = hsaw_sparks_metal 38, hsaw_stars 9, saw_sparkler_metal 9, spark_spray 13, ember_metal 9, saw_smoke_metal 7
+  light      = 130, 2.916
+  lightcolor = 255, 196, 130
+  mark       = gouge, 2, 9, 8, 50
+  markcolor  = 255, 140, 60
+  shimmer    = 11, 0.840
+  sound      = none
+  smokevolume = 17, 0.630, 0.350
+  damage     = cut, 3.2, 6.5, 0.8, 0.04, 0.18, travel
+end
+
+hotspot saw_cut_wood_heavy@extreme   # the Heavy Chainsaw on wood: sawdust spraying, a thick dust cloud, splinters, friction smoke; no light -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = sawdust_spray 35, saw_dust_wood 17, splinter_wood 7, saw_smoke_wood 7
+  sound      = none
+  smokevolume = 20, 0.770, 0.630
+  damage     = cut, 4, 8.5, 1, 0.1, 0, travel
+end
+
+hotspot saw_cut_dirt_heavy@extreme   # the Heavy Chainsaw in dirt and rock: clods, a rolling dust cloud, glowing beads and specks off the stones -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = clods_dirt 7, dust_dirt 17, hsaw_beads 4, saw_grit 7
+  sound      = none
+  smokevolume = 28, 1.120
+  damage     = cut, 4.5, 9, 0.7, 0.03, 0, travel
+end
+
+hotspot saw_cut_glass_heavy@extreme   # the Heavy Chainsaw on glass: shards, glass dust, a few specks -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = glint_glass 9, saw_dust 9, saw_grit 4
+  sound      = none
+  smokevolume = 17, 0.490
+  damage     = crack, 5, 12, 0.5, 0, 0
+end
+
+hotspot saw_cut_liquid_heavy@extreme   # a chain in water: spray -- the Heavy Chainsaw's, heavier -- AT EXTREME
+  merge      = 18
+  heat       = 0.3, 1.2, 1.0
+  bursts     = splash_liquid 13
+  sound      = none
+end
+
+trail bfg_ray@extreme   # a BFG ray from the shooter to what it strikes: a green core in a green halo, sparks drifting off it -- AT EXTREME
+  line        = 1.160, 7.250, 2.900, 32
+  linecolor   = 200, 255, 205
+  linecolorend = 120, 255, 140
+  linelook    = 0.7, 2.0
+  licks       = 0.280, 1.400, 0.070, 2.100
+  helix       = rsb_rail_mote, 1.350, 5.400, 8.100
+  helixmotion = 6, 0.9, 0.3
+  helixcolor  = 120, 255, 140
+  helixmax    = 300
+  lights      = 2, 120, 1.8, 8
+  lightcolor  = 140, 255, 150
+end
+
+trail bfg_ray_heavy@extreme   # the Heavy BFG's rays: thicker, brighter, longer to fade -- AT EXTREME
+  line        = 1.595, 10.150, 3.480, 41
+  linecolor   = 210, 255, 215
+  linecolorend = 130, 255, 150
+  linelook    = 0.75, 2.2
+  licks       = 0.350, 1.540, 0.070, 2.100
+  helix       = rsb_rail_mote, 1.350, 7.425, 6.750
+  helixmotion = 7, 1.0, 0.3
+  helixcolor  = 130, 255, 150
+  helixmax    = 400
+  lights      = 3, 150, 2.2, 10
+  lightcolor  = 150, 255, 160
+end
+
+trail rail@extreme   # a Quake 2 railgun: a white-hot core in a blue halo, a blue corkscrew that loosens and fades -- AT EXTREME
+  line        = 0.870, 5.075, 3.190, 46
+  linecolor   = 205, 228, 255
+  linelook    = 0.55, 2.5
+  licks       = 0.140, 1.260, 0.084, 1.680
+  helix       = rsb_rail_mote, 4.050, 4.050, 3.375
+  helixmotion = 5, 1.3, 0.3
+  helixcolor  = 80, 140, 255
+  helixmax    = 600
+  lights      = 4, 90, 1.6, 4
+  lightcolor  = 110, 160, 255
+  heat        = 6, 0.5, 20
+end
+
+flame incinerator@extreme   # a tight, fast jet -- AT EXTREME
+  reach       = 614
+  speed       = 950
+  spread      = 1.725
+  stream      = flame_core, flame_body, flame_tip, flame_embers
+  landing    = flame_splash, flame_sheet, flame_embers_rise, flame_smoke, flame_lick
+  cling       = 0.188
+  tube        = 6, 1.0, 3, 0.5
+  tubelook    = 2.000, 3.750, 0.625
+  tubecolors  = 255, 250, 235, 255, 215, 120, 255, 140, 40, 200, 60, 12, 110, 25, 6
+  tubelicks   = 0.6, 0.06, 2.0
+  heat        = 4, 18, 1.2, 0.08, 30
+  heatland    = 36, 1.820
+  landingtics = 2
+  scorch      = pool, 10, 105
+  scorchcolor = 255, 100, 25
+  scorchtics  = 8
+  light       = 324, 3.510, 0.472
+  lightcolor  = 255, 150, 60
+  landlight   = 216, 2.970
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+  sputter     = 0.15, rsb/flame/hiss
+  flameout    = flame_out_puff
+  smokevolume = 22, 0.700, 2.100, 1.000
+  damage     = scorch, 12, 0, 0.05, 0
+end
+
+flame napalm@extreme   # wide and slower; it sticks and burns where it lands -- AT EXTREME
+  reach       = 448
+  speed       = 620
+  spread      = 5
+  stream      = flame_core, flame_body, flame_body, flame_tip, flame_embers
+  landing    = flame_splash, flame_sheet, flame_licks, flame_embers_rise, flame_smoke, flame_lick
+  cling       = 0.375   # it sticks: puffs slide along what they hit twice as long
+  tube        = 6, 1.6, 4, 0.5
+  tubelook    = 1.750, 4.375, 0.688
+  tubecolors  = 255, 240, 210, 255, 190, 90, 255, 120, 30, 180, 45, 10, 90, 20, 5
+  tubelicks   = 0.8, 0.07, 2.5
+  heat        = 6, 26, 1.4, 0.07, 26
+  heatland    = 52, 2.080
+  landingtics = 1
+  scorch      = sunburst, 16, 140
+  scorchcolor = 255, 90, 20
+  scorchtics  = 6
+  light       = 378, 3.780, 0.608
+  lightcolor  = 255, 135, 45
+  landlight   = 297, 3.510
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+  jets        = 2, 1.0, 3       # twin jets through a round shroud, splaying into a wide spray
+  sputter     = 0.15, rsb/flame/hiss
+  flameout    = flame_out_puff
+  smokevolume = 28, 0.350, 2.100, 1.000
+  damage     = scorch, 18, 0, 0.07, 0
+end
+
+hotspot xsaw_cut_stone@extreme   # the Chainsaw's cut in stone at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = saw_sparks_stone 29, saw_grit 14, saw_dust 26, chips_concrete 4, hsaw_beads 3
+  light       = 97, 2.295
+  lightcolor  = 255, 190, 120
+  sound       = none
+  smokevolume = 22, 0.980
+  damage      = cut, 3, 6, 0.8, 0.03, 0, travel
+end
+
+hotspot xsaw_cut_metal@extreme   # the Chainsaw's cut in metal at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = saw_sparks_metal 41, saw_sparkler_metal 9, hsaw_stars 6, spark_spray 13, ember_metal 10, saw_smoke_metal 6
+  light       = 135, 2.970
+  lightcolor  = 255, 196, 130
+  mark        = gouge, 2, 11, 6, 75
+  markcolor   = 255, 140, 60
+  shimmer     = 14, 1.120
+  sound       = none
+  smokevolume = 17, 0.630, 0.350
+  damage      = cut, 2.5, 5, 0.7, 0.03, 0.15, travel
+end
+
+hotspot xsaw_cut_wood@extreme   # the Chainsaw's cut in wood at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = sawdust_spray 32, saw_dust_wood 17, splinter_wood 6, saw_smoke_wood 6
+  sound       = none
+  smokevolume = 20, 0.770, 0.630
+  damage      = cut, 3, 6.5, 0.9, 0.08, 0, travel
+end
+
+hotspot xsaw_cut_dirt@extreme   # the Chainsaw's cut in dirt at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = clods_dirt 6, dust_dirt 17, saw_grit 9, hsaw_beads 3
+  sound       = none
+  smokevolume = 25, 1.120
+  damage      = cut, 3.5, 7, 0.6, 0.02, 0, travel
+end
+
+hotspot xsaw_cut_glass@extreme   # the Chainsaw's cut in glass at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = glint_glass 9, saw_dust 9, saw_grit 4
+  sound       = none
+  smokevolume = 17, 0.490
+  damage      = crack, 4, 9, 0.4, 0, 0
+end
+
+hotspot xsaw_cut_liquid@extreme   # the Chainsaw's cut in liquid at extreme -- AT EXTREME
+  merge  = 18
+  heat   = 0.3, 1.2, 1.0
+  bursts = splash_liquid 13
+  sound  = none
+end
+
+hotspot xsaw_cut_stone_heavy@extreme   # the Heavy Chainsaw's cut in stone at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = hsaw_sparks_stone 38, hsaw_beads 12, saw_dust 38, chips_concrete 6, saw_grit 9
+  light       = 122, 2.700
+  lightcolor  = 255, 190, 120
+  sound       = none
+  smokevolume = 31, 1.400
+  damage      = cut, 4, 8, 0.9, 0.04, 0, travel
+end
+
+hotspot xsaw_cut_metal_heavy@extreme   # the Heavy Chainsaw's cut in metal at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = hsaw_sparks_metal 52, hsaw_stars 13, saw_sparkler_metal 13, spark_spray 17, ember_metal 13, saw_smoke_metal 9
+  light       = 162, 3.510
+  lightcolor  = 255, 196, 130
+  mark        = gouge, 2, 11, 6, 75
+  markcolor   = 255, 140, 60
+  shimmer     = 14, 1.120
+  sound       = none
+  smokevolume = 20, 0.770, 0.350
+  damage      = cut, 3.2, 6.5, 0.8, 0.04, 0.18, travel
+end
+
+hotspot xsaw_cut_wood_heavy@extreme   # the Heavy Chainsaw's cut in wood at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = sawdust_spray 46, saw_dust_wood 26, splinter_wood 9, saw_smoke_wood 9
+  sound       = none
+  smokevolume = 22, 0.980, 0.630
+  damage      = cut, 4, 8.5, 1, 0.1, 0, travel
+end
+
+hotspot xsaw_cut_dirt_heavy@extreme   # the Heavy Chainsaw's cut in dirt at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = clods_dirt 9, dust_dirt 26, hsaw_beads 7, saw_grit 10
+  sound       = none
+  smokevolume = 34, 1.400
+  damage      = cut, 4.5, 9, 0.7, 0.03, 0, travel
+end
+
+hotspot xsaw_cut_glass_heavy@extreme   # the Heavy Chainsaw's cut in glass at extreme -- AT EXTREME
+  merge       = 18
+  heat        = 0.3, 1.2, 1.0
+  bursts      = glint_glass 13, saw_dust 13, saw_grit 6
+  sound       = none
+  smokevolume = 20, 0.630
+  damage      = crack, 5, 12, 0.5, 0, 0
+end
+
+hotspot xsaw_cut_liquid_heavy@extreme   # the Heavy Chainsaw's cut in liquid at extreme -- AT EXTREME
+  merge  = 18
+  heat   = 0.3, 1.2, 1.0
+  bursts = splash_liquid 19
+  sound  = none
+end
+
+trail ww2_tesla@extreme   # THE TESLA GUN: a white-hot arc in a violet halo that lights every wall it passes and is gone in two tics -- AT EXTREME
+  line        = 1.595, 7.250, 5.800, 3
+  linecolor   = 235, 245, 255
+  linecolorend = 150, 120, 255
+  linelook    = 0.9, 4.5
+  licks       = 0.630, 2.000, 0.308, 4.200
+  helix       = rsb_lightning, 2.700, 13.500, 62.100
+  helixmotion = 14, 2.6, 0.9
+  helixcolor  = 170, 200, 255
+  helixmax    = 900
+  beamlight   = 170, 3.6, 3, 0.75
+  beamjag     = 6, 26
+  lightcolor  = 235, 245, 255
+  beamcolorend = 150, 120, 255
+  heat        = 9, 0.8, 26
+end
+
+flame ww2_flame@extreme   # THE FLAMMENWERFER: a fat wet gout, not a modern jet -- slower, shorter, and it clings -- AT EXTREME
+  reach       = 496
+  speed       = 700
+  spread      = 2.530
+  stream      = flame_core, flame_body, flame_tip, flame_embers
+  landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke, flame_lick
+  cling       = 0.400
+  tube        = 6, 1.0, 3, 0.5
+  tubelook    = 2.250, 4.000, 0.625
+  tubecolors  = 255, 246, 220, 255, 205, 110, 255, 130, 36, 190, 55, 10, 100, 22, 5
+  tubelicks   = 0.7, 0.07, 2.2
+  heat        = 5, 20, 1.3, 0.09, 34
+  heatland    = 42, 1.950
+  landingtics = 2
+  scorch      = pool, 12, 120
+  scorchcolor = 255, 95, 20
+  scorchtics  = 9
+  light       = 351, 3.780, 0.513
+  lightcolor  = 255, 140, 50
+  landlight   = 243, 3.240
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+  sputter     = 0.2, rsb/flame/hiss
+  flameout    = flame_out_puff
+  smokevolume = 28, 0.840, 2.520, 1.000
+  damage      = scorch, 14, 0, 0.06, 0
+end
+
+trail unmaker@extreme   # AT EXTREME
+  line         = 3.190, 8.700, 3.770, 4
+  linecolor    = 255, 38, 22
+  linecolorend = 26, 6, 8
+  linelook     = 0.8, 5.0
+  licks        = 0.112, 0.224, 0.070, 0.840
+  linepulse    = 7, 0.55, 2.4
+  helix        = rsb_smoke_soot_gun, 0.540, 5.400, 35.100
+  helixmotion  = 6, 1.6, 0.7
+  helixcolor   = 90, 30, 26
+  helixmax     = 400
+  beamlight    = 120, 1.6, 3, 0.35
+  lightcolor   = 255, 60, 34
+  beamcolorend = 60, 12, 10
+  heat         = 7, 0.6, 20
+end
+
+flame ae_flamer@extreme   # THE M260B INCINERATOR: not a 1940s Flammenwerfer. A shorter, hotter, tighter gout with BLUE AT THE ROOT where the fuel is still burning clean, going orange as it tumbles and starves. Corridor work -- AT EXTREME
+  reach       = 425
+  speed       = 820
+  spread      = 1.955
+  stream      = flame_core, flame_body, flame_tip, flame_embers
+  landing     = flame_splash, flame_sheet, flame_embers_rise, flame_smoke, flame_lick
+  cling       = 0.475
+  tube        = 5, 1.0, 3, 0.45
+  tubelook    = 1.875, 3.500, 0.562
+  tubecolors  = 190, 220, 255, 255, 240, 200, 255, 180, 70, 255, 96, 24, 120, 28, 8
+  tubelicks   = 0.6, 0.08, 2.6
+  heat        = 5, 18, 1.4, 0.10, 30
+  heatland    = 36, 2.080
+  landingtics = 2
+  scorch      = pool, 11, 120
+  scorchcolor = 255, 110, 30
+  scorchtics  = 9
+  light       = 324, 4.050, 0.540
+  lightcolor  = 255, 158, 66
+  landlight   = 230, 3.375
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  pilot       = pilot_flame
+  sputter     = 0.18, rsb/flame/hiss
+  flameout    = flame_out_puff
+  smokevolume = 25, 0.840, 2.660, 1.000
+  damage      = scorch, 13, 0, 0.06, 0
+end
+
+trail cl_particlegun@extreme   # the air torn open along a line: white where it is worst, violet where it fades, fraying as it goes and still crackling after -- AT EXTREME
+  line         = 1.305, 10.150, 4.640, 6
+  linecolor    = 240, 248, 255
+  linecolorend = 122, 58, 255
+  linelook     = 1.2, 4.4
+  # TIGHT AT THE APERTURE, RAGGED AT THE FAR END: atmospheric blooming, and the one thing
+  # that makes this read as particles rather than as light.
+  licks        = 0.168, 1.330, 0.098, 2.240
+  linepulse    = 3, 0.42, 2.0
+  # ARCS, NOT MOTES. The channel is still conductive when the beam has gone.
+  helix        = rsb_arc, 4.725, 7.425, 18.900
+  helixmotion  = 11, 2.2, 0.8
+  helixcolor   = 190, 150, 255
+  helixmax     = 700
+  beamlight    = 150, 2.6, 4, 0.55
+  lightcolor   = 225, 210, 255
+  beamcolorend = 110, 50, 235
+  # THE LONGEST, STRONGEST HEAT OF ANY BEAM HERE: the air is cooked the whole way, not at a point.
+  heat         = 9, 1.0, 30
+end
+
+hotspot bl_burn@extreme   # a flare buried in something, burning it down -- AT EXTREME
+  ride       = yes
+  merge      = 46
+  heat       = 1.60, 0.11, 1.60
+  bursts     = flame_body 20, flame_core 13, flame_licks 10, flame_tip 7, flame_embers 6, flame_smoke 9
+  light      = 176, 3.240
+  lightcolor = 255, 138, 48
+  throb      = 7, 0.300
+  mark       = pool, 5, 22, 10, 75
+  markcolor  = 40, 30, 26
+  shimmer    = 28, 1.540
+  sound      = rsb/flame/loop, 0.75
+  smokevolume = 28, 1.260
+  damage     = scorch, 4, 15, 0.35, 0.55, 0.30
+end
+
+hotspot bl_burn_small@extreme   # a lighter lying where it fell, burning what it fell on -- AT EXTREME
+  ride       = yes
+  merge      = 32
+  heat       = 1.00, 0.14, 1.00
+  bursts     = flame_body 12, flame_core 7, flame_licks 6, flame_embers 3, flame_smoke 4
+  light      = 113, 2.295
+  lightcolor = 255, 146, 56
+  throb      = 6, 0.340
+  mark       = pool, 4, 14, 8, 56
+  markcolor  = 40, 30, 26
+  shimmer    = 18, 1.120
+  sound      = rsb/flame/pilot, 0.7
+  smokevolume = 18, 0.840
+  damage     = scorch, 3, 9, 0.25, 0.45, 0.22
+end
+
+hotspot bl_napalm_pool@extreme   # what a can of burning tar leaves behind -- AT EXTREME
+  ride       = yes
+  merge      = 64
+  heat       = 2.20, 0.10, 2.20
+  bursts     = flame_body 29, flame_core 19, flame_licks 14, flame_tip 10, flame_embers 9, flame_smoke 14
+  light      = 230, 3.780
+  lightcolor = 255, 132, 44
+  throb      = 8, 0.260
+  mark       = pool, 10, 38, 12, 112
+  markcolor  = 32, 24, 20
+  shimmer    = 42, 2.100
+  sound      = rsb/flame/loop, 0.9
+  smokevolume = 42, 1.680
+  damage     = scorch, 8, 26, 0.45, 0.7, 0.35
+end
+
+flame bl_spray_inert@extreme   # an aerosol can, discharging: cold, wet, and harmless -- AT EXTREME
+  reach       = 177
+  speed       = 420
+  spread      = 3.910
+  stream      = spray_mist, spray_haze
+  landing     = spray_wet, spray_haze
+  landingtics = 3
+  cling       = 0.275
+  sounds      = none, none, none
+end
+
+flame bl_spray_lit@extreme   # the can and the lighter, which is the whole joke of the weapon -- AT EXTREME
+  reach       = 248
+  speed       = 460
+  spread      = 3.450
+  stream      = flame_core, flame_body, flame_tip, spray_mist
+  landing     = flame_splash, flame_lick, flame_smoke, spray_wet
+  landingtics = 2
+  cling       = 0.325
+  tube        = 5, 0.85, 3, 0.45
+  tubelook    = 1.750, 3.250, 0.688
+  tubecolors  = 255, 244, 214, 255, 198, 104, 255, 124, 34, 182, 52, 10, 96, 20, 5
+  tubelicks   = 0.62, 0.08, 2.0
+  heat        = 4, 15, 1.0, 0.08, 26
+  heatland    = 31, 1.495
+  scorch      = pool, 9, 95
+  scorchcolor = 255, 92, 20
+  scorchtics  = 10
+  light       = 256, 2.970, 0.567
+  lightcolor  = 255, 148, 58
+  landlight   = 176, 2.565
+  sounds      = rsb/flame/loop, rsb/flame/start, rsb/flame/stop
+  sputter     = 0.3, rsb/flame/hiss
+end
+
+trail none@extreme   # draws no beam -- AT EXTREME
+end
+
+# ---- END EXTREMES FOR TRAIL, FLAME AND HOTSPOT ----
 # ---- END NEW SETS
