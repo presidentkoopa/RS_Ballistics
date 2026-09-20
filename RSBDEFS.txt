@@ -15708,4 +15708,35 @@ end
 
 
 # ---- END ROBOCOP + HACX ----
+
+# THE TWO VANILLA FLAMETHROWERS, which had no recoil of their own and fell back to the house kick
+# -- a gun-shaped snap on a weapon that does not snap at all.
+#
+# A FLAMETHROWER PUSHES, IT DOES NOT KICK. Pressurised fuel leaving a nozzle is a steady shove for
+# as long as the trigger is down, so the climb is small and the DRIFT is large: it wanders while
+# it runs rather than jumping per shot. Stated, not derived -- there is no bullet and no charge,
+# and inventing a cartridge so the arithmetic would run is the false precision this package
+# refuses everywhere else.
+#
+# The Flammenwerfer (ww2_flame) is the heavier one and keeps its own: a bigger tank, a fatter
+# gout, and it wanders further. These two are the lighter pair.
+recoil flamer            # a flamethrower: a steady push and a wander, never a snap
+  climb   = 0.14
+  drift   = 0.80, 5
+  recover = 20, 6
+  max     = 4.0, 2.6
+  bloom   = 0.00
+  brace   = 0.6, 0.85
+  view    = 0.9, 4, 1, 6
+end
+
+recoil flamer_heavy      # the bigger tank: the same shove, more of it, and it wanders further
+  climb   = 0.20
+  drift   = 1.05, 5
+  recover = 24, 7
+  max     = 5.2, 3.2
+  bloom   = 0.00
+  brace   = 0.6, 0.85
+  view    = 1.2, 5, 1, 7
+end
 # ---- END NEW SETS
