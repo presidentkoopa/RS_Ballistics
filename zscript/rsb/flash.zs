@@ -88,6 +88,7 @@ class RSB_Flash : Actor
 				"flash \"%s\" is not defined in any RSBDEFS", whichFlash));
 			return null;
 		}
+		RSB_Registry.Tally("flash", fd.id);
 		// BARRELS (`barrels`): each shot of this slot flashes from the next barrel round the bore.
 		Vector3 muzzle = at;
 		if (fd.barrelCount > 1 && fd.barrelRadius > 0)

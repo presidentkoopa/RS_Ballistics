@@ -214,6 +214,10 @@ class RSB_Bullet : FastProjectile
 		}
 		if (!flightDef) return;
 
+		// WHAT IT ACTUALLY FLEW AS, counted per round. The look that RESOLVES and the look that DRAWS
+		// are different questions and only this one is worth anything.
+		RSB_Registry.Tally("round", flightDef.id .. " (" .. flightDef.lookKind ..
+			(flightDef.lookName.Length() > 0 ? " " .. flightDef.lookName : "") .. ")");
 		bINVISIBLE = (flightDef.lookKind == "none");
 		if (flightDef.lookKind == "sprite")
 		{

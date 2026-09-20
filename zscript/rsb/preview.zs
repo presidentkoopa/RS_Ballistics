@@ -29,6 +29,42 @@ class RSB_Preview : EventHandler
 	{
 		if (RSB_Bench.Begin(e)) return;   // rsb_bench_*: bench.zs
 
+		// WHAT WAS ACTUALLY DRAWN THIS MAP (`rsb_shotreport`), as opposed to what resolves.
+		//
+		// This package can already prove a profile exists, that its name resolves, that the pack
+		// loaded it and that nothing was refused -- and every one of those has been true while the
+		// thing itself drew NOTHING. A gun wearing a profile that resolves to silence is the defect
+		// this package keeps paying for, and the only cure is counting effects where they happen.
+		//
+		// Diagnostics: local, never read back, no gameplay. `rsb_shotreport clear` starts again.
+		if (e.Name ~== "rsb_shotreport" || e.Name ~== "rsb_shotreport_clear")
+		{
+			let reg = RSB_Registry.Get();
+			if (!reg) return;
+			if (e.Name ~== "rsb_shotreport_clear")
+			{
+				reg.tallyKey.Clear();
+				reg.tallyCount.Clear();
+				Console.Printf("\c[Orange]RSB\c- shot report cleared");
+				return;
+			}
+			if (reg.tallyKey.Size() == 0)
+			{
+				Console.Printf("\c[Orange]RSB\c- shot report: NOTHING HAS BEEN DRAWN THIS MAP. "
+					.. "Not one flash, casing, round, trail or impact.");
+				return;
+			}
+			Console.Printf("\c[Orange]RSB\c- shot report -- what actually drew this map:");
+			int total = 0;
+			for (int i = 0; i < reg.tallyKey.Size(); i++)
+			{
+				Console.Printf("   %5d x %s", reg.tallyCount[i], reg.tallyKey[i]);
+				total += reg.tallyCount[i];
+			}
+			Console.Printf("   %d effects across %d kinds of thing.", total, reg.tallyKey.Size());
+			return;
+		}
+
 		bool impact = e.Name ~== "rsb_preview_impact";
 		bool flash  = e.Name ~== "rsb_preview_flash";
 		bool casing = e.Name ~== "rsb_preview_casing";

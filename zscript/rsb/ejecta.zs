@@ -101,6 +101,7 @@ class RSB_Ejecta : Actor
 				"ejecta \"%s\" is not defined in any RSBDEFS", whichEjecta));
 			return null;
 		}
+		RSB_Registry.Tally("casing", whichEjecta);
 		Vector3 d = (aim.Length() > 0.000001) ? aim.Unit() : (0, 0, 1);
 		PortSmoke(ed, at, d, seed);
 		if (!shared) return RSB_LocalEjecta.Toss(reg, whichEjecta, at, d, carrierVel, throwSpeed, seed, casingSound);

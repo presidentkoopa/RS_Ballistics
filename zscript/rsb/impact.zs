@@ -359,6 +359,7 @@ class RSB_Impact play
 		RSB_Lights.ShootOut(surf);
 
 		if (impactBase.Length() == 0 || impactBase ~== "none") return;
+		RSB_Registry.Tally("impact", impactBase .. (surf.material.Length() > 0 ? "." .. surf.material : ""));
 		let reg = RSB_Registry.Get();
 		if (!reg) return;
 

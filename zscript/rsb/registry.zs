@@ -13,6 +13,20 @@
 
 class RSB_Registry : StaticEventHandler
 {
+	// ONE PLACE A DRAWN THING ADMITS TO EXISTING. `kind` is what happened (flash, casing, round,
+	// trail, impact, flame, fire), `name` is which profile did it.
+	static void Tally(String kind, String name)
+	{
+		let reg = RSB_Registry.Get();
+		if (!reg) return;
+		String key = kind .. " " .. name;
+		for (int i = 0; i < reg.tallyKey.Size(); i++)
+			if (reg.tallyKey[i] == key) { reg.tallyCount[i]++; return; }
+		if (reg.tallyKey.Size() >= 256) return;   // a runaway list is a leak, not a diagnostic
+		reg.tallyKey.Push(key);
+		reg.tallyCount.Push(1);
+	}
+
 	RSB_DefSet defs;
 	int        lumpsRead;
 	int        refusals;
@@ -23,6 +37,15 @@ class RSB_Registry : StaticEventHandler
 	Array<Actor>           casings;       // casings in the world, oldest first: the shared casing cap -- ours and any mod's that asked (RSB_Service casing.keep); cleared each map
 	Array<RSB_ShotSlot>    shotSlots;     // each beam slot's gunshot tail and shot count (flash.zs RSB_Tail)
 	Array<RSB_Hotspot>     hotspots;      // live hotspots, oldest first (hotspot.zs; cleared each map)
+	// WHAT WAS ACTUALLY DRAWN THIS MAP (`rsb_shotreport`). Counted at the moment each effect HAPPENS,
+	// never where a profile resolves -- because a name resolving is the thing that has fooled every
+	// check in this package at least once, and a look that is wired and silent is indistinguishable
+	// from a look that is right until somebody watches it.
+	//
+	// Diagnostics only: local, never read back by anything, no gameplay, no netplay traffic. Cleared
+	// each map with everything else here.
+	Array<String> tallyKey;
+	Array<int>    tallyCount;
 	private Array<String> said;                  // once-per-map log keys
 
 	clearscope static RSB_Registry Get()

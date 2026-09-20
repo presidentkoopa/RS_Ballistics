@@ -36,6 +36,7 @@ class RSB_Trail play
 		int tier = RSB_Tier.Current();
 		if (tier <= RSB_Tier.T_OFF) return;
 		let td = reg.ResolveTrail(whichTrail, RSB_Tier.Name(tier));
+		if (td) RSB_Registry.Tally("trail", whichTrail);
 		if (!td)
 		{
 			RSB_Log.Once(RSB_Log.LV_ERR, "trail:missing:" .. whichTrail, String.Format(
