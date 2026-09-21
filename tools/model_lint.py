@@ -61,6 +61,10 @@ for ln in read("RSBDEFS.txt").split("\n"):
 # class -> {"SPRT" + frame letter: model path it draws}
 provided = {}
 meshes = set()
+# AND THE SKINS. A model whose texture is missing still draws -- untextured -- and says nothing.
+# The Star Wars bolts are thirteen frames riding four GENERATED skins, so a skin that failed to
+# write is a whole colour of bolt gone grey, and the mesh check alone would pass it.
+skins = set()
 block_class, block_path, block_models = None, None, {}
 for ln in read("MODELDEF.txt").split("\n"):
     s = re.sub(r"//.*", "", ln).strip()
@@ -80,6 +84,10 @@ for ln in read("MODELDEF.txt").split("\n"):
     m = re.match(r'^Path\s+"([^"]+)"', s, re.I)
     if m:
         block_path = m.group(1)
+        continue
+    m = re.match(r'^(?:Surface)?Skin\s+\d+(?:\s+\d+)?\s+"([^"]+)"', s, re.I)
+    if m:
+        skins.add(("%s/%s" % (block_path, m.group(1))) if block_path else m.group(1))
         continue
     m = re.match(r'^Model\s+(\d+)\s+"([^"]+)"', s, re.I)
     if m:
@@ -114,6 +122,9 @@ for look in sorted(asked):
 for mesh in sorted(meshes):
     if not os.path.exists(os.path.join(ROOT, mesh)):
         bad.append("MODELDEF names %s, which is not in the package" % mesh)
+for skin in sorted(skins):
+    if not os.path.exists(os.path.join(ROOT, skin)):
+        bad.append("MODELDEF skins a model with %s, which is not in the package -- it would draw untextured" % skin)
 
 # and a frame bound to a model that no look ever asks for is dead weight, worth saying but not failing
 unused = sorted(set(k for c in ROUND_CLASSES for k in provided.get(c, {})) - set(asked.values()))
