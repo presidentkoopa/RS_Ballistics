@@ -345,6 +345,25 @@ class RSB_Impact play
 		}
 	}
 
+	// AN IMPACT AT A POINT, WITH NO ROUND BEHIND IT. Land() needs a projectile that has just hit
+	// something; a blade, a fist or a thrown club never is one. So this takes the point and the
+	// direction outright. Pass the thing that was struck as `onActor` and the flesh variant is used
+	// when it bleeds, and a hotspot that `ride`s will follow it.
+	//
+	// Built for the lightsaber's cut, named for what it does: any melee weapon can use it.
+	static void At(Actor soundAt, Vector3 at, Vector3 travel, String impactBase, Actor onActor = null)
+	{
+		if (!soundAt || impactBase.Length() == 0 || impactBase ~== "none") return;
+		let surf = RSB_Materials.InAir(at, travel);
+		if (!surf) return;
+		if (onActor)
+		{
+			surf.onActor = onActor;
+			if (!onActor.bNOBLOOD) surf.material = "flesh";
+		}
+		LandOn(soundAt, surf, impactBase, travel);
+	}
+
 	static void LandOn(Actor soundAt, RSB_Surface surf, String impactBase, Vector3 travel)
 	{
 		if (!soundAt || !surf || surf.sky) return;
