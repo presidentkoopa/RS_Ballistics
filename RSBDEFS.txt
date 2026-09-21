@@ -16763,10 +16763,10 @@ end
 # powder smoke, no petals: STAR WARS, NOT JOHN WICK.
 flash sw_xim_blaster   # Xim's blaster pistol
   light      = 196, 3.2, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone       = 14, 38, 70, 5
   conetics   = 2
-  bursts     = swb_green_snap, swb_green_glow
+  bursts     = swb_red_snap, swb_red_glow
   maybe      = plasma_ozone 0.5
   flame      = 0.0
   smoke      = 0, 0.0, 0.0
@@ -16776,10 +16776,10 @@ end
 # powder smoke, no petals: STAR WARS, NOT JOHN WICK.
 flash sw_xim_rifle   # Xim's blaster rifle
   light      = 201, 3.3, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone       = 15, 39, 72, 5
   conetics   = 2
-  bursts     = swb_green_snap, swb_green_glow
+  bursts     = swb_red_snap, swb_red_glow
   maybe      = plasma_ozone 0.5
   flame      = 0.0
   smoke      = 0, 0.0, 0.0
@@ -16802,10 +16802,10 @@ end
 # powder smoke, no petals: STAR WARS, NOT JOHN WICK.
 flash sw_xim_heavy   # Xim's heavy blaster: builds with the rate
   light      = 205, 3.3, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone       = 15, 40, 74, 5
   conetics   = 2
-  bursts     = swb_green_snap, swb_green_glow
+  bursts     = swb_red_snap, swb_red_glow
   maybe      = plasma_ozone 0.5
   flame      = 0.0
   smoke      = 0, 0.0, 0.0
@@ -17640,10 +17640,10 @@ end
 
 flash sw_xim_blaster@extreme   # Xim's blaster pistol -- AT EXTREME
   light         = 225, 3.20, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone          = 14, 38, 94, 5
   conetics   = 2
-  bursts        = swb_green_snap, swb_green_glow, flash_embers, spk_embers_heavy
+  bursts        = swb_red_snap, swb_red_glow, flash_embers, spk_embers_heavy
   maybe         = plasma_ozone 0.70, flash_tongue 0.45
   flame      = 0.0
   smoke      = 0, 0.0, 0.0
@@ -17651,10 +17651,10 @@ end
 
 flash sw_xim_rifle@extreme   # Xim's blaster rifle -- AT EXTREME
   light         = 231, 3.30, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone          = 15, 39, 97, 5
   conetics   = 2
-  bursts        = swb_green_snap, swb_green_glow, flash_embers, spk_embers_heavy
+  bursts        = swb_red_snap, swb_red_glow, flash_embers, spk_embers_heavy
   maybe         = plasma_ozone 0.70, flash_tongue 0.45
   flame      = 0.0
   smoke      = 0, 0.0, 0.0
@@ -17675,10 +17675,10 @@ end
 
 flash sw_xim_heavy@extreme   # Xim's heavy blaster: builds with the rate -- AT EXTREME
   light         = 236, 3.30, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone          = 15, 40, 100, 5
   conetics   = 2
-  bursts        = swb_green_snap, swb_green_glow, flash_embers, spk_embers_heavy
+  bursts        = swb_red_snap, swb_red_glow, flash_embers, spk_embers_heavy
   maybe         = plasma_ozone 0.70, flash_tongue 0.45
   flame      = 0.0
   smoke      = 0, 0.0, 0.0

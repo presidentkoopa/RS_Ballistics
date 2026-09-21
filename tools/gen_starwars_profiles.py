@@ -18,7 +18,10 @@ arithmetic. Every one of those is wrong here. So:
 
 WHAT A BOLT IS: the round-in-flight mesh this package already flies (models/bullet/btracer.obj), in a
 coloured skin generated from its own texture -- the white-hot core kept, the orange edge recoloured --
-at its own size. Red for the Empire, green for the Rebels, blue for the Republic and for ion.
+at its own size. THE FILMS' COLOURS (owner, 2026-09-21): hand blasters fire RED on both sides --
+Han's, Leia's, the Rebel troopers' -- blue is the clone army and ion, and the bowcaster keeps the green
+the games gave it. An earlier draft said "red Empire, green Rebel"; that came from a brief, not from
+the owner, and it is not what the films show.
 
 THE SABER'S LOOK IS HERE; the blade, the throw and the deflect logic are the weapons lane's. Eight
 colours, each with a deflect, a cut, a wall melt that drags with the blade (the blast-door shot), a
@@ -41,9 +44,9 @@ MD_END = "// ---- END STAR WARS BOLTS ----"
 
 # ---------------------------------------------------------------- the colours
 BOLT = {
-    "red":   (255, 60, 50),     # the Empire
-    "green": (90, 255, 110),    # the Rebels
-    "blue":  (100, 160, 255),   # the Republic
+    "red":   (255, 60, 50),     # almost every hand blaster in the films, on both sides
+    "green": (90, 255, 110),    # the bowcaster (the games' colour for it)
+    "blue":  (100, 160, 255),   # the clone army
     "ion":   (185, 228, 255),   # ion: nearly white, a cold blue edge
 }
 
@@ -92,8 +95,7 @@ ROUNDS = {
 # shot and wander as the rate builds; the concussion rifle and the cannon are the ones allowed to hit.
 GUNS = [
     # ---- Wardusted
-    # HAN'S GUN FIRES RED, like the film. The rule is Rebel-green, and the owner ruled this one the
-    # film's way (2026-09-21, "the filmmmm") -- the one gun where what it looked like on screen wins.
+    # HAN'S GUN FIRES RED, like the film -- the owner's word that set the colours for the whole set.
     ("DL44Blaster",       "sw_dl44",      "red",   0.9, "Han's heavy blaster pistol: a sharp red snap, as in the film",
      (1.35, 0.22, 16, 5.0, 1.5), "sw_bolt_red_pistol"),
     ("E11Blaster",        "sw_e11",       "red",   0.8, "the stormtrooper rifle: light, quick, and red",
@@ -117,14 +119,14 @@ GUNS = [
     ("DarkAssaultCannon", "sw_assault_cannon", "red", 1.6, "the heaviest thing in the set: it settles slowly",
      (3.60, 0.42, 30, 9.0, 3.6), "sw_bolt_red_charge"),
     # ---- Xim's Star Wars Doom, on Doom's own slots
-    ("XIM_Pistol",        "sw_xim_blaster", "green", 0.85, "Xim's blaster pistol",
-     (1.25, 0.22, 16, 4.8, 1.4), "sw_bolt_green_pistol"),
-    ("XIM_Shotgun",       "sw_xim_rifle", "green", 0.9, "Xim's blaster rifle",
-     (0.80, 0.30, 15, 4.6, 1.2), "sw_bolt_green_rifle"),
+    ("XIM_Pistol",        "sw_xim_blaster", "red",   0.85, "Xim's blaster pistol",
+     (1.25, 0.22, 16, 4.8, 1.4), "sw_bolt_red_pistol"),
+    ("XIM_Shotgun",       "sw_xim_rifle", "red",   0.9, "Xim's blaster rifle",
+     (0.80, 0.30, 15, 4.6, 1.2), "sw_bolt_red_rifle"),
     ("XIM_SuperShotgun",  "sw_xim_ion",   "ion",   1.15, "Xim's ion blaster: a sharp blue-white crack",
      (1.60, 0.24, 18, 5.6, 1.8), "sw_bolt_ion"),
-    ("XIM_Chaingun",      "sw_xim_heavy", "green", 0.95, "Xim's heavy blaster: builds with the rate",
-     (0.45, 0.36, 22, 4.6, 0.9), "sw_bolt_green_heavy"),
+    ("XIM_Chaingun",      "sw_xim_heavy", "red",   0.95, "Xim's heavy blaster: builds with the rate",
+     (0.45, 0.36, 22, 4.6, 0.9), "sw_bolt_red_heavy"),
     ("XIM_RocketLauncher", "sw_xim_bowcaster", "green", 1.3, "Xim's bowcaster",
      (2.40, 0.30, 22, 7.0, 2.4), "sw_bolt_green_quarrel"),
     ("XIM_PlasmaRifle",   "sw_xim_rotary", "blue",  0.85, "Xim's rotary blaster: wanders as it spins",

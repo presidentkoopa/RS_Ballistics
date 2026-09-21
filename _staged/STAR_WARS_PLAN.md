@@ -29,9 +29,11 @@ feedback at least."*
 | **disruptor** | no bolt — an instant beam muzzle-to-hit, white core, red edge; the target flakes to ash | DisruptorRifle |
 | **concussion** | a heavy pulse; a ring of bent air where it lands, and a thump | ConcussionRifle |
 
-Colours, by the owner's rule: **red** Imperial, **green** Rebel, **blue** Republic/ion.
+Colours are **the films'** (owner, 2026-09-21): hand blasters fire **red** on both sides, **blue** is the
+clone army (the Z-6, the rotary) and ion, and the bowcaster keeps the **green** the games gave it.
 
-*The one exception:* Han's DL-44 fires **red**, as in the film -- the owner's call, 2026-09-21.
+*Correction:* an earlier draft called "red Empire, green Rebel" the owner's rule. It came from the brief,
+unquoted, and the films do not do it.
 
 ---
 
@@ -40,7 +42,7 @@ Colours, by the owner's rule: **red** Imperial, **green** Rebel, **blue** Republ
 | gun | look | colour | kick |
 |---|---|---|---|
 | **Wardusted** | | | |
-| DL44Blaster | blaster, pistol | red (the film) | a sharp snap, fast back |
+| DL44Blaster | blaster, pistol | red | a sharp snap, fast back |
 | E11Blaster | blaster, rifle | red | light and quick |
 | DarkBlaster | blaster, heavy | red | heavier |
 | DLT19 | blaster, heavy | red | small per shot, builds with the rate |
@@ -53,10 +55,10 @@ Colours, by the owner's rule: **red** Imperial, **green** Rebel, **blue** Republ
 | DarkAssaultCannon | heavy charge | red | the heaviest, settles slowly |
 | RebelThermalDetonator, ProximityMines | energy blast | — | none (thrown) |
 | **Xim** | | | |
-| Pistol (blaster) | blaster, pistol | green | snap |
-| Shotgun (Blaster Rifle) | blaster, rifle | green | light |
+| Pistol (blaster) | blaster, pistol | red | snap |
+| Shotgun (Blaster Rifle) | blaster, rifle | red | light |
 | SSG (Ion Blaster) | ion | blue | sharp |
-| Chaingun (Heavy Blaster) | blaster, heavy | green | builds |
+| Chaingun (Heavy Blaster) | blaster, heavy | red | builds |
 | Rocket (Bowcaster) | quarrel | green | shove |
 | Plasma (Rotary Blaster) | blaster, heavy | blue | wanders |
 | BFG (Thermal Detonators) | energy blast, big | — | none |
