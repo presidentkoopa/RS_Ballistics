@@ -74,6 +74,14 @@ Sparks, a scorch and smoke off the burnt spot, a flash of its own colour lightin
 flesh: a cauterised sizzle, steam and char, no blood spray. The smoke is the hit burning, not powder,
 so it stays.
 
+## What the enemies fire (Xim)
+
+Xim's troopers use the package's shared enemy rounds, which fly as bullets. `--enemies` writes
+`_staged/RSBDEFS.xim_enemies`: it gives `enemy_round`, `enemy_pellet` and `enemy_heavy` red bolt
+looks (frames J, I, K), bolt impacts and a streak light. **Look only**: speed and damage stay the
+house's. It ships as `RSBDEFS.txt` inside the Xim REMA pack, which loads after RS_Ballistics, so the
+override exists only while Xim is played.
+
 ---
 
 ## The lightsaber — eight colours

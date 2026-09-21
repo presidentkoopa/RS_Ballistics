@@ -153,7 +153,8 @@ def main():
         s = raw.rstrip()
         m = re.match(r"^(trail|flame|hotspot)[ \t]+(\S+)\s*(?:#(.*))?$", s)
         if m and "=" not in s:
-            if m.group(2).endswith("@extreme") or "~" in m.group(2) or "." in m.group(2):
+            # `none` is a stated absence, not a look: an extreme of nothing is still nothing.
+            if m.group(2).endswith("@extreme") or "~" in m.group(2) or "." in m.group(2) or m.group(2).lower() == "none":
                 cur = None
                 continue
             cur, head, body = m.group(1), (m.group(2), (m.group(3) or "").strip()), []

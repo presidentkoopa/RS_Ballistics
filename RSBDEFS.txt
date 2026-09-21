@@ -18327,9 +18327,6 @@ flame bl_spray_lit@extreme   # the can and the lighter, which is the whole joke 
   sputter     = 0.3, rsb/flame/hiss
 end
 
-trail none@extreme   # draws no beam -- AT EXTREME
-end
-
 trail sw_disruptor@extreme   # a disruptor beam: a white core, a hot red edge, gone in a moment -- AT EXTREME
   line        = 1.160, 4.350, 4.060, 17
   linecolor   = 255, 110, 80
