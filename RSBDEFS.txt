@@ -16446,7 +16446,7 @@ round sw_disruptor
   roundlook  = sw_disruptor
 end
 
-recoil sw_dl44   # a heavy blaster pistol: a sharp green snap -- STATED: an energy weapon has no cartridge, and no kick is the one wrong answer
+recoil sw_dl44   # Han's heavy blaster pistol: a sharp red snap, as in the film -- STATED: an energy weapon has no cartridge, and no kick is the one wrong answer
   climb   = 1.35
   drift   = 0.22, 5
   recover = 16, 6
@@ -16618,12 +16618,12 @@ end
 
 # DL44Blaster -- a blaster flash: a coloured snap of light and a whiff of ozone. No flame card, no
 # powder smoke, no petals: STAR WARS, NOT JOHN WICK.
-flash sw_dl44   # a heavy blaster pistol: a sharp green snap
+flash sw_dl44   # Han's heavy blaster pistol: a sharp red snap, as in the film
   light      = 201, 3.3, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone       = 15, 39, 72, 5
   conetics   = 2
-  bursts     = swb_green_snap, swb_green_glow
+  bursts     = swb_red_snap, swb_red_glow
   maybe      = plasma_ozone 0.5
   flame      = 0.0
   smoke      = 0, 0.0, 0.0
@@ -17508,12 +17508,12 @@ end
 # LIGHT -> EXTREME: every flash again, as MORE of what it is -- through the WW2 set's own
 # transformer, so this set grows the same way as the other ten.
 
-flash sw_dl44@extreme   # a heavy blaster pistol: a sharp green snap -- AT EXTREME
+flash sw_dl44@extreme   # Han's heavy blaster pistol: a sharp red snap, as in the film -- AT EXTREME
   light         = 231, 3.30, 2
-  lightcolor = 90, 255, 110
+  lightcolor = 255, 60, 50
   cone          = 15, 39, 97, 5
   conetics   = 2
-  bursts        = swb_green_snap, swb_green_glow, flash_embers, spk_embers_heavy
+  bursts        = swb_red_snap, swb_red_glow, flash_embers, spk_embers_heavy
   maybe         = plasma_ozone 0.70, flash_tongue 0.45
   flame      = 0.0
   smoke      = 0, 0.0, 0.0

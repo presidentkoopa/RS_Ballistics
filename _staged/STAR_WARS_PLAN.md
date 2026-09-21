@@ -31,8 +31,7 @@ feedback at least."*
 
 Colours, by the owner's rule: **red** Imperial, **green** Rebel, **blue** Republic/ion.
 
-*One flag, not a change:* Han's DL-44 fired red in the films. The rule says Rebel is green, so it is
-green here. One word from the owner flips it.
+*The one exception:* Han's DL-44 fires **red**, as in the film -- the owner's call, 2026-09-21.
 
 ---
 
@@ -41,7 +40,7 @@ green here. One word from the owner flips it.
 | gun | look | colour | kick |
 |---|---|---|---|
 | **Wardusted** | | | |
-| DL44Blaster | blaster, pistol | green | a sharp snap, fast back |
+| DL44Blaster | blaster, pistol | red (the film) | a sharp snap, fast back |
 | E11Blaster | blaster, rifle | red | light and quick |
 | DarkBlaster | blaster, heavy | red | heavier |
 | DLT19 | blaster, heavy | red | small per shot, builds with the rate |

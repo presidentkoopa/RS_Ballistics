@@ -92,8 +92,10 @@ ROUNDS = {
 # shot and wander as the rate builds; the concussion rifle and the cannon are the ones allowed to hit.
 GUNS = [
     # ---- Wardusted
-    ("DL44Blaster",       "sw_dl44",      "green", 0.9, "a heavy blaster pistol: a sharp green snap",
-     (1.35, 0.22, 16, 5.0, 1.5), "sw_bolt_green_pistol"),
+    # HAN'S GUN FIRES RED, like the film. The rule is Rebel-green, and the owner ruled this one the
+    # film's way (2026-09-21, "the filmmmm") -- the one gun where what it looked like on screen wins.
+    ("DL44Blaster",       "sw_dl44",      "red",   0.9, "Han's heavy blaster pistol: a sharp red snap, as in the film",
+     (1.35, 0.22, 16, 5.0, 1.5), "sw_bolt_red_pistol"),
     ("E11Blaster",        "sw_e11",       "red",   0.8, "the stormtrooper rifle: light, quick, and red",
      (0.70, 0.30, 14, 4.2, 1.1), "sw_bolt_red_rifle"),
     ("DarkBlaster",       "sw_darkblaster", "red", 1.05, "a dark trooper's blaster: heavier bolts",
