@@ -18397,5 +18397,173 @@ trail saber_smear_white@extreme   # the swing: a ribbon of the blade's light, go
   linelook    = 0.6, 2.4
 end
 
+trail saber_slice_blue@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 110, 165, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 110, 165, 255
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_green@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 90, 255, 110
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 90, 255, 110
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_red@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 255, 55, 45
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 255, 55, 45
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_purple@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 190, 90, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 190, 90, 255
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_yellow@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 255, 225, 80
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 255, 225, 80
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_orange@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 255, 140, 40
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 255, 140, 40
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_cyan@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 80, 245, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 80, 245, 255
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_white@extreme   # the cut seam: a hard bright line where the blade went through -- AT EXTREME
+  line         = 1.305, 1.595, 6.090, 14
+  linecolor    = 235, 240, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 235, 240, 255
+  heat         = 26, 0.75, 26
+end
+
 # ---- END EXTREMES FOR TRAIL, FLAME AND HOTSPOT ----
 # ---- END NEW SETS
+
+# ---- BEGIN SABER SLICE SEAMS (tools/gen_saber_slice.py) ----
+#
+# Generated. Edit tools/gen_saber_slice.py and re-run it; edits here are overwritten.
+# The cut seam, per blade hue. See that script for what a seam is and what is not in it.
+#
+
+trail saber_slice_blue   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 110, 165, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 110, 165, 255
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_green   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 90, 255, 110
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 90, 255, 110
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_red   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 255, 55, 45
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 255, 55, 45
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_purple   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 190, 90, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 190, 90, 255
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_yellow   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 255, 225, 80
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 255, 225, 80
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_orange   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 255, 140, 40
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 255, 140, 40
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_cyan   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 80, 245, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 80, 245, 255
+  heat         = 26, 0.75, 26
+end
+
+trail saber_slice_white   # the cut seam: a hard bright line where the blade went through
+  line         = 0.9, 1.1, 4.2, 10
+  linecolor    = 235, 240, 255
+  linecolorend = 255, 248, 235
+  linelook     = 0.35, 1.2
+  beamlight    = 72, 2.4, 10, 0.55
+  lightcolor   = 235, 240, 255
+  heat         = 26, 0.75, 26
+end
+
+# ---- END SABER SLICE SEAMS ----
