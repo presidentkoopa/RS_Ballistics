@@ -22809,5 +22809,3889 @@
    "span": "A"
   }
  ],
+ "sounds": {
+  "brass_rifle": [
+   {
+    "bytes": 6718,
+    "channels": 1,
+    "file": "sounds/rsb/debris/brass_rifle/chgncas2.wav",
+    "folder": "brass_rifle",
+    "format": "wav",
+    "name": "chgncas2.wav",
+    "rate": 11111,
+    "seconds": 0.599
+   },
+   {
+    "bytes": 12801,
+    "channels": 1,
+    "file": "sounds/rsb/debris/brass_rifle/dsriflc1.ogg",
+    "folder": "brass_rifle",
+    "format": "ogg",
+    "name": "dsriflc1.ogg",
+    "rate": 44100,
+    "seconds": 0.663
+   },
+   {
+    "bytes": 10656,
+    "channels": 1,
+    "file": "sounds/rsb/debris/brass_rifle/dsriflc2.ogg",
+    "folder": "brass_rifle",
+    "format": "ogg",
+    "name": "dsriflc2.ogg",
+    "rate": 44100,
+    "seconds": 0.529
+   },
+   {
+    "bytes": 11071,
+    "channels": 1,
+    "file": "sounds/rsb/debris/brass_rifle/dsriflc3.ogg",
+    "folder": "brass_rifle",
+    "format": "ogg",
+    "name": "dsriflc3.ogg",
+    "rate": 44100,
+    "seconds": 0.541
+   }
+  ],
+  "casings": [
+   {
+    "bytes": 20226,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/40CAS1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "40CAS1.ogg",
+    "rate": 48000,
+    "seconds": 0.94
+   },
+   {
+    "bytes": 32013,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/40CAS2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "40CAS2.ogg",
+    "rate": 48000,
+    "seconds": 1.556
+   },
+   {
+    "bytes": 32529,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/40CAS3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "40CAS3.ogg",
+    "rate": 48000,
+    "seconds": 1.683
+   },
+   {
+    "bytes": 20195,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/BigBounce1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "BigBounce1.ogg",
+    "rate": 48000,
+    "seconds": 0.489
+   },
+   {
+    "bytes": 21000,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/BigBounce2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "BigBounce2.ogg",
+    "rate": 48000,
+    "seconds": 0.524
+   },
+   {
+    "bytes": 16959,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/BigBounce3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "BigBounce3.ogg",
+    "rate": 48000,
+    "seconds": 0.399
+   },
+   {
+    "bytes": 5267,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CABRBNC1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CABRBNC1.ogg",
+    "rate": 44100,
+    "seconds": 0.268
+   },
+   {
+    "bytes": 6811,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CABRBNC2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CABRBNC2.ogg",
+    "rate": 44100,
+    "seconds": 0.419
+   },
+   {
+    "bytes": 6569,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CABRBNC3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CABRBNC3.ogg",
+    "rate": 44100,
+    "seconds": 0.434
+   },
+   {
+    "bytes": 5735,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CABRBNC4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CABRBNC4.ogg",
+    "rate": 44100,
+    "seconds": 0.286
+   },
+   {
+    "bytes": 6734,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CABRBNC5.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CABRBNC5.ogg",
+    "rate": 44100,
+    "seconds": 0.422
+   },
+   {
+    "bytes": 5693,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CABRBNC6.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CABRBNC6.ogg",
+    "rate": 44100,
+    "seconds": 0.283
+   },
+   {
+    "bytes": 9820,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CHGNCAS1.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "CHGNCAS1.wav",
+    "rate": 22050,
+    "seconds": 0.442
+   },
+   {
+    "bytes": 8398,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CHGNCAS3.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "CHGNCAS3.wav",
+    "rate": 22050,
+    "seconds": 0.378
+   },
+   {
+    "bytes": 6065,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/CLIPIN.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "CLIPIN.ogg",
+    "rate": 22050,
+    "seconds": 0.339
+   },
+   {
+    "bytes": 8170,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DRYFIRE.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DRYFIRE.ogg",
+    "rate": 44100,
+    "seconds": 0.558
+   },
+   {
+    "bytes": 13064,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC1.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSAOUNC1.lmp",
+    "rate": 22050,
+    "seconds": 0.592
+   },
+   {
+    "bytes": 7045,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSAOUNC1.ogg",
+    "rate": 22050,
+    "seconds": 0.591
+   },
+   {
+    "bytes": 10936,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC2.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSAOUNC2.lmp",
+    "rate": 22050,
+    "seconds": 0.496
+   },
+   {
+    "bytes": 6466,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSAOUNC2.ogg",
+    "rate": 22050,
+    "seconds": 0.496
+   },
+   {
+    "bytes": 10647,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC3.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSAOUNC3.lmp",
+    "rate": 22050,
+    "seconds": 0.482
+   },
+   {
+    "bytes": 6658,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSAOUNC3.ogg",
+    "rate": 22050,
+    "seconds": 0.482
+   },
+   {
+    "bytes": 11624,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC4.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSAOUNC4.lmp",
+    "rate": 22050,
+    "seconds": 0.527
+   },
+   {
+    "bytes": 6812,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSAOUNC4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSAOUNC4.ogg",
+    "rate": 22050,
+    "seconds": 0.527
+   },
+   {
+    "bytes": 2993,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC1.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSBOUNC1.lmp",
+    "rate": 22050,
+    "seconds": 0.135
+   },
+   {
+    "bytes": 4774,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSBOUNC1.ogg",
+    "rate": 22050,
+    "seconds": 0.135
+   },
+   {
+    "bytes": 141882,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC1.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSBOUNC1.wav",
+    "rate": 48000,
+    "seconds": 0.738
+   },
+   {
+    "bytes": 7363,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC2.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSBOUNC2.lmp",
+    "rate": 22050,
+    "seconds": 0.334
+   },
+   {
+    "bytes": 5963,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSBOUNC2.ogg",
+    "rate": 22050,
+    "seconds": 0.334
+   },
+   {
+    "bytes": 130706,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC2.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSBOUNC2.wav",
+    "rate": 48000,
+    "seconds": 0.68
+   },
+   {
+    "bytes": 4901,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC3.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSBOUNC3.lmp",
+    "rate": 22050,
+    "seconds": 0.222
+   },
+   {
+    "bytes": 5156,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSBOUNC3.ogg",
+    "rate": 22050,
+    "seconds": 0.222
+   },
+   {
+    "bytes": 153962,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC3.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSBOUNC3.wav",
+    "rate": 48000,
+    "seconds": 0.801
+   },
+   {
+    "bytes": 8790,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC4.lmp",
+    "folder": "casing_doom",
+    "format": "dmx",
+    "name": "DSBOUNC4.lmp",
+    "rate": 22050,
+    "seconds": 0.398
+   },
+   {
+    "bytes": 6548,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSBOUNC4.ogg",
+    "rate": 22050,
+    "seconds": 0.398
+   },
+   {
+    "bytes": 146370,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSBOUNC4.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSBOUNC4.wav",
+    "rate": 48000,
+    "seconds": 0.762
+   },
+   {
+    "bytes": 6598,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSCASIN1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSCASIN1.ogg",
+    "rate": 22050,
+    "seconds": 0.345
+   },
+   {
+    "bytes": 15080,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSCASIN1.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSCASIN1.wav",
+    "rate": 22050,
+    "seconds": 0.681
+   },
+   {
+    "bytes": 4648,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSCASIN2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSCASIN2.ogg",
+    "rate": 22050,
+    "seconds": 0.091
+   },
+   {
+    "bytes": 12834,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSCASIN2.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSCASIN2.wav",
+    "rate": 22050,
+    "seconds": 0.579
+   },
+   {
+    "bytes": 6999,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSCASIN3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSCASIN3.ogg",
+    "rate": 22050,
+    "seconds": 0.332
+   },
+   {
+    "bytes": 7396,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSCASIN3.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSCASIN3.wav",
+    "rate": 22050,
+    "seconds": 0.332
+   },
+   {
+    "bytes": 11118,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSLMLNK1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSLMLNK1.ogg",
+    "rate": 44100,
+    "seconds": 1.139
+   },
+   {
+    "bytes": 10328,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSLMLNK2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSLMLNK2.ogg",
+    "rate": 44100,
+    "seconds": 1.035
+   },
+   {
+    "bytes": 11660,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSLMLNK3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSLMLNK3.ogg",
+    "rate": 44100,
+    "seconds": 1.087
+   },
+   {
+    "bytes": 8813,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSLMLNK4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSLMLNK4.ogg",
+    "rate": 44100,
+    "seconds": 0.736
+   },
+   {
+    "bytes": 49068,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL1.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSSHELL1.wav",
+    "rate": 22050,
+    "seconds": 2.222
+   },
+   {
+    "bytes": 7858,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL1_12ga.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSSHELL1_12ga.wav",
+    "rate": 11025,
+    "seconds": 0.707
+   },
+   {
+    "bytes": 47940,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL2.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSSHELL2.wav",
+    "rate": 22050,
+    "seconds": 2.171
+   },
+   {
+    "bytes": 5752,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL2_12ga.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSSHELL2_12ga.wav",
+    "rate": 11025,
+    "seconds": 0.516
+   },
+   {
+    "bytes": 50372,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL3.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSSHELL3.wav",
+    "rate": 22050,
+    "seconds": 2.281
+   },
+   {
+    "bytes": 10502,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL3_12ga.wav",
+    "folder": "casing_doom",
+    "format": "wav",
+    "name": "DSSHELL3_12ga.wav",
+    "rate": 11025,
+    "seconds": 0.946
+   },
+   {
+    "bytes": 12128,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL4.ogg",
+    "rate": 22050,
+    "seconds": 0.955
+   },
+   {
+    "bytes": 5669,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/DSSHELL4_12ga.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL4_12ga.ogg",
+    "rate": 44100,
+    "seconds": 0.14
+   },
+   {
+    "bytes": 13293,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL5.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL5.ogg",
+    "rate": 22050,
+    "seconds": 1.226
+   },
+   {
+    "bytes": 7002,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/DSSHELL5_12ga.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL5_12ga.ogg",
+    "rate": 44100,
+    "seconds": 0.27
+   },
+   {
+    "bytes": 10469,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL6.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL6.ogg",
+    "rate": 22050,
+    "seconds": 0.838
+   },
+   {
+    "bytes": 5357,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/DSSHELL6_12ga.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL6_12ga.ogg",
+    "rate": 44100,
+    "seconds": 0.11
+   },
+   {
+    "bytes": 7840,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/DSSHELL7.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "DSSHELL7.ogg",
+    "rate": 22050,
+    "seconds": 0.681
+   },
+   {
+    "bytes": 6634,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/F1stsup.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "F1stsup.ogg",
+    "rate": 44100,
+    "seconds": 0.443
+   },
+   {
+    "bytes": 11061,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/IRONSIT1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "IRONSIT1.ogg",
+    "rate": 44100,
+    "seconds": 0.836
+   },
+   {
+    "bytes": 10226,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/IRONSIT2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "IRONSIT2.ogg",
+    "rate": 44100,
+    "seconds": 0.731
+   },
+   {
+    "bytes": 14119,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/IRONSIT3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "IRONSIT3.ogg",
+    "rate": 44100,
+    "seconds": 1.215
+   },
+   {
+    "bytes": 13905,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/IRONSIT4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "IRONSIT4.ogg",
+    "rate": 44100,
+    "seconds": 1.206
+   },
+   {
+    "bytes": 31416,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/MP40.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "MP40.ogg",
+    "rate": 44100,
+    "seconds": 2.175
+   },
+   {
+    "bytes": 8146,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/MidBounce1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "MidBounce1.ogg",
+    "rate": 44100,
+    "seconds": 0.33
+   },
+   {
+    "bytes": 8232,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/MidBounce2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "MidBounce2.ogg",
+    "rate": 44100,
+    "seconds": 0.34
+   },
+   {
+    "bytes": 9036,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/MidBounce3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "MidBounce3.ogg",
+    "rate": 44100,
+    "seconds": 0.37
+   },
+   {
+    "bytes": 8499,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/MidBounce4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "MidBounce4.ogg",
+    "rate": 44100,
+    "seconds": 0.35
+   },
+   {
+    "bytes": 13553,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/RELOAD.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "RELOAD.ogg",
+    "rate": 44100,
+    "seconds": 0.756
+   },
+   {
+    "bytes": 5252,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/SHELPKUP.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "SHELPKUP.ogg",
+    "rate": 22050,
+    "seconds": 0.2
+   },
+   {
+    "bytes": 8622,
+    "channels": 2,
+    "file": "sounds/rsb/casing_doom/STGNPUMP.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "STGNPUMP.ogg",
+    "rate": 44100,
+    "seconds": 0.376
+   },
+   {
+    "bytes": 11512,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/SmallBounce1.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "SmallBounce1.ogg",
+    "rate": 48000,
+    "seconds": 0.738
+   },
+   {
+    "bytes": 9961,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/SmallBounce2.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "SmallBounce2.ogg",
+    "rate": 48000,
+    "seconds": 0.68
+   },
+   {
+    "bytes": 10700,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/SmallBounce3.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "SmallBounce3.ogg",
+    "rate": 48000,
+    "seconds": 0.801
+   },
+   {
+    "bytes": 10749,
+    "channels": 1,
+    "file": "sounds/rsb/casing_doom/SmallBounce4.ogg",
+    "folder": "casing_doom",
+    "format": "ogg",
+    "name": "SmallBounce4.ogg",
+    "rate": 48000,
+    "seconds": 0.762
+   },
+   {
+    "bytes": 10736,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin1.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin1.ogg",
+    "rate": 44100,
+    "seconds": 0.54
+   },
+   {
+    "bytes": 9673,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin2.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin2.ogg",
+    "rate": 44100,
+    "seconds": 0.45
+   },
+   {
+    "bytes": 8347,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin3.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin3.ogg",
+    "rate": 44100,
+    "seconds": 0.42
+   },
+   {
+    "bytes": 7729,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin4.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin4.ogg",
+    "rate": 44100,
+    "seconds": 0.34
+   },
+   {
+    "bytes": 9115,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin5.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin5.ogg",
+    "rate": 44100,
+    "seconds": 0.42
+   },
+   {
+    "bytes": 8729,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin6.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin6.ogg",
+    "rate": 44100,
+    "seconds": 0.38
+   },
+   {
+    "bytes": 8125,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin7.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin7.ogg",
+    "rate": 44100,
+    "seconds": 0.35
+   },
+   {
+    "bytes": 8490,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin8.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin8.ogg",
+    "rate": 44100,
+    "seconds": 0.35
+   },
+   {
+    "bytes": 8237,
+    "channels": 2,
+    "file": "sounds/rsb/casing_medium/dscasin9.ogg",
+    "folder": "casing_medium",
+    "format": "ogg",
+    "name": "dscasin9.ogg",
+    "rate": 44100,
+    "seconds": 0.37
+   },
+   {
+    "bytes": 5530,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell1.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell1.ogg",
+    "rate": 44100,
+    "seconds": 0.12
+   },
+   {
+    "bytes": 5578,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell2.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell2.ogg",
+    "rate": 44100,
+    "seconds": 0.14
+   },
+   {
+    "bytes": 7112,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell3.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell3.ogg",
+    "rate": 44100,
+    "seconds": 0.23
+   },
+   {
+    "bytes": 5669,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell4.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell4.ogg",
+    "rate": 44100,
+    "seconds": 0.14
+   },
+   {
+    "bytes": 7002,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell5.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell5.ogg",
+    "rate": 44100,
+    "seconds": 0.27
+   },
+   {
+    "bytes": 5357,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell6.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell6.ogg",
+    "rate": 44100,
+    "seconds": 0.11
+   },
+   {
+    "bytes": 5648,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell7.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell7.ogg",
+    "rate": 44100,
+    "seconds": 0.13
+   },
+   {
+    "bytes": 6705,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell8.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell8.ogg",
+    "rate": 44100,
+    "seconds": 0.26
+   },
+   {
+    "bytes": 7588,
+    "channels": 2,
+    "file": "sounds/rsb/casing_shell/dsshell9.ogg",
+    "folder": "casing_shell",
+    "format": "ogg",
+    "name": "dsshell9.ogg",
+    "rate": 44100,
+    "seconds": 0.23
+   },
+   {
+    "bytes": 5598,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c1.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c1.ogg",
+    "rate": 44100,
+    "seconds": 0.14
+   },
+   {
+    "bytes": 12703,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c2.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c2.ogg",
+    "rate": 44100,
+    "seconds": 0.94
+   },
+   {
+    "bytes": 7191,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c3.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c3.ogg",
+    "rate": 44100,
+    "seconds": 0.32
+   },
+   {
+    "bytes": 9117,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c4.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c4.ogg",
+    "rate": 44100,
+    "seconds": 0.46
+   },
+   {
+    "bytes": 8305,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c5.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c5.ogg",
+    "rate": 44100,
+    "seconds": 0.36
+   },
+   {
+    "bytes": 7358,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c6.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c6.ogg",
+    "rate": 44100,
+    "seconds": 0.32
+   },
+   {
+    "bytes": 5420,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c7.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c7.ogg",
+    "rate": 44100,
+    "seconds": 0.12
+   },
+   {
+    "bytes": 7422,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c8.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c8.ogg",
+    "rate": 44100,
+    "seconds": 0.33
+   },
+   {
+    "bytes": 6861,
+    "channels": 2,
+    "file": "sounds/rsb/casing_small/brass_c9.ogg",
+    "folder": "casing_small",
+    "format": "ogg",
+    "name": "brass_c9.ogg",
+    "rate": 44100,
+    "seconds": 0.25
+   }
+  ],
+  "chips": [
+   {
+    "bytes": 56796,
+    "channels": 2,
+    "file": "sounds/rsb/debris/chips/impact5.wav",
+    "folder": "chips",
+    "format": "wav",
+    "name": "impact5.wav",
+    "rate": 44100,
+    "seconds": 0.639
+   },
+   {
+    "bytes": 72970,
+    "channels": 2,
+    "file": "sounds/rsb/debris/chips/impact6.wav",
+    "folder": "chips",
+    "format": "wav",
+    "name": "impact6.wav",
+    "rate": 44100,
+    "seconds": 0.811
+   },
+   {
+    "bytes": 19680,
+    "channels": null,
+    "file": "sounds/rsb/debris/chips/impact9.mp3",
+    "folder": "chips",
+    "format": "mp3",
+    "name": "impact9.mp3",
+    "rate": null,
+    "seconds": null
+   }
+  ],
+  "crack": [
+   {
+    "bytes": 24602,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_01.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_01.ogg",
+    "rate": 44100,
+    "seconds": 2.71
+   },
+   {
+    "bytes": 25746,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_02.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_02.ogg",
+    "rate": 44100,
+    "seconds": 2.84
+   },
+   {
+    "bytes": 24392,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_03.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_03.ogg",
+    "rate": 44100,
+    "seconds": 2.69
+   },
+   {
+    "bytes": 22759,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_04.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_04.ogg",
+    "rate": 44100,
+    "seconds": 2.49
+   },
+   {
+    "bytes": 25012,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_05.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_05.ogg",
+    "rate": 44100,
+    "seconds": 2.72
+   },
+   {
+    "bytes": 24499,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_06.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_06.ogg",
+    "rate": 44100,
+    "seconds": 2.66
+   },
+   {
+    "bytes": 25891,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_07.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_07.ogg",
+    "rate": 44100,
+    "seconds": 2.8
+   },
+   {
+    "bytes": 27044,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_far_08.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_far_08.ogg",
+    "rate": 44100,
+    "seconds": 2.92
+   },
+   {
+    "bytes": 18942,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_01.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_01.ogg",
+    "rate": 44100,
+    "seconds": 1.96
+   },
+   {
+    "bytes": 18626,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_02.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_02.ogg",
+    "rate": 44100,
+    "seconds": 1.93
+   },
+   {
+    "bytes": 17985,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_03.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_03.ogg",
+    "rate": 44100,
+    "seconds": 1.82
+   },
+   {
+    "bytes": 17737,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_04.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_04.ogg",
+    "rate": 44100,
+    "seconds": 1.76
+   },
+   {
+    "bytes": 18505,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_05.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_05.ogg",
+    "rate": 44100,
+    "seconds": 1.87
+   },
+   {
+    "bytes": 16956,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_06.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_06.ogg",
+    "rate": 44100,
+    "seconds": 1.7
+   },
+   {
+    "bytes": 18158,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_07.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_07.ogg",
+    "rate": 44100,
+    "seconds": 1.82
+   },
+   {
+    "bytes": 19802,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_med_08.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_med_08.ogg",
+    "rate": 44100,
+    "seconds": 2.04
+   },
+   {
+    "bytes": 22673,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_01.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_01.ogg",
+    "rate": 44100,
+    "seconds": 2.4
+   },
+   {
+    "bytes": 22696,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_02.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_02.ogg",
+    "rate": 44100,
+    "seconds": 2.42
+   },
+   {
+    "bytes": 20653,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_03.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_03.ogg",
+    "rate": 44100,
+    "seconds": 2.18
+   },
+   {
+    "bytes": 24031,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_04.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_04.ogg",
+    "rate": 44100,
+    "seconds": 2.59
+   },
+   {
+    "bytes": 24179,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_05.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_05.ogg",
+    "rate": 44100,
+    "seconds": 2.58
+   },
+   {
+    "bytes": 23687,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_06.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_06.ogg",
+    "rate": 44100,
+    "seconds": 2.53
+   },
+   {
+    "bytes": 22681,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_07.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_07.ogg",
+    "rate": 44100,
+    "seconds": 2.42
+   },
+   {
+    "bytes": 24370,
+    "channels": 1,
+    "file": "sounds/rsb/crack/bullet_crack_near_08.ogg",
+    "folder": "crack",
+    "format": "ogg",
+    "name": "bullet_crack_near_08.ogg",
+    "rate": 44100,
+    "seconds": 2.57
+   }
+  ],
+  "debris": [
+   {
+    "bytes": 10077,
+    "channels": 1,
+    "file": "sounds/rsb/glass/dsbottle.ogg",
+    "folder": "glass",
+    "format": "ogg",
+    "name": "dsbottle.ogg",
+    "rate": 22050,
+    "seconds": 1.271
+   },
+   {
+    "bytes": 31964,
+    "channels": 2,
+    "file": "sounds/rsb/glass/glsfal.ogg",
+    "folder": "glass",
+    "format": "ogg",
+    "name": "glsfal.ogg",
+    "rate": 44100,
+    "seconds": 2.485
+   },
+   {
+    "bytes": 31964,
+    "channels": 2,
+    "file": "sounds/rsb/glass/winbrea.ogg",
+    "folder": "glass",
+    "format": "ogg",
+    "name": "winbrea.ogg",
+    "rate": 44100,
+    "seconds": 2.485
+   }
+  ],
+  "dirt": [
+   {
+    "bytes": 13378,
+    "channels": 1,
+    "file": "sounds/rsb/debris/dirt/gbounce.wav",
+    "folder": "dirt",
+    "format": "wav",
+    "name": "gbounce.wav",
+    "rate": 44100,
+    "seconds": 0.151
+   },
+   {
+    "bytes": 1783,
+    "channels": 1,
+    "file": "sounds/rsb/debris/dirt/grnbnce.wav",
+    "folder": "dirt",
+    "format": "wav",
+    "name": "grnbnce.wav",
+    "rate": 11025,
+    "seconds": 0.156
+   }
+  ],
+  "explosions": [
+   {
+    "bytes": 41512,
+    "channels": 1,
+    "file": "sounds/rsb/blast/big1.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "big1.ogg",
+    "rate": 44100,
+    "seconds": 3.233
+   },
+   {
+    "bytes": 48385,
+    "channels": 1,
+    "file": "sounds/rsb/blast/big2.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "big2.ogg",
+    "rate": 44100,
+    "seconds": 3.835
+   },
+   {
+    "bytes": 39383,
+    "channels": 1,
+    "file": "sounds/rsb/blast/big3.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "big3.ogg",
+    "rate": 22050,
+    "seconds": 4.24
+   },
+   {
+    "bytes": 29968,
+    "channels": 1,
+    "file": "sounds/rsb/blast/med1.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "med1.ogg",
+    "rate": 44100,
+    "seconds": 2.328
+   },
+   {
+    "bytes": 28262,
+    "channels": 1,
+    "file": "sounds/rsb/blast/med2.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "med2.ogg",
+    "rate": 44100,
+    "seconds": 2.036
+   },
+   {
+    "bytes": 27364,
+    "channels": 1,
+    "file": "sounds/rsb/blast/med3.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "med3.ogg",
+    "rate": 44100,
+    "seconds": 1.963
+   },
+   {
+    "bytes": 27329,
+    "channels": 1,
+    "file": "sounds/rsb/blast/med4.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "med4.ogg",
+    "rate": 48000,
+    "seconds": 2.064
+   },
+   {
+    "bytes": 25191,
+    "channels": 1,
+    "file": "sounds/rsb/blast/med5.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "med5.ogg",
+    "rate": 48000,
+    "seconds": 1.797
+   },
+   {
+    "bytes": 25468,
+    "channels": 1,
+    "file": "sounds/rsb/blast/roll1.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "roll1.ogg",
+    "rate": 44100,
+    "seconds": 2.148
+   },
+   {
+    "bytes": 28388,
+    "channels": 1,
+    "file": "sounds/rsb/blast/roll2.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "roll2.ogg",
+    "rate": 44100,
+    "seconds": 2.459
+   },
+   {
+    "bytes": 24113,
+    "channels": 1,
+    "file": "sounds/rsb/blast/roll3.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "roll3.ogg",
+    "rate": 44100,
+    "seconds": 2.077
+   },
+   {
+    "bytes": 12725,
+    "channels": 1,
+    "file": "sounds/rsb/blast/small1.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "small1.ogg",
+    "rate": 22050,
+    "seconds": 1.105
+   },
+   {
+    "bytes": 12710,
+    "channels": 1,
+    "file": "sounds/rsb/blast/small2.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "small2.ogg",
+    "rate": 22050,
+    "seconds": 0.993
+   },
+   {
+    "bytes": 11908,
+    "channels": 1,
+    "file": "sounds/rsb/blast/small3.ogg",
+    "folder": "blast",
+    "format": "ogg",
+    "name": "small3.ogg",
+    "rate": 22050,
+    "seconds": 0.993
+   },
+   {
+    "bytes": 38039,
+    "channels": 2,
+    "file": "sounds/rsb/explosion/BA_EXP01.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "BA_EXP01.ogg",
+    "rate": 44100,
+    "seconds": 2.328
+   },
+   {
+    "bytes": 30100,
+    "channels": 2,
+    "file": "sounds/rsb/explosion/BA_EXP02.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "BA_EXP02.ogg",
+    "rate": 44100,
+    "seconds": 2.036
+   },
+   {
+    "bytes": 27804,
+    "channels": 2,
+    "file": "sounds/rsb/explosion/BA_EXP03.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "BA_EXP03.ogg",
+    "rate": 44100,
+    "seconds": 1.963
+   },
+   {
+    "bytes": 93996,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/BFGEXPL1.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "BFGEXPL1.wav",
+    "rate": 22050,
+    "seconds": 2.13
+   },
+   {
+    "bytes": 274342,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/BFGEXPL2.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "BFGEXPL2.wav",
+    "rate": 44100,
+    "seconds": 3.11
+   },
+   {
+    "bytes": 147762,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/BFGEXPL3.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "BFGEXPL3.wav",
+    "rate": 22050,
+    "seconds": 3.35
+   },
+   {
+    "bytes": 90736,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/BFGEXPL4.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "BFGEXPL4.wav",
+    "rate": 22050,
+    "seconds": 4.112
+   },
+   {
+    "bytes": 20126,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/DISTEXP1.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "DISTEXP1.ogg",
+    "rate": 44100,
+    "seconds": 1.968
+   },
+   {
+    "bytes": 24946,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/DISTEXP2.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "DISTEXP2.ogg",
+    "rate": 44100,
+    "seconds": 2.547
+   },
+   {
+    "bytes": 22516,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/DISTEXP3.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "DISTEXP3.ogg",
+    "rate": 44100,
+    "seconds": 2.279
+   },
+   {
+    "bytes": 21983,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/DISTEXP4.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "DISTEXP4.ogg",
+    "rate": 44100,
+    "seconds": 2.21
+   },
+   {
+    "bytes": 18599,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/DISTEXP5.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "DISTEXP5.ogg",
+    "rate": 44100,
+    "seconds": 1.897
+   },
+   {
+    "bytes": 285168,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/Explode1.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "Explode1.wav",
+    "rate": 44100,
+    "seconds": 3.233
+   },
+   {
+    "bytes": 338318,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/Explode2.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "Explode2.wav",
+    "rate": 44100,
+    "seconds": 3.835
+   },
+   {
+    "bytes": 12740,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/PLEXP1.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "PLEXP1.ogg",
+    "rate": 22050,
+    "seconds": 1.105
+   },
+   {
+    "bytes": 12499,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/PLEXP2.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "PLEXP2.ogg",
+    "rate": 22050,
+    "seconds": 0.993
+   },
+   {
+    "bytes": 11740,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/PLEXP3.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "PLEXP3.ogg",
+    "rate": 22050,
+    "seconds": 0.993
+   },
+   {
+    "bytes": 41412,
+    "channels": 2,
+    "file": "sounds/rsb/explosion/REXP01.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "REXP01.ogg",
+    "rate": 48000,
+    "seconds": 2.064
+   },
+   {
+    "bytes": 35006,
+    "channels": 2,
+    "file": "sounds/rsb/explosion/REXP02.ogg",
+    "folder": "explosion",
+    "format": "ogg",
+    "name": "REXP02.ogg",
+    "rate": 48000,
+    "seconds": 1.797
+   },
+   {
+    "bytes": 187306,
+    "channels": 1,
+    "file": "sounds/rsb/explosion/RLANEXPL.wav",
+    "folder": "explosion",
+    "format": "wav",
+    "name": "RLANEXPL.wav",
+    "rate": 22050,
+    "seconds": 4.24
+   }
+  ],
+  "ext": [
+   {
+    "bytes": 67586,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/ext/weap_ar3_fire_plr_atmo_ext1_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_ar3_fire_plr_atmo_ext1_01.ogg",
+    "rate": 48000,
+    "seconds": 5.279
+   },
+   {
+    "bytes": 49268,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/ext/weap_ar3_fire_plr_atmo_ext1_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_ar3_fire_plr_atmo_ext1_02.ogg",
+    "rate": 48000,
+    "seconds": 3.677
+   },
+   {
+    "bytes": 50018,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/ext/weap_ar3_fire_plr_atmo_ext1_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_ar3_fire_plr_atmo_ext1_03.ogg",
+    "rate": 48000,
+    "seconds": 3.658
+   },
+   {
+    "bytes": 47066,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/ext/weap_ar3_fire_plr_atmo_ext1_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_ar3_fire_plr_atmo_ext1_04.ogg",
+    "rate": 48000,
+    "seconds": 3.504
+   },
+   {
+    "bytes": 48800,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/ext/weap_ar3_fire_plr_atmo_ext1_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_ar3_fire_plr_atmo_ext1_05.ogg",
+    "rate": 48000,
+    "seconds": 3.599
+   },
+   {
+    "bytes": 47834,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/ext/weap_ar3_fire_plr_atmo_ext1_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_ar3_fire_plr_atmo_ext1_06.ogg",
+    "rate": 48000,
+    "seconds": 3.529
+   },
+   {
+    "bytes": 69411,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_01.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 69680,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_02.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 70138,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_03.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 70064,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_04.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 70540,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_05.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 69542,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_06.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 69670,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_07.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_07.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 70081,
+    "channels": 2,
+    "file": "sounds/rsb/tail/br/ext/weap_br3_fire_plr_atmo_ext1_08.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_br3_fire_plr_atmo_ext1_08.ogg",
+    "rate": 48000,
+    "seconds": 5.42
+   },
+   {
+    "bytes": 39762,
+    "channels": 2,
+    "file": "sounds/rsb/tail/dbshotgun/ext/weap_shotgun_fire_plr_atmo_ext2_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext2_01.ogg",
+    "rate": 48000,
+    "seconds": 3.22
+   },
+   {
+    "bytes": 40246,
+    "channels": 2,
+    "file": "sounds/rsb/tail/dbshotgun/ext/weap_shotgun_fire_plr_atmo_ext2_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext2_02.ogg",
+    "rate": 48000,
+    "seconds": 3.22
+   },
+   {
+    "bytes": 40610,
+    "channels": 2,
+    "file": "sounds/rsb/tail/dbshotgun/ext/weap_shotgun_fire_plr_atmo_ext2_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext2_03.ogg",
+    "rate": 48000,
+    "seconds": 3.22
+   },
+   {
+    "bytes": 40060,
+    "channels": 2,
+    "file": "sounds/rsb/tail/dbshotgun/ext/weap_shotgun_fire_plr_atmo_ext2_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext2_04.ogg",
+    "rate": 48000,
+    "seconds": 3.22
+   },
+   {
+    "bytes": 40189,
+    "channels": 2,
+    "file": "sounds/rsb/tail/dbshotgun/ext/weap_shotgun_fire_plr_atmo_ext2_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext2_05.ogg",
+    "rate": 48000,
+    "seconds": 3.22
+   },
+   {
+    "bytes": 39920,
+    "channels": 2,
+    "file": "sounds/rsb/tail/dbshotgun/ext/weap_shotgun_fire_plr_atmo_ext2_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext2_06.ogg",
+    "rate": 48000,
+    "seconds": 3.22
+   },
+   {
+    "bytes": 50956,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/ext/weap_lmg_fire_plr_atmo_ext2_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_ext2_01.ogg",
+    "rate": 44100,
+    "seconds": 3.733
+   },
+   {
+    "bytes": 51568,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/ext/weap_lmg_fire_plr_atmo_ext2_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_ext2_02.ogg",
+    "rate": 44100,
+    "seconds": 3.733
+   },
+   {
+    "bytes": 51466,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/ext/weap_lmg_fire_plr_atmo_ext2_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_ext2_03.ogg",
+    "rate": 44100,
+    "seconds": 3.733
+   },
+   {
+    "bytes": 51490,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/ext/weap_lmg_fire_plr_atmo_ext2_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_ext2_04.ogg",
+    "rate": 44100,
+    "seconds": 3.733
+   },
+   {
+    "bytes": 50992,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/ext/weap_lmg_fire_plr_atmo_ext2_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_ext2_05.ogg",
+    "rate": 44100,
+    "seconds": 3.733
+   },
+   {
+    "bytes": 51238,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/ext/weap_lmg_fire_plr_atmo_ext2_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_ext2_06.ogg",
+    "rate": 44100,
+    "seconds": 3.723
+   },
+   {
+    "bytes": 44535,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/ext/weap_pistol_fire_plr_atmo_ext1_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_ext1_01.ogg",
+    "rate": 48000,
+    "seconds": 3.295
+   },
+   {
+    "bytes": 44824,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/ext/weap_pistol_fire_plr_atmo_ext1_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_ext1_02.ogg",
+    "rate": 48000,
+    "seconds": 3.401
+   },
+   {
+    "bytes": 47137,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/ext/weap_pistol_fire_plr_atmo_ext1_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_ext1_03.ogg",
+    "rate": 48000,
+    "seconds": 3.592
+   },
+   {
+    "bytes": 47765,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/ext/weap_pistol_fire_plr_atmo_ext1_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_ext1_04.ogg",
+    "rate": 48000,
+    "seconds": 3.646
+   },
+   {
+    "bytes": 48314,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/ext/weap_pistol_fire_plr_atmo_ext1_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_ext1_05.ogg",
+    "rate": 48000,
+    "seconds": 3.68
+   },
+   {
+    "bytes": 48397,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/ext/weap_pistol_fire_plr_atmo_ext1_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_ext1_06.ogg",
+    "rate": 48000,
+    "seconds": 3.782
+   },
+   {
+    "bytes": 52405,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol_mag/ext/weap_pistol_mag_fire_plr_atmo_ext1_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_mag_fire_plr_atmo_ext1_01.ogg",
+    "rate": 48000,
+    "seconds": 4.238
+   },
+   {
+    "bytes": 50828,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol_mag/ext/weap_pistol_mag_fire_plr_atmo_ext1_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_mag_fire_plr_atmo_ext1_02.ogg",
+    "rate": 48000,
+    "seconds": 4.08
+   },
+   {
+    "bytes": 58408,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol_mag/ext/weap_pistol_mag_fire_plr_atmo_ext1_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_mag_fire_plr_atmo_ext1_03.ogg",
+    "rate": 48000,
+    "seconds": 4.72
+   },
+   {
+    "bytes": 55039,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol_mag/ext/weap_pistol_mag_fire_plr_atmo_ext1_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_mag_fire_plr_atmo_ext1_04.ogg",
+    "rate": 48000,
+    "seconds": 4.487
+   },
+   {
+    "bytes": 54523,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol_mag/ext/weap_pistol_mag_fire_plr_atmo_ext1_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_mag_fire_plr_atmo_ext1_05.ogg",
+    "rate": 48000,
+    "seconds": 4.452
+   },
+   {
+    "bytes": 54403,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol_mag/ext/weap_pistol_mag_fire_plr_atmo_ext1_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_pistol_mag_fire_plr_atmo_ext1_06.ogg",
+    "rate": 48000,
+    "seconds": 4.389
+   },
+   {
+    "bytes": 39391,
+    "channels": 1,
+    "file": "sounds/rsb/tail/rpg/ext/rpg_atmo_ext_med_1.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "rpg_atmo_ext_med_1.ogg",
+    "rate": 44100,
+    "seconds": 4.741
+   },
+   {
+    "bytes": 38961,
+    "channels": 1,
+    "file": "sounds/rsb/tail/rpg/ext/rpg_atmo_ext_med_2.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "rpg_atmo_ext_med_2.ogg",
+    "rate": 44100,
+    "seconds": 4.699
+   },
+   {
+    "bytes": 35638,
+    "channels": 1,
+    "file": "sounds/rsb/tail/rpg/ext/rpg_atmo_ext_med_3.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "rpg_atmo_ext_med_3.ogg",
+    "rate": 44100,
+    "seconds": 4.257
+   },
+   {
+    "bytes": 51076,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/ext/weap_shotgun_fire_plr_atmo_ext1_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext1_01.ogg",
+    "rate": 48000,
+    "seconds": 3.906
+   },
+   {
+    "bytes": 54792,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/ext/weap_shotgun_fire_plr_atmo_ext1_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext1_02.ogg",
+    "rate": 48000,
+    "seconds": 4.156
+   },
+   {
+    "bytes": 52543,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/ext/weap_shotgun_fire_plr_atmo_ext1_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext1_03.ogg",
+    "rate": 48000,
+    "seconds": 4.019
+   },
+   {
+    "bytes": 51349,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/ext/weap_shotgun_fire_plr_atmo_ext1_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext1_04.ogg",
+    "rate": 48000,
+    "seconds": 3.885
+   },
+   {
+    "bytes": 55462,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/ext/weap_shotgun_fire_plr_atmo_ext1_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext1_05.ogg",
+    "rate": 48000,
+    "seconds": 4.205
+   },
+   {
+    "bytes": 55811,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/ext/weap_shotgun_fire_plr_atmo_ext1_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_ext1_06.ogg",
+    "rate": 48000,
+    "seconds": 4.244
+   },
+   {
+    "bytes": 52077,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/ext/weap_smg_fire_plr_atmo_ext1_01.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_ext1_01.ogg",
+    "rate": 48000,
+    "seconds": 3.87
+   },
+   {
+    "bytes": 55099,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/ext/weap_smg_fire_plr_atmo_ext1_02.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_ext1_02.ogg",
+    "rate": 48000,
+    "seconds": 4.176
+   },
+   {
+    "bytes": 51818,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/ext/weap_smg_fire_plr_atmo_ext1_03.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_ext1_03.ogg",
+    "rate": 48000,
+    "seconds": 3.872
+   },
+   {
+    "bytes": 56110,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/ext/weap_smg_fire_plr_atmo_ext1_04.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_ext1_04.ogg",
+    "rate": 48000,
+    "seconds": 4.213
+   },
+   {
+    "bytes": 54580,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/ext/weap_smg_fire_plr_atmo_ext1_05.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_ext1_05.ogg",
+    "rate": 48000,
+    "seconds": 4.094
+   },
+   {
+    "bytes": 56570,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/ext/weap_smg_fire_plr_atmo_ext1_06.ogg",
+    "folder": "ext",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_ext1_06.ogg",
+    "rate": 48000,
+    "seconds": 4.273
+   }
+  ],
+  "fire": [
+   {
+    "bytes": 27955,
+    "channels": 2,
+    "file": "sounds/rsb/flame/flamer_blast.ogg",
+    "folder": "flame",
+    "format": "ogg",
+    "name": "flamer_blast.ogg",
+    "rate": 44100,
+    "seconds": 1.208
+   },
+   {
+    "bytes": 125696,
+    "channels": 2,
+    "file": "sounds/rsb/flame/flamer_loop.ogg",
+    "folder": "flame",
+    "format": "ogg",
+    "name": "flamer_loop.ogg",
+    "rate": 44100,
+    "seconds": 8.86
+   },
+   {
+    "bytes": 18309,
+    "channels": 2,
+    "file": "sounds/rsb/flame/flamer_start.ogg",
+    "folder": "flame",
+    "format": "ogg",
+    "name": "flamer_start.ogg",
+    "rate": 44100,
+    "seconds": 0.871
+   },
+   {
+    "bytes": 43358,
+    "channels": 1,
+    "file": "sounds/rsb/flame/flamerhiss1.ogg",
+    "folder": "flame",
+    "format": "ogg",
+    "name": "flamerhiss1.ogg",
+    "rate": 48000,
+    "seconds": 1.333
+   },
+   {
+    "bytes": 79528,
+    "channels": 1,
+    "file": "sounds/rsb/flame/flamerhiss2.wav",
+    "folder": "flame",
+    "format": "wav",
+    "name": "flamerhiss2.wav",
+    "rate": 44100,
+    "seconds": 0.9
+   },
+   {
+    "bytes": 31678,
+    "channels": 1,
+    "file": "sounds/rsb/flame/ft_lighthiss.ogg",
+    "folder": "flame",
+    "format": "ogg",
+    "name": "ft_lighthiss.ogg",
+    "rate": 44100,
+    "seconds": 3.332
+   }
+  ],
+  "glass_big": [
+   {
+    "bytes": 18336,
+    "channels": 1,
+    "file": "sounds/rsb/debris/glass_big/ice_shatter.ogg",
+    "folder": "glass_big",
+    "format": "ogg",
+    "name": "ice_shatter.ogg",
+    "rate": 22050,
+    "seconds": 1.794
+   }
+  ],
+  "impact_concrete": [
+   {
+    "bytes": 14827,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact1.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact1.ogg",
+    "rate": 44100,
+    "seconds": 1.13
+   },
+   {
+    "bytes": 8774,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact10.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact10.ogg",
+    "rate": 44100,
+    "seconds": 0.53
+   },
+   {
+    "bytes": 13275,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact11.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact11.ogg",
+    "rate": 44100,
+    "seconds": 0.84
+   },
+   {
+    "bytes": 13618,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact2.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact2.ogg",
+    "rate": 44100,
+    "seconds": 0.94
+   },
+   {
+    "bytes": 15436,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact3.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact3.ogg",
+    "rate": 44100,
+    "seconds": 1.11
+   },
+   {
+    "bytes": 15664,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact4.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact4.ogg",
+    "rate": 44100,
+    "seconds": 1.06
+   },
+   {
+    "bytes": 13987,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact5.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact5.ogg",
+    "rate": 44100,
+    "seconds": 0.95
+   },
+   {
+    "bytes": 12192,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact6.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact6.ogg",
+    "rate": 44100,
+    "seconds": 0.75
+   },
+   {
+    "bytes": 16036,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact7.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact7.ogg",
+    "rate": 44100,
+    "seconds": 0.99
+   },
+   {
+    "bytes": 16880,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact8.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact8.ogg",
+    "rate": 44100,
+    "seconds": 1.22
+   },
+   {
+    "bytes": 13801,
+    "channels": 1,
+    "file": "sounds/rsb/impact_concrete/bulletimpact9.ogg",
+    "folder": "impact_concrete",
+    "format": "ogg",
+    "name": "bulletimpact9.ogg",
+    "rate": 44100,
+    "seconds": 0.92
+   }
+  ],
+  "impact_electric": [
+   {
+    "bytes": 19894,
+    "channels": 1,
+    "file": "sounds/rsb/impact_electric/dsdevzap.ogg",
+    "folder": "impact_electric",
+    "format": "ogg",
+    "name": "dsdevzap.ogg",
+    "rate": 22050,
+    "seconds": 1.246
+   },
+   {
+    "bytes": 17481,
+    "channels": 1,
+    "file": "sounds/rsb/impact_electric/electro7.ogg",
+    "folder": "impact_electric",
+    "format": "ogg",
+    "name": "electro7.ogg",
+    "rate": 22050,
+    "seconds": 1.396
+   },
+   {
+    "bytes": 27122,
+    "channels": 1,
+    "file": "sounds/rsb/impact_electric/electro8.wav",
+    "folder": "impact_electric",
+    "format": "wav",
+    "name": "electro8.wav",
+    "rate": 22050,
+    "seconds": 0.613
+   },
+   {
+    "bytes": 6726,
+    "channels": 1,
+    "file": "sounds/rsb/impact_electric/pzaphit.ogg",
+    "folder": "impact_electric",
+    "format": "ogg",
+    "name": "pzaphit.ogg",
+    "rate": 22050,
+    "seconds": 0.401
+   },
+   {
+    "bytes": 15486,
+    "channels": 2,
+    "file": "sounds/rsb/impact_electric/sparks1.ogg",
+    "folder": "impact_electric",
+    "format": "ogg",
+    "name": "sparks1.ogg",
+    "rate": 32000,
+    "seconds": 1.436
+   }
+  ],
+  "impact_metal": [
+   {
+    "bytes": 9508,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metal/blt_imp_metal_thick_near_01.ogg",
+    "folder": "impact_metal",
+    "format": "ogg",
+    "name": "blt_imp_metal_thick_near_01.ogg",
+    "rate": 44100,
+    "seconds": 0.48
+   },
+   {
+    "bytes": 8903,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metal/blt_imp_metal_thick_near_02.ogg",
+    "folder": "impact_metal",
+    "format": "ogg",
+    "name": "blt_imp_metal_thick_near_02.ogg",
+    "rate": 44100,
+    "seconds": 0.41
+   },
+   {
+    "bytes": 10802,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metal/blt_imp_metal_thick_near_03.ogg",
+    "folder": "impact_metal",
+    "format": "ogg",
+    "name": "blt_imp_metal_thick_near_03.ogg",
+    "rate": 44100,
+    "seconds": 0.68
+   },
+   {
+    "bytes": 7894,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metal/blt_imp_metal_thick_near_04.ogg",
+    "folder": "impact_metal",
+    "format": "ogg",
+    "name": "blt_imp_metal_thick_near_04.ogg",
+    "rate": 44100,
+    "seconds": 0.38
+   },
+   {
+    "bytes": 10885,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metal/blt_imp_metal_thick_near_05.ogg",
+    "folder": "impact_metal",
+    "format": "ogg",
+    "name": "blt_imp_metal_thick_near_05.ogg",
+    "rate": 44100,
+    "seconds": 0.55
+   },
+   {
+    "bytes": 11667,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metal/blt_imp_metal_thick_near_06.ogg",
+    "folder": "impact_metal",
+    "format": "ogg",
+    "name": "blt_imp_metal_thick_near_06.ogg",
+    "rate": 44100,
+    "seconds": 0.62
+   }
+  ],
+  "impact_metalthin": [
+   {
+    "bytes": 8799,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_01.ogg",
+    "folder": "impact_metalthin",
+    "format": "ogg",
+    "name": "blt_imp_metal_thin_near_01.ogg",
+    "rate": 44100,
+    "seconds": 0.45
+   },
+   {
+    "bytes": 10352,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_02.ogg",
+    "folder": "impact_metalthin",
+    "format": "ogg",
+    "name": "blt_imp_metal_thin_near_02.ogg",
+    "rate": 44100,
+    "seconds": 0.53
+   },
+   {
+    "bytes": 16302,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_03.ogg",
+    "folder": "impact_metalthin",
+    "format": "ogg",
+    "name": "blt_imp_metal_thin_near_03.ogg",
+    "rate": 44100,
+    "seconds": 0.81
+   },
+   {
+    "bytes": 11667,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_04.ogg",
+    "folder": "impact_metalthin",
+    "format": "ogg",
+    "name": "blt_imp_metal_thin_near_04.ogg",
+    "rate": 44100,
+    "seconds": 0.62
+   },
+   {
+    "bytes": 9655,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_05.ogg",
+    "folder": "impact_metalthin",
+    "format": "ogg",
+    "name": "blt_imp_metal_thin_near_05.ogg",
+    "rate": 44100,
+    "seconds": 0.53
+   },
+   {
+    "bytes": 10836,
+    "channels": 2,
+    "file": "sounds/rsb/impact_metalthin/blt_imp_metal_thin_near_06.ogg",
+    "folder": "impact_metalthin",
+    "format": "ogg",
+    "name": "blt_imp_metal_thin_near_06.ogg",
+    "rate": 44100,
+    "seconds": 0.52
+   }
+  ],
+  "impact_pipe": [
+   {
+    "bytes": 13426,
+    "channels": 1,
+    "file": "sounds/rsb/impact_pipe/pipe_hit1.ogg",
+    "folder": "impact_pipe",
+    "format": "ogg",
+    "name": "pipe_hit1.ogg",
+    "rate": 44100,
+    "seconds": 0.928
+   },
+   {
+    "bytes": 17044,
+    "channels": 1,
+    "file": "sounds/rsb/impact_pipe/pipe_hit2.ogg",
+    "folder": "impact_pipe",
+    "format": "ogg",
+    "name": "pipe_hit2.ogg",
+    "rate": 44100,
+    "seconds": 1.361
+   },
+   {
+    "bytes": 13205,
+    "channels": 1,
+    "file": "sounds/rsb/impact_pipe/pipe_hit3.ogg",
+    "folder": "impact_pipe",
+    "format": "ogg",
+    "name": "pipe_hit3.ogg",
+    "rate": 44100,
+    "seconds": 0.928
+   },
+   {
+    "bytes": 16987,
+    "channels": 1,
+    "file": "sounds/rsb/impact_pipe/pipe_hit4.ogg",
+    "folder": "impact_pipe",
+    "format": "ogg",
+    "name": "pipe_hit4.ogg",
+    "rate": 44100,
+    "seconds": 1.361
+   },
+   {
+    "bytes": 13299,
+    "channels": 1,
+    "file": "sounds/rsb/impact_pipe/pipe_hit5.ogg",
+    "folder": "impact_pipe",
+    "format": "ogg",
+    "name": "pipe_hit5.ogg",
+    "rate": 44100,
+    "seconds": 0.928
+   },
+   {
+    "bytes": 16439,
+    "channels": 1,
+    "file": "sounds/rsb/impact_pipe/pipe_hit6.ogg",
+    "folder": "impact_pipe",
+    "format": "ogg",
+    "name": "pipe_hit6.ogg",
+    "rate": 44100,
+    "seconds": 1.361
+   }
+  ],
+  "impact_wood": [
+   {
+    "bytes": 13769,
+    "channels": 2,
+    "file": "sounds/rsb/impact_wood/blt_imp_wood_near_01.ogg",
+    "folder": "impact_wood",
+    "format": "ogg",
+    "name": "blt_imp_wood_near_01.ogg",
+    "rate": 44100,
+    "seconds": 0.57
+   },
+   {
+    "bytes": 13115,
+    "channels": 2,
+    "file": "sounds/rsb/impact_wood/blt_imp_wood_near_02.ogg",
+    "folder": "impact_wood",
+    "format": "ogg",
+    "name": "blt_imp_wood_near_02.ogg",
+    "rate": 44100,
+    "seconds": 0.51
+   },
+   {
+    "bytes": 15292,
+    "channels": 2,
+    "file": "sounds/rsb/impact_wood/blt_imp_wood_near_03.ogg",
+    "folder": "impact_wood",
+    "format": "ogg",
+    "name": "blt_imp_wood_near_03.ogg",
+    "rate": 44100,
+    "seconds": 0.7
+   },
+   {
+    "bytes": 15222,
+    "channels": 2,
+    "file": "sounds/rsb/impact_wood/blt_imp_wood_near_04.ogg",
+    "folder": "impact_wood",
+    "format": "ogg",
+    "name": "blt_imp_wood_near_04.ogg",
+    "rate": 44100,
+    "seconds": 0.62
+   },
+   {
+    "bytes": 14357,
+    "channels": 2,
+    "file": "sounds/rsb/impact_wood/blt_imp_wood_near_05.ogg",
+    "folder": "impact_wood",
+    "format": "ogg",
+    "name": "blt_imp_wood_near_05.ogg",
+    "rate": 44100,
+    "seconds": 0.53
+   },
+   {
+    "bytes": 15604,
+    "channels": 2,
+    "file": "sounds/rsb/impact_wood/blt_imp_wood_near_06.ogg",
+    "folder": "impact_wood",
+    "format": "ogg",
+    "name": "blt_imp_wood_near_06.ogg",
+    "rate": 44100,
+    "seconds": 0.53
+   }
+  ],
+  "int": [
+   {
+    "bytes": 27352,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/int/weap_ar_fire_plr_atmo_int1_01.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_ar_fire_plr_atmo_int1_01.ogg",
+    "rate": 44100,
+    "seconds": 1.918
+   },
+   {
+    "bytes": 27312,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/int/weap_ar_fire_plr_atmo_int1_02.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_ar_fire_plr_atmo_int1_02.ogg",
+    "rate": 44100,
+    "seconds": 1.91
+   },
+   {
+    "bytes": 27294,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/int/weap_ar_fire_plr_atmo_int1_03.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_ar_fire_plr_atmo_int1_03.ogg",
+    "rate": 44100,
+    "seconds": 1.933
+   },
+   {
+    "bytes": 27054,
+    "channels": 2,
+    "file": "sounds/rsb/tail/ar/int/weap_ar_fire_plr_atmo_int1_04.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_ar_fire_plr_atmo_int1_04.ogg",
+    "rate": 44100,
+    "seconds": 1.908
+   },
+   {
+    "bytes": 24163,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/int/weap_lmg_fire_plr_atmo_int1_01.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_int1_01.ogg",
+    "rate": 44100,
+    "seconds": 1.639
+   },
+   {
+    "bytes": 24297,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/int/weap_lmg_fire_plr_atmo_int1_02.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_int1_02.ogg",
+    "rate": 44100,
+    "seconds": 1.634
+   },
+   {
+    "bytes": 25887,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/int/weap_lmg_fire_plr_atmo_int1_03.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_int1_03.ogg",
+    "rate": 44100,
+    "seconds": 1.754
+   },
+   {
+    "bytes": 25093,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/int/weap_lmg_fire_plr_atmo_int1_04.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_int1_04.ogg",
+    "rate": 44100,
+    "seconds": 1.674
+   },
+   {
+    "bytes": 25579,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/int/weap_lmg_fire_plr_atmo_int1_05.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_int1_05.ogg",
+    "rate": 44100,
+    "seconds": 1.732
+   },
+   {
+    "bytes": 28032,
+    "channels": 2,
+    "file": "sounds/rsb/tail/lmg/int/weap_lmg_fire_plr_atmo_int1_06.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_lmg_fire_plr_atmo_int1_06.ogg",
+    "rate": 44100,
+    "seconds": 1.931
+   },
+   {
+    "bytes": 32832,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/int/weap_pistol_fire_plr_atmo_int1_01.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_int1_01.ogg",
+    "rate": 48000,
+    "seconds": 2.27
+   },
+   {
+    "bytes": 31666,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/int/weap_pistol_fire_plr_atmo_int1_02.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_int1_02.ogg",
+    "rate": 48000,
+    "seconds": 2.157
+   },
+   {
+    "bytes": 32670,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/int/weap_pistol_fire_plr_atmo_int1_03.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_int1_03.ogg",
+    "rate": 48000,
+    "seconds": 2.26
+   },
+   {
+    "bytes": 31596,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/int/weap_pistol_fire_plr_atmo_int1_04.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_int1_04.ogg",
+    "rate": 48000,
+    "seconds": 2.157
+   },
+   {
+    "bytes": 31293,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/int/weap_pistol_fire_plr_atmo_int1_05.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_int1_05.ogg",
+    "rate": 48000,
+    "seconds": 2.144
+   },
+   {
+    "bytes": 35542,
+    "channels": 2,
+    "file": "sounds/rsb/tail/pistol/int/weap_pistol_fire_plr_atmo_int1_06.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_pistol_fire_plr_atmo_int1_06.ogg",
+    "rate": 48000,
+    "seconds": 2.502
+   },
+   {
+    "bytes": 15976,
+    "channels": 1,
+    "file": "sounds/rsb/tail/rpg/int/rpg_atmo_int_med_1.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "rpg_atmo_int_med_1.ogg",
+    "rate": 44100,
+    "seconds": 1.67
+   },
+   {
+    "bytes": 15480,
+    "channels": 1,
+    "file": "sounds/rsb/tail/rpg/int/rpg_atmo_int_med_2.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "rpg_atmo_int_med_2.ogg",
+    "rate": 44100,
+    "seconds": 1.552
+   },
+   {
+    "bytes": 16156,
+    "channels": 1,
+    "file": "sounds/rsb/tail/rpg/int/rpg_atmo_int_med_3.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "rpg_atmo_int_med_3.ogg",
+    "rate": 44100,
+    "seconds": 1.672
+   },
+   {
+    "bytes": 40441,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/int/weap_shotgun_fire_plr_atmo_int1_01.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_int1_01.ogg",
+    "rate": 48000,
+    "seconds": 2.974
+   },
+   {
+    "bytes": 37687,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/int/weap_shotgun_fire_plr_atmo_int1_02.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_int1_02.ogg",
+    "rate": 48000,
+    "seconds": 2.752
+   },
+   {
+    "bytes": 39083,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/int/weap_shotgun_fire_plr_atmo_int1_03.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_int1_03.ogg",
+    "rate": 48000,
+    "seconds": 2.877
+   },
+   {
+    "bytes": 40160,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/int/weap_shotgun_fire_plr_atmo_int1_04.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_int1_04.ogg",
+    "rate": 48000,
+    "seconds": 2.953
+   },
+   {
+    "bytes": 43251,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/int/weap_shotgun_fire_plr_atmo_int1_05.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_int1_05.ogg",
+    "rate": 48000,
+    "seconds": 3.199
+   },
+   {
+    "bytes": 38088,
+    "channels": 2,
+    "file": "sounds/rsb/tail/shotgun/int/weap_shotgun_fire_plr_atmo_int1_06.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_shotgun_fire_plr_atmo_int1_06.ogg",
+    "rate": 48000,
+    "seconds": 2.754
+   },
+   {
+    "bytes": 28126,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/int/weap_smg_fire_plr_atmo_int1_01.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_int1_01.ogg",
+    "rate": 48000,
+    "seconds": 1.958
+   },
+   {
+    "bytes": 26919,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/int/weap_smg_fire_plr_atmo_int1_02.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_int1_02.ogg",
+    "rate": 48000,
+    "seconds": 1.871
+   },
+   {
+    "bytes": 27100,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/int/weap_smg_fire_plr_atmo_int1_03.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_int1_03.ogg",
+    "rate": 48000,
+    "seconds": 1.878
+   },
+   {
+    "bytes": 26140,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/int/weap_smg_fire_plr_atmo_int1_04.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_int1_04.ogg",
+    "rate": 48000,
+    "seconds": 1.802
+   },
+   {
+    "bytes": 24495,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/int/weap_smg_fire_plr_atmo_int1_05.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_int1_05.ogg",
+    "rate": 48000,
+    "seconds": 1.657
+   },
+   {
+    "bytes": 23292,
+    "channels": 2,
+    "file": "sounds/rsb/tail/smg/int/weap_smg_fire_plr_atmo_int1_06.ogg",
+    "folder": "int",
+    "format": "ogg",
+    "name": "weap_smg_fire_plr_atmo_int1_06.ogg",
+    "rate": 48000,
+    "seconds": 1.588
+   }
+  ],
+  "magdrops": [
+   {
+    "bytes": 7701,
+    "channels": 1,
+    "file": "sounds/rsb/magdrop/BFGCLI01.ogg",
+    "folder": "magdrop",
+    "format": "ogg",
+    "name": "BFGCLI01.ogg",
+    "rate": 22050,
+    "seconds": 0.471
+   },
+   {
+    "bytes": 9626,
+    "channels": 1,
+    "file": "sounds/rsb/magdrop/BFGCLI02.ogg",
+    "folder": "magdrop",
+    "format": "ogg",
+    "name": "BFGCLI02.ogg",
+    "rate": 22050,
+    "seconds": 0.848
+   },
+   {
+    "bytes": 8306,
+    "channels": 1,
+    "file": "sounds/rsb/magdrop/BFGCLI03.ogg",
+    "folder": "magdrop",
+    "format": "ogg",
+    "name": "BFGCLI03.ogg",
+    "rate": 22050,
+    "seconds": 0.592
+   }
+  ],
+  "marble": [
+   {
+    "bytes": 11087,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step1.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step1.ogg",
+    "rate": 44100,
+    "seconds": 0.704
+   },
+   {
+    "bytes": 11777,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step2.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step2.ogg",
+    "rate": 44100,
+    "seconds": 0.71
+   },
+   {
+    "bytes": 11413,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step3.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step3.ogg",
+    "rate": 44100,
+    "seconds": 0.688
+   },
+   {
+    "bytes": 11696,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step4.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step4.ogg",
+    "rate": 44100,
+    "seconds": 0.69
+   },
+   {
+    "bytes": 11331,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step5.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step5.ogg",
+    "rate": 44100,
+    "seconds": 0.7
+   },
+   {
+    "bytes": 11324,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step6.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step6.ogg",
+    "rate": 44100,
+    "seconds": 0.69
+   },
+   {
+    "bytes": 11839,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step7.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step7.ogg",
+    "rate": 44100,
+    "seconds": 0.7
+   },
+   {
+    "bytes": 10472,
+    "channels": 2,
+    "file": "sounds/rsb/debris/marble/marble_step8.ogg",
+    "folder": "marble",
+    "format": "ogg",
+    "name": "marble_step8.ogg",
+    "rate": 44100,
+    "seconds": 0.623
+   }
+  ],
+  "metal": [
+   {
+    "bytes": 4760,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal/dsbounc1.ogg",
+    "folder": "metal",
+    "format": "ogg",
+    "name": "dsbounc1.ogg",
+    "rate": 22050,
+    "seconds": 0.135
+   },
+   {
+    "bytes": 5949,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal/dsbounc2.ogg",
+    "folder": "metal",
+    "format": "ogg",
+    "name": "dsbounc2.ogg",
+    "rate": 22050,
+    "seconds": 0.334
+   },
+   {
+    "bytes": 4758,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal/dsbounc3.ogg",
+    "folder": "metal",
+    "format": "ogg",
+    "name": "dsbounc3.ogg",
+    "rate": 22050,
+    "seconds": 0.144
+   },
+   {
+    "bytes": 5142,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal/dsbounc4.ogg",
+    "folder": "metal",
+    "format": "ogg",
+    "name": "dsbounc4.ogg",
+    "rate": 22050,
+    "seconds": 0.222
+   },
+   {
+    "bytes": 6534,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal/dsbounc5.ogg",
+    "folder": "metal",
+    "format": "ogg",
+    "name": "dsbounc5.ogg",
+    "rate": 22050,
+    "seconds": 0.398
+   },
+   {
+    "bytes": 5948,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal/dsbounc6.ogg",
+    "folder": "metal",
+    "format": "ogg",
+    "name": "dsbounc6.ogg",
+    "rate": 22050,
+    "seconds": 0.32
+   }
+  ],
+  "metal_big": [
+   {
+    "bytes": 6726,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal_big/dsaounc1.ogg",
+    "folder": "metal_big",
+    "format": "ogg",
+    "name": "dsaounc1.ogg",
+    "rate": 22050,
+    "seconds": 0.464
+   },
+   {
+    "bytes": 8370,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal_big/dsaounc2.ogg",
+    "folder": "metal_big",
+    "format": "ogg",
+    "name": "dsaounc2.ogg",
+    "rate": 22050,
+    "seconds": 0.848
+   },
+   {
+    "bytes": 6879,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal_big/dsaounc3.ogg",
+    "folder": "metal_big",
+    "format": "ogg",
+    "name": "dsaounc3.ogg",
+    "rate": 22050,
+    "seconds": 0.592
+   },
+   {
+    "bytes": 6458,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal_big/dsaounc4.ogg",
+    "folder": "metal_big",
+    "format": "ogg",
+    "name": "dsaounc4.ogg",
+    "rate": 22050,
+    "seconds": 0.496
+   },
+   {
+    "bytes": 6645,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal_big/dsaounc5.ogg",
+    "folder": "metal_big",
+    "format": "ogg",
+    "name": "dsaounc5.ogg",
+    "rate": 22050,
+    "seconds": 0.482
+   },
+   {
+    "bytes": 6798,
+    "channels": 1,
+    "file": "sounds/rsb/debris/metal_big/dsaounc6.ogg",
+    "folder": "metal_big",
+    "format": "ogg",
+    "name": "dsaounc6.ogg",
+    "rate": 22050,
+    "seconds": 0.527
+   }
+  ],
+  "ricochet": [
+   {
+    "bytes": 10298,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche1.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche1.ogg",
+    "rate": 44100,
+    "seconds": 0.81
+   },
+   {
+    "bytes": 10669,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche10.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche10.ogg",
+    "rate": 44100,
+    "seconds": 0.81
+   },
+   {
+    "bytes": 10872,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche11.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche11.ogg",
+    "rate": 44100,
+    "seconds": 0.76
+   },
+   {
+    "bytes": 10599,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche12.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche12.ogg",
+    "rate": 44100,
+    "seconds": 0.82
+   },
+   {
+    "bytes": 13584,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche13.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche13.ogg",
+    "rate": 44100,
+    "seconds": 1.16
+   },
+   {
+    "bytes": 11921,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche14.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche14.ogg",
+    "rate": 44100,
+    "seconds": 0.99
+   },
+   {
+    "bytes": 14878,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche15.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche15.ogg",
+    "rate": 44100,
+    "seconds": 1.32
+   },
+   {
+    "bytes": 7877,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche16.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche16.ogg",
+    "rate": 22050,
+    "seconds": 1.004
+   },
+   {
+    "bytes": 10829,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche2.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche2.ogg",
+    "rate": 44100,
+    "seconds": 0.79
+   },
+   {
+    "bytes": 11093,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche3.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche3.ogg",
+    "rate": 44100,
+    "seconds": 0.82
+   },
+   {
+    "bytes": 10296,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche4.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche4.ogg",
+    "rate": 44100,
+    "seconds": 0.76
+   },
+   {
+    "bytes": 8695,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche5.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche5.ogg",
+    "rate": 44100,
+    "seconds": 0.58
+   },
+   {
+    "bytes": 10019,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche6.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche6.ogg",
+    "rate": 44100,
+    "seconds": 0.75
+   },
+   {
+    "bytes": 9763,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche7.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche7.ogg",
+    "rate": 44100,
+    "seconds": 0.73
+   },
+   {
+    "bytes": 10923,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche8.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche8.ogg",
+    "rate": 44100,
+    "seconds": 0.85
+   },
+   {
+    "bytes": 14116,
+    "channels": 1,
+    "file": "sounds/rsb/ricochet/ricoche9.ogg",
+    "folder": "ricochet",
+    "format": "ogg",
+    "name": "ricoche9.ogg",
+    "rate": 44100,
+    "seconds": 1.19
+   }
+  ],
+  "rubble": [
+   {
+    "bytes": 12346,
+    "channels": 1,
+    "file": "sounds/rsb/debris/rubble/dsmothud.ogg",
+    "folder": "rubble",
+    "format": "ogg",
+    "name": "dsmothud.ogg",
+    "rate": 22050,
+    "seconds": 1.117
+   },
+   {
+    "bytes": 37212,
+    "channels": 1,
+    "file": "sounds/rsb/debris/rubble/rockhit1.wav",
+    "folder": "rubble",
+    "format": "wav",
+    "name": "rockhit1.wav",
+    "rate": 22050,
+    "seconds": 0.843
+   }
+  ],
+  "sparks": [
+   {
+    "bytes": 18646,
+    "channels": 2,
+    "file": "sounds/rsb/sparks/sparks1.ogg",
+    "folder": "sparks",
+    "format": "ogg",
+    "name": "sparks1.ogg",
+    "rate": 32000,
+    "seconds": 1.446
+   },
+   {
+    "bytes": 14078,
+    "channels": 2,
+    "file": "sounds/rsb/sparks/sparks2.ogg",
+    "folder": "sparks",
+    "format": "ogg",
+    "name": "sparks2.ogg",
+    "rate": 32000,
+    "seconds": 1.03
+   },
+   {
+    "bytes": 17044,
+    "channels": 2,
+    "file": "sounds/rsb/sparks/sparks3.ogg",
+    "folder": "sparks",
+    "format": "ogg",
+    "name": "sparks3.ogg",
+    "rate": 32000,
+    "seconds": 1.398
+   },
+   {
+    "bytes": 17035,
+    "channels": 2,
+    "file": "sounds/rsb/sparks/sparks4.ogg",
+    "folder": "sparks",
+    "format": "ogg",
+    "name": "sparks4.ogg",
+    "rate": 32000,
+    "seconds": 1.542
+   }
+  ],
+  "tile": [
+   {
+    "bytes": 3429,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/dstile01.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "dstile01.ogg",
+    "rate": 11025,
+    "seconds": 0.164
+   },
+   {
+    "bytes": 3201,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/dstile02.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "dstile02.ogg",
+    "rate": 11025,
+    "seconds": 0.108
+   },
+   {
+    "bytes": 3206,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/dstile03.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "dstile03.ogg",
+    "rate": 11025,
+    "seconds": 0.114
+   },
+   {
+    "bytes": 3224,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/dstile04.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "dstile04.ogg",
+    "rate": 11025,
+    "seconds": 0.112
+   },
+   {
+    "bytes": 3258,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/dstile05.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "dstile05.ogg",
+    "rate": 11025,
+    "seconds": 0.119
+   },
+   {
+    "bytes": 3285,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/dstile06.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "dstile06.ogg",
+    "rate": 11025,
+    "seconds": 0.132
+   },
+   {
+    "bytes": 7632,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/tile2_step1.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "tile2_step1.ogg",
+    "rate": 44100,
+    "seconds": 0.425
+   },
+   {
+    "bytes": 8673,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/tile2_step2.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "tile2_step2.ogg",
+    "rate": 44100,
+    "seconds": 0.608
+   },
+   {
+    "bytes": 9698,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/tile2_step3.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "tile2_step3.ogg",
+    "rate": 44100,
+    "seconds": 0.663
+   },
+   {
+    "bytes": 6288,
+    "channels": 1,
+    "file": "sounds/rsb/debris/tile/tile2_step4.ogg",
+    "folder": "tile",
+    "format": "ogg",
+    "name": "tile2_step4.ogg",
+    "rate": 44100,
+    "seconds": 0.294
+   }
+  ],
+  "whiz": [
+   {
+    "bytes": 91806,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby1.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby1.wav",
+    "rate": 44100,
+    "seconds": 0.52
+   },
+   {
+    "bytes": 81222,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby10.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby10.wav",
+    "rate": 44100,
+    "seconds": 0.46
+   },
+   {
+    "bytes": 77694,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby11.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby11.wav",
+    "rate": 44100,
+    "seconds": 0.44
+   },
+   {
+    "bytes": 61818,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby12.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby12.wav",
+    "rate": 44100,
+    "seconds": 0.35
+   },
+   {
+    "bytes": 65346,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby13.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby13.wav",
+    "rate": 44100,
+    "seconds": 0.37
+   },
+   {
+    "bytes": 60054,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby14.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby14.wav",
+    "rate": 44100,
+    "seconds": 0.34
+   },
+   {
+    "bytes": 47706,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby15.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby15.wav",
+    "rate": 44100,
+    "seconds": 0.27
+   },
+   {
+    "bytes": 56526,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby16.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby16.wav",
+    "rate": 44100,
+    "seconds": 0.32
+   },
+   {
+    "bytes": 74166,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby17.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby17.wav",
+    "rate": 44100,
+    "seconds": 0.42
+   },
+   {
+    "bytes": 82986,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby18.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby18.wav",
+    "rate": 44100,
+    "seconds": 0.47
+   },
+   {
+    "bytes": 74166,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby19.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby19.wav",
+    "rate": 44100,
+    "seconds": 0.42
+   },
+   {
+    "bytes": 81222,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby2.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby2.wav",
+    "rate": 44100,
+    "seconds": 0.46
+   },
+   {
+    "bytes": 79458,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby20.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby20.wav",
+    "rate": 44100,
+    "seconds": 0.45
+   },
+   {
+    "bytes": 90042,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby21.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby21.wav",
+    "rate": 44100,
+    "seconds": 0.51
+   },
+   {
+    "bytes": 74166,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby22.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby22.wav",
+    "rate": 44100,
+    "seconds": 0.42
+   },
+   {
+    "bytes": 93570,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby23.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby23.wav",
+    "rate": 44100,
+    "seconds": 0.53
+   },
+   {
+    "bytes": 105918,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby24.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby24.wav",
+    "rate": 44100,
+    "seconds": 0.6
+   },
+   {
+    "bytes": 79458,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby3.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby3.wav",
+    "rate": 44100,
+    "seconds": 0.45
+   },
+   {
+    "bytes": 90042,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby4.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby4.wav",
+    "rate": 44100,
+    "seconds": 0.51
+   },
+   {
+    "bytes": 97098,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby5.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby5.wav",
+    "rate": 44100,
+    "seconds": 0.55
+   },
+   {
+    "bytes": 111210,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby6.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby6.wav",
+    "rate": 44100,
+    "seconds": 0.63
+   },
+   {
+    "bytes": 91806,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby7.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby7.wav",
+    "rate": 44100,
+    "seconds": 0.52
+   },
+   {
+    "bytes": 68874,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby8.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby8.wav",
+    "rate": 44100,
+    "seconds": 0.39
+   },
+   {
+    "bytes": 75930,
+    "channels": 2,
+    "file": "sounds/rsb/whiz/whizby9.wav",
+    "folder": "whiz",
+    "format": "wav",
+    "name": "whizby9.wav",
+    "rate": 44100,
+    "seconds": 0.43
+   }
+  ]
+ },
  "uncatalogued": []
 }

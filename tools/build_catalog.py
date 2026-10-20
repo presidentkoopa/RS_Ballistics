@@ -44,9 +44,29 @@ SPRITES = os.path.join(ROOT, "sprites")
 OUTDIR = os.path.join(ROOT, "catalog")
 
 SPRITE_EXT = (".png", ".lmp")
+SOUND_EXT = (".ogg", ".wav", ".mp3", ".lmp", ".flac")
+SOUNDS = os.path.join(ROOT, "sounds")
 
 # Art that sits directly in sprites/ rather than in a category folder.
 ROOT_CATEGORY = "(uncategorised)"
+
+# An effect is what it looks like AND what it sounds like. These put a sound
+# folder under the same category as the art it belongs with, so the catalogue
+# can show both together. A folder with no entry here keeps its own name --
+# plenty of sound only has no sprite (whizzes, tails, surface impacts).
+SOUND_CATEGORY = {
+    "casing_doom": "casings",
+    "casing_small": "casings",
+    "casing_medium": "casings",
+    "casing_shell": "casings",
+    "explosion": "explosions",
+    "blast": "explosions",
+    "magdrop": "magdrops",
+    "flame": "fire",
+    "sparks": "sparks",
+    "debris": "debris",
+    "glass": "debris",
+}
 
 
 def frame_order(ch):
@@ -125,6 +145,79 @@ def read_frame(path):
 def lump_name(filename):
     """Lump name as GZDoom sees it: basename, extension dropped, uppercased."""
     return os.path.splitext(os.path.basename(filename))[0].upper()
+
+
+def read_sound(path):
+    """Length, rate and channels of one sound, without decoding it.
+
+    You cannot look at a sound the way you can look at a sprite, so the
+    catalogue has to carry enough to choose from: how long it runs, and
+    whether it sits at the same rate as its neighbours. Three containers turn
+    up in this library -- Ogg Vorbis, RIFF/WAV, and raw Doom DMX lumps, which
+    are headed by format 3 then a sample rate.
+    """
+    with open(path, "rb") as fh:
+        data = fh.read()
+    info = {"bytes": len(data), "format": None, "rate": None, "channels": None, "seconds": None}
+    try:
+        if data[:4] == b"OggS":
+            info["format"] = "ogg"
+            # Identification header: channels at +39, rate at +40 from "vorbis".
+            v = data.find(b"\x01vorbis")
+            if v >= 0:
+                info["channels"] = data[v + 11]
+                (info["rate"],) = struct.unpack("<I", data[v + 12 : v + 16])
+            # Duration is the granule position of the final page, in samples.
+            last = data.rfind(b"OggS")
+            if last >= 0 and info["rate"]:
+                (granule,) = struct.unpack("<q", data[last + 6 : last + 14])
+                if granule > 0:
+                    info["seconds"] = round(granule / info["rate"], 3)
+        elif data[:4] == b"RIFF":
+            info["format"] = "wav"
+            off = 12
+            frames = byte_rate = None
+            while off + 8 <= len(data):
+                cid = data[off : off + 4]
+                (size,) = struct.unpack("<I", data[off + 4 : off + 8])
+                if cid == b"fmt ":
+                    (_fmt, ch, rate, brate) = struct.unpack("<HHII", data[off + 8 : off + 20])
+                    info["channels"], info["rate"], byte_rate = ch, rate, brate
+                elif cid == b"data":
+                    frames = size
+                off += 8 + size + (size & 1)
+            if frames and byte_rate:
+                info["seconds"] = round(frames / byte_rate, 3)
+        elif len(data) >= 8 and struct.unpack("<H", data[:2])[0] == 3:
+            info["format"] = "dmx"
+            (_fmt, rate, samples) = struct.unpack("<HHI", data[:8])
+            info["rate"], info["channels"] = rate, 1
+            if rate:
+                info["seconds"] = round(samples / rate, 3)
+        else:
+            info["format"] = os.path.splitext(path)[1].lstrip(".").lower() or "unknown"
+    except (struct.error, IndexError, ZeroDivisionError):
+        pass  # a header we cannot read is reported, not fatal
+    return info
+
+
+def scan_sounds():
+    """Group sound files by folder, filed under the effect category they serve."""
+    out = {}
+    if not os.path.isdir(SOUNDS):
+        return out
+    for dirpath, dirnames, filenames in os.walk(SOUNDS):
+        dirnames[:] = [d for d in dirnames if not d.startswith((".", "_"))]
+        for fn in sorted(filenames):
+            if fn.startswith(".") or os.path.splitext(fn)[1].lower() not in SOUND_EXT:
+                continue
+            path = os.path.join(dirpath, fn)
+            rel = os.path.relpath(path, ROOT).replace("\\", "/")
+            folder = os.path.basename(dirpath)
+            info = read_sound(path)
+            info.update({"file": rel, "name": fn, "folder": folder})
+            out.setdefault(SOUND_CATEGORY.get(folder, folder), []).append(info)
+    return out
 
 
 def walk_sprites(base):
@@ -234,15 +327,21 @@ def build_sheets(entries, outdir, cell_cap=256):
     return made
 
 
-def write_markdown(entries, path, skipped):
+def fmt_seconds(s):
+    return "-" if s is None else f"{s:.2f}s"
+
+
+def write_markdown(entries, path, skipped, sounds):
     by_cat = {}
     for e in entries:
         by_cat.setdefault(e["category"], []).append(e)
     total = sum(e["frame_count"] for e in entries)
+    n_sounds = sum(len(v) for v in sounds.values())
     lines = [
-        "# RS_Ballistics sprite catalogue",
+        "# RS_Ballistics effect catalogue",
         "",
-        f"{len(entries)} effects, {total} frames, {len(by_cat)} categories.",
+        f"{len(entries)} effects, {total} frames, {len(by_cat)} categories, "
+        f"{n_sounds} sounds.",
         "",
         "Generated by `tools/build_catalog.py`. Do not hand-edit: re-run the",
         "script after adding art and commit what it changes.",
@@ -251,24 +350,42 @@ def write_markdown(entries, path, skipped):
         "for all view angles). `rotations` effects are drawn per view angle.",
         "",
     ]
-    for cat in sorted(by_cat):
-        items = by_cat[cat]
-        lines += [
-            f"## {cat}",
-            "",
-            f"{len(items)} effects, {sum(i['frame_count'] for i in items)} frames.",
-            "",
-            "| id | kind | frames | span | max size | sheet |",
-            "|---|---|---|---|---|---|",
-        ]
-        for e in items:
-            w, h = e["max_size"]
-            flag = " ⚠" if e["issues"] else ""
-            lines.append(
-                f"| `{e['id']}`{flag} | {e['kind']} | {e['frame_count']} | {e['span']} "
-                f"| {w}x{h} | [sheet]({e['sheet']}) |"
-            )
-        lines.append("")
+    for cat in sorted(set(by_cat) | set(sounds)):
+        items = by_cat.get(cat, [])
+        snd = sounds.get(cat, [])
+        head = []
+        if items:
+            head.append(f"{len(items)} effects, {sum(i['frame_count'] for i in items)} frames")
+        if snd:
+            secs = [s["seconds"] for s in snd if s["seconds"]]
+            head.append(f"{len(snd)} sounds" + (f", {sum(secs):.1f}s of audio" if secs else ""))
+        lines += [f"## {cat}", "", ", ".join(head) + ".", ""]
+        if items:
+            lines += [
+                "| id | kind | frames | span | max size | sheet |",
+                "|---|---|---|---|---|---|",
+            ]
+            for e in items:
+                w, h = e["max_size"]
+                flag = " ⚠" if e["issues"] else ""
+                lines.append(
+                    f"| `{e['id']}`{flag} | {e['kind']} | {e['frame_count']} | {e['span']} "
+                    f"| {w}x{h} | [sheet]({e['sheet']}) |"
+                )
+            lines.append("")
+        if snd:
+            lines += [
+                "| sound | length | rate | ch | format | file |",
+                "|---|---|---|---|---|---|",
+            ]
+            for s in sorted(snd, key=lambda x: (x["folder"], x["name"])):
+                rate = f"{s['rate']}" if s["rate"] else "-"
+                ch = f"{s['channels']}" if s["channels"] else "-"
+                lines.append(
+                    f"| {s['name']} | {fmt_seconds(s['seconds'])} | {rate} | {ch} "
+                    f"| {s['format']} | `{s['file']}` |"
+                )
+            lines.append("")
 
     flagged = [e for e in entries if e["issues"]]
     if flagged:
@@ -326,16 +443,25 @@ def main():
 
     effects, skipped = scan()
     entries = effect_entries(effects)
-    print(f"{len(entries)} effects, {sum(e['frame_count'] for e in entries)} frames")
+    sounds = scan_sounds()
+    n_sounds = sum(len(v) for v in sounds.values())
+    print(f"{len(entries)} effects, {sum(e['frame_count'] for e in entries)} frames, "
+          f"{n_sounds} sounds in {len(sounds)} groups")
+    unreadable = [s["file"] for v in sounds.values() for s in v if s["seconds"] is None]
+    if unreadable:
+        print(f"  ! {len(unreadable)} sounds whose length could not be read, e.g. {unreadable[0]}")
 
     if args.check:
         return check(entries)
 
     os.makedirs(OUTDIR, exist_ok=True)
     with open(os.path.join(OUTDIR, "catalog.json"), "w", encoding="utf-8", newline="\n") as fh:
-        json.dump({"effects": entries, "uncatalogued": sorted(skipped)}, fh, indent=1, sort_keys=True)
+        json.dump(
+            {"effects": entries, "sounds": sounds, "uncatalogued": sorted(skipped)},
+            fh, indent=1, sort_keys=True,
+        )
         fh.write("\n")
-    write_markdown(entries, os.path.join(OUTDIR, "CATALOG.md"), skipped)
+    write_markdown(entries, os.path.join(OUTDIR, "CATALOG.md"), skipped, sounds)
     if not args.no_sheets:
         print(f"{build_sheets(entries, os.path.join(OUTDIR, 'sheets'))} contact sheets")
     print("wrote catalog/catalog.json, catalog/CATALOG.md")
