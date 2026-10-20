@@ -1,1 +1,5 @@
 models/** binary
+# Raw Doom lumps carry no extension, so git guesses text vs binary from
+# content. A lump that guesses wrong gets CRLF-mangled on checkout and the
+# sprite breaks. Same reason models/** is pinned above.
+sprites/** binary
