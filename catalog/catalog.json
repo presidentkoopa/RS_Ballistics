@@ -791,6 +791,139 @@
    "span": "A-I"
   },
   {
+   "bytes": 5966,
+   "category": "blood",
+   "detail": [
+    {
+     "bytes": 362,
+     "file": "sprites/blood/BLUDA0",
+     "format": "png",
+     "frame": "A",
+     "h": 19,
+     "issues": [
+      "bad-crc:grAb"
+     ],
+     "lump": "BLUDA0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "1940da9edd06f1f91887d64700b24fed758645ab",
+     "w": 19
+    },
+    {
+     "bytes": 401,
+     "file": "sprites/blood/BLUDB0",
+     "format": "png",
+     "frame": "B",
+     "h": 20,
+     "issues": [
+      "bad-crc:grAb"
+     ],
+     "lump": "BLUDB0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "a0d8af8959ffffdf9134784612993ccf160ce756",
+     "w": 20
+    },
+    {
+     "bytes": 1230,
+     "file": "sprites/blood/BLUDC0.png",
+     "format": "png",
+     "frame": "C",
+     "h": 11,
+     "issues": [],
+     "lump": "BLUDC0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "e19a54a253dd5b9940d852f9b56bb665fc3c4948",
+     "w": 12
+    },
+    {
+     "bytes": 1179,
+     "file": "sprites/blood/BLUDD0.png",
+     "format": "png",
+     "frame": "D",
+     "h": 2,
+     "issues": [],
+     "lump": "BLUDD0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "4b0281e526fecfbb0ffd9b7fabf5e5a5904c30ca",
+     "w": 16
+    },
+    {
+     "bytes": 1205,
+     "file": "sprites/blood/BLUDE0.png",
+     "format": "png",
+     "frame": "E",
+     "h": 3,
+     "issues": [],
+     "lump": "BLUDE0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "71c65442a346476a28828bd0df10832d34bbd3ac",
+     "w": 25
+    },
+    {
+     "bytes": 1191,
+     "file": "sprites/blood/BLUDF0.png",
+     "format": "png",
+     "frame": "F",
+     "h": 3,
+     "issues": [],
+     "lump": "BLUDF0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "b643efd70799cef5869b55708e729d3ff518edec",
+     "w": 14
+    },
+    {
+     "bytes": 398,
+     "file": "sprites/blood/BLUDZ0",
+     "format": "png",
+     "frame": "Z",
+     "h": 41,
+     "issues": [
+      "bad-crc:grAb"
+     ],
+     "lump": "BLUDZ0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "94df077d66291715774112a28ed87fe0b37a1773",
+     "w": 9
+    }
+   ],
+   "frame_count": 7,
+   "frames": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "Z"
+   ],
+   "id": "BLUD",
+   "issues": [
+    "bad-crc:grAb"
+   ],
+   "kind": "sequence",
+   "lumps": [
+    "BLUDA0",
+    "BLUDB0",
+    "BLUDC0",
+    "BLUDD0",
+    "BLUDE0",
+    "BLUDF0",
+    "BLUDZ0"
+   ],
+   "max_size": [
+    25,
+    41
+   ],
+   "sheet": "sheets/BLUD.png",
+   "span": "A-Z"
+  },
+  {
    "bytes": 1549,
    "category": "bullets",
    "detail": [
@@ -12503,145 +12636,12 @@
    "span": "A-C"
   },
   {
-   "bytes": 5966,
-   "category": "hitflash",
-   "detail": [
-    {
-     "bytes": 362,
-     "file": "sprites/hitflash/BLUDA0",
-     "format": "png",
-     "frame": "A",
-     "h": 19,
-     "issues": [
-      "bad-crc:grAb"
-     ],
-     "lump": "BLUDA0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "1940da9edd06f1f91887d64700b24fed758645ab",
-     "w": 19
-    },
-    {
-     "bytes": 401,
-     "file": "sprites/hitflash/BLUDB0",
-     "format": "png",
-     "frame": "B",
-     "h": 20,
-     "issues": [
-      "bad-crc:grAb"
-     ],
-     "lump": "BLUDB0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "a0d8af8959ffffdf9134784612993ccf160ce756",
-     "w": 20
-    },
-    {
-     "bytes": 1230,
-     "file": "sprites/hitflash/BLUDC0.png",
-     "format": "png",
-     "frame": "C",
-     "h": 11,
-     "issues": [],
-     "lump": "BLUDC0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "e19a54a253dd5b9940d852f9b56bb665fc3c4948",
-     "w": 12
-    },
-    {
-     "bytes": 1179,
-     "file": "sprites/hitflash/BLUDD0.png",
-     "format": "png",
-     "frame": "D",
-     "h": 2,
-     "issues": [],
-     "lump": "BLUDD0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "4b0281e526fecfbb0ffd9b7fabf5e5a5904c30ca",
-     "w": 16
-    },
-    {
-     "bytes": 1205,
-     "file": "sprites/hitflash/BLUDE0.png",
-     "format": "png",
-     "frame": "E",
-     "h": 3,
-     "issues": [],
-     "lump": "BLUDE0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "71c65442a346476a28828bd0df10832d34bbd3ac",
-     "w": 25
-    },
-    {
-     "bytes": 1191,
-     "file": "sprites/hitflash/BLUDF0.png",
-     "format": "png",
-     "frame": "F",
-     "h": 3,
-     "issues": [],
-     "lump": "BLUDF0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "b643efd70799cef5869b55708e729d3ff518edec",
-     "w": 14
-    },
-    {
-     "bytes": 398,
-     "file": "sprites/hitflash/BLUDZ0",
-     "format": "png",
-     "frame": "Z",
-     "h": 41,
-     "issues": [
-      "bad-crc:grAb"
-     ],
-     "lump": "BLUDZ0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "94df077d66291715774112a28ed87fe0b37a1773",
-     "w": 9
-    }
-   ],
-   "frame_count": 7,
-   "frames": [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "Z"
-   ],
-   "id": "BLUD",
-   "issues": [
-    "bad-crc:grAb"
-   ],
-   "kind": "sequence",
-   "lumps": [
-    "BLUDA0",
-    "BLUDB0",
-    "BLUDC0",
-    "BLUDD0",
-    "BLUDE0",
-    "BLUDF0",
-    "BLUDZ0"
-   ],
-   "max_size": [
-    25,
-    41
-   ],
-   "sheet": "sheets/BLUD.png",
-   "span": "A-Z"
-  },
-  {
    "bytes": 167199,
-   "category": "hitflash",
+   "category": "flashes",
    "detail": [
     {
      "bytes": 4149,
-     "file": "sprites/hitflash/RSH0A0.png",
+     "file": "sprites/flashes/RSH0A0.png",
      "format": "png",
      "frame": "A",
      "h": 96,
@@ -12654,7 +12654,7 @@
     },
     {
      "bytes": 5611,
-     "file": "sprites/hitflash/RSH0B0.png",
+     "file": "sprites/flashes/RSH0B0.png",
      "format": "png",
      "frame": "B",
      "h": 96,
@@ -12667,7 +12667,7 @@
     },
     {
      "bytes": 6677,
-     "file": "sprites/hitflash/RSH0C0.png",
+     "file": "sprites/flashes/RSH0C0.png",
      "format": "png",
      "frame": "C",
      "h": 96,
@@ -12680,7 +12680,7 @@
     },
     {
      "bytes": 7730,
-     "file": "sprites/hitflash/RSH0D0.png",
+     "file": "sprites/flashes/RSH0D0.png",
      "format": "png",
      "frame": "D",
      "h": 96,
@@ -12693,7 +12693,7 @@
     },
     {
      "bytes": 8456,
-     "file": "sprites/hitflash/RSH0E0.png",
+     "file": "sprites/flashes/RSH0E0.png",
      "format": "png",
      "frame": "E",
      "h": 96,
@@ -12706,7 +12706,7 @@
     },
     {
      "bytes": 9176,
-     "file": "sprites/hitflash/RSH0F0.png",
+     "file": "sprites/flashes/RSH0F0.png",
      "format": "png",
      "frame": "F",
      "h": 96,
@@ -12719,7 +12719,7 @@
     },
     {
      "bytes": 9902,
-     "file": "sprites/hitflash/RSH0G0.png",
+     "file": "sprites/flashes/RSH0G0.png",
      "format": "png",
      "frame": "G",
      "h": 96,
@@ -12732,7 +12732,7 @@
     },
     {
      "bytes": 10407,
-     "file": "sprites/hitflash/RSH0H0.png",
+     "file": "sprites/flashes/RSH0H0.png",
      "format": "png",
      "frame": "H",
      "h": 96,
@@ -12745,7 +12745,7 @@
     },
     {
      "bytes": 10898,
-     "file": "sprites/hitflash/RSH0I0.png",
+     "file": "sprites/flashes/RSH0I0.png",
      "format": "png",
      "frame": "I",
      "h": 96,
@@ -12758,7 +12758,7 @@
     },
     {
      "bytes": 12141,
-     "file": "sprites/hitflash/RSH0J0.png",
+     "file": "sprites/flashes/RSH0J0.png",
      "format": "png",
      "frame": "J",
      "h": 96,
@@ -12771,7 +12771,7 @@
     },
     {
      "bytes": 13385,
-     "file": "sprites/hitflash/RSH0K0.png",
+     "file": "sprites/flashes/RSH0K0.png",
      "format": "png",
      "frame": "K",
      "h": 96,
@@ -12784,7 +12784,7 @@
     },
     {
      "bytes": 12919,
-     "file": "sprites/hitflash/RSH0L0.png",
+     "file": "sprites/flashes/RSH0L0.png",
      "format": "png",
      "frame": "L",
      "h": 96,
@@ -12797,7 +12797,7 @@
     },
     {
      "bytes": 11877,
-     "file": "sprites/hitflash/RSH0M0.png",
+     "file": "sprites/flashes/RSH0M0.png",
      "format": "png",
      "frame": "M",
      "h": 96,
@@ -12810,7 +12810,7 @@
     },
     {
      "bytes": 10208,
-     "file": "sprites/hitflash/RSH0N0.png",
+     "file": "sprites/flashes/RSH0N0.png",
      "format": "png",
      "frame": "N",
      "h": 96,
@@ -12823,7 +12823,7 @@
     },
     {
      "bytes": 9568,
-     "file": "sprites/hitflash/RSH0O0.png",
+     "file": "sprites/flashes/RSH0O0.png",
      "format": "png",
      "frame": "O",
      "h": 96,
@@ -12836,7 +12836,7 @@
     },
     {
      "bytes": 8892,
-     "file": "sprites/hitflash/RSH0P0.png",
+     "file": "sprites/flashes/RSH0P0.png",
      "format": "png",
      "frame": "P",
      "h": 96,
@@ -12849,7 +12849,7 @@
     },
     {
      "bytes": 7919,
-     "file": "sprites/hitflash/RSH0Q0.png",
+     "file": "sprites/flashes/RSH0Q0.png",
      "format": "png",
      "frame": "Q",
      "h": 96,
@@ -12862,7 +12862,7 @@
     },
     {
      "bytes": 5710,
-     "file": "sprites/hitflash/RSH0R0.png",
+     "file": "sprites/flashes/RSH0R0.png",
      "format": "png",
      "frame": "R",
      "h": 96,
@@ -12875,7 +12875,7 @@
     },
     {
      "bytes": 1574,
-     "file": "sprites/hitflash/RSH0S0.png",
+     "file": "sprites/flashes/RSH0S0.png",
      "format": "png",
      "frame": "S",
      "h": 96,
@@ -12939,6 +12939,86 @@
    ],
    "sheet": "sheets/RSH0.png",
    "span": "A-S"
+  },
+  {
+   "bytes": 7655,
+   "category": "flashes",
+   "detail": [
+    {
+     "bytes": 1528,
+     "file": "sprites/flashes/RSMFB0.png",
+     "format": "png",
+     "frame": "B",
+     "h": 34,
+     "issues": [],
+     "lump": "RSMFB0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "ece39f7a2bc7c9abae8be9d545757a048ba44680",
+     "w": 25
+    },
+    {
+     "bytes": 1939,
+     "file": "sprites/flashes/RSMFC0.png",
+     "format": "png",
+     "frame": "C",
+     "h": 64,
+     "issues": [],
+     "lump": "RSMFC0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "7c75608b7b408db64d93891b9b1385b2a4f1f858",
+     "w": 39
+    },
+    {
+     "bytes": 2071,
+     "file": "sprites/flashes/RSMFD0.png",
+     "format": "png",
+     "frame": "D",
+     "h": 64,
+     "issues": [],
+     "lump": "RSMFD0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "e8c7c7a9ee067ac70045a5752b2e83f38cd97352",
+     "w": 42
+    },
+    {
+     "bytes": 2117,
+     "file": "sprites/flashes/RSMFE0.png",
+     "format": "png",
+     "frame": "E",
+     "h": 61,
+     "issues": [],
+     "lump": "RSMFE0",
+     "mirror": null,
+     "rotation": "0",
+     "sha1": "5414169a69ec557439d7ffc64f0c36728a3eabf8",
+     "w": 41
+    }
+   ],
+   "frame_count": 4,
+   "frames": [
+    "B",
+    "C",
+    "D",
+    "E"
+   ],
+   "id": "RSMF",
+   "issues": [],
+   "kind": "sequence",
+   "lumps": [
+    "RSMFB0",
+    "RSMFC0",
+    "RSMFD0",
+    "RSMFE0"
+   ],
+   "max_size": [
+    42,
+    64
+   ],
+   "sheet": "sheets/RSMF.png",
+   "span": "B-E"
   },
   {
    "bytes": 4340,
@@ -14630,86 +14710,6 @@
    ],
    "sheet": "sheets/RSM3.png",
    "span": "A-H"
-  },
-  {
-   "bytes": 7655,
-   "category": "muzzleflash",
-   "detail": [
-    {
-     "bytes": 1528,
-     "file": "sprites/muzzleflash/RSMFB0.png",
-     "format": "png",
-     "frame": "B",
-     "h": 34,
-     "issues": [],
-     "lump": "RSMFB0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "ece39f7a2bc7c9abae8be9d545757a048ba44680",
-     "w": 25
-    },
-    {
-     "bytes": 1939,
-     "file": "sprites/muzzleflash/RSMFC0.png",
-     "format": "png",
-     "frame": "C",
-     "h": 64,
-     "issues": [],
-     "lump": "RSMFC0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "7c75608b7b408db64d93891b9b1385b2a4f1f858",
-     "w": 39
-    },
-    {
-     "bytes": 2071,
-     "file": "sprites/muzzleflash/RSMFD0.png",
-     "format": "png",
-     "frame": "D",
-     "h": 64,
-     "issues": [],
-     "lump": "RSMFD0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "e8c7c7a9ee067ac70045a5752b2e83f38cd97352",
-     "w": 42
-    },
-    {
-     "bytes": 2117,
-     "file": "sprites/muzzleflash/RSMFE0.png",
-     "format": "png",
-     "frame": "E",
-     "h": 61,
-     "issues": [],
-     "lump": "RSMFE0",
-     "mirror": null,
-     "rotation": "0",
-     "sha1": "5414169a69ec557439d7ffc64f0c36728a3eabf8",
-     "w": 41
-    }
-   ],
-   "frame_count": 4,
-   "frames": [
-    "B",
-    "C",
-    "D",
-    "E"
-   ],
-   "id": "RSMF",
-   "issues": [],
-   "kind": "sequence",
-   "lumps": [
-    "RSMFB0",
-    "RSMFC0",
-    "RSMFD0",
-    "RSMFE0"
-   ],
-   "max_size": [
-    42,
-    64
-   ],
-   "sheet": "sheets/RSMF.png",
-   "span": "B-E"
   },
   {
    "bytes": 467,

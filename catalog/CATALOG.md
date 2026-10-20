@@ -30,6 +30,14 @@ for all view angles). `rotations` effects are drawn per view angle.
 | `JSPK` | sequence | 1 | A | 128x128 | [sheet](sheets/JSPK.png) |
 | `JXPL` | sequence | 8 | A-I | 64x64 | [sheet](sheets/JXPL.png) |
 
+## blood
+
+1 effects, 7 frames.
+
+| id | kind | frames | span | max size | sheet |
+|---|---|---|---|---|---|
+| `BLUD` ⚠ | sequence | 7 | A-Z | 25x41 | [sheet](sheets/BLUD.png) |
+
 ## bullets
 
 4 effects, 36 frames.
@@ -158,14 +166,14 @@ for all view angles). `rotations` effects are drawn per view angle.
 | `RSF8` | sequence | 1 | R | 256x256 | [sheet](sheets/RSF8.png) |
 | `RSF9` | sequence | 3 | A-C | 50x44 | [sheet](sheets/RSF9.png) |
 
-## hitflash
+## flashes
 
-2 effects, 26 frames.
+2 effects, 23 frames.
 
 | id | kind | frames | span | max size | sheet |
 |---|---|---|---|---|---|
-| `BLUD` ⚠ | sequence | 7 | A-Z | 25x41 | [sheet](sheets/BLUD.png) |
 | `RSH0` | sequence | 19 | A-S | 96x96 | [sheet](sheets/RSH0.png) |
+| `RSMF` | sequence | 4 | B-E | 42x64 | [sheet](sheets/RSMF.png) |
 
 ## ice
 
@@ -198,14 +206,6 @@ for all view angles). `rotations` effects are drawn per view angle.
 | `RSM1` | sequence | 1 | C | 17x17 | [sheet](sheets/RSM1.png) |
 | `RSM2` | sequence | 5 | A-H | 25x25 | [sheet](sheets/RSM2.png) |
 | `RSM3` | sequence | 8 | A-H | 18x18 | [sheet](sheets/RSM3.png) |
-
-## muzzleflash
-
-1 effects, 4 frames.
-
-| id | kind | frames | span | max size | sheet |
-|---|---|---|---|---|---|
-| `RSMF` | sequence | 4 | B-E | 42x64 | [sheet](sheets/RSMF.png) |
 
 ## plasma
 
@@ -331,10 +331,10 @@ the lump name, which drops the extension, but it misleads tools).
 
 | id | category | frames affected | issue |
 |---|---|---|---|
+| `BLUD` | blood | 3/7 | bad-crc:grAb |
 | `RSC3` | casings | 13/13 | bad-crc:grAb |
 | `RSC4` | casings | 13/13 | bad-crc:grAb |
 | `RSF7` | flares | 18/18 | patch-data-named-png |
-| `BLUD` | hitflash | 3/7 | bad-crc:grAb |
 | `ICEY` | ice | 7/7 | bad-crc:grAb |
 | `JGND` | projectiles | 1/1 | bad-crc:grAb |
 | `RSR4` | projectiles | 1/8 | bad-crc:grAb |
