@@ -29,6 +29,31 @@ import io, os, re, sys
 
 ROOT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), ".."))
 
+_SPRITE_LUMPS = None
+
+
+def sprite_lumps():
+    """Every sprite lump name in the package, uppercased.
+
+    Looked up by NAME, not by path: a lump name ignores both its extension
+    and the folder it sits in (the engine tags anything under sprites/ as
+    ns_sprites by prefix, filesystem.cpp), so sprites/RSBMA0.png and
+    sprites/bullets/RSBMA0.png are the same lump. Checking a fixed path
+    instead would fail this build the day the art gets sorted into folders,
+    for sprites that are perfectly fine.
+    """
+    global _SPRITE_LUMPS
+    if _SPRITE_LUMPS is None:
+        _SPRITE_LUMPS = set()
+        for dirpath, dirnames, filenames in os.walk(os.path.join(ROOT, "sprites")):
+            dirnames[:] = [d for d in dirnames if not d.startswith((".", "_"))]
+            for fn in filenames:
+                if fn.startswith("."):
+                    continue
+                _SPRITE_LUMPS.add(os.path.splitext(fn)[0].upper())
+    return _SPRITE_LUMPS
+
+
 # THE CLASSES A ROUND CAN BE. Both fly a roundlook, so both need every frame the looks name.
 # RSB_EnemyBullet is here because it is a SUBCLASS and MODELDEF does not follow inheritance -- that is
 # the whole point of naming it rather than checking RSB_Bullet alone.
@@ -109,9 +134,8 @@ for look in sorted(asked):
     if len(want) != 5:
         bad.append("roundlook %s: look = model, %s is not four letters and a frame letter" % (look, want))
         continue
-    sprite_lump = os.path.join(ROOT, "sprites", want + "0.png")
-    if not os.path.exists(sprite_lump):
-        bad.append("roundlook %s names frame %s, and sprites/%s0.png does not exist -- "
+    if (want + "0").upper() not in sprite_lumps():
+        bad.append("roundlook %s names frame %s, and no %s0 sprite lump exists -- "
                    "a model has no sprite frame to hang on and the round flies invisible" % (look, want, want))
     for cls in ROUND_CLASSES:
         if want not in provided.get(cls, {}):
