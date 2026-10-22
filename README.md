@@ -1,7 +1,23 @@
 # RS_Ballistics
 
-**The combat-effects generator for the UZDXREMA (DoomXR) mod family.** Data in
-lumps turns into:
+**The combat-effects generator for the UZDXREMA (DoomXR) mod family.**
+
+A gun does not describe its own effects here. It names profiles on its sheet —
+`flashprofile`, `recoilprofile`, `roundprofile`, `ejectaprofile` — and this
+package turns those names into what the shot looks like, sounds like, and does
+to the wall behind it. **1251 profiles cover every gun in every set.**
+
+Two things it refuses to do the easy way:
+
+- **Recoil is computed, never typed.** Bullet weight, muzzle velocity, powder
+  charge and the loaded gun's weight go through free-recoil arithmetic. An MG42
+  and a Kar98k fire the same cartridge out of a 25 lb gun and a 9 lb gun, and
+  the numbers say so: identical impulse, three times apart in energy.
+- **Nothing here moves the camera.** In VR the camera is the player's head, so
+  a jolt we compute fights their inner ear. Recoil is torque spent on the thing
+  you look *at*, never the thing you look *through*.
+
+Everything below is the full inventory. Data in lumps turns into:
 - real rounds in flight as **3D models** -- one mesh at eight sizes, so a buckshot pellet is a stub and a
   .30-06 tracer is a long fat streak, each round turning to face its own flight -- with vapour trails, heat
   shimmer, flight lights and near-miss whiz and crack
@@ -43,6 +59,36 @@ effects level (off, plain, normal, heavy, extreme) scales counts, lights, sizes,
 smoke, shoves, shimmer, mark life, glow and tracers; `@extreme` profiles add what
 only the top level shows. Effects are picked per player by level, style and menu
 settings.
+
+## What it draws
+
+A muzzle flash, four frames — every shot picks its own lean, spread and powder
+colour, so no two fire alike (`RSMF`):
+
+![muzzle flash](docs/RSMF.png)
+
+Sparks thrown off a hard surface, expanding and cooling (`RSSP`):
+
+![impact sparks](docs/RSSP.png)
+
+A spent case tumbling (`RSCS`) — the 9mm, .45, .357 and 12-gauge are generated
+by `tools/gen_casings.py` and owned outright:
+
+![spent casing](docs/RSCS.png)
+
+An electric arc, for tech panels and screens shorting out (`RSEC`):
+
+![electric arc](docs/RSEC.png)
+
+Dust and smoke rolling off a hit and thinning out, 18 frames, greyscale so it
+can be tinted to whatever material was struck (`RSDS`):
+
+![dust and smoke](docs/RSDS.png)
+
+These are sprites only. The rounds in flight are 3D models, the flashes and
+blasts are emissive volumes, and the smoke is an engine volume -- none of that
+photographs. `python tools/make_docs_sheets.py` regenerates these; `docs/` is
+deliberately outside the build's allowlist, so nothing in it becomes a lump.
 
 ## Coverage
 
