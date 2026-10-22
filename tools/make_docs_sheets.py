@@ -7,7 +7,7 @@ Writes docs/<SPRITE>.png, one image per sprite named in SHEETS below. This
 is documentation only: docs/ is deliberately not in build.ps1's allowlist,
 so nothing here reaches the pk3 or becomes a lump.
 
-Frames are ordered by their Doom frame letter (RSMFB0, RSMFC0, ... ), which
+Frames are ordered by their Doom frame letter (RSCSA0, RSCSB0, ... ), which
 is the order they play in.
 """
 
@@ -22,7 +22,6 @@ DOCS = os.path.join(ROOT, "docs")
 
 # What the README shows, and why each one is worth a picture.
 SHEETS = {
-    "RSMF": "muzzle flash",
     "RSSP": "spray of hot spark streaks",
     "RSDS": "rolling dust and smoke cloud",
     "RSFK": "a single rising flame lick",
@@ -32,7 +31,7 @@ SHEETS = {
     "RSL1": "textured spark burst",
 }
 
-# A sprite lump is NAME + frame letter + rotation, e.g. RSMFB0.
+# A sprite lump is NAME + frame letter + rotation, e.g. RSCSA0.
 LUMP = re.compile(r"^(?P<name>[A-Z0-9]{4})(?P<frame>[A-Z\[\]\\])(?P<rot>[0-8])", re.I)
 CELL_CAP = 256
 

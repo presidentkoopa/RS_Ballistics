@@ -62,11 +62,6 @@ settings.
 
 ## What it draws
 
-A muzzle flash, four frames — every shot picks its own lean, spread and powder
-colour, so no two fire alike (`RSMF`):
-
-![muzzle flash](docs/RSMF.png)
-
 Sparks thrown off a hard surface, expanding and cooling (`RSSP`):
 
 ![impact sparks](docs/RSSP.png)
@@ -139,17 +134,21 @@ Two rules matter more than the rest:
   (`+PRECACHEALWAYS`), surface damage (`PaintSurfaceDamage`, `DAMAGEDEFS`) and effect lights
   (`SpawnEffectLight`, PARTICLEDEFS `light` keys, `LF_CASTSHADOW`) emissive volumes (`VOLUMEDEFS`,
   `SpawnEmissiveVolume`) and the compressed particle atlas (BC7 DDS flipbooks). It will not load on other engines.
-- Mods that fire its rounds or call its hooks (RS_VR_Reload, RS_VR_Weapons) require
-  it and load after it.
+- **Nothing else.** This package has no dependency on any other mod. The
+  dependency runs the other way: a mod that fires its rounds or calls its hooks
+  requires RS_Ballistics and loads after it. Every mention of such a mod in
+  this package's source is a comment describing the contract from their side —
+  no class here imports, extends or calls one.
 
 ## Load order
 
-1. `RS_Ballistics`
-2. `RS_VR_Reload`
-3. `RS_VR_Weapons`
+`RS_Ballistics` loads before anything that uses it, and needs nothing before
+it. The owner's full order has other mods around it.
 
-(The owner's full order has more mods around these; RS_Ballistics always loads
-before the two that use it.)
+The two packages that used to follow it — `RS_VR_Reload` and `RS_VR_Weapons` —
+are retired and no longer in the live tree. The build checks this package on
+its own for that reason, and will check it against either of them again the
+day one comes back (see Build).
 
 ## What is in the package
 

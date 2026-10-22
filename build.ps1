@@ -22,12 +22,6 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $root = $PSScriptRoot
 $out  = if ($OutFile) { $OutFile } else { Join-Path $root 'RS_Ballistics.pk3' }
 
-# THE PACKAGE RS_Ballistics IS COMPILE-CHECKED WITH. One variable on purpose:
-# the reload system is being renamed RS_VR_PistolTest -> RS_VR_Reload, and this
-# is the only line that changes when it is. Load order: RS_Ballistics first,
-# because the reload system requires it.
-$reloadPk3 = 'E:\DOOMWork\RS_VR_Reload\RS_VR_Reload.pk3'
-
 & python 'E:\DOOMWork\tools\menu_lint.py' $root --prefix rsb_
 if ($LASTEXITCODE -ne 0) { throw "menu lint failed -- a control would be dead. See above." }
 
@@ -89,11 +83,42 @@ Write-Output "RS_Ballistics.pk3  --  $($names.Count) entries, verified"
 
 if ($NoCompileCheck) { Write-Output "compile check SKIPPED (-NoCompileCheck) -- NOT proven to compile"; return }
 
-# PROVE IT COMPILES, every build, through the shared hidden check, WITH the
-# reload system -- RS_Ballistics first, as in the owner's load order.
+# PROVE IT COMPILES, every build, through the shared hidden check.
 #
 # Called in-process with `&`, not `powershell -File`: an array does not survive
 # -File argument passing (-Files a,b arrives as the single string "a,b"). The
 # check ends with `exit`, which here returns to this script with $LASTEXITCODE.
-& 'E:\DOOMWork\tools\compile_check.ps1' -Files @($out, $reloadPk3)
-if ($LASTEXITCODE -ne 0) { throw "compile check FAILED -- see above" }
+
+# STAGE 1 -- THIS PACKAGE, ALONE. Not optional. It is the claim the package
+# makes about itself, and it was never actually tested: the old check only ever
+# compiled RS_Ballistics together with the reload system, so "it compiles" and
+# "it compiles with that one other mod present" were the same sentence.
+& 'E:\DOOMWork\tools\compile_check.ps1' -Files @($out)
+if ($LASTEXITCODE -ne 0) { throw "compile check FAILED -- this package does not compile on its own. See above." }
+
+# STAGE 2 -- WITH EACH CONSUMER THAT IS ACTUALLY INSTALLED, RS_Ballistics first,
+# as in the owner's load order. Nothing here is required: the dependency runs the
+# other way round, and every mention of these packages in this package's source
+# is a comment. They are checked so that a change which breaks a consumer is
+# caught at the build instead of in a headset.
+#
+# A consumer that is not in the tree is SKIPPED, never a failure. A build that
+# cannot run without another package installed is a build that stops the day
+# that package is retired -- which is exactly what happened when the RS_VR_*
+# packages moved out of the live tree. Retired packages are not listed here;
+# compiling against the quarantine would defeat the point of quarantining it.
+$consumers = @(
+    'E:\DOOMWork\RS_VR_Reload\RS_VR_Reload.pk3',
+    'E:\DOOMWork\RS_VR_Weapons\RS_VR_Weapons.pk3'
+)
+$present = @($consumers | Where-Object { Test-Path -LiteralPath $_ })
+foreach ($c in $consumers) {
+    if ($present -notcontains $c) { Write-Output "compile check: consumer not installed, skipped -- $c" }
+}
+if ($present.Count -gt 0) {
+    & 'E:\DOOMWork\tools\compile_check.ps1' -Files (@($out) + $present)
+    if ($LASTEXITCODE -ne 0) { throw "compile check FAILED with a consumer loaded -- see above" }
+    Write-Output "compile check: passed alone, and with $($present.Count) consumer(s)"
+} else {
+    Write-Output "compile check: passed alone. No consumer installed, so nothing else was checked."
+}
